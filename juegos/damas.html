@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Juego de damas</title>
+
+    <style>
+      /* -------------------- SELECTORES COMPLEJOS -------------------- */
+
+      /* Tablero → celdas oscuras */
+      #juego-damas-contenedor #tablero-damas > .celda-damas.oscura-damas {
+        background: #2f5f3a;
+      }
+
+      /* Tablero → celdas claras */
+      #juego-damas-contenedor #tablero-damas > .celda-damas.clara-damas {
+        background: #f0d9b5;
+      }
+
+      /* Pieza → selectores combinados */
+      #tablero-damas .celda-damas.oscura-damas > div.dot-pieza.pieza-humano,
+      #tablero-damas .celda-damas.oscura-damas > div.dot-pieza.pieza-ia {
+        border-radius: 50%;
+        width: 76%;
+        height: 76%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.12s;
+      }
+
+      /* Rey humano o IA con pseudo-clase */
+      #tablero-damas div.dot-pieza.rey-damas:is(.pieza-humano, .pieza-ia) {
+        box-shadow: 0 0 18px 4px rgba(255, 215, 0, 0.9);
+      }
+
+      /* Pieza humana solo si está dentro del tablero y en celda oscura */
+      #tablero-damas .celda-damas.oscura-damas > .dot-pieza.pieza-humano {
+        background: linear-gradient(180deg, #4f83ff, #2750b3);
+      }
+
+      /* Pieza IA */
+      #tablero-damas .celda-damas.oscura-damas > .dot-pieza.pieza-ia {
+        background: linear-gradient(180deg, #cf3630, #8b2720);
+      }
+
+      /* Movimiento sugerido */
+      #tablero-damas .celda-damas.oscura-damas > .sugerencia-movimiento {
+        position: absolute;
+        width: 28%;
+        height: 28%;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      #tablero-damas
+        .celda-damas.oscura-damas
+        > .sugerencia-movimiento.captura {
+        background: #ffc5c5;
+        border: 2px solid #ff3c3c;
+      }
+
+      /* -------------------- CONTENEDORES -------------------- */
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f8;
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      #juego-damas-contenedor {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      #tablero-damas {
+        width: 520px;
+        height: 520px;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+      }
+
+      .celda-damas {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .info-panel {
+        background: #fff;
+        padding: 14px;
+        border-radius: 10px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+        width: 260px;
+      }
+
+      .info-panel div {
+        margin-bottom: 4px;
+      }
+
+      .boton-damas {
+        padding: 8px 12px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      .boton-damas:hover {
+        background: #1e4fc1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="juego-damas-contenedor">
+      <h2>Juego de damas</h2>
+
+      <div id="tablero-damas"></div>
+
+      <div>
+        <button class="boton-damas" id="boton-reinicio-damas">
+          Reiniciar / Sortear
+        </button>
+        <button class="boton-damas" id="boton-voltear-damas">
+          Girar Tablero
+        </button>
+      </div>
+    </div>
+
+    <div class="info-panel">
+      <div><b>Tu lado:</b> <span id="lado-humano-info">—</span></div>
+      <div><b>Turno:</b> <span id="turno-info">—</span></div>
+      <div><b>Ganador:</b> <span id="ganador-info">—</span></div>
+      <div>
+        <b>Capturas obligatorias:</b>
+        <span id="captura-obligatoria-info">—</span>
+      </div>
+      <div style="margin-top: 10px" id="mensaje-estado-damas"></div>
+    </div>
+
+    <script>
+      // ======================================================================
+      //   VARIABLES CON NOMBRES COMPLEJOS
+      // ======================================================================
+
+      const tableroDamasPrincipal = document.getElementById("tablero-damas");
+
+      const estadoGlobalDamas = {
+        matrizDamas: [],
+        ladoHumanoAsignado: null, // 'top' / 'bottom'
+        turnoActualDamas: null, // 'humano' / 'ia'
+        seleccionActualDamas: null,
+        movimientosDisponiblesDamas: [],
+        tableroGiradoFlag: false,
+        juegoTerminadoFlag: false,
+      };
+
+      // ======================================================================
+      //   UTILIDADES GENERALES
+      // ======================================================================
+
+      function indicePlanoDamas(f, c) {
+        return f * 8 + c;
+      }
+      function enLimiteDamas(r, c) {
+        return r >= 0 && r < 8 && c >= 0 && c < 8;
+      }
+      function clonarMatrizDamas(m) {
+        return m.map((fila) =>
+          fila.map((celda) => (celda ? { ...celda } : null))
+        );
+      }
+
+      // ======================================================================
+      //   INICIALIZAR TABLERO
+      // ======================================================================
+
+      function generarTableroInicialDamas() {
+        estadoGlobalDamas.matrizDamas = Array.from({ length: 8 }, () =>
+          Array(8).fill(null)
+        );
+
+        // Coloca fichas arriba (top)
+        for (let r = 0; r < 3; r++) {
+          for (let c = 0; c < 8; c++) {
+            if ((r + c) % 2 === 1) {
+              estadoGlobalDamas.matrizDamas[r][c] = {
+                dueño: "top",
+                rey: false,
+              };
+            }
+          }
+        }
+
+        // Coloca fichas abajo (bottom)
+        for (let r = 5; r < 8; r++) {
+          for (let c = 0; c < 8; c++) {
+            if ((r + c) % 2 === 1) {
+              estadoGlobalDamas.matrizDamas[r][c] = {
+                dueño: "bottom",
+                rey: false,
+              };
+            }
+          }
+        }
+      }
+
+      // ======================================================================
+      //   SORTEO DE LADOS Y TURNO
+      // ======================================================================
+
+      function sortearRolesDamas() {
+        estadoGlobalDamas.ladoHumanoAsignado =
+          Math.random() < 0.5 ? "top" : "bottom";
+        estadoGlobalDamas.turnoActualDamas =
+          Math.random() < 0.5 ? "humano" : "ia";
+
+        document.getElementById("lado-humano-info").textContent =
+          estadoGlobalDamas.ladoHumanoAsignado === "top" ? "Arriba" : "Abajo";
+      }
+
+      // ======================================================================
+      //   DIBUJAR TABLERO
+      // ======================================================================
+
+      function dibujarTableroDamas() {
+        tableroDamasPrincipal.innerHTML = "";
+
+        for (let r = 0; r < 8; r++) {
+          for (let c = 0; c < 8; c++) {
+            const celda = document.createElement("div");
+            celda.className =
+              "celda-damas " +
+              ((r + c) % 2 === 0 ? "clara-damas" : "oscura-damas");
+            celda.dataset.r = r;
+            celda.dataset.c = c;
+
+            if ((r + c) % 2 === 1) {
+              const pieza = estadoGlobalDamas.matrizDamas[r][c];
+              const dot = document.createElement("div");
+              dot.className = "dot-pieza";
+
+              if (pieza) {
+                const esHumano =
+                  pieza.dueño === estadoGlobalDamas.ladoHumanoAsignado;
+                dot.classList.add(esHumano ? "pieza-humano" : "pieza-ia");
+                if (pieza.rey) dot.classList.add("rey-damas");
+              } else {
+                dot.style.background = "transparent";
+                dot.style.cursor = "default";
+              }
+
+              dot.addEventListener("click", (e) => {
+                manejarClickPiezaDamas(r, c);
+                e.stopPropagation();
+              });
+
+              celda.appendChild(dot);
+            }
+
+            tableroDamasPrincipal.appendChild(celda);
+          }
+        }
+        actualizarPanelInfoDamas();
+      }
+
+      // ======================================================================
+      //   SELECCIÓN Y MOVIMIENTOS
+      // ======================================================================
+
+      function manejarClickPiezaDamas(r, c) {
+        if (estadoGlobalDamas.juegoTerminadoFlag) return;
+        if (estadoGlobalDamas.turnoActualDamas !== "humano") return;
+
+        const ficha = estadoGlobalDamas.matrizDamas[r][c];
+        const esHumano =
+          ficha && ficha.dueño === estadoGlobalDamas.ladoHumanoAsignado;
+
+        if (esHumano) {
+          estadoGlobalDamas.seleccionActualDamas = { r, c };
+          estadoGlobalDamas.movimientosDisponiblesDamas =
+            calcularMovimientosDesdeDamas(r, c);
+
+          resaltarSeleccionDamas();
+          return;
+        }
+
+        // Intentar mover si es casilla destino
+        if (estadoGlobalDamas.seleccionActualDamas) {
+          const mov = estadoGlobalDamas.movimientosDisponiblesDamas.find(
+            (m) => m.hacia.r === r && m.hacia.c === c
+          );
+          if (mov) {
+            ejecutarMovimientoDamas(mov);
+          }
+        }
+      }
+
+      function resaltarSeleccionDamas() {
+        dibujarTableroDamas();
+
+        const { r, c } = estadoGlobalDamas.seleccionActualDamas;
+        const idx = indicePlanoDamas(r, c);
+        const celda = tableroDamasPrincipal.children[idx];
+        const dot = celda.querySelector(".dot-pieza");
+        if (dot) dot.style.outline = "4px solid #fff8";
+
+        estadoGlobalDamas.movimientosDisponiblesDamas.forEach((m) => {
+          const id2 = indicePlanoDamas(m.hacia.r, m.hacia.c);
+          const destino = tableroDamasPrincipal.children[id2];
+          const s = document.createElement("div");
+          s.className = "sugerencia-movimiento";
+          if (m.capturas.length) s.classList.add("captura");
+
+          s.addEventListener("click", (e) => {
+            ejecutarMovimientoDamas(m);
+            e.stopPropagation();
+          });
+          destino.appendChild(s);
+        });
+      }
+
+      // ======================================================================
+      //   MOVER / CAPTURAR
+      // ======================================================================
+
+      function calcularMovimientosDesdeDamas(r, c) {
+        const pieza = estadoGlobalDamas.matrizDamas[r][c];
+        if (!pieza) return [];
+
+        const mueveAbajo = pieza.dueño === "top" ? 1 : -1;
+        const rey = pieza.rey;
+
+        const direcciones = rey
+          ? [
+              [1, 1],
+              [1, -1],
+              [-1, 1],
+              [-1, -1],
+            ]
+          : [
+              [mueveAbajo, 1],
+              [mueveAbajo, -1],
+            ];
+
+        const capturasTotales = [];
+
+        // Capturas recursivas
+        function buscarSaltos(matriz, x, y, caps, reyAhora) {
+          let encontro = false;
+          for (const [dr, dc] of reyAhora
+            ? [
+                [1, 1],
+                [1, -1],
+                [-1, 1],
+                [-1, -1],
+              ]
+            : [
+                [mueveAbajo, 1],
+                [mueveAbajo, -1],
+              ]) {
+            const mr = x + dr,
+              mc = y + dc;
+            const tr = x + 2 * dr,
+              tc = y + 2 * dc;
+            if (enLimiteDamas(mr, mc) && enLimiteDamas(tr, tc)) {
+              const medio = matriz[mr][mc];
+              const dest = matriz[tr][tc];
+              if (medio && medio.dueño !== matriz[x][y].dueño && !dest) {
+                encontro = true;
+                const copia = clonarMatrizDamas(matriz);
+                copia[tr][tc] = copia[x][y];
+                copia[x][y] = null;
+                copia[mr][mc] = null;
+
+                const coronar =
+                  copia[tr][tc].rey ||
+                  (copia[tr][tc].dueño === "top" && tr === 7) ||
+                  (copia[tr][tc].dueño === "bottom" && tr === 0);
+
+                if (coronar) copia[tr][tc].rey = true;
+
+                const nuevasCaps = caps.concat([{ r: mr, c: mc }]);
+                const rec = buscarSaltos(
+                  copia,
+                  tr,
+                  tc,
+                  nuevasCaps,
+                  copia[tr][tc].rey
+                );
+                if (!rec) {
+                  capturasTotales.push({
+                    desde: { r, c },
+                    hacia: { r: tr, c: tc },
+                    capturas: nuevasCaps,
+                    reyDespues: coronar,
+                  });
+                }
+              }
+            }
+          }
+          return encontro;
+        }
+
+        buscarSaltos(estadoGlobalDamas.matrizDamas, r, c, [], pieza.rey);
+
+        if (capturasTotales.length) return capturasTotales;
+
+        // Movimientos simples
+        const movsSimples = [];
+        for (const [dr, dc] of direcciones) {
+          const nr = r + dr,
+            nc = c + dc;
+          if (enLimiteDamas(nr, nc) && !estadoGlobalDamas.matrizDamas[nr][nc]) {
+            const coronar =
+              pieza.rey ||
+              (pieza.dueño === "top" && nr === 7) ||
+              (pieza.dueño === "bottom" && nr === 0);
+            movsSimples.push({
+              desde: { r, c },
+              hacia: { r: nr, c: nc },
+              capturas: [],
+              reyDespues: coronar,
+            });
+          }
+        }
+        return movsSimples;
+      }
+
+      // Ejecuta el movimiento seleccionado
+      function ejecutarMovimientoDamas(mov) {
+        const { desde, hacia, capturas, reyDespues } = mov;
+
+        const pieza = estadoGlobalDamas.matrizDamas[desde.r][desde.c];
+        estadoGlobalDamas.matrizDamas[hacia.r][hacia.c] = pieza;
+        estadoGlobalDamas.matrizDamas[desde.r][desde.c] = null;
+
+        if (capturas.length) {
+          capturas.forEach(
+            (c) => (estadoGlobalDamas.matrizDamas[c.r][c.c] = null)
+          );
+        }
+
+        if (reyDespues) pieza.rey = true;
+
+        estadoGlobalDamas.seleccionActualDamas = null;
+        estadoGlobalDamas.movimientosDisponiblesDamas = [];
+        dibujarTableroDamas();
+
+        if (
+          capturas.length &&
+          estadoGlobalDamas.turnoActualDamas === "humano"
+        ) {
+          const nuevas = calcularMovimientosDesdeDamas(hacia.r, hacia.c).filter(
+            (m) => m.capturas.length
+          );
+          if (nuevas.length) {
+            estadoGlobalDamas.seleccionActualDamas = { r: hacia.r, c: hacia.c };
+            estadoGlobalDamas.movimientosDisponiblesDamas = nuevas;
+            resaltarSeleccionDamas();
+            return;
+          }
+        }
+
+        terminarTurnoDamas();
+      }
+
+      // ======================================================================
+      //   FIN DE TURNO / IA / GANADOR
+      // ======================================================================
+
+      function terminarTurnoDamas() {
+        evaluarGanadorDamas();
+
+        if (estadoGlobalDamas.juegoTerminadoFlag) return;
+
+        estadoGlobalDamas.turnoActualDamas =
+          estadoGlobalDamas.turnoActualDamas === "humano" ? "ia" : "humano";
+
+        actualizarPanelInfoDamas();
+
+        if (estadoGlobalDamas.turnoActualDamas === "ia") {
+          setTimeout(() => movimientoIA_Damas(), 250);
+        }
+      }
+
+      function evaluarGanadorDamas() {
+        let humano = 0,
+          ia = 0;
+
+        for (let r = 0; r < 8; r++)
+          for (let c = 0; c < 8; c++) {
+            const p = estadoGlobalDamas.matrizDamas[r][c];
+            if (!p) continue;
+            p.dueño === estadoGlobalDamas.ladoHumanoAsignado ? humano++ : ia++;
+          }
+
+        if (humano === 0) {
+          estadoGlobalDamas.juegoTerminadoFlag = true;
+          document.getElementById("ganador-info").textContent = "MÁQUINA";
+          document.getElementById("mensaje-estado-damas").textContent =
+            "Perdiste sin fichas.";
+          return;
+        }
+
+        if (ia === 0) {
+          estadoGlobalDamas.juegoTerminadoFlag = true;
+          document.getElementById("ganador-info").textContent = "TÚ";
+          document.getElementById("mensaje-estado-damas").textContent =
+            "Ganaste sin oposición.";
+        }
+      }
+
+      // IA simple aleatoria
+      function movimientoIA_Damas() {
+        if (estadoGlobalDamas.juegoTerminadoFlag) return;
+
+        const movs = [];
+
+        for (let r = 0; r < 8; r++)
+          for (let c = 0; c < 8; c++) {
+            const p = estadoGlobalDamas.matrizDamas[r][c];
+            if (!p || p.dueño === estadoGlobalDamas.ladoHumanoAsignado)
+              continue;
+            calcularMovimientosDesdeDamas(r, c).forEach((m) => movs.push(m));
+          }
+
+        if (movs.length === 0) {
+          estadoGlobalDamas.juegoTerminadoFlag = true;
+          document.getElementById("ganador-info").textContent = "TÚ";
+          return;
+        }
+
+        const capt = movs.filter((m) => m.capturas.length);
+        const pool = capt.length ? capt : movs;
+
+        const choice = pool[Math.floor(Math.random() * pool.length)];
+
+        ejecutarMovimientoDamas(choice);
+      }
+
+      // ======================================================================
+      //   PANEL INFO
+      // ======================================================================
+
+      function actualizarPanelInfoDamas() {
+        document.getElementById("turno-info").textContent =
+          estadoGlobalDamas.turnoActualDamas === "humano" ? "TÚ" : "MÁQUINA";
+
+        const caps = buscarCapturasGeneralesDamas(
+          estadoGlobalDamas.turnoActualDamas
+        );
+        document.getElementById("captura-obligatoria-info").textContent =
+          caps.length ? caps.length : "—";
+      }
+
+      function buscarCapturasGeneralesDamas(turno) {
+        const res = [];
+        for (let r = 0; r < 8; r++)
+          for (let c = 0; c < 8; c++) {
+            const p = estadoGlobalDamas.matrizDamas[r][c];
+            if (!p) continue;
+            const esHum = p.dueño === estadoGlobalDamas.ladoHumanoAsignado;
+            if ((turno === "humano" && esHum) || (turno === "ia" && !esHum)) {
+              const m = calcularMovimientosDesdeDamas(r, c).filter(
+                (x) => x.capturas.length
+              );
+              res.push(...m);
+            }
+          }
+        return res;
+      }
+
+      // ======================================================================
+      //   RESET COMPLEJO
+      // ======================================================================
+
+      function resetGameDamasUltra() {
+        generarTableroInicialDamas();
+        sortearRolesDamas();
+        estadoGlobalDamas.seleccionActualDamas = null;
+        estadoGlobalDamas.movimientosDisponiblesDamas = [];
+        estadoGlobalDamas.juegoTerminadoFlag = false;
+
+        document.getElementById("ganador-info").textContent = "—";
+        document.getElementById("mensaje-estado-damas").textContent = "";
+
+        dibujarTableroDamas();
+
+        if (estadoGlobalDamas.turnoActualDamas === "ia") {
+          setTimeout(() => movimientoIA_Damas(), 300);
+        }
+      }
+
+      document
+        .getElementById("boton-reinicio-damas")
+        .addEventListener("click", resetGameDamasUltra);
+
+      document
+        .getElementById("boton-voltear-damas")
+        .addEventListener("click", () => {
+          estadoGlobalDamas.tableroGiradoFlag =
+            !estadoGlobalDamas.tableroGiradoFlag;
+          tableroDamasPrincipal.style.transform =
+            estadoGlobalDamas.tableroGiradoFlag ? "rotate(180deg)" : "";
+        });
+
+      // Inicio
+      resetGameDamasUltra();
+    </script>
+  </body>
+</html>
