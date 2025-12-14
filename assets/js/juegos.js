@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const puntuacionFinal = document.getElementById("puntuacionFinal");
     const salirBtn = document.getElementById("salir");
     const salirJuegoBtn = document.getElementById("salir-juego-memori");
+    const salirDamas = document.getElementById("salirDamas");
     const reiniciarBtn = document.getElementById("reiniciar");
     const guardarBtn = document.getElementById("guardar");
     const registro = document.getElementById("registro");
@@ -822,3 +823,11 @@ function siguiente() {
     if (modalInicio) modalInicio.style.display = "flex";
   };
 })();
+
+/*********************************
+ *    Juego damas*************
+ *
+ *************************************/
+
+// Evento boton salir durante el juego damas
+salirDamas.addEventListener("click", () => (location.href = "../index.html"));

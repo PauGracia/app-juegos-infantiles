@@ -4,21 +4,23 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Juego de damas</title>
-
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20251111" />
     <style>
-      /* -------------------- SELECTORES COMPLEJOS -------------------- */
+      :root {
+        --escala-ui: 1;
+      }
 
-      /* Tablero → celdas oscuras */
+      /* Tablero celdas oscuras */
       #juego-damas-contenedor #tablero-damas > .celda-damas.oscura-damas {
         background: #2f5f3a;
       }
 
-      /* Tablero → celdas claras */
+      /* Tablero celdas claras */
       #juego-damas-contenedor #tablero-damas > .celda-damas.clara-damas {
         background: #f0d9b5;
       }
 
-      /* Pieza → selectores combinados */
+      /* Pieza*/
       #tablero-damas .celda-damas.oscura-damas > div.dot-pieza.pieza-humano,
       #tablero-damas .celda-damas.oscura-damas > div.dot-pieza.pieza-ia {
         border-radius: 50%;
@@ -35,14 +37,14 @@
         box-shadow: 0 0 18px 4px rgba(255, 215, 0, 0.9);
       }
 
-      /* Pieza humana solo si está dentro del tablero y en celda oscura */
+      /* Pieza humana (blanco roto) */
       #tablero-damas .celda-damas.oscura-damas > .dot-pieza.pieza-humano {
-        background: linear-gradient(180deg, #4f83ff, #2750b3);
+        background: linear-gradient(180deg, #f5f5f2, #dcdcd6);
       }
 
-      /* Pieza IA */
+      /* Pieza IA (negro / gris muy oscuro) */
       #tablero-damas .celda-damas.oscura-damas > .dot-pieza.pieza-ia {
-        background: linear-gradient(180deg, #cf3630, #8b2720);
+        background: linear-gradient(180deg, #2b2b2b, #0f0f0f);
       }
 
       /* Movimiento sugerido */
@@ -63,12 +65,32 @@
 
       /* -------------------- CONTENEDORES -------------------- */
 
-      body {
-        font-family: Arial, sans-serif;
-        background: #f4f6f8;
+      .body-damas {
+        font-family: "ChalkRegular", Arial, sans-serif;
+        background: linear-gradient(120deg, #f7fbff, #e0f0fb, #cfe5f5, #eaf3fb);
+        background-size: 500% 500%;
+        animation: fondoAzulSuave 14s ease infinite;
         display: flex;
+        justify-content: center;
         gap: 20px;
         padding: 20px;
+      }
+
+      @keyframes fondoAzulSuave {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .titulo-damas {
+        font-size: calc(60px * var(--escala-ui));
+        text-align: center;
       }
 
       #juego-damas-contenedor {
@@ -78,8 +100,8 @@
       }
 
       #tablero-damas {
-        width: 520px;
-        height: 520px;
+        width: calc(520px * var(--escala-ui));
+        height: calc(520px * var(--escala-ui));
         display: grid;
         grid-template-columns: repeat(8, 1fr);
         border-radius: 12px;
@@ -94,12 +116,27 @@
         justify-content: center;
       }
 
+      .contenedor-juego {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        align-items: flex-start;
+      }
+
       .info-panel {
         background: #fff;
         padding: 14px;
         border-radius: 10px;
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-        width: 260px;
+
+        width: calc(260px * var(--escala-ui));
+        font-size: calc(20px * var(--escala-ui));
+
+        max-height: 90vh;
+        overflow-y: auto;
+        overflow: visible;
+
+        margin-top: 140px;
       }
 
       .info-panel div {
@@ -107,49 +144,98 @@
       }
 
       .boton-damas {
-        padding: 8px 12px;
-        background: #2563eb;
-        color: white;
+        font-size: calc(18px * var(--escala-ui));
+        padding: calc(12px * var(--escala-ui));
+        background: darkgray;
+        color: black;
         border: none;
         border-radius: 8px;
         cursor: pointer;
       }
 
       .boton-damas:hover {
-        background: #1e4fc1;
+        color: #dcdcd6;
+      }
+
+      @media (max-width: 900px) {
+        :root {
+          --escala-ui: 0.85;
+        }
+        .contenedor-juego {
+          align-items: center;
+        }
+        .info-panel {
+          margin-top: 60px;
+        }
+      }
+
+      @media (max-width: 780px) {
+        :root {
+          --escala-ui: 0.72;
+        }
+        .contenedor-juego {
+          align-items: center;
+        }
+        .info-panel {
+          margin-top: 60px;
+        }
+      }
+
+      @media (max-width: 650px) {
+        :root {
+          --escala-ui: 0.6;
+        }
+        .contenedor-juego {
+          align-items: center;
+        }
+        .info-panel {
+          margin-top: 60px;
+        }
+      }
+      @media (max-width: 550px) {
+        :root {
+          --escala-ui: 0.4;
+        }
+        .info-panel {
+          margin-top: 60px;
+        }
       }
     </style>
   </head>
-  <body>
-    <div id="juego-damas-contenedor">
-      <h2>Juego de damas</h2>
+  <body class="body-damas">
+    <div class="contenedor-juego">
+      <div id="juego-damas-contenedor">
+        <h1 class="titulo-damas">Juego de damas</h1>
 
-      <div id="tablero-damas"></div>
+        <div id="tablero-damas"></div>
 
-      <div>
-        <button class="boton-damas" id="boton-reinicio-damas">
-          Reiniciar / Sortear
-        </button>
-        <button class="boton-damas" id="boton-voltear-damas">
-          Girar Tablero
-        </button>
+        <div>
+          <button class="boton-damas" id="boton-reinicio-damas">Sortear</button>
+          <button class="boton-damas" id="boton-voltear-damas">
+            Girar Tablero
+          </button>
+          <button id="salirDamas" class="boton-damas">Salir</button>
+        </div>
+      </div>
+
+      <div class="info-panel">
+        <div><b>Tu lado:</b> <span id="lado-humano-info">—</span></div>
+        <div><b>Turno:</b> <span id="turno-info">—</span></div>
+        <div><b>Ganador:</b> <span id="ganador-info">—</span></div>
+        <div>
+          <b>Capturas obligatorias:</b>
+          <span id="captura-obligatoria-info">—</span>
+        </div>
+        <div><b>Capturas TÚ:</b> <span id="capturas-humano-info">0</span></div>
+        <div><b>Capturas MÁQUINA:</b> <span id="capturas-ia-info">0</span></div>
+
+        <div style="margin-top: 10px" id="mensaje-estado-damas"></div>
       </div>
     </div>
-
-    <div class="info-panel">
-      <div><b>Tu lado:</b> <span id="lado-humano-info">—</span></div>
-      <div><b>Turno:</b> <span id="turno-info">—</span></div>
-      <div><b>Ganador:</b> <span id="ganador-info">—</span></div>
-      <div>
-        <b>Capturas obligatorias:</b>
-        <span id="captura-obligatoria-info">—</span>
-      </div>
-      <div style="margin-top: 10px" id="mensaje-estado-damas"></div>
-    </div>
-
+    <script src="../assets/js/juegos.js"></script>
     <script>
       // ======================================================================
-      //   VARIABLES CON NOMBRES COMPLEJOS
+      //   VARIABLES
       // ======================================================================
 
       const tableroDamasPrincipal = document.getElementById("tablero-damas");
@@ -162,6 +248,8 @@
         movimientosDisponiblesDamas: [],
         tableroGiradoFlag: false,
         juegoTerminadoFlag: false,
+        capturasHumano: 0,
+        capturasIA: 0,
       };
 
       // ======================================================================
@@ -259,6 +347,14 @@
                 dot.style.cursor = "default";
               }
 
+              if (
+                estadoGlobalDamas.seleccionActualDamas &&
+                estadoGlobalDamas.seleccionActualDamas.r === r &&
+                estadoGlobalDamas.seleccionActualDamas.c === c
+              ) {
+                dot.style.outline = "4px solid #ffd700";
+              }
+
               dot.addEventListener("click", (e) => {
                 manejarClickPiezaDamas(r, c);
                 e.stopPropagation();
@@ -278,6 +374,17 @@
       // ======================================================================
 
       function manejarClickPiezaDamas(r, c) {
+        if (
+          estadoGlobalDamas.seleccionActualDamas &&
+          estadoGlobalDamas.seleccionActualDamas.r === r &&
+          estadoGlobalDamas.seleccionActualDamas.c === c
+        ) {
+          estadoGlobalDamas.seleccionActualDamas = null;
+          estadoGlobalDamas.movimientosDisponiblesDamas = [];
+          dibujarTableroDamas();
+          return;
+        }
+
         if (estadoGlobalDamas.juegoTerminadoFlag) return;
         if (estadoGlobalDamas.turnoActualDamas !== "humano") return;
 
@@ -287,8 +394,24 @@
 
         if (esHumano) {
           estadoGlobalDamas.seleccionActualDamas = { r, c };
-          estadoGlobalDamas.movimientosDisponiblesDamas =
-            calcularMovimientosDesdeDamas(r, c);
+
+          const todasLasCapturas = buscarCapturasGeneralesDamas("humano");
+
+          if (todasLasCapturas.length) {
+            estadoGlobalDamas.movimientosDisponiblesDamas =
+              todasLasCapturas.filter(
+                (m) => m.desde.r === r && m.desde.c === c
+              );
+          } else {
+            estadoGlobalDamas.movimientosDisponiblesDamas =
+              calcularMovimientosDesdeDamas(r, c);
+          }
+
+          // Si la ficha no puede capturar cuando es obligatorio: no seleccionar
+          if (estadoGlobalDamas.movimientosDisponiblesDamas.length === 0) {
+            estadoGlobalDamas.seleccionActualDamas = null;
+            return;
+          }
 
           resaltarSeleccionDamas();
           return;
@@ -448,6 +571,12 @@
           capturas.forEach(
             (c) => (estadoGlobalDamas.matrizDamas[c.r][c.c] = null)
           );
+
+          if (estadoGlobalDamas.turnoActualDamas === "humano") {
+            estadoGlobalDamas.capturasHumano += capturas.length;
+          } else {
+            estadoGlobalDamas.capturasIA += capturas.length;
+          }
         }
 
         if (reyDespues) pieza.rey = true;
@@ -489,7 +618,7 @@
         actualizarPanelInfoDamas();
 
         if (estadoGlobalDamas.turnoActualDamas === "ia") {
-          setTimeout(() => movimientoIA_Damas(), 250);
+          setTimeout(() => movimientoIA_Damas(), 950);
         }
       }
 
@@ -545,7 +674,12 @@
 
         const choice = pool[Math.floor(Math.random() * pool.length)];
 
-        ejecutarMovimientoDamas(choice);
+        estadoGlobalDamas.seleccionActualDamas = choice.desde;
+        dibujarTableroDamas();
+
+        setTimeout(() => {
+          ejecutarMovimientoDamas(choice);
+        }, 600);
       }
 
       // ======================================================================
@@ -561,6 +695,12 @@
         );
         document.getElementById("captura-obligatoria-info").textContent =
           caps.length ? caps.length : "—";
+
+        document.getElementById("capturas-humano-info").textContent =
+          estadoGlobalDamas.capturasHumano;
+
+        document.getElementById("capturas-ia-info").textContent =
+          estadoGlobalDamas.capturasIA;
       }
 
       function buscarCapturasGeneralesDamas(turno) {
@@ -590,6 +730,8 @@
         estadoGlobalDamas.seleccionActualDamas = null;
         estadoGlobalDamas.movimientosDisponiblesDamas = [];
         estadoGlobalDamas.juegoTerminadoFlag = false;
+        estadoGlobalDamas.capturasHumano = 0;
+        estadoGlobalDamas.capturasIA = 0;
 
         document.getElementById("ganador-info").textContent = "—";
         document.getElementById("mensaje-estado-damas").textContent = "";
