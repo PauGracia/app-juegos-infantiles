@@ -17,51 +17,15 @@
         <input type="text" id="usuario" placeholder="Nombre de usuario" />
         <br />
         <button onclick="iniciarAhorcado()">Empezar</button>
-        <!-- CAMBIO AQUÍ: Ahora usa JavaScript local -->
+
         <button onclick="window.location.href='rankingLocal.html'">
           Ver ranking local
         </button>
       </div>
     </div>
 
-    <!-- Modal final -->
-    <div id="modal-final" style="display: none">
-      <div id="modal-final-contenido">
-        <h2>Fin del juego</h2>
-        <p id="resultado"></p>
-        <button onclick="reiniciarCompleto()">Volver a jugar</button>
-        <button onclick="window.location.href='../index.html'">Salir</button>
-
-        <!-- CAMBIO AQUÍ: Botones adicionales para el ranking local -->
-        <div
-          style="
-            margin-top: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-          "
-        >
-          <button onclick="guardarPuntuacionLocal()">
-            Guardar récord local
-          </button>
-          <button onclick="mostrarRankingLocal()">Ver ranking local</button>
-          <button onclick="exportarRanking()">Exportar ranking</button>
-        </div>
-
-        <!-- ELIMINA O COMENTA EL FORMULARIO PHP -->
-        <!-- 
-        <form method="POST" action="../backend/rankingPalabras.php" style="margin-top: 10px">
-          <input type="hidden" id="usuarioFinal" name="usuario" />
-          <input type="hidden" id="puntosFinal" name="puntos" />
-          <button type="submit">Registrar récord</button>
-        </form>
-        -->
-      </div>
-    </div>
-
     <div class="contenedor-juego">
       <div class="imagen-ahorcado">
-        <!-- Reemplaza la imagen por el SVG -->
         <svg id="ahorcadoSVG" width="300" height="300" viewBox="0 0 300 300">
           <!-- Poste -->
           <line id="poste" class="parte" x1="50" y1="260" x2="200" y2="260" />
@@ -116,6 +80,35 @@
     <div class="boton-volver-ahorcado">
       <button onclick="window.location.href='../index.html'">Salir</button>
     </div>
+    <!-- Modal informativo reutilizable -->
+    <div id="modal-info" class="modal-ranking" style="display: none">
+      <div class="modal-ranking-contenido">
+        <h3 id="modal-info-titulo">Información</h3>
+        <p id="modal-info-texto"></p>
+        <button onclick="cerrarModalInfo()">Aceptar</button>
+      </div>
+    </div>
+    <!-- Modal final -->
+    <div id="modal-final" style="display: none">
+      <div id="modal-final-contenido">
+        <h2>Fin del juego</h2>
+        <p id="resultado"></p>
+        <button onclick="reiniciarCompleto()">Volver a jugar</button>
+        <button onclick="window.location.href='../index.html'">Salir</button>
+
+        <div class="modal-final-acciones">
+          <button onclick="guardarPuntuacionLocal()">
+            Guardar récord local
+          </button>
+          <button onclick="window.location.href='rankingLocal.html'">
+            Ver ranking local
+          </button>
+
+          <button onclick="exportarRanking()">Exportar ranking</button>
+        </div>
+      </div>
+    </div>
+
     <script src="../assets/js/palabras.js"></script>
     <script src="../assets/js/juegos.js"></script>
   </body>

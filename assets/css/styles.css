@@ -1083,13 +1083,20 @@ body {
   margin-top: 30px;
 }
 
+#palabra {
+  min-height: 50px; /* ajusta según tu diseño */
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
 .letras {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 10px;
   justify-content: center;
   margin-top: 30px;
-  max-width: 500px;
 }
 
 .letras button {
@@ -1159,6 +1166,13 @@ body {
   background: #007bff;
 }
 
+.modal-final-acciones {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
 /* Estilos para el ahorcado SVG */
 #ahorcadoSVG {
   max-width: 300px;
@@ -1218,6 +1232,24 @@ body {
   transform: scale(0.97);
 }
 
+.modal-ranking {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-ranking-contenido {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 90%;
+  text-align: center;
+}
+
 @media (max-width: 680px) {
   .boton-volver-ahorcado button {
     width: 30%;
@@ -1229,6 +1261,95 @@ body {
     font-size: 3em;
     margin-top: 1px;
   }
+
+  .palabra {
+    font-size: 1.8em;
+    letter-spacing: 5px;
+    margin-top: 20px;
+  }
+}
+
+/* =========================
+   RANKING LOCAL
+   ========================= */
+
+.body-ranking {
+  font-family: system-ui, sans-serif;
+  background: #f4f6fb;
+  margin: 0;
+  padding: 10px;
+}
+
+.ranking-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.ranking-controles {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.ranking-controles select,
+.ranking-controles input,
+.ranking-controles button {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.ranking-lista ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ranking-lista li {
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 8px;
+  display: grid;
+  grid-template-columns: 30px 1fr auto;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.ranking-pos {
+  font-weight: bold;
+}
+
+.ranking-usuario {
+  font-weight: 600;
+}
+
+.ranking-puntos {
+  background: #4caf50;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.ranking-fecha {
+  font-size: 12px;
+  color: #666;
+}
+
+.ranking-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+button.danger {
+  background: #e53935;
+  color: white;
+  border: none;
 }
 
 /* === ESTILOS ESPECÍFICOS: RANKING PALABRAS === */

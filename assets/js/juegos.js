@@ -680,6 +680,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  window.iniciarJuego = iniciarJuego;
+  window.comprobar = comprobar;
+  window.siguiente = siguiente;
+
   /* =========================
    JUEGO AHORCADO (namespaced)
    ========================= */
@@ -758,14 +762,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 2. Función para mostrar ranking (exportada globalmente)
-    window.mostrarRankingLocal = function () {
+    /*window.mostrarRankingLocal = function () {
       try {
         const ranking = JSON.parse(
           localStorage.getItem("rankingAhorcado") || "[]"
         );
 
         if (ranking.length === 0) {
-          alert(
+          mostrarModalInfo(
             "🏆 RANKING AHORCADO 🏆\n\nNo hay puntuaciones registradas aún.\n¡Sé el primero!"
           );
           return;
@@ -784,23 +788,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Mostrar en alerta o puedes crear un modal bonito
-        alert(mensaje);
+        mostrarModalInfo(mensaje);
       } catch (error) {
         console.error("Error al mostrar ranking:", error);
-        alert(
+        mostrarModalInfo(
           "Error al cargar el ranking. Asegúrate de que localStorage esté habilitado."
         );
       }
-    };
+    };*/
 
     // 3. Función para guardar puntuación desde el botón
     window.guardarPuntuacionLocal = function () {
       if (ah_guardarRankingLocal()) {
-        alert(
+        mostrarModalInfo(
           `¡Puntuación de ${ah_puntos} puntos guardada para ${ah_usuario}!`
         );
       } else {
-        alert("Error al guardar la puntuación");
+        mostrarModalInfo("Error al guardar la puntuación");
       }
     };
 
@@ -811,7 +815,7 @@ document.addEventListener("DOMContentLoaded", () => {
           localStorage.getItem("rankingAhorcado") || "[]"
         );
         if (ranking.length === 0) {
-          alert("No hay datos para exportar.");
+          mostrarModalInfo("No hay datos para exportar.");
           return;
         }
 
@@ -827,10 +831,10 @@ document.addEventListener("DOMContentLoaded", () => {
         );
         linkElement.click();
 
-        alert("Ranking exportado correctamente como archivo JSON.");
+        mostrarModalInfo("Ranking exportado correctamente como archivo JSON.");
       } catch (error) {
         console.error("Error al exportar:", error);
-        alert("Error al exportar el ranking.");
+        mostrarModalInfo("Error al exportar el ranking.");
       }
     };
 
@@ -853,14 +857,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 "rankingAhorcado",
                 JSON.stringify(importedData)
               );
-              alert(
+              mostrarModalInfo(
                 `Ranking importado correctamente. ${importedData.length} registros cargados.`
               );
             } else {
-              alert("Error: El archivo no contiene un array válido.");
+              mostrarModalInfo(
+                "Error: El archivo no contiene un array válido."
+              );
             }
           } catch (error) {
-            alert("Error: Archivo JSON inválido.");
+            mostrarModalInfo("Error: Archivo JSON inválido.");
           }
         };
         reader.readAsText(file);
@@ -870,19 +876,26 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // ================================
-    // FUNCIONES ORIGINALES DEL JUEGO
+    // FUNCIONES
     // ================================
+
+    function normalizarLetra(letra) {
+      return letra
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toUpperCase();
+    }
 
     // Iniciar juego
     window.iniciarAhorcado = function () {
       const inputUsuario = document.getElementById("usuario");
       if (!inputUsuario) {
-        alert("No se encontró el campo usuario.");
+        mostrarModalInfo("No se encontró el campo usuario.");
         return;
       }
       ah_usuario = inputUsuario.value.trim();
       if (!ah_usuario) {
-        alert("Por favor ingresa un nombre de usuario");
+        mostrarModalInfo("Por favor ingresa un nombre de usuario");
         return;
       }
       const modalInicio = document.getElementById("modal-inicio");
@@ -935,11 +948,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function ah_manejarLetra(btn, letra) {
       btn.disabled = true;
-      if (ah_palabraSecreta.includes(letra)) {
+      const letraNormalizada = normalizarLetra(letra);
+
+      if (normalizarLetra(ah_palabraSecreta).includes(letraNormalizada)) {
         btn.style.background = "green";
         for (let i = 0; i < ah_palabraSecreta.length; i++) {
-          if (ah_palabraSecreta[i] === letra) ah_progreso[i] = letra;
+          if (normalizarLetra(ah_palabraSecreta[i]) === letraNormalizada) {
+            ah_progreso[i] = ah_palabraSecreta[i];
+          }
         }
+
         ah_mostrarPalabra();
         if (!ah_progreso.includes("_")) {
           ah_puntos++;
@@ -1015,6 +1033,101 @@ document.addEventListener("DOMContentLoaded", () => {
       window.ah_reiniciarCompleto();
     };
   })();
+
+  // Funciones modal del ranking
+  window.mostrarModalInfo = function (titulo, mensaje) {
+    document.getElementById("modal-info-titulo").textContent = titulo;
+    document.getElementById("modal-info-texto").textContent = mensaje;
+    document.getElementById("modal-info").style.display = "flex";
+  };
+
+  window.cerrarModalInfo = function () {
+    document.getElementById("modal-info").style.display = "none";
+  };
+
+  /*****************************
+   *  RANKING LOCAL - UI
+   *****************************/
+
+  const lista = document.getElementById("listaRanking");
+  if (!lista) return; // no estamos en rankingLocal.html
+
+  const ordenSelect = document.getElementById("ordenRanking");
+  const filtroInput = document.getElementById("filtroUsuario");
+
+  let ranking = [];
+
+  function cargarRanking() {
+    ranking = JSON.parse(localStorage.getItem("rankingAhorcado") || "[]");
+    renderRanking();
+  }
+
+  function renderRanking() {
+    const filtro = filtroInput.value.toLowerCase();
+    let datos = [...ranking];
+
+    // Filtro por usuario
+    if (filtro) {
+      datos = datos.filter((r) => r.usuario.toLowerCase().includes(filtro));
+    }
+
+    // Orden
+    const orden = ordenSelect.value;
+    if (orden === "puntos") {
+      datos.sort((a, b) => b.puntos - a.puntos);
+    } else if (orden === "fecha") {
+      datos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+    } else if (orden === "usuario") {
+      datos.sort((a, b) => a.usuario.localeCompare(b.usuario));
+    }
+
+    lista.innerHTML = "";
+
+    if (datos.length === 0) {
+      lista.innerHTML = "<li>No hay resultados</li>";
+      return;
+    }
+
+    datos.forEach((r, i) => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <div class="ranking-pos">${i + 1}</div>
+        <div>
+          <div class="ranking-usuario">${r.usuario}</div>
+          <div class="ranking-fecha">${r.fecha}</div>
+        </div>
+        <div class="ranking-puntos">${r.puntos} pts</div>
+      `;
+      lista.appendChild(li);
+    });
+  }
+
+  // Eventos
+  ordenSelect.addEventListener("change", renderRanking);
+  filtroInput.addEventListener("input", renderRanking);
+
+  document.getElementById("btnLimpiarFiltro").addEventListener("click", () => {
+    filtroInput.value = "";
+    renderRanking();
+  });
+
+  document.getElementById("btnBorrarRanking").addEventListener("click", () => {
+    mostrarModalInfo(
+      "Confirmación",
+      "¿Seguro que quieres borrar todo el ranking?"
+    );
+
+    // Reutiliza el modal si quieres confirmaciones más adelante
+    localStorage.removeItem("rankingAhorcado");
+    cargarRanking();
+  });
+
+  document
+    .getElementById("btnVolverJuego")
+    .addEventListener("click", () => (location.href = "juegoAhorcado.html"));
+
+  cargarRanking();
+
   /*********************************
    *    Juego damas*************
    *
