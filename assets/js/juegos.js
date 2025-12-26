@@ -368,466 +368,665 @@ document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("lista")) {
     iniciarRanking();
   }
-});
 
-// -----JUEGO OPERACIONES-----
-// Constantes globales para el juego de operaciones
-const MAX_OPERACIONES = 50;
-const MAX_OPERANDO = 1000;
+  // -----JUEGO OPERACIONES-----
+  // Constantes globales para el juego de operaciones
+  const MAX_OPERACIONES = 50;
+  const MAX_OPERANDO = 1000;
 
-// Obtener elementos del DOM para configuración
-const nivelSelect = document.getElementById("nivel");
-const inputMaximo = document.getElementById("input-maximo");
+  // Obtener elementos del DOM para configuración
+  const nivelSelect = document.getElementById("nivel");
+  const inputMaximo = document.getElementById("input-maximo");
 
-// Configurar comportamiento del nivel 2 (deshabilitar operador máximo)
-if (nivelSelect && inputMaximo) {
-  nivelSelect.addEventListener("change", () => {
-    if (nivelSelect.value === "2") {
-      inputMaximo.disabled = true;
-      inputMaximo.value = "";
-      inputMaximo.placeholder = "No aplicable en nivel 2";
-    } else {
-      inputMaximo.disabled = false;
-      inputMaximo.placeholder = "Número Operador (solo nivel 1)";
-    }
-  });
-
-  // Forzar estado al cargar la página para aplicar configuración inicial
-  nivelSelect.dispatchEvent(new Event("change"));
-}
-
-// Array para almacenar las operaciones generadas
-let operaciones = [];
-
-// Función principal para iniciar el juego de operaciones
-function iniciar() {
-  // Obtener valores de configuración del usuario
-  const nivel = parseInt(document.getElementById("nivel").value);
-  const numOperaciones = parseInt(
-    document.getElementById("input-operaciones").value
-  );
-  const maxValor =
-    parseInt(document.getElementById("input-maximo").value) || MAX_OPERANDO;
-
-  // Validaciones de entrada
-  if (
-    isNaN(numOperaciones) ||
-    numOperaciones < 1 ||
-    numOperaciones > MAX_OPERACIONES
-  ) {
-    alert("Por favor, introduce un número válido de operaciones.");
-    return;
-  }
-
-  if (
-    nivel === 1 &&
-    (isNaN(maxValor) || maxValor < 0 || maxValor > MAX_OPERANDO)
-  ) {
-    alert("Por favor, introduce un número válido para el máximo operando.");
-    return;
-  }
-
-  // Ocultar modal de configuración y generar operaciones
-  document.getElementById("modal-operaciones").style.display = "none";
-  generarOperaciones(numOperaciones, nivel, maxValor);
-}
-
-// Función para generar las operaciones matemáticas
-function generarOperaciones(cantidad, nivel, max) {
-  const pizarra = document.getElementById("pizarra");
-  pizarra.innerHTML = ""; // Limpiar pizarra anterior
-  operaciones = []; // Reiniciar array de operaciones
-
-  // Generar cada operación
-  for (let i = 0; i < cantidad; i++) {
-    let a, b, operador, resultadoReal;
-
-    // Lógica diferente según el nivel seleccionado
-    if (nivel === 1) {
-      // Nivel 1: sumas y restas sin resultados negativos
-      a = Math.floor(Math.random() * (max + 1));
-      b = Math.floor(Math.random() * (max + 1));
-      operador = Math.random() < 0.5 ? "+" : "-";
-
-      // Evitar resultados negativos en restas
-      if (operador === "-" && b > a) {
-        [a, b] = [b, a]; // Intercambiar valores
-      }
-      resultadoReal = operador === "+" ? a + b : a - b;
-    } else {
-      // Nivel 2: todas las operaciones básicas (+,-,*,/)
-      const operadores = ["+", "-", "*", "/"];
-      operador = operadores[Math.floor(Math.random() * operadores.length)];
-      a = Math.floor(Math.random() * (MAX_OPERANDO + 1));
-      b = Math.floor(Math.random() * (MAX_OPERANDO + 1));
-
-      // Lógica específica para cada operador
-      if (operador === "/") {
-        while (b === 0) {
-          b = Math.floor(Math.random() * (MAX_OPERANDO + 1)); // evitar división entre 0
-        }
-        resultadoReal = a / b;
-        resultadoReal = parseFloat(resultadoReal.toFixed(2)); // limitar decimales
-      } else if (operador === "+") {
-        resultadoReal = a + b;
-      } else if (operador === "-") {
-        resultadoReal = a - b;
-      } else if (operador === "*") {
-        resultadoReal = a * b;
-      }
-    }
-
-    // Guardar operación en el array
-    operaciones.push({ a, b, operador, resultadoReal });
-
-    // Crear elemento HTML para la operación
-    let div = document.createElement("div");
-    div.className = "operacion";
-
-    let input = document.createElement("input");
-    input.type = "number";
-    input.className = "resultado-input";
-
-    // Evento para limpiar estilos al enfocar
-    input.addEventListener("focus", () => {
-      if (
-        input.classList.contains("incorrecto") ||
-        input.classList.contains("correcto")
-      ) {
-        input.value = "";
-        input.classList.remove("incorrecto", "correcto");
-      }
-    });
-
-    // Estructura visual de la operación
-    div.innerHTML = `${a}<br>${operador} ${b}<br><hr>`;
-    div.appendChild(input);
-    pizarra.appendChild(div);
-  }
-}
-
-// Botón para salir del juego de operaciones
-const botonSalirOperaciones = document.getElementById(
-  "boton-salir-operaciones"
-);
-if (botonSalirOperaciones) {
-  botonSalirOperaciones.addEventListener("click", () => {
-    location.href = "../index.html";
-  });
-}
-
-// Función para comprobar las respuestas del usuario
-function comprobarRespuestas() {
-  const inputs = document.querySelectorAll(".resultado-input");
-  inputs.forEach((input, index) => {
-    let valorUsuario = parseFloat(input.value);
-    let correcto = valorUsuario === operaciones[index].resultadoReal;
-
-    // Aplicar estilos según si es correcto o incorrecto
-    input.classList.remove("correcto", "incorrecto");
-    input.classList.add(correcto ? "correcto" : "incorrecto");
-    if (correcto) input.disabled = true; // Bloquear inputs correctos
-  });
-}
-
-// JUEGO PALABRAS
-
-// Variables globales para el juego de palabras
-let idiomaSeleccionado = 0;
-let seleccionados = []; // Array de elementos seleccionados
-let actual = 0; // Índice del elemento actual
-
-// Estado "congelado" para la ronda actual (evita cambios durante la ronda)
-let comprobado = false; // Si ya se ha comprobado la palabra actual
-let objetoActual = null; // Objeto actual mostrado
-let palabraObjetivo = ""; // Palabra objetivo de la ronda actual
-
-// Función para iniciar el juego de palabras
-function iniciarJuego() {
-  // Obtener configuración del usuario
-  idiomaSeleccionado = parseInt(document.getElementById("idioma").value);
-  const cantidad = parseInt(document.getElementById("cantidad").value);
-
-  // Seleccionar elementos aleatorios
-  seleccionados = [...elementos]
-    .sort(() => Math.random() - 0.5) // Mezclar array
-    .slice(0, cantidad); // Tomar los primeros N elementos
-
-  // Mostrar juego y ocultar configuración
-  document.getElementById("modal").style.display = "none";
-  document.getElementById("juego").style.display = "flex";
-
-  mostrarImagen(); // Mostrar primera imagen
-}
-
-// Función para mostrar una imagen y preparar la ronda
-function mostrarImagen() {
-  comprobado = false; // Resetear estado de comprobación
-
-  // "Congelar" el objeto y palabra objetivo para esta ronda
-  objetoActual = seleccionados[actual];
-  palabraObjetivo = String(objetoActual.palabras[idiomaSeleccionado] || "");
-
-  // Limpiar y normalizar la palabra objetivo
-  palabraObjetivo = palabraObjetivo.trim();
-
-  // Mostrar imagen
-  document.getElementById("imagen").src = objetoActual.imagen;
-
-  const contenedor = document.querySelector(".imagen-contenedor");
-  contenedor.style.borderColor = "black"; // Color inicial
-
-  const inputsDiv = document.getElementById("inputs");
-  inputsDiv.innerHTML = ""; // Limpiar inputs anteriores
-
-  // Botón para salir del juego de palabras
-  document.getElementById("salir-palabras").addEventListener("click", () => {
-    location.href = "../index.html";
-  });
-
-  // Crear inputs para cada letra de la palabra objetivo
-  for (let i = 0; i < palabraObjetivo.length; i++) {
-    const input = document.createElement("input");
-    input.maxLength = 1; // Solo una letra por input
-    input.dataset.index = String(i); // Guardar índice para referencia
-
-    // Estilo inicial
-    input.style.backgroundColor = "white";
-
-    // Evento al escribir en un input
-    input.addEventListener("input", (e) => {
-      const idx = parseInt(e.target.dataset.index, 10);
-
-      if (!comprobado) {
-        // Auto-avance a siguiente input antes de comprobar
-        const siguiente = inputsDiv.querySelector(
-          `input[data-index='${idx + 1}']`
-        );
-        if (siguiente && e.target.value !== "") {
-          siguiente.focus();
-        }
+  // Configurar comportamiento del nivel 2 (deshabilitar operador máximo)
+  if (nivelSelect && inputMaximo) {
+    nivelSelect.addEventListener("change", () => {
+      if (nivelSelect.value === "2") {
+        inputMaximo.disabled = true;
+        inputMaximo.value = "";
+        inputMaximo.placeholder = "No aplicable en nivel 2";
       } else {
-        // Después de comprobar: resetear color al cambiar
-        e.target.style.backgroundColor = "white";
+        inputMaximo.disabled = false;
+        inputMaximo.placeholder = "Número Operador (solo nivel 1)";
       }
     });
 
-    // Evento al hacer clic (focus) en un input
-    input.addEventListener("focus", (e) => {
-      if (comprobado && e.target.value !== "") {
-        // Permitir corrección después de comprobar
-        e.target.value = "";
-        e.target.style.backgroundColor = "white";
+    // Forzar estado al cargar la página para aplicar configuración inicial
+    nivelSelect.dispatchEvent(new Event("change"));
+  }
+
+  // Array para almacenar las operaciones generadas
+  let operaciones = [];
+
+  // Función principal para iniciar el juego de operaciones (EXPORTADA GLOBALMENTE)
+  window.iniciar = function () {
+    // Obtener valores de configuración del usuario
+    const nivel = parseInt(document.getElementById("nivel").value);
+    const numOperaciones = parseInt(
+      document.getElementById("input-operaciones").value
+    );
+    const maxValor =
+      parseInt(document.getElementById("input-maximo").value) || MAX_OPERANDO;
+
+    // Validaciones de entrada
+    if (
+      isNaN(numOperaciones) ||
+      numOperaciones < 1 ||
+      numOperaciones > MAX_OPERACIONES
+    ) {
+      alert("Por favor, introduce un número válido de operaciones.");
+      return;
+    }
+
+    if (
+      nivel === 1 &&
+      (isNaN(maxValor) || maxValor < 0 || maxValor > MAX_OPERANDO)
+    ) {
+      alert("Por favor, introduce un número válido para el máximo operando.");
+      return;
+    }
+
+    // Ocultar modal de configuración y generar operaciones
+    document.getElementById("modal-operaciones").style.display = "none";
+    generarOperaciones(numOperaciones, nivel, maxValor);
+  };
+
+  // Función para generar las operaciones matemáticas
+  function generarOperaciones(cantidad, nivel, max) {
+    const pizarra = document.getElementById("pizarra");
+    pizarra.innerHTML = ""; // Limpiar pizarra anterior
+    operaciones = []; // Reiniciar array de operaciones
+
+    // Generar cada operación
+    for (let i = 0; i < cantidad; i++) {
+      let a, b, operador, resultadoReal;
+
+      // Lógica diferente según el nivel seleccionado
+      if (nivel === 1) {
+        // Nivel 1: sumas y restas sin resultados negativos
+        a = Math.floor(Math.random() * (max + 1));
+        b = Math.floor(Math.random() * (max + 1));
+        operador = Math.random() < 0.5 ? "+" : "-";
+
+        // Evitar resultados negativos en restas
+        if (operador === "-" && b > a) {
+          [a, b] = [b, a]; // Intercambiar valores
+        }
+        resultadoReal = operador === "+" ? a + b : a - b;
+      } else {
+        // Nivel 2: todas las operaciones básicas (+,-,*,/)
+        const operadores = ["+", "-", "*", "/"];
+        operador = operadores[Math.floor(Math.random() * operadores.length)];
+        a = Math.floor(Math.random() * (MAX_OPERANDO + 1));
+        b = Math.floor(Math.random() * (MAX_OPERANDO + 1));
+
+        // Lógica específica para cada operador
+        if (operador === "/") {
+          while (b === 0) {
+            b = Math.floor(Math.random() * (MAX_OPERANDO + 1)); // evitar división entre 0
+          }
+          resultadoReal = a / b;
+          resultadoReal = parseFloat(resultadoReal.toFixed(2)); // limitar decimales
+        } else if (operador === "+") {
+          resultadoReal = a + b;
+        } else if (operador === "-") {
+          resultadoReal = a - b;
+        } else if (operador === "*") {
+          resultadoReal = a * b;
+        }
       }
-    });
 
-    inputsDiv.appendChild(input);
-  }
+      // Guardar operación en el array
+      operaciones.push({ a, b, operador, resultadoReal });
 
-  // Deshabilitar botón siguiente hasta que se acierte
-  document.getElementById("btnSiguiente").disabled = true;
-}
+      // Crear elemento HTML para la operación
+      let div = document.createElement("div");
+      div.className = "operacion";
 
-// Función para comprobar la palabra ingresada
-function comprobar() {
-  const inputs = document.querySelectorAll("#inputs input");
+      let input = document.createElement("input");
+      input.type = "number";
+      input.className = "resultado-input";
 
-  // Validación defensiva: verificar que coincidan las longitudes
-  if (inputs.length !== palabraObjetivo.length) {
-    mostrarImagen(); // Reconstruir si hay inconsistencia
-    return;
-  }
+      // Evento para limpiar estilos al enfocar
+      input.addEventListener("focus", () => {
+        if (
+          input.classList.contains("incorrecto") ||
+          input.classList.contains("correcto")
+        ) {
+          input.value = "";
+          input.classList.remove("incorrecto", "correcto");
+        }
+      });
 
-  // Construir palabra ingresada por el usuario
-  let resultado = "";
-  inputs.forEach((input) => (resultado += input.value.toLowerCase()));
-
-  const contenedor = document.querySelector(".imagen-contenedor");
-  const botonSiguiente = document.getElementById("btnSiguiente");
-
-  // Comprobar letra por letra y colorear resultados
-  for (let i = 0; i < palabraObjetivo.length; i++) {
-    const esperado = palabraObjetivo[i]?.toLowerCase() ?? "";
-    const actualLetra = (inputs[i].value || "").toLowerCase();
-
-    // Verde si es correcta, rojo si es incorrecta
-    if (actualLetra === esperado) {
-      inputs[i].style.backgroundColor = "#9f9"; // verde suave
-    } else {
-      inputs[i].style.backgroundColor = "#f99"; // rojo suave
+      // Estructura visual de la operación
+      div.innerHTML = `${a}<br>${operador} ${b}<br><hr>`;
+      div.appendChild(input);
+      pizarra.appendChild(div);
     }
   }
 
-  // Comprobar palabra completa
-  if (resultado === palabraObjetivo.toLowerCase()) {
-    contenedor.style.borderColor = "green"; // Éxito
-    botonSiguiente.disabled = false; // Habilitar siguiente
-  } else {
-    contenedor.style.borderColor = "red"; // Error
-    botonSiguiente.disabled = true;
+  // Botón para salir del juego de operaciones
+  const botonSalirOperaciones = document.getElementById(
+    "boton-salir-operaciones"
+  );
+  if (botonSalirOperaciones) {
+    botonSalirOperaciones.addEventListener("click", () => {
+      location.href = "../index.html";
+    });
   }
 
-  comprobado = true; // Marcar como comprobado
-}
+  // Función para comprobar las respuestas del usuario
+  window.comprobarRespuestas = function () {
+    const inputs = document.querySelectorAll(".resultado-input");
+    inputs.forEach((input, index) => {
+      let valorUsuario = parseFloat(input.value);
+      let correcto = valorUsuario === operaciones[index].resultadoReal;
 
-// Función para pasar a la siguiente imagen/palabra
-function siguiente() {
-  if (actual < seleccionados.length - 1) {
-    actual++; // Avanzar índice
-    mostrarImagen(); // Mostrar siguiente elemento
-  } else {
-    alert("¡Has terminado!");
-    location.reload(); // Reiniciar juego al terminar
+      // Aplicar estilos según si es correcto o incorrecto
+      input.classList.remove("correcto", "incorrecto");
+      input.classList.add(correcto ? "correcto" : "incorrecto");
+      if (correcto) input.disabled = true; // Bloquear inputs correctos
+    });
+  };
+
+  // JUEGO PALABRAS
+
+  // Variables globales para el juego de palabras
+  let idiomaSeleccionado = 0;
+  let seleccionados = []; // Array de elementos seleccionados
+  let actual = 0; // Índice del elemento actual
+
+  // Estado "congelado" para la ronda actual (evita cambios durante la ronda)
+  let comprobado = false; // Si ya se ha comprobado la palabra actual
+  let objetoActual = null; // Objeto actual mostrado
+  let palabraObjetivo = ""; // Palabra objetivo de la ronda actual
+
+  // Función para iniciar el juego de palabras
+  function iniciarJuego() {
+    // Obtener configuración del usuario
+    idiomaSeleccionado = parseInt(document.getElementById("idioma").value);
+    const cantidad = parseInt(document.getElementById("cantidad").value);
+
+    // Seleccionar elementos aleatorios
+    seleccionados = [...elementos]
+      .sort(() => Math.random() - 0.5) // Mezclar array
+      .slice(0, cantidad); // Tomar los primeros N elementos
+
+    // Mostrar juego y ocultar configuración
+    document.getElementById("modal").style.display = "none";
+    document.getElementById("juego").style.display = "flex";
+
+    mostrarImagen(); // Mostrar primera imagen
   }
-}
 
-/* =========================
+  // Función para mostrar una imagen y preparar la ronda
+  function mostrarImagen() {
+    comprobado = false; // Resetear estado de comprobación
+
+    // "Congelar" el objeto y palabra objetivo para esta ronda
+    objetoActual = seleccionados[actual];
+    palabraObjetivo = String(objetoActual.palabras[idiomaSeleccionado] || "");
+
+    // Limpiar y normalizar la palabra objetivo
+    palabraObjetivo = palabraObjetivo.trim();
+
+    // Mostrar imagen
+    document.getElementById("imagen").src = objetoActual.imagen;
+
+    const contenedor = document.querySelector(".imagen-contenedor");
+    contenedor.style.borderColor = "black"; // Color inicial
+
+    const inputsDiv = document.getElementById("inputs");
+    inputsDiv.innerHTML = ""; // Limpiar inputs anteriores
+
+    // Botón para salir del juego de palabras
+    document.getElementById("salir-palabras").addEventListener("click", () => {
+      location.href = "../index.html";
+    });
+
+    // Crear inputs para cada letra de la palabra objetivo
+    for (let i = 0; i < palabraObjetivo.length; i++) {
+      const input = document.createElement("input");
+      input.maxLength = 1; // Solo una letra por input
+      input.dataset.index = String(i); // Guardar índice para referencia
+
+      // Estilo inicial
+      input.style.backgroundColor = "white";
+
+      // Evento al escribir en un input
+      input.addEventListener("input", (e) => {
+        const idx = parseInt(e.target.dataset.index, 10);
+
+        if (!comprobado) {
+          // Auto-avance a siguiente input antes de comprobar
+          const siguiente = inputsDiv.querySelector(
+            `input[data-index='${idx + 1}']`
+          );
+          if (siguiente && e.target.value !== "") {
+            siguiente.focus();
+          }
+        } else {
+          // Después de comprobar: resetear color al cambiar
+          e.target.style.backgroundColor = "white";
+        }
+      });
+
+      // Evento al hacer clic (focus) en un input
+      input.addEventListener("focus", (e) => {
+        if (comprobado && e.target.value !== "") {
+          // Permitir corrección después de comprobar
+          e.target.value = "";
+          e.target.style.backgroundColor = "white";
+        }
+      });
+
+      inputsDiv.appendChild(input);
+    }
+
+    // Deshabilitar botón siguiente hasta que se acierte
+    document.getElementById("btnSiguiente").disabled = true;
+  }
+
+  // Función para comprobar la palabra ingresada
+  function comprobar() {
+    const inputs = document.querySelectorAll("#inputs input");
+
+    // Validación defensiva: verificar que coincidan las longitudes
+    if (inputs.length !== palabraObjetivo.length) {
+      mostrarImagen(); // Reconstruir si hay inconsistencia
+      return;
+    }
+
+    // Construir palabra ingresada por el usuario
+    let resultado = "";
+    inputs.forEach((input) => (resultado += input.value.toLowerCase()));
+
+    const contenedor = document.querySelector(".imagen-contenedor");
+    const botonSiguiente = document.getElementById("btnSiguiente");
+
+    // Comprobar letra por letra y colorear resultados
+    for (let i = 0; i < palabraObjetivo.length; i++) {
+      const esperado = palabraObjetivo[i]?.toLowerCase() ?? "";
+      const actualLetra = (inputs[i].value || "").toLowerCase();
+
+      // Verde si es correcta, rojo si es incorrecta
+      if (actualLetra === esperado) {
+        inputs[i].style.backgroundColor = "#9f9"; // verde suave
+      } else {
+        inputs[i].style.backgroundColor = "#f99"; // rojo suave
+      }
+    }
+
+    // Comprobar palabra completa
+    if (resultado === palabraObjetivo.toLowerCase()) {
+      contenedor.style.borderColor = "green"; // Éxito
+      botonSiguiente.disabled = false; // Habilitar siguiente
+    } else {
+      contenedor.style.borderColor = "red"; // Error
+      botonSiguiente.disabled = true;
+    }
+
+    comprobado = true; // Marcar como comprobado
+  }
+
+  // Función para pasar a la siguiente imagen/palabra
+  function siguiente() {
+    if (actual < seleccionados.length - 1) {
+      actual++; // Avanzar índice
+      mostrarImagen(); // Mostrar siguiente elemento
+    } else {
+      alert("¡Has terminado!");
+      location.reload(); // Reiniciar juego al terminar
+    }
+  }
+
+  /* =========================
    JUEGO AHORCADO (namespaced)
    ========================= */
-(function () {
-  // Solo continuar si estamos en la página del ahorcado (comprobación por un elemento único)
-  const palabraEl = document.getElementById("palabra");
-  const letrasEl = document.getElementById("letras");
-  const imagenAhorcado = document.getElementById("imagenAhorcado");
-  // Ajusta este id en el HTML si quieres: por defecto uso "marcador" si existe,
-  // si prefieres "marcador-ahorcado" añade ese id al HTML.
-  const marcadorEl =
-    document.getElementById("marcador-ahorcado") ||
-    document.getElementById("marcador") ||
-    null;
+  (function () {
+    const palabraEl = document.getElementById("palabra");
+    const letrasEl = document.getElementById("letras");
+    const marcadorEl =
+      document.getElementById("marcador-ahorcado") ||
+      document.getElementById("marcador") ||
+      null;
 
-  // Si no existen los elementos principales, no ejecutamos nada para evitar errores
-  if (!palabraEl || !letrasEl || !imagenAhorcado) {
-    // No es la página del ahorcado: salir sin romper el resto del JS
-    return;
-  }
-
-  // Estado privado del módulo
-  let ah_palabraSecreta;
-  let ah_progreso;
-  let ah_errores = 0;
-  const ah_maxErrores = 6;
-  let ah_usuario = "";
-  let ah_puntos = 0;
-
-  // Iniciar juego (usa este nombre para no colisionar)
-  window.iniciarAhorcado = function () {
-    const inputUsuario = document.getElementById("usuario");
-    if (!inputUsuario) {
-      alert("No se encontró el campo usuario.");
+    if (!palabraEl || !letrasEl) {
       return;
     }
-    ah_usuario = inputUsuario.value.trim();
-    if (!ah_usuario) {
-      alert("Por favor ingresa un nombre de usuario");
-      return;
-    }
-    const modalInicio = document.getElementById("modal-inicio");
-    if (modalInicio) modalInicio.style.display = "none";
-    ah_puntos = 0;
-    ah_actualizarMarcador();
-    ah_nuevaPalabra();
-  };
 
-  function ah_nuevaPalabra() {
-    // 'palabras' debe venir de tu archivo palabras.js (array de strings)
-    ah_palabraSecreta =
-      palabras[Math.floor(Math.random() * palabras.length)].toUpperCase();
-    ah_progreso = Array(ah_palabraSecreta.length).fill("_");
-    ah_errores = 0;
-    imagenAhorcado.src = `../assets/img/imagenes/ahorcado${ah_errores}.jpg`;
-    letrasEl.innerHTML = "";
-    ah_mostrarPalabra();
-    ah_crearBotones();
-  }
+    // Array con los IDs de las partes del ahorcado SVG (10 partes)
+    const ah_partesSVG = [
+      "poste",
+      "vertical",
+      "horizontal",
+      "cuerda",
+      "cabeza",
+      "cuerpo",
+      "brazo1",
+      "brazo2",
+      "pierna1",
+      "pierna2",
+    ];
 
-  function ah_mostrarPalabra() {
-    // join con espacios, usar innerHTML para permitir spans después de perder
-    palabraEl.innerHTML = ah_progreso.join(" ");
-  }
+    // Estado privado del módulo
+    let ah_palabraSecreta;
+    let ah_progreso;
+    let ah_errores = 0;
+    const ah_maxErrores = ah_partesSVG.length; // Ahora es 10 errores máximos
+    let ah_usuario = "";
+    let ah_puntos = 0;
 
-  function ah_crearBotones() {
-    const abecedario = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
-    abecedario.forEach((letra) => {
-      const btn = document.createElement("button");
-      btn.textContent = letra;
-      btn.type = "button";
-      btn.addEventListener("click", () => ah_manejarLetra(btn, letra));
-      letrasEl.appendChild(btn);
-    });
-  }
+    // ================================
+    // NUEVAS FUNCIONES PARA LOCALSTORAGE
+    // ================================
 
-  function ah_manejarLetra(btn, letra) {
-    btn.disabled = true;
-    if (ah_palabraSecreta.includes(letra)) {
-      btn.style.background = "green";
-      for (let i = 0; i < ah_palabraSecreta.length; i++) {
-        if (ah_palabraSecreta[i] === letra) ah_progreso[i] = letra;
+    // 1. Función para guardar en localStorage
+    function ah_guardarRankingLocal() {
+      if (!ah_usuario || ah_puntos <= 0) return false;
+
+      try {
+        // Obtener ranking actual de localStorage
+        let ranking = JSON.parse(
+          localStorage.getItem("rankingAhorcado") || "[]"
+        );
+
+        // Añadir nuevo registro
+        const nuevoRegistro = {
+          usuario: ah_usuario,
+          puntos: ah_puntos,
+          fecha: new Date().toLocaleString("es-ES"),
+        };
+
+        ranking.push(nuevoRegistro);
+
+        // Ordenar por puntos (descendente)
+        ranking.sort((a, b) => b.puntos - a.puntos);
+
+        // Mantener solo top 20
+        ranking = ranking.slice(0, 20);
+
+        // Guardar en localStorage
+        localStorage.setItem("rankingAhorcado", JSON.stringify(ranking));
+
+        console.log("Puntuación guardada localmente:", nuevoRegistro);
+        return true;
+      } catch (error) {
+        console.error("Error al guardar ranking:", error);
+        return false;
       }
-      ah_mostrarPalabra();
-      if (!ah_progreso.includes("_")) {
-        ah_puntos++;
-        ah_actualizarMarcador();
-        setTimeout(() => ah_nuevaPalabra(), 700);
+    }
+
+    // 2. Función para mostrar ranking (exportada globalmente)
+    window.mostrarRankingLocal = function () {
+      try {
+        const ranking = JSON.parse(
+          localStorage.getItem("rankingAhorcado") || "[]"
+        );
+
+        if (ranking.length === 0) {
+          alert(
+            "🏆 RANKING AHORCADO 🏆\n\nNo hay puntuaciones registradas aún.\n¡Sé el primero!"
+          );
+          return;
+        }
+
+        let mensaje = "🏆 RANKING AHORCADO 🏆\n\n";
+        mensaje += "Posición | Usuario | Puntos | Fecha\n";
+        mensaje += "-----------------------------------\n";
+
+        ranking.forEach((item, index) => {
+          mensaje += `${(index + 1)
+            .toString()
+            .padStart(2)}. ${item.usuario.padEnd(15)} ${item.puntos
+            .toString()
+            .padStart(4)} pts   ${item.fecha}\n`;
+        });
+
+        // Mostrar en alerta o puedes crear un modal bonito
+        alert(mensaje);
+      } catch (error) {
+        console.error("Error al mostrar ranking:", error);
+        alert(
+          "Error al cargar el ranking. Asegúrate de que localStorage esté habilitado."
+        );
       }
-    } else {
-      btn.style.background = "red";
-      ah_errores++;
-      ah_actualizarAhorcado();
-    }
-  }
+    };
 
-  function ah_actualizarAhorcado() {
-    imagenAhorcado.src = `../assets/img/imagenes/ahorcado${ah_errores}.jpg`;
-    if (ah_errores >= ah_maxErrores) {
-      // Revelar palabra con las no adivinadas en rojo
-      ah_revelarPalabra();
-      // Mostrar modal final tras un pequeño retardo
-      setTimeout(() => ah_mostrarFinal(), 1200);
-    }
-  }
-
-  function ah_revelarPalabra() {
-    let palabraMostrada = "";
-    for (let i = 0; i < ah_palabraSecreta.length; i++) {
-      if (ah_progreso[i] === "_") {
-        palabraMostrada += `<span class="ah-letra-no">${ah_palabraSecreta[i]}</span> `;
+    // 3. Función para guardar puntuación desde el botón
+    window.guardarPuntuacionLocal = function () {
+      if (ah_guardarRankingLocal()) {
+        alert(
+          `¡Puntuación de ${ah_puntos} puntos guardada para ${ah_usuario}!`
+        );
       } else {
-        palabraMostrada += `<span class="ah-letra-si">${ah_progreso[i]}</span> `;
+        alert("Error al guardar la puntuación");
+      }
+    };
+
+    // 4. Función para exportar ranking a archivo JSON
+    window.exportarRanking = function () {
+      try {
+        const ranking = JSON.parse(
+          localStorage.getItem("rankingAhorcado") || "[]"
+        );
+        if (ranking.length === 0) {
+          alert("No hay datos para exportar.");
+          return;
+        }
+
+        const dataStr = JSON.stringify(ranking, null, 2);
+        const dataUri =
+          "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
+
+        const linkElement = document.createElement("a");
+        linkElement.setAttribute("href", dataUri);
+        linkElement.setAttribute(
+          "download",
+          `ranking_ahorcado_${new Date().toISOString().split("T")[0]}.json`
+        );
+        linkElement.click();
+
+        alert("Ranking exportado correctamente como archivo JSON.");
+      } catch (error) {
+        console.error("Error al exportar:", error);
+        alert("Error al exportar el ranking.");
+      }
+    };
+
+    // 5. Función para importar ranking desde archivo (opcional)
+    window.importarRanking = function () {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = ".json";
+
+      input.onchange = function (event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            const importedData = JSON.parse(e.target.result);
+            if (Array.isArray(importedData)) {
+              localStorage.setItem(
+                "rankingAhorcado",
+                JSON.stringify(importedData)
+              );
+              alert(
+                `Ranking importado correctamente. ${importedData.length} registros cargados.`
+              );
+            } else {
+              alert("Error: El archivo no contiene un array válido.");
+            }
+          } catch (error) {
+            alert("Error: Archivo JSON inválido.");
+          }
+        };
+        reader.readAsText(file);
+      };
+
+      input.click();
+    };
+
+    // ================================
+    // FUNCIONES ORIGINALES DEL JUEGO
+    // ================================
+
+    // Iniciar juego
+    window.iniciarAhorcado = function () {
+      const inputUsuario = document.getElementById("usuario");
+      if (!inputUsuario) {
+        alert("No se encontró el campo usuario.");
+        return;
+      }
+      ah_usuario = inputUsuario.value.trim();
+      if (!ah_usuario) {
+        alert("Por favor ingresa un nombre de usuario");
+        return;
+      }
+      const modalInicio = document.getElementById("modal-inicio");
+      if (modalInicio) modalInicio.style.display = "none";
+      ah_puntos = 0;
+      ah_actualizarMarcador();
+      ah_resetearSVG(); // Resetear el dibujo SVG
+      ah_nuevaPalabra();
+    };
+
+    // Función para resetear el SVG (ocultar todas las partes)
+    function ah_resetearSVG() {
+      ah_partesSVG.forEach((parteId) => {
+        const elemento = document.getElementById(parteId);
+        if (elemento) {
+          elemento.style.display = "none";
+        }
+      });
+    }
+
+    function ah_nuevaPalabra() {
+      // 'palabras' debe venir de tu archivo palabras.js (array de strings)
+      ah_palabraSecreta =
+        palabras[Math.floor(Math.random() * palabras.length)].toUpperCase();
+      ah_progreso = Array(ah_palabraSecreta.length).fill("_");
+      ah_errores = 0;
+
+      // En lugar de cambiar la imagen, resetear el SVG
+      ah_resetearSVG();
+
+      letrasEl.innerHTML = "";
+      ah_mostrarPalabra();
+      ah_crearBotones();
+    }
+
+    function ah_mostrarPalabra() {
+      palabraEl.innerHTML = ah_progreso.join(" ");
+    }
+
+    function ah_crearBotones() {
+      const abecedario = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
+      abecedario.forEach((letra) => {
+        const btn = document.createElement("button");
+        btn.textContent = letra;
+        btn.type = "button";
+        btn.addEventListener("click", () => ah_manejarLetra(btn, letra));
+        letrasEl.appendChild(btn);
+      });
+    }
+
+    function ah_manejarLetra(btn, letra) {
+      btn.disabled = true;
+      if (ah_palabraSecreta.includes(letra)) {
+        btn.style.background = "green";
+        for (let i = 0; i < ah_palabraSecreta.length; i++) {
+          if (ah_palabraSecreta[i] === letra) ah_progreso[i] = letra;
+        }
+        ah_mostrarPalabra();
+        if (!ah_progreso.includes("_")) {
+          ah_puntos++;
+          ah_actualizarMarcador();
+          setTimeout(() => ah_nuevaPalabra(), 700);
+        }
+      } else {
+        btn.style.background = "red";
+        ah_errores++;
+        ah_actualizarAhorcado();
       }
     }
-    palabraEl.innerHTML = palabraMostrada.trim();
+
+    function ah_actualizarAhorcado() {
+      // Mostrar la parte correspondiente del ahorcado
+      if (ah_errores > 0 && ah_errores <= ah_partesSVG.length) {
+        const parteId = ah_partesSVG[ah_errores - 1];
+        const elemento = document.getElementById(parteId);
+        if (elemento) {
+          elemento.style.display = "block";
+        }
+      }
+
+      if (ah_errores >= ah_maxErrores) {
+        // Revelar palabra con las no adivinadas en rojo
+        ah_revelarPalabra();
+        // Mostrar modal final tras un pequeño retardo
+        setTimeout(() => ah_mostrarFinal(), 1200);
+      }
+    }
+
+    function ah_revelarPalabra() {
+      let palabraMostrada = "";
+      for (let i = 0; i < ah_palabraSecreta.length; i++) {
+        if (ah_progreso[i] === "_") {
+          palabraMostrada += `<span class="ah-letra-no">${ah_palabraSecreta[i]}</span> `;
+        } else {
+          palabraMostrada += `<span class="ah-letra-si">${ah_progreso[i]}</span> `;
+        }
+      }
+      palabraEl.innerHTML = palabraMostrada.trim();
+    }
+
+    function ah_actualizarMarcador() {
+      if (!marcadorEl) return;
+      marcadorEl.textContent = ah_puntos;
+    }
+
+    function ah_mostrarFinal() {
+      const modalFinal = document.getElementById("modal-final");
+      if (modalFinal) modalFinal.style.display = "flex";
+      const resultado = document.getElementById("resultado");
+      if (resultado) {
+        resultado.textContent = `${ah_usuario}, tu puntuación final es: ${ah_puntos} puntos`;
+      }
+
+      // Guardar automáticamente si la puntuación es buena (opcional)
+      if (ah_puntos >= 3) {
+        // Puedes guardar automáticamente o dejar que el usuario decida
+        // ah_guardarRankingLocal();
+      }
+    }
+
+    window.ah_reiniciarCompleto = function () {
+      const modalFinal = document.getElementById("modal-final");
+      if (modalFinal) modalFinal.style.display = "none";
+      const modalInicio = document.getElementById("modal-inicio");
+      if (modalInicio) modalInicio.style.display = "flex";
+    };
+
+    // Exportar la función reiniciarCompleto para el botón HTML
+    window.reiniciarCompleto = function () {
+      window.ah_reiniciarCompleto();
+    };
+  })();
+  /*********************************
+   *    Juego damas*************
+   *
+   *************************************/
+
+  // Evento boton salir durante el juego damas
+
+  const salirDamas = document.getElementById("salirDamas");
+  if (salirDamas) {
+    salirDamas.addEventListener(
+      "click",
+      () => (location.href = "../index.html")
+    );
   }
-
-  function ah_actualizarMarcador() {
-    if (!marcadorEl) return; // si no hay marcador, evitamos errores
-    marcadorEl.textContent = ah_puntos;
-  }
-
-  function ah_mostrarFinal() {
-    const modalFinal = document.getElementById("modal-final");
-    if (modalFinal) modalFinal.style.display = "flex";
-    const resultado = document.getElementById("resultado");
-    if (resultado)
-      resultado.textContent = ah_usuario + ", tu puntuación fue: " + ah_puntos;
-    const uFinal = document.getElementById("usuarioFinal");
-    const pFinal = document.getElementById("puntosFinal");
-    if (uFinal) uFinal.value = ah_usuario;
-    if (pFinal) pFinal.value = ah_puntos;
-  }
-
-  window.ah_reiniciarCompleto = function () {
-    const modalFinal = document.getElementById("modal-final");
-    if (modalFinal) modalFinal.style.display = "none";
-    const modalInicio = document.getElementById("modal-inicio");
-    if (modalInicio) modalInicio.style.display = "flex";
-  };
-})();
-
-/*********************************
- *    Juego damas*************
- *
- *************************************/
-
-// Evento boton salir durante el juego damas
-salirDamas.addEventListener("click", () => (location.href = "../index.html"));
+});
