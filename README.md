@@ -1,4 +1,4 @@
-# 🌐 Web Juegos Infantiles
+# 🌐📱 Juegos Infantiles — Web & App Android
 
 **Repositorio:** `web-juegos-infantiles`
 **Autor:** Pau Gracia
@@ -11,63 +11,141 @@
 
 ## 📖 Descripción
 
-**Web Juegos Infantiles** es una colección de juegos educativos web desarrollada con **HTML, CSS y JavaScript puro**.
-Está orientada a niños y niñas para aprender **matemáticas**, **vocabulario** y **pensamiento lógico** de manera interactiva y divertida.
+**Juegos Infantiles** es una colección de **minijuegos educativos** desarrollados con
+**HTML, CSS y JavaScript puro**, pensada para niños y niñas para aprender de forma **lúdica e interactiva**:
 
-Actualmente incluye:
+- 🧮 Matemáticas
+- 🔤 Vocabulario
+- 🧠 Memoria
+- ♟️ Pensamiento lógico
 
-- 🧠 **Memori** → Juego de memoria visual con imágenes y puntuación.
-- ➕ **Operaciones** → Practica operaciones matemáticas (niveles fáciles y avanzados).
-- 🔤 **Juego de Palabras** → Aprende vocabulario en distintos idiomas con casillas de letras.
-- 🎯 **Ahorcado** → Juego clásico para reforzar vocabulario y deducción.
-- ♟️ **Damas** → Juego completo de damas contra la máquina con reglas clásicas.
+El proyecto **nació como web** y actualmente se encuentra en un **proceso de adaptación a aplicación Android**, manteniendo una única base de código.
 
-👉 Funciona en **navegadores modernos** y es compatible con **Windows** y **Linux**.
-👉 Optimizado para una experiencia fluida en **móvil y escritorio**.
+👉 El objetivo final es una **app móvil descargable**, optimizada para **pantallas táctiles** y **orientación vertical (portrait)**.
+
+---
+
+## 🎮 Juegos incluidos
+
+- 🧠 **Memori**
+  Juego de memoria visual con ranking de puntuaciones.
+
+- ➕ **Operaciones**
+  Práctica de operaciones matemáticas con distintos niveles de dificultad.
+
+- 🔤 **Juego de Palabras**
+  Aprendizaje de vocabulario en varios idiomas mediante casillas de letras.
+
+- 🎯 **Ahorcado**
+  Juego clásico para reforzar vocabulario y deducción.
+
+- ♟️ **Damas**
+  Juego completo de damas contra la máquina:
+
+  - capturas obligatorias
+  - coronación
+  - IA básica
+
+---
+
+## 🎯 Objetivos actuales del proyecto
+
+- 📱 **Convertir la web en una app Android**
+- 🔒 Diseñar la experiencia **solo en orientación vertical (portrait)**
+- 🧩 Unificar todos los juegos bajo una **estructura de app común**
+- 🗂️ Separar correctamente:
+
+  - CSS global de app
+  - CSS específico por juego
+  - JS común y JS por juego
+
+- ♻️ Mantener **una sola base de código** (web + app)
+- 🚀 Preparar el proyecto para empaquetado con **Capacitor / WebView**
 
 ---
 
 ## 🛠️ Tecnologías
 
+### Frontend
+
 - **HTML5**
-- **CSS3** (Flexbox, media queries)
+- **CSS3** (Flexbox, media queries, diseño responsive)
 - **JavaScript (Vanilla JS)**
-- **PHP** (backend mínimo para almacenamiento de puntuaciones `guardar.php`)
-- **Git** (control de versiones, despliegue seguro vía SSH)
+
+### Backend (opcional / legado web)
+
+- **PHP**
+
+  - Guardado de rankings (`guardar.php`)
+  - Archivos de datos (`memori.txt`)
+
+### Herramientas
+
+- **Git** (ramas `main` / `dev`)
+- **Servidor PHP local**
+- Preparado para **Capacitor (Android)**
 
 ---
 
 ## ✨ Características
 
-- Modal de configuración para seleccionar nivel, número de operaciones o cantidad de palabras.
-- Diferentes niveles de dificultad en juegos matemáticos.
-- Validación en tiempo real de respuestas y feedback visual:
+- Menú central de acceso a todos los juegos.
+- Modal de configuración por juego (niveles, dificultad, opciones).
+- Feedback visual inmediato:
 
-  - ✅ Verde = correcto
-  - ❌ Rojo = incorrecto
+  - ✅ Respuesta correcta
+  - ❌ Respuesta incorrecta
 
-- **Responsive design** (adaptativo a móviles).
-- Persistencia de puntuaciones y ranking en memoria backend (`memori.txt`).
-- Navegación sencilla y segura entre juegos.
-- Interfaz clara y accesible pensada para público infantil.
+- Diseño accesible pensado para público infantil.
+- Compatible con:
+
+  - 🖥️ Escritorio
+  - 📱 Móvil (portrait-first)
+
+- Arquitectura preparada para **app móvil**.
 
 ---
 
-## 🚀 Instalación y uso
+## 📂 Estructura del proyecto (en transición)
 
-Este proyecto utiliza **PHP** para guardar las puntuaciones en el ranking del juego de parejas.
-Por ello, es necesario **clonar el repositorio** y **levantar un servidor local** para que funcione correctamente.
-
-### 1️⃣ Clonar el repositorio
-
-Usando **SSH**:
-
-```bash
-git clone git@github.com:PauGracia/web-juegos-infantiles.git
-cd web-juegos-infantiles
+```text
+web-juegos-infantiles/
+│
+├── index.html                # Menú principal (App)
+│
+├── juegos/                   # Juegos individuales
+│   ├── damas/
+│   │   ├── index.html
+│   │   ├── damas.js
+│   │   └── damas.css
+│   ├── memori/
+│   ├── operaciones/
+│   ├── palabras/
+│   └── ahorcado/
+│
+├── assets/
+│   ├── css/
+│   │   ├── app.css           # Estilos comunes de la app
+│   │   └── variables.css
+│   ├── js/
+│   │   ├── app.js            # Navegación y utilidades
+│   │   └── storage.js
+│   ├── img/
+│   └── fonts/
+│
+├── backend/                  # Backend PHP (ranking legacy)
+│   └── data/memori.txt
+│
+└── README.md
 ```
 
-O usando **HTTPS**:
+> ⚠️ La estructura está siendo **refactorizada progresivamente** en la rama `dev`.
+
+---
+
+## 🚀 Instalación y uso (modo web)
+
+### 1️⃣ Clonar el repositorio
 
 ```bash
 git clone https://github.com/PauGracia/web-juegos-infantiles.git
@@ -76,10 +154,7 @@ cd web-juegos-infantiles
 
 ---
 
-### 2️⃣ Levantar un servidor local con PHP
-
-Asegúrate de tener PHP instalado (Windows, Linux o macOS).
-Luego ejecuta en la terminal:
+### 2️⃣ Levantar servidor local (para ranking)
 
 ```bash
 php -S localhost:8000
@@ -91,87 +166,44 @@ php -S localhost:8000
 
 👉 [http://localhost:8000](http://localhost:8000)
 
-⚠️ **Nota:** El ranking solo funciona con servidor PHP.
-Si no lo levantas, el juego cargará pero sin la opción de guardar puntuaciones.
+⚠️ El ranking solo funciona con servidor PHP activo.
 
 ---
 
-## 🔎 Ver el proyecto sin ranking
-
-También puedes probar el juego sin ranking en GitHub Pages:
+## 🌍 Versión online (sin ranking)
 
 👉 [https://paugracia.github.io/web-juegos-infantiles/index.html](https://paugracia.github.io/web-juegos-infantiles/index.html)
 
 ---
 
-## 📊 Esquema de uso
+## 🔀 Flujo de desarrollo
 
-```
-🖥️ Clonar repositorio
-│
-▼
-📂 Entrar en carpeta del proyecto
-│
-▼
-⚙️ Levantar servidor local con PHP
-│
-▼
-🌐 Abrir http://localhost:8000
-│
-├── ✅ Con servidor PHP → Juego + Ranking
-│
-└── ❌ Sin servidor PHP → Acceso a GitHub Pages
-👉 https://paugracia.github.io/web-juegos-infantiles/index.html
-```
+- `main` → versión estable
+- `dev` → refactor, adaptación a app móvil y nuevas funcionalidades
+
+Todos los cambios relacionados con:
+
+- separación de CSS / JS
+- layout móvil
+- adaptación Android
+
+se realizan **exclusivamente en `dev`**.
 
 ---
 
-## 📂 Estructura de carpetas
+## 🔮 Próximos pasos
 
-```
-web-juegos-infantiles/
-│
-├─ backend/             # Archivos PHP y datos
-│  └─ data/memori.txt
-│
-├─ juegos/              # Juegos individuales
-│  ├─ damas.html
-│  ├─ juegoAhorcado.html
-│  ├─ memori.html
-│  ├─ operaciones.html
-│  ├─ palabras.html
-│  └─ ranking.html
-│
-├─ assets/              # Recursos (CSS, JS, imágenes)
-│
-├─ index.html           # Página principal
-└─ README.md            # Documentación
-```
-
----
-
-## ⚙️ Configuración especial
-
-- **Compatibilidad Windows/Linux** → `core.autocrlf=input` en Git para evitar problemas de fin de línea.
-- **SSH en GitHub** → conexión remota con clave SSH para evitar errores 403.
-- **Operaciones** → en nivel avanzado (nivel 2) se deshabilita el input del máximo operando.
-- **Palabras** → el juego congela la palabra a adivinar, validando letra a letra con feedback en tiempo real.
-- **Damas** → incluye capturas obligatorias, coronación de fichas y juego contra IA.
-
----
-
-## 🔮 Mejoras futuras
-
-- Sonido y animaciones para feedback positivo/negativo.
-- Guardado de progreso de usuarios entre sesiones.
-- Inclusión de más idiomas y palabras para el juego de vocabulario.
-- Optimización de backend para ranking global multiusuario.
-- Mejora de la inteligencia artificial en el juego de Damas.
+- Finalizar separación de juegos en módulos independientes.
+- Crear layout base común para todos los juegos.
+- Forzar orientación **portrait-only**.
+- Integrar vibración, pantalla completa y guardado local.
+- Empaquetar como **APK / AAB Android** con Capacitor.
+- Publicación en Google Play (fase futura).
 
 ---
 
 ## 📜 Licencia
 
-Proyecto personal desarrollado con fines **educativos** y de **demostración** para currículum y portfolio.
+Proyecto personal con fines **educativos**, de **aprendizaje** y **portfolio**.
 
 ---

@@ -1,0 +1,246 @@
+/* === ESTILOS ESPECÍFICOS: JUEGO DEL AHORCADO === */
+
+.body-ahorcado {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #f7f7f7;
+  margin: 0;
+  padding: 20px;
+}
+
+.titulo-ahorcado {
+  font-size: 4em;
+  margin-bottom: 20px;
+  color: #333;
+  margin-top: 100px;
+}
+
+#marcador-ahorcado {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  background: #222;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.contenedor-juego {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 50px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.imagen-ahorcado {
+  width: 225px;
+  height: 225px;
+  border-radius: 10px;
+  background: #f9f9f9;
+  border: 3px solid #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.imagen-ahorcado img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.palabra {
+  font-size: 2em;
+  letter-spacing: 8px;
+}
+
+#palabra {
+  min-height: 30px; /* ajusta según tu diseño */
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+.letras {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.letras button {
+  padding: 10px;
+  font-size: 1em;
+  font-weight: bold;
+  border-radius: 6px;
+  border: none;
+  background: #ddd;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.letras button:hover:not(:disabled) {
+  background: #ccc;
+}
+
+.letras button:disabled {
+  cursor: not-allowed;
+  color: #fff;
+}
+
+/* -------- MODALES -------- */
+#modal-inicio,
+#modal-final {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+#modal-contenido,
+#modal-final-contenido {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 300px;
+}
+
+#modal-contenido input {
+  padding: 8px;
+  font-size: 1em;
+  margin: 10px 0;
+  width: 90%;
+}
+
+#modal-contenido button,
+#modal-final-contenido button {
+  padding: 10px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #28a745;
+  color: white;
+  margin: 5px;
+}
+
+#modal-contenido button:nth-child(3) {
+  background: #007bff;
+}
+
+.modal-final-acciones {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Estilos para el ahorcado SVG */
+#ahorcadoSVG {
+  max-width: 300px;
+  height: auto;
+
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  padding: 10px;
+}
+
+.parte {
+  stroke: #2c3e50;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+/* Hacer que las letras sean más visibles */
+.ah-letra-no {
+  color: #e74c3c;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.ah-letra-si {
+  color: #27ae60;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+/* ---- BOTÓN SALIR ---- */
+.boton-volver-ahorcado {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.boton-volver-ahorcado button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 14px 40px;
+  font-size: 1.2em;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.boton-volver-ahorcado button:hover {
+  background: #218838;
+  transform: scale(1.05);
+}
+
+.boton-volver-ahorcado button:active {
+  transform: scale(0.97);
+}
+
+.modal-ranking {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-ranking-contenido {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 90%;
+  text-align: center;
+}
+
+@media (max-width: 680px) {
+  .boton-volver-ahorcado button {
+    width: 30%;
+    font-size: 1em;
+    padding: 12px 0;
+  }
+
+  .titulo-ahorcado {
+    font-size: 1.5em;
+    margin-top: 1px;
+  }
+
+  .palabra {
+    font-size: 1.8em;
+    letter-spacing: 5px;
+  }
+}

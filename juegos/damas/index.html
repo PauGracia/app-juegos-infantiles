@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title>Juego de damas</title>
+    <link rel="stylesheet" href="../assets/css/app.css?v=20251111" />
+    <link rel="stylesheet" href="damas.css?v=20251111" />
+  </head>
+  <body class="body-damas">
+    <div class="contenedor-juego-damas">
+      <div id="juego-damas-contenedor">
+        <h1 class="titulo-damas">Juego de damas</h1>
+
+        <div id="tablero-damas"></div>
+
+        <div class="info-panel-damas">
+          <div><b>Tu lado:</b> <span id="lado-humano-info">—</span></div>
+          <div><b>Turno:</b> <span id="turno-info">—</span></div>
+          <div><b>Ganador:</b> <span id="ganador-info">—</span></div>
+          <div>
+            <b>Capturas obligatorias:</b>
+            <span id="captura-obligatoria-info">—</span>
+          </div>
+          <div>
+            <b>Capturas TÚ:</b> <span id="capturas-humano-info">0</span>
+          </div>
+          <div>
+            <b>Capturas MÁQUINA:</b> <span id="capturas-ia-info">0</span>
+          </div>
+
+          <div style="margin-top: 10px" id="mensaje-estado-damas"></div>
+        </div>
+        <div>
+          <button class="boton-damas" id="boton-reinicio-damas">Sortear</button>
+          <button class="boton-damas" id="boton-voltear-damas">
+            Girar Tablero
+          </button>
+          <button id="salirDamas" class="boton-damas">Salir</button>
+        </div>
+      </div>
+    </div>
+    <!-- Modal de fin de partida -->
+    <div id="modal-fin-damas" class="modal-fin-damas">
+      <div class="modal-contenido">
+        <div id="icono-resultado" class="icono-resultado"></div>
+        <h2 id="mensaje-resultado"></h2>
+        <div class="botones-modal">
+          <button class="boton-damas" id="boton-reiniciar-modal">
+            Volver a jugar
+          </button>
+          <button class="boton-damas" id="boton-salir-modal">Salir</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="damas.js"></script>
+  </body>
+</html>

@@ -1,0 +1,274 @@
+/*************************
+*****DAMAS***************
+*******************/
+
+:root {
+  --escala-ui: 1;
+}
+
+/* Tablero celdas oscuras */
+#juego-damas-contenedor #tablero-damas > .celda-damas.oscura-damas {
+  background: #2f5f3a;
+}
+
+/* Tablero celdas claras */
+#juego-damas-contenedor #tablero-damas > .celda-damas.clara-damas {
+  background: #f0d9b5;
+}
+
+/* Pieza*/
+#tablero-damas .celda-damas.oscura-damas > div.dot-pieza.pieza-humano,
+#tablero-damas .celda-damas.oscura-damas > div.dot-pieza.pieza-ia {
+  border-radius: 50%;
+  width: 76%;
+  height: 76%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.12s;
+}
+
+/* Rey humano o IA con pseudo-clase */
+#tablero-damas div.dot-pieza.rey-damas:is(.pieza-humano, .pieza-ia) {
+  box-shadow: 0 0 18px 4px rgba(255, 215, 0, 0.9);
+}
+
+/* Pieza humana (blanco roto) */
+#tablero-damas .celda-damas.oscura-damas > .dot-pieza.pieza-humano {
+  background: linear-gradient(180deg, #f5f5f2, #dcdcd6);
+}
+
+/* Pieza IA (negro / gris muy oscuro) */
+#tablero-damas .celda-damas.oscura-damas > .dot-pieza.pieza-ia {
+  background: linear-gradient(180deg, #2b2b2b, #0f0f0f);
+}
+
+/* Movimiento sugerido */
+#tablero-damas .celda-damas.oscura-damas > .sugerencia-movimiento {
+  position: absolute;
+  width: 28%;
+  height: 28%;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  cursor: pointer;
+}
+#tablero-damas .celda-damas.oscura-damas > .sugerencia-movimiento.captura {
+  background: #ffc5c5;
+  border: 2px solid #ff3c3c;
+}
+
+/* -------------------- CONTENEDORES -------------------- */
+
+.body-damas {
+  font-family: "ChalkRegular", Arial, sans-serif;
+  background: linear-gradient(120deg, #f7fbff, #e0f0fb, #cfe5f5, #eaf3fb);
+  background-size: 500% 500%;
+  animation: fondoAzulSuave 14s ease infinite;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+@keyframes fondoAzulSuave {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.titulo-damas {
+  font-size: calc(60px * var(--escala-ui));
+  text-align: center;
+}
+
+#juego-damas-contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#tablero-damas {
+  width: 90vw;
+  height: 90vw;
+  max-width: 520px;
+  max-height: 520px;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.celda-damas {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contenedor-juego-damas {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.info-panel-damas {
+  background: #fff;
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+
+  width: 50%;
+  max-width: 260px;
+  margin-top: 20px;
+  font-size: calc(20px * var(--escala-ui));
+
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow: visible;
+
+  margin-top: 140px;
+}
+
+.info-panel-damas div {
+  margin-bottom: 4px;
+}
+
+.boton-damas {
+  font-size: 16px;
+  padding: 12px 20px;
+  background: darkgray;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.boton-damas:hover {
+  color: #dcdcd6;
+}
+
+/* Modal de fin de partida */
+.modal-fin-damas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 90%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: none; /* se muestra con JS */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-contenido {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  max-width: 300px;
+  width: 90%;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.icono-resultado {
+  font-size: 80px;
+  margin-bottom: 20px;
+}
+
+.icono-resultado.ganador {
+  color: gold;
+  content: "🏆";
+}
+
+.icono-resultado.perdedor {
+  color: red;
+  content: "❌";
+}
+
+#mensaje-resultado {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.botones-modal {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.botones-modal .boton-damas {
+  font-size: 16px;
+  padding: 12px 18px;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --escala-ui: 0.85;
+  }
+  .contenedor-juego-damas {
+    align-items: center;
+  }
+  .info-panel-damas {
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 780px) {
+  :root {
+    --escala-ui: 0.72;
+  }
+  .contenedor-juego-damas {
+    align-items: center;
+  }
+}
+
+@media (max-width: 650px) {
+  :root {
+    --escala-ui: 0.6;
+  }
+  .contenedor-juego-damas {
+    align-items: center;
+  }
+  .info-panel-damas {
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contenedor-juego-damas {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  #tablero-damas {
+    width: 90vw;
+    height: 90vw;
+  }
+
+  .info-panel-damas {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 550px) {
+  :root {
+    --escala-ui: 0.4;
+  }
+  .info-panel-damas {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}

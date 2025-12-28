@@ -1,0 +1,88 @@
+/* =========================
+   RANKING LOCAL
+   ========================= */
+
+.body-ranking {
+  font-family: system-ui, sans-serif;
+  background: #f4f6fb;
+  margin: 0;
+  padding: 10px;
+}
+
+.ranking-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.ranking-controles {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.ranking-controles select,
+.ranking-controles input,
+.ranking-controles button {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.ranking-lista ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ranking-lista li {
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 8px;
+  display: grid;
+  grid-template-columns: 30px 1fr auto;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.ranking-pos {
+  font-weight: bold;
+}
+
+.ranking-usuario {
+  font-weight: 600;
+}
+
+.ranking-puntos {
+  background: #4caf50;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.ranking-fecha {
+  font-size: 12px;
+  color: #666;
+}
+
+.ranking-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+button.danger {
+  background: #e53935;
+  color: white;
+  border: none;
+}
+
+#btnVolverJuego {
+  background: #4d4646;
+  color: white;
+  border: none;
+}

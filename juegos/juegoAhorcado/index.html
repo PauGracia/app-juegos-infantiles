@@ -2,8 +2,14 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+
     <title>El Ahorcado</title>
-    <link rel="stylesheet" href="../assets/css/styles.css?v=20251111" />
+    <link rel="stylesheet" href="../../assets/css/app.css?v=20251111" />
+    <link rel="stylesheet" href="juegoAhorcado.css" />
   </head>
 
   <body class="body-ahorcado">
@@ -18,15 +24,15 @@
         <br />
         <button onclick="iniciarAhorcado()">Empezar</button>
 
-        <button onclick="window.location.href='rankingLocal.html'">
-          Ver ranking local
+        <button onclick="window.location.href='../ranking/rankingLocal.html'">
+          Ver ranking
         </button>
       </div>
     </div>
 
     <div class="contenedor-juego">
       <div class="imagen-ahorcado">
-        <svg id="ahorcadoSVG" width="300" height="300" viewBox="0 0 300 300">
+        <svg id="ahorcadoSVG" width="225" height="225" viewBox="0 0 300 300">
           <!-- Poste -->
           <line id="poste" class="parte" x1="50" y1="260" x2="200" y2="260" />
           <line
@@ -78,7 +84,7 @@
     </div>
 
     <div class="boton-volver-ahorcado">
-      <button onclick="window.location.href='../index.html'">Salir</button>
+      <button onclick="window.location.href='../../index.html'">Salir</button>
     </div>
     <!-- Modal informativo reutilizable -->
     <div id="modal-info" class="modal-ranking" style="display: none">
@@ -94,14 +100,14 @@
         <h2>Fin del juego</h2>
         <p id="resultado"></p>
         <button onclick="reiniciarCompleto()">Volver a jugar</button>
-        <button onclick="window.location.href='../index.html'">Salir</button>
+        <button onclick="window.location.href='../../index.html'">Salir</button>
 
         <div class="modal-final-acciones">
           <button onclick="guardarPuntuacionLocal()">
             Guardar récord local
           </button>
-          <button onclick="window.location.href='rankingLocal.html'">
-            Ver ranking local
+          <button onclick="window.location.href='../ranking/rankingLocal.html'">
+            Ver ranking
           </button>
 
           <button onclick="exportarRanking()">Exportar ranking</button>
@@ -109,7 +115,7 @@
       </div>
     </div>
 
-    <script src="../assets/js/palabras.js"></script>
-    <script src="../assets/js/juegos.js"></script>
+    <script src="../../assets/js/palabras.js"></script>
+    <script src="juegoAhorcado.js"></script>
   </body>
 </html>
