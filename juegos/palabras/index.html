@@ -4,16 +4,20 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
     <title>Escribe el nombre</title>
-    <link rel="stylesheet" href="../assets/css/styles.css?v=20251111" />
+    <link rel="stylesheet" href="../../assets/css/app.css?v=20251111" />
+    <link rel="stylesheet" href="palabras.css?v=20251111" />
   </head>
 
   <body>
     <!-- Fondo de pantalla -->
 
     <img
-      src="../assets/img/imagenes/pizarra.jpg"
+      src="../../assets/img/imagenes/pizarra.jpg"
       class="fondo-palabras"
       alt=""
     />
@@ -53,10 +57,24 @@
         <button id="salir-palabras" class="salir-btn">Salir</button>
       </div>
     </div>
+    <div class="modal-palabras" id="modal-final" style="display: none">
+      <div class="modal-contentPalabras">
+        <h2>Resultado final</h2>
+
+        <p>✅ Aciertos: <span id="total-aciertos"></span></p>
+        <p>❌ Errores: <span id="total-errores"></span></p>
+
+        <ul id="lista-resultados"></ul>
+
+        <br />
+        <button class="btn-final" onclick="reiniciarJuego()">Reiniciar</button>
+        <button class="btn-final" onclick="salirJuego()">Salir</button>
+      </div>
+    </div>
 
     <!-- Enlaces a scripts JS -->
 
-    <script src="../assets/js/elementos.js"></script>
-    <script src="../assets/js/juegos.js"></script>
+    <script src="../../assets/js/elementos.js"></script>
+    <script src="palabras.js"></script>
   </body>
 </html>

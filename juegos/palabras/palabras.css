@@ -1,0 +1,259 @@
+/* -----Juego palabras-----*/
+
+/* Reset básico */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.fondo-palabras {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.modal-palabras {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  z-index: 10;
+}
+
+.modal-palabras button {
+  background-color: #000;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  width: 70px;
+  font-size: 20px;
+}
+
+.modal-palabras button:hover {
+  background-color: #000;
+  color: gray;
+}
+
+.modal-palabras button:active {
+  background-color: #5e5b5b00;
+  color: gray;
+  transform: scale(0.97);
+}
+
+.modal-contentPalabras {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.modal-contentPalabras label,
+.modal-contentPalabras input,
+.modal-contentPalabras select {
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 5px 10px;
+  height: 30px;
+  box-sizing: border-box; /* Para que el padding no aumente el ancho */
+  vertical-align: middle;
+}
+
+.contenedor-imagenPalabra {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  padding-bottom: 120px; /* espacio para teclado */
+  color: white;
+}
+
+.imagen-contenedor {
+  border: 5px solid gray;
+  border-radius: 20px;
+  padding: 50px;
+  display: inline-block;
+
+  max-width: 370px;
+  max-height: 370px;
+}
+
+.imagen-palabras {
+  border: none;
+  border-radius: 10px;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.letras-palabras {
+  margin: 20px 0;
+}
+
+.letras-palabras input {
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  text-align: center;
+  margin: 5px;
+}
+
+.botones-palabras {
+  margin-top: 10px;
+}
+
+.botones-palabras button {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.botones-palabras button:disabled {
+  background-color: #444;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.botones-palabras button:active {
+  transform: scale(0.95);
+  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+#salir-palabras {
+  background-color: white;
+  color: black;
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Modal final – fondo */
+#modal-final {
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+#modal-final .modal-contentPalabras {
+  max-width: 420px;
+  width: 90%;
+  max-height: 80dvh;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  animation: modalFadeIn 0.25s ease;
+}
+
+#modal-final h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+#modal-final p {
+  margin: 6px 0;
+  font-size: 16px;
+}
+
+#lista-resultados {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+#lista-resultados li {
+  padding: 8px 12px;
+  font-size: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+#lista-resultados li:last-child {
+  border-bottom: none;
+}
+
+#modal-final .modal-contentPalabras button {
+  margin: 8px;
+}
+
+@keyframes modalFadeIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Media tablets juego palabras */
+@media (max-width: 668px) {
+  .contenedor-imagenPalabra {
+    justify-content: flex-start;
+    margin-top: 90px;
+  }
+
+  .imagen-contenedor {
+    border: 8px solid black;
+
+    padding: 20px;
+
+    max-width: 175px;
+    max-height: 175px;
+  }
+
+  h1 {
+    margin-top: -40%;
+  }
+
+  .letras-palabras input {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    margin: 2px;
+  }
+
+  .botones-palabras button {
+    font-size: 14px;
+  }
+  #salir-palabras {
+    font-size: 14px;
+  }
+
+  #modal-final .modal-contentPalabras {
+    padding: 20px;
+  }
+
+  #modal-final .modal-contentPalabras button {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+  }
+}
