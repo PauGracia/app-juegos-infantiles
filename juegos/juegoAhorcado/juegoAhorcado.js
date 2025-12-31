@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const ah_maxErrores = ah_partesSVG.length; // Ahora es 10 errores máximos
     let ah_usuario = "";
     let ah_puntos = 0;
+    let ah_idioma = "es";
 
     // ================================
     // NUEVAS FUNCIONES PARA LOCALSTORAGE
@@ -203,6 +204,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Iniciar juego
     window.iniciarAhorcado = function () {
+      const selectIdioma = document.getElementById("idioma");
+      ah_idioma = selectIdioma ? selectIdioma.value : "es";
+
       const inputUsuario = document.getElementById("usuario");
       if (!inputUsuario) {
         mostrarModalInfo("No se encontró el campo usuario.");
@@ -240,9 +244,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function ah_nuevaPalabra() {
-      // 'palabras' debe venir de tu archivo palabras.js (array de strings)
+      const lista = palabras[ah_idioma] || palabras.es;
+
       ah_palabraSecreta =
-        palabras[Math.floor(Math.random() * palabras.length)].toUpperCase();
+        lista[Math.floor(Math.random() * lista.length)].toUpperCase();
+
       ah_progreso = Array(ah_palabraSecreta.length).fill("_");
       ah_errores = 0;
 

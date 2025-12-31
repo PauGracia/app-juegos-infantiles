@@ -27,7 +27,8 @@
         <h2>Configuración</h2>
         <label for="idioma">Idioma:</label>
         <select id="idioma">
-          <option value="0">Castellano</option>
+          <option value="0" selected>Castellano</option>
+
           <option value="1">Catalán</option>
           <option value="2">Inglés</option>
         </select>
@@ -63,6 +64,7 @@
 
         <p>✅ Aciertos: <span id="total-aciertos"></span></p>
         <p>❌ Errores: <span id="total-errores"></span></p>
+        <br />
 
         <ul id="lista-resultados"></ul>
 
@@ -72,7 +74,14 @@
       </div>
     </div>
 
-    <!-- Enlaces a scripts JS -->
+    <div class="panel-info" id="panel-info">
+      <p>
+        📘 Palabra <span id="info-actual">1</span> de
+        <span id="info-total">5</span>
+      </p>
+      <p>✅ Aciertos: <span id="info-aciertos">0</span></p>
+      <p>❌ Errores: <span id="info-errores">0</span></p>
+    </div>
 
     <script src="../../assets/js/elementos.js"></script>
     <script src="palabras.js"></script>

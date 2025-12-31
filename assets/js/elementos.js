@@ -173,7 +173,7 @@ const elementos = [
   },
   {
     id: 34,
-    palabras: ["lapìz", "llapis", "pencil"],
+    palabras: ["lapiz", "llapis", "pencil"],
     imagen: "../../assets/img/iconos/lapiz.png",
   },
   {

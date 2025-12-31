@@ -44,23 +44,24 @@ body {
   font-size: 20px;
 }
 
-.modal-palabras button:hover {
-  background-color: #000;
-  color: gray;
-}
-
-.modal-palabras button:active {
-  background-color: #5e5b5b00;
-  color: gray;
-  transform: scale(0.97);
-}
-
 .modal-contentPalabras {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
+  max-width: 80%;
 }
+
+.modal-contentPalabras select#idioma {
+  width: 60%;
+
+  background-color: #f7f7f7;
+  color: #333;
+
+  margin-top: 5px;
+}
+
+/* Estilo móvil para el selector del modal de palabras */
 
 .modal-contentPalabras label,
 .modal-contentPalabras input,
@@ -69,7 +70,7 @@ body {
   line-height: 1.5;
   padding: 5px 10px;
   height: 30px;
-  box-sizing: border-box; /* Para que el padding no aumente el ancho */
+  box-sizing: border-box;
   vertical-align: middle;
 }
 
@@ -79,7 +80,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100dvh;
-  padding-bottom: 120px; /* espacio para teclado */
+  padding-bottom: 120px;
   color: white;
 }
 
@@ -202,6 +203,35 @@ body {
   margin: 8px;
 }
 
+.panel-info {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: calc(100% - 32px);
+  max-width: 360px;
+
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+
+  padding: 12px 16px;
+  border-radius: 16px;
+
+  font-size: 15px;
+  text-align: center;
+
+  z-index: 5;
+  pointer-events: none;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.panel-info p {
+  margin: 4px;
+  padding: 1px;
+}
+
 @keyframes modalFadeIn {
   from {
     transform: scale(0.95);
@@ -249,11 +279,16 @@ body {
 
   #modal-final .modal-contentPalabras {
     padding: 20px;
+    width: auto;
+    max-width: 300px;
   }
 
   #modal-final .modal-contentPalabras button {
     display: block;
     width: 100%;
     margin: 8px 0;
+  }
+  .panel-info {
+    width: calc(80% - 32px);
   }
 }

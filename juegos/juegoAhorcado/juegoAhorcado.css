@@ -227,6 +227,39 @@
   text-align: center;
 }
 
+/*Estilos del selector de idioma */
+#modal-inicio select#idioma {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #f0f0f0;
+  border: 2px solid #555;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-family: "Arial", sans-serif;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  width: 180px;
+  margin-left: 8px;
+  margin-top: 5px;
+}
+
+/* Icono de flecha personalizada */
+#modal-inicio select#idioma::-ms-expand {
+  display: none;
+}
+
+/* Flecha personalizada */
+#modal-inicio select#idioma {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='0,0 12,0 6,6' fill='%23333'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  padding-right: 30px; /* espacio para la flecha */
+}
+
 @media (max-width: 680px) {
   .boton-volver-ahorcado button {
     width: 30%;
