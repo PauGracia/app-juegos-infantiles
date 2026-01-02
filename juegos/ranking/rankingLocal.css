@@ -79,10 +79,12 @@ button.danger {
   background: #e53935;
   color: white;
   border: none;
+  font-size: 18px;
 }
 
 #btnVolverJuego {
   background: #4d4646;
   color: white;
   border: none;
+  font-size: 18px;
 }

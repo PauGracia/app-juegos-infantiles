@@ -1,0 +1,207 @@
+/*----Juego Operaciones-----*/
+
+.body-operaciones {
+  background-color: #ffffd2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /*border: 20px solid #0893ff;*/
+  box-sizing: border-box;
+  overflow-y: auto;
+  min-height: 100vh;
+  padding-bottom: 20px;
+}
+
+body.body-operaciones {
+  background-image: url("../../assets/img/imagenes/pizarra.jpg");
+  background-size: cover; /* la imagen cubre toda la pantalla */
+  background-position: center; /* centrada */
+  background-repeat: no-repeat; /* no se repite */
+  height: 100%; /* asegurar que el body ocupe toda la pantalla */
+  margin: 0;
+  padding: 0;
+}
+
+.titulo-operaciones {
+  color: #f5f5f0;
+  font-size: 90px;
+  margin-bottom: 40px;
+  margin-top: 40px;
+  border-radius: 15px;
+  padding: 0 15px 15px 15px;
+}
+
+.botones-operaciones {
+  margin: 20px;
+}
+
+.botones-operaciones button {
+  background-color: black;
+  color: #f5f5f0;
+  font-size: 25px;
+  width: 200px;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.botones-operaciones button:hover {
+  background-color: rgb(44, 43, 43);
+  color: #f5f5f0;
+  cursor: pointer;
+}
+
+.botones-operaciones button:active {
+  background-color: gray;
+  color: #f5f5f0;
+  transform: scale(0.97);
+}
+
+#boton-salir-operaciones {
+  display: flex;
+  justify-content: center;
+}
+
+#boton-salir-operaciones button {
+  background-color: #f5f5f0;
+  color: black;
+  font-size: 25px;
+  width: 200px;
+  padding: 10px;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+#boton-salir-operaciones button:hover {
+  background-color: rgba(255, 255, 255, 0.76);
+  cursor: pointer;
+}
+
+#boton-salir-operaciones button:active {
+  background-color: gray;
+  transform: scale(0.97);
+}
+
+.operaciones-pizarra {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-width: 95%; /* para que no salga horizontal scroll */
+  overflow-y: visible; /* permitir que suba/baje con teclado */
+}
+
+.operacion {
+  font-family: monospace;
+  font-size: 30px;
+  text-align: right;
+  background-color: white;
+  padding: 15px;
+  width: 150px;
+  border-radius: 10px;
+}
+
+.resultado-input {
+  width: 100%;
+  font-size: 28px;
+  text-align: right;
+  margin-top: 10px;
+}
+
+.correcto {
+  background-color: #c3f7c3;
+}
+
+.incorrecto {
+  background-color: #f7c3c3;
+}
+
+/* Modal de juego operaciones */
+.modal-operaciones {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #fffff0;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  color: black;
+}
+
+.modal-content input {
+  font-size: 20px;
+  padding: 10px;
+  margin: 10px;
+  width: 250px;
+  border: 2px solid black;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.modal-content button {
+  margin-top: 20px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  background-color: #ffffd2;
+  color: black;
+  font-size: 20px;
+  border: 4px solid black;
+  width: 150px;
+  padding: 5px;
+  margin: 5px;
+  transition: all 0.2s ease;
+}
+
+/* Móviles */
+@media (max-width: 680px) {
+  .operacion {
+    width: 90px;
+    font-size: 18px;
+    padding: 6px;
+    box-sizing: border-box;
+  }
+
+  .operaciones-pizarra {
+    gap: 10px;
+  }
+
+  .resultado-input {
+    font-size: 14px;
+    padding: 2px 4px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: right;
+  }
+  .botones-operaciones button {
+    width: 100px;
+    font-size: 15px;
+    padding: 8px;
+    margin-bottom: 20px;
+  }
+  .titulo-operaciones {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  #boton-salir-operaciones button {
+    width: 100px;
+    font-size: 15px;
+    padding: 8px;
+  }
+}

@@ -1,5 +1,11 @@
 /* === ESTILOS ESPECÍFICOS: JUEGO DEL AHORCADO === */
 
+body,
+html {
+  overscroll-behavior: contain;
+  touch-action: manipulation;
+}
+
 .body-ahorcado {
   font-family: Arial, sans-serif;
   text-align: center;
@@ -30,7 +36,7 @@
 .contenedor-juego {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+
   gap: 50px;
   margin-top: 30px;
   flex-wrap: wrap;
@@ -260,7 +266,19 @@
   padding-right: 30px; /* espacio para la flecha */
 }
 
-@media (max-width: 680px) {
+@media (max-width: 780px) {
+  .contenedor-juego {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* ocupa toda la altura disponible */
+    max-height: 100vh; /* no sobrepasa la pantalla */
+    gap: 20px;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden; /* evita scroll vertical */
+  }
+
   .boton-volver-ahorcado button {
     width: 30%;
     font-size: 1em;
