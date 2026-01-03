@@ -18,26 +18,57 @@
         <h2>Configuración de Operaciones</h2>
 
         <label for="nivel">Nivel de dificultad:</label><br />
-        <select id="nivel">
+        <select id="nivel" onchange="cambiarNivel()">
           <option value="1">Nivel 1 (fácil)</option>
-          <option value="2">Nivel 2 (avanzado)</option></select
-        ><br /><br />
+          <option value="2">Nivel 2 (avanzado)</option>
+        </select>
+        <br /><br />
 
-        <input
-          type="number"
-          id="input-operaciones"
-          placeholder="Número de operaciones (máx 50)"
-          min="1"
-          max="50"
-        /><br />
+        <div class="modal-inputs">
+          <input
+            type="number"
+            id="input-operaciones"
+            placeholder="Número de operaciones (máx 50)"
+            min="1"
+            max="50"
+          />
+          <input
+            type="number"
+            id="input-maximo"
+            placeholder="Número Operador (solo nivel 1)"
+            min="0"
+            max="1000"
+          />
+        </div>
 
-        <input
-          type="number"
-          id="input-maximo"
-          placeholder="Número Operador (solo nivel 1)"
-          min="0"
-          max="1000"
-        /><br />
+        <!-- Opciones Nivel 2 -->
+        <div id="opciones-nivel2" class="nivel2-opciones oculto">
+          <h3>Operaciones permitidas</h3>
+
+          <label><input type="checkbox" id="op-suma" checked /> Sumas</label
+          ><br />
+          <label><input type="checkbox" id="op-resta" checked /> Restas</label
+          ><br />
+
+          <label
+            ><input type="checkbox" id="op-multi" checked />
+            Multiplicaciones</label
+          ><br />
+          <label><input type="checkbox" id="op-div" checked /> Divisiones</label
+          ><br />
+          <label class="sub-opcion">
+            <input type="checkbox" id="resta-negativa" checked />
+            Permitir resultado negativo </label
+          ><br /><br />
+
+          <input
+            type="number"
+            id="input-maximo-nivel2"
+            placeholder="Número máximo coeficiente"
+            min="1"
+            max="1000"
+          />
+        </div>
 
         <button onclick="iniciar()">Iniciar</button>
       </div>
@@ -54,6 +85,14 @@
 
     <div id="boton-salir-operaciones">
       <button onclick="window.location.href='../../index.html'">Salir</button>
+    </div>
+
+    <!-- Modal de aviso/informativo -->
+    <div class="modal-aviso oculto" id="modal-aviso">
+      <div class="modal-aviso-content">
+        <p id="mensaje-aviso">Este es un mensaje de prueba</p>
+        <button onclick="cerrarModalAviso()">Aceptar</button>
+      </div>
     </div>
 
     <script src="operaciones.js"></script>

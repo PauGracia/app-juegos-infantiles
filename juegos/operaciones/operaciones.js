@@ -7,6 +7,178 @@ const MAX_OPERANDO = 1000;
 const nivelSelect = document.getElementById("nivel");
 const inputMaximo = document.getElementById("input-maximo");
 
+function cambiarNivel() {
+  const nivel = document.getElementById("nivel").value;
+  const opciones = document.getElementById("opciones-nivel2");
+  const inputNivel1 = document.getElementById("input-maximo");
+
+  if (nivel === "2") {
+    opciones.classList.remove("oculto");
+    inputNivel1.style.display = "none";
+  } else {
+    opciones.classList.add("oculto");
+    inputNivel1.style.display = "block";
+  }
+}
+
+function iniciar() {
+  const nivel = document.getElementById("nivel").value;
+  const cantidadInput = document.getElementById("input-operaciones").value;
+  const maxInput = document.getElementById("input-maximo").value;
+
+  // Validar número de operaciones
+  const cantidad = parseInt(cantidadInput);
+  if (
+    !cantidadInput ||
+    isNaN(cantidad) ||
+    cantidad < 1 ||
+    cantidad > MAX_OPERACIONES
+  ) {
+    mostrarModalAviso("Introduce un número válido de operaciones (1-50).");
+    return;
+  }
+
+  if (nivel === "1") {
+    // Validar máximo operando
+    const max = parseInt(maxInput);
+    if (!maxInput || isNaN(max) || max < 0 || max > MAX_OPERANDO) {
+      mostrarModalAviso(
+        "Introduce un número válido para el máximo operando (0-1000)."
+      );
+      return;
+    }
+    document.getElementById("pizarra").innerHTML = "";
+    document.getElementById("modal-operaciones").style.display = "none";
+    generarNivel1(cantidad, max);
+  } else {
+    // Nivel 2: validar que haya al menos un tipo de operación seleccionada
+    const operacionesSeleccionadas = [
+      "op-suma",
+      "op-resta",
+      "op-multi",
+      "op-div",
+    ].some((id) => document.getElementById(id).checked);
+
+    if (!operacionesSeleccionadas) {
+      mostrarModalAviso("Selecciona al menos una operación en nivel 2.");
+      return; // <-- aquí no hacemos nada más hasta que el usuario corrija
+    }
+
+    document.getElementById("pizarra").innerHTML = "";
+    document.getElementById("modal-operaciones").style.display = "none";
+    generarNivel2(cantidad);
+  }
+}
+
+function generarNivel1(cantidad, max) {
+  for (let i = 0; i < cantidad; i++) {
+    let a = random(max, false);
+    let b = random(max, false);
+    let op = Math.random() < 0.5 ? "+" : "-";
+
+    if (op === "-" && b > a) {
+      [a, b] = [b, a]; // evitar negativos
+    }
+
+    crearOperacion(a, b, op);
+  }
+}
+
+function generarNivel2(cantidad) {
+  const max =
+    parseInt(document.getElementById("input-maximo-nivel2").value) || 10;
+
+  const permitirNegativo = document.getElementById("resta-negativa").checked;
+
+  const operaciones = [];
+  if (document.getElementById("op-suma").checked) operaciones.push("+");
+  if (document.getElementById("op-resta").checked) operaciones.push("-");
+  if (document.getElementById("op-multi").checked) operaciones.push("*");
+  if (document.getElementById("op-div").checked) operaciones.push("/");
+
+  if (operaciones.length === 0) {
+    mostrarModalAviso("Selecciona al menos una operación en nivel 2.");
+
+    return;
+  }
+
+  for (let i = 0; i < cantidad; i++) {
+    let op = operaciones[Math.floor(Math.random() * operaciones.length)];
+    let a, b;
+
+    switch (op) {
+      case "+":
+        a = random(max, permitirNegativo);
+        b = random(max, permitirNegativo);
+        break;
+
+      case "-":
+        a = random(max, permitirNegativo);
+        b = random(max, permitirNegativo);
+
+        if (!permitirNegativo && b > a) {
+          [a, b] = [b, a]; // evita negativos
+        }
+        break;
+
+      case "*":
+        a = random(max, permitirNegativo);
+        b = random(max, permitirNegativo);
+        break;
+
+      case "/":
+        b = random(max, false) || 1;
+        a = random(max, false);
+
+        a = Math.floor(a / b) * b;
+        break;
+    }
+
+    crearOperacion(a, b, op);
+  }
+}
+
+function random(max, permitirNegativo) {
+  if (permitirNegativo) {
+    return Math.floor(Math.random() * (max * 2 + 1)) - max;
+  }
+  return Math.floor(Math.random() * (max + 1));
+}
+
+function crearOperacion(a, b, op) {
+  const pizarra = document.getElementById("pizarra");
+
+  const div = document.createElement("div");
+  div.className = "operacion";
+
+  let resultado;
+  switch (op) {
+    case "+":
+      resultado = a + b;
+      break;
+    case "-":
+      resultado = a - b;
+      break;
+    case "*":
+      resultado = a * b;
+      break;
+    case "/":
+      resultado = a / b;
+      break;
+  }
+
+  div.dataset.resultado = resultado;
+
+  div.innerHTML = `
+    <div class="linea arriba">${a}</div>
+    <div class="linea operador">${op} ${b}</div>
+    <div class="linea raya"></div>
+    <input type="number" class="resultado-input" />
+  `;
+
+  pizarra.appendChild(div);
+}
+
 // Configurar comportamiento del nivel 2 (deshabilitar operador máximo)
 if (nivelSelect && inputMaximo) {
   nivelSelect.addEventListener("change", () => {
@@ -24,136 +196,37 @@ if (nivelSelect && inputMaximo) {
   nivelSelect.dispatchEvent(new Event("change"));
 }
 
-// Array para almacenar las operaciones generadas
-let operaciones = [];
+function comprobarRespuestas() {
+  const operaciones = document.querySelectorAll(".operacion");
 
-// Función principal para iniciar el juego de operaciones (EXPORTADA GLOBALMENTE)
-window.iniciar = function () {
-  // Obtener valores de configuración del usuario
-  const nivel = parseInt(document.getElementById("nivel").value);
-  const numOperaciones = parseInt(
-    document.getElementById("input-operaciones").value
-  );
-  const maxValor =
-    parseInt(document.getElementById("input-maximo").value) || MAX_OPERANDO;
+  operaciones.forEach((opDiv) => {
+    const input = opDiv.querySelector(".resultado-input");
+    const resultadoCorrecto = Number(opDiv.dataset.resultado);
+    const valorUsuario = Number(input.value);
 
-  // Validaciones de entrada
-  if (
-    isNaN(numOperaciones) ||
-    numOperaciones < 1 ||
-    numOperaciones > MAX_OPERACIONES
-  ) {
-    alert("Por favor, introduce un número válido de operaciones.");
-    return;
-  }
-
-  if (
-    nivel === 1 &&
-    (isNaN(maxValor) || maxValor < 0 || maxValor > MAX_OPERANDO)
-  ) {
-    alert("Por favor, introduce un número válido para el máximo operando.");
-    return;
-  }
-
-  // Ocultar modal de configuración y generar operaciones
-  document.getElementById("modal-operaciones").style.display = "none";
-  generarOperaciones(numOperaciones, nivel, maxValor);
-};
-
-// Función para generar las operaciones matemáticas
-function generarOperaciones(cantidad, nivel, max) {
-  const pizarra = document.getElementById("pizarra");
-  pizarra.innerHTML = ""; // Limpiar pizarra anterior
-  operaciones = []; // Reiniciar array de operaciones
-
-  // Generar cada operación
-  for (let i = 0; i < cantidad; i++) {
-    let a, b, operador, resultadoReal;
-
-    // Lógica diferente según el nivel seleccionado
-    if (nivel === 1) {
-      // Nivel 1: sumas y restas sin resultados negativos
-      a = Math.floor(Math.random() * (max + 1));
-      b = Math.floor(Math.random() * (max + 1));
-      operador = Math.random() < 0.5 ? "+" : "-";
-
-      // Evitar resultados negativos en restas
-      if (operador === "-" && b > a) {
-        [a, b] = [b, a]; // Intercambiar valores
-      }
-      resultadoReal = operador === "+" ? a + b : a - b;
-    } else {
-      // Nivel 2: todas las operaciones básicas (+,-,*,/)
-      const operadores = ["+", "-", "*", "/"];
-      operador = operadores[Math.floor(Math.random() * operadores.length)];
-      a = Math.floor(Math.random() * (MAX_OPERANDO + 1));
-      b = Math.floor(Math.random() * (MAX_OPERANDO + 1));
-
-      // Lógica específica para cada operador
-      if (operador === "/") {
-        while (b === 0) {
-          b = Math.floor(Math.random() * (MAX_OPERANDO + 1)); // evitar división entre 0
-        }
-        resultadoReal = a / b;
-        resultadoReal = parseFloat(resultadoReal.toFixed(2)); // limitar decimales
-      } else if (operador === "+") {
-        resultadoReal = a + b;
-      } else if (operador === "-") {
-        resultadoReal = a - b;
-      } else if (operador === "*") {
-        resultadoReal = a * b;
-      }
-    }
-
-    // Guardar operación en el array
-    operaciones.push({ a, b, operador, resultadoReal });
-
-    // Crear elemento HTML para la operación
-    let div = document.createElement("div");
-    div.className = "operacion";
-
-    let input = document.createElement("input");
-    input.type = "number";
-    input.className = "resultado-input";
-
-    // Evento para limpiar estilos al enfocar
-    input.addEventListener("focus", () => {
-      if (
-        input.classList.contains("incorrecto") ||
-        input.classList.contains("correcto")
-      ) {
-        input.value = "";
-        input.classList.remove("incorrecto", "correcto");
-      }
-    });
-
-    // Estructura visual de la operación
-    div.innerHTML = `${a}<br>${operador} ${b}<br><hr>`;
-    div.appendChild(input);
-    pizarra.appendChild(div);
-  }
-}
-
-// Botón para salir del juego de operaciones
-const botonSalirOperaciones = document.getElementById(
-  "boton-salir-operaciones"
-);
-if (botonSalirOperaciones) {
-  botonSalirOperaciones.addEventListener("click", () => {
-    location.href = "../../index.html";
-  });
-}
-
-// Función para comprobar las respuestas del usuario
-window.comprobarRespuestas = function () {
-  const inputs = document.querySelectorAll(".resultado-input");
-  inputs.forEach((input, index) => {
-    let valorUsuario = parseFloat(input.value);
-    let correcto = valorUsuario === operaciones[index].resultadoReal;
-
-    // Aplicar estilos según si es correcto o incorrecto
     input.classList.remove("correcto", "incorrecto");
-    input.classList.add(correcto ? "correcto" : "incorrecto");
-    if (correcto) input.disabled = true; // Bloquear inputs correctos
+
+    if (valorUsuario === resultadoCorrecto) {
+      input.classList.add("correcto");
+      input.disabled = true;
+    } else {
+      input.classList.add("incorrecto");
+    }
   });
-};
+}
+
+// Mostrar mensaje en el modal de aviso
+function mostrarModalAviso(mensaje) {
+  const modal = document.getElementById("modal-aviso");
+  const mensajeP = document.getElementById("mensaje-aviso");
+  mensajeP.textContent = mensaje; // asigna el mensaje
+  modal.classList.remove("oculto"); // abre el modal
+}
+
+// Cerrar modal
+function cerrarModalAviso() {
+  const modal = document.getElementById("modal-aviso");
+  const mensajeP = document.getElementById("mensaje-aviso"); // definirlo aquí también
+  mensajeP.textContent = ""; // limpiar mensaje
+  modal.classList.add("oculto");
+}
