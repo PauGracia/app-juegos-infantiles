@@ -7,6 +7,8 @@ const MAX_OPERANDO = 1000;
 const nivelSelect = document.getElementById("nivel");
 const inputMaximo = document.getElementById("input-maximo");
 
+let numeroComprobaciones = 0;
+
 function cambiarNivel() {
   const nivel = document.getElementById("nivel").value;
   const opciones = document.getElementById("opciones-nivel2");
@@ -168,6 +170,10 @@ function crearOperacion(a, b, op) {
   }
 
   div.dataset.resultado = resultado;
+  div.dataset.operacion = op;
+  div.dataset.estado = "pendiente"; // pendiente | bien | mal
+  div.dataset.texto = `${a} ${op} ${b}`;
+  div.dataset.primer = ""; // aún no evaluada
 
   div.innerHTML = `
     <div class="linea arriba">${a}</div>
@@ -197,22 +203,86 @@ if (nivelSelect && inputMaximo) {
 }
 
 function comprobarRespuestas() {
+  numeroComprobaciones++;
+
   const operaciones = document.querySelectorAll(".operacion");
 
   operaciones.forEach((opDiv) => {
+    // si ya está bien, no se vuelve a evaluar
+    if (opDiv.dataset.estado === "bien") return;
+
     const input = opDiv.querySelector(".resultado-input");
-    const resultadoCorrecto = Number(opDiv.dataset.resultado);
-    const valorUsuario = Number(input.value);
+    const valorTexto = input.value.trim();
+
+    if (valorTexto === "") return;
+
+    const correcto = Number(opDiv.dataset.resultado);
+    const usuario = Number(valorTexto);
 
     input.classList.remove("correcto", "incorrecto");
 
-    if (valorUsuario === resultadoCorrecto) {
+    // ACERTADO
+    if (usuario === correcto) {
       input.classList.add("correcto");
       input.disabled = true;
-    } else {
+      opDiv.dataset.estado = "bien";
+
+      // guardar PRIMER resultado si no existe
+      if (opDiv.dataset.primer === "") {
+        opDiv.dataset.primer = "bien";
+      }
+    }
+    // FALLADO
+    else {
       input.classList.add("incorrecto");
+
+      // guardar PRIMER resultado si no existe
+      if (opDiv.dataset.primer === "") {
+        opDiv.dataset.primer = "mal";
+      }
     }
   });
+
+  // ¿Juego terminado?
+  const terminado = [...operaciones].every(
+    (op) => op.dataset.estado === "bien"
+  );
+
+  if (terminado) {
+    generarResumenFinal();
+  }
+}
+
+function generarResumenFinal() {
+  const operaciones = document.querySelectorAll(".operacion");
+
+  const estadisticas = {
+    "+": { bien: 0, mal: 0 },
+    "-": { bien: 0, mal: 0 },
+    "*": { bien: 0, mal: 0 },
+    "/": { bien: 0, mal: 0 },
+  };
+
+  const listaBien = [];
+  const listaMal = [];
+
+  operaciones.forEach((opDiv) => {
+    const tipo = opDiv.dataset.operacion;
+    const primer = opDiv.dataset.primer;
+    const texto = opDiv.dataset.texto;
+
+    if (primer === "bien") {
+      estadisticas[tipo].bien++;
+      listaBien.push(texto);
+    }
+
+    if (primer === "mal") {
+      estadisticas[tipo].mal++;
+      listaMal.push(texto);
+    }
+  });
+
+  mostrarModalFinal(estadisticas, listaBien, listaMal, numeroComprobaciones);
 }
 
 // Mostrar mensaje en el modal de aviso
@@ -229,4 +299,51 @@ function cerrarModalAviso() {
   const mensajeP = document.getElementById("mensaje-aviso"); // definirlo aquí también
   mensajeP.textContent = ""; // limpiar mensaje
   modal.classList.add("oculto");
+}
+
+function mostrarModalFinal(stats, listaBien, listaMal, comprobaciones) {
+  document.getElementById("modal-final").classList.remove("oculto");
+
+  document.getElementById(
+    "resumen-general"
+  ).textContent = `Comprobaciones realizadas: ${comprobaciones}`;
+
+  const nombres = {
+    "+": "Sumas",
+    "-": "Restas",
+    "*": "Multiplicaciones",
+    "/": "Divisiones",
+  };
+
+  const contenedorStats = document.getElementById("estadisticas-operaciones");
+  contenedorStats.innerHTML = "";
+
+  for (const op in stats) {
+    const { bien, mal } = stats[op];
+    if (bien === 0 && mal === 0) continue;
+
+    const p = document.createElement("p");
+    p.textContent = `${nombres[op]} → ✔️ ${bien} | ❌ ${mal}`;
+    contenedorStats.appendChild(p);
+  }
+
+  const ulBien = document.getElementById("lista-bien");
+  ulBien.innerHTML = "";
+  listaBien.forEach((op) => {
+    const li = document.createElement("li");
+    li.textContent = op;
+    ulBien.appendChild(li);
+  });
+
+  const ulMal = document.getElementById("lista-mal");
+  ulMal.innerHTML = "";
+  listaMal.forEach((op) => {
+    const li = document.createElement("li");
+    li.textContent = op;
+    ulMal.appendChild(li);
+  });
+}
+
+function cerrarModalFinal() {
+  document.getElementById("modal-final").classList.add("oculto");
 }

@@ -87,6 +87,31 @@
       <button onclick="window.location.href='../../index.html'">Salir</button>
     </div>
 
+    <!-- Modal final-->
+    <div class="modal-aviso oculto" id="modal-final">
+      <div class="modal-aviso-content">
+        <h2>Juego terminado 🎉</h2>
+
+        <p id="resumen-general"></p>
+        <div id="estadisticas-operaciones"></div>
+
+        <div class="bloque-detalles">
+          <details>
+            <summary>Operaciones correctas</summary>
+            <ul id="lista-bien"></ul>
+          </details>
+
+          <details>
+            <summary>Operaciones incorrectas</summary>
+            <ul id="lista-mal"></ul>
+          </details>
+        </div>
+
+        <button onclick="location.reload()">Reiniciar</button>
+        <button onclick="window.location.href='../../index.html'">Salir</button>
+      </div>
+    </div>
+
     <!-- Modal de aviso/informativo -->
     <div class="modal-aviso oculto" id="modal-aviso">
       <div class="modal-aviso-content">
