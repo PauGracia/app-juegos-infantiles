@@ -1,6 +1,51 @@
 // ================================
 // Juego de Damas
 // ================================
+
+// ================================
+// SONIDOS
+// ================================
+
+document.addEventListener(
+  "click",
+  () => {
+    ["movement", "comer1", "you-win", "game-over"].forEach((s) => {
+      const a = new Audio(`sounds/${s}.mp3`);
+      a.volume = 0;
+      a.play().catch(() => {});
+    });
+  },
+  { once: true }
+);
+
+const sonidosDamas = {
+  movimiento: () => {
+    const a = new Audio("sounds/movement.mp3");
+    a.volume = 0.8;
+    a.play();
+  },
+  comer: () => {
+    const a = new Audio("sounds/comer1.mp3");
+    a.volume = 0.9;
+    a.play();
+  },
+  ganar: () => {
+    const a = new Audio("sounds/you-win.mp3");
+    a.volume = 1;
+    a.play();
+  },
+  perder: () => {
+    const a = new Audio("sounds/game-over.mp3");
+    a.volume = 1;
+    a.play();
+  },
+  coronar: () => {
+    const a = new Audio("sounds/christmas.mp3");
+    a.volume = 1;
+    a.play();
+  },
+};
+
 const JuegoDamas = (() => {
   // ======================================================================
   // VARIABLES
@@ -63,6 +108,7 @@ const JuegoDamas = (() => {
   // ======================================================================
   // DIBUJAR TABLERO
   // ======================================================================
+
   function dibujarTableroDamas() {
     tableroDamasPrincipal.innerHTML = "";
 
@@ -284,6 +330,7 @@ const JuegoDamas = (() => {
 
   function ejecutarMovimientoDamas(mov) {
     const { desde, hacia, capturas, reyDespues } = mov;
+
     const pieza = estadoGlobalDamas.matrizDamas[desde.r][desde.c];
     estadoGlobalDamas.matrizDamas[hacia.r][hacia.c] = pieza;
     estadoGlobalDamas.matrizDamas[desde.r][desde.c] = null;
@@ -297,7 +344,15 @@ const JuegoDamas = (() => {
       }
     }
 
-    if (reyDespues) pieza.rey = true;
+    if (reyDespues && !pieza.rey) {
+      pieza.rey = true;
+      sonidosDamas.coronar();
+    } else if (capturas.length) {
+      sonidosDamas.comer();
+    } else {
+      sonidosDamas.movimiento();
+    }
+
     estadoGlobalDamas.seleccionActualDamas = null;
     estadoGlobalDamas.movimientosDisponiblesDamas = [];
     dibujarTableroDamas();
@@ -366,9 +421,11 @@ const JuegoDamas = (() => {
     if (gano) {
       icono.textContent = "🏆";
       mensaje.textContent = "¡Has ganado!";
+      sonidosDamas.ganar();
     } else {
       icono.textContent = "❌";
       mensaje.textContent = "Has perdido";
+      sonidosDamas.perder();
     }
 
     // Botones
