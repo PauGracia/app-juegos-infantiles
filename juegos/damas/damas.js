@@ -57,6 +57,7 @@ const JuegoDamas = (() => {
   const estadoGlobalDamas = {
     matrizDamas: [],
     ladoHumanoAsignado: null,
+    colorHumano: null, // "blancas" o "negras"
     turnoActualDamas: null,
     seleccionActualDamas: null,
     movimientosDisponiblesDamas: [],
@@ -96,13 +97,21 @@ const JuegoDamas = (() => {
   // ======================================================================
   // SORTEO DE LADOS Y TURNO
   // ======================================================================
-  function sortearRolesDamas() {
+  /*function sortearRolesDamas() {
     estadoGlobalDamas.ladoHumanoAsignado =
       Math.random() < 0.5 ? "top" : "bottom";
     estadoGlobalDamas.turnoActualDamas = Math.random() < 0.5 ? "humano" : "ia";
 
     document.getElementById("lado-humano-info").textContent =
       estadoGlobalDamas.ladoHumanoAsignado === "top" ? "Arriba" : "Abajo";
+  }*/
+
+  function sortearColoresYTurno() {
+    estadoGlobalDamas.colorHumano = Math.random() < 0.5 ? "blancas" : "negras";
+
+    // El que tiene blancas empieza
+    estadoGlobalDamas.turnoActualDamas =
+      estadoGlobalDamas.colorHumano === "blancas" ? "humano" : "ia";
   }
 
   // ======================================================================
@@ -127,7 +136,14 @@ const JuegoDamas = (() => {
           if (pieza) {
             const esHumano =
               pieza.dueño === estadoGlobalDamas.ladoHumanoAsignado;
-            dot.classList.add(esHumano ? "pieza-humano" : "pieza-ia");
+
+            const humanoEsBlanco = estadoGlobalDamas.colorHumano === "blancas";
+
+            if (esHumano) {
+              dot.classList.add(humanoEsBlanco ? "pieza-humano" : "pieza-ia");
+            } else {
+              dot.classList.add(humanoEsBlanco ? "pieza-ia" : "pieza-humano");
+            }
 
             if (pieza.rey) {
               dot.classList.add("rey-damas");
@@ -714,6 +730,8 @@ const JuegoDamas = (() => {
       estadoGlobalDamas.capturasHumano;
     document.getElementById("capturas-ia-info").textContent =
       estadoGlobalDamas.capturasIA;
+    document.getElementById("color-humano-info").textContent =
+      estadoGlobalDamas.colorHumano === "blancas" ? "Blancas" : "Negras";
   }
 
   function buscarCapturasGeneralesDamas(turno) {
@@ -738,7 +756,10 @@ const JuegoDamas = (() => {
   // ======================================================================
   function resetGameDamasUltra() {
     generarTableroInicialDamas();
-    sortearRolesDamas();
+    estadoGlobalDamas.ladoHumanoAsignado = "bottom";
+    document.getElementById("lado-humano-info").textContent = "Abajo";
+    sortearColoresYTurno();
+
     estadoGlobalDamas.seleccionActualDamas = null;
     estadoGlobalDamas.movimientosDisponiblesDamas = [];
     estadoGlobalDamas.juegoTerminadoFlag = false;
@@ -766,14 +787,14 @@ const JuegoDamas = (() => {
       .getElementById("boton-reinicio-damas")
       .addEventListener("click", resetGameDamasUltra);
 
-    document
+    /*document
       .getElementById("boton-voltear-damas")
       .addEventListener("click", () => {
         estadoGlobalDamas.tableroGiradoFlag =
           !estadoGlobalDamas.tableroGiradoFlag;
         tableroDamasPrincipal.style.transform =
           estadoGlobalDamas.tableroGiradoFlag ? "rotate(180deg)" : "";
-      });
+      });*/
 
     resetGameDamasUltra();
   }
@@ -784,3 +805,19 @@ const JuegoDamas = (() => {
     reset: resetGameDamasUltra,
   };
 })();
+
+// ======================================================================
+// MODAL INSTRUCCIONES
+// =============================================================
+
+document
+  .getElementById("boton-instrucciones-damas")
+  .addEventListener("click", () => {
+    document.getElementById("modal-instrucciones-damas").style.display = "flex";
+  });
+
+document
+  .getElementById("boton-cerrar-instrucciones")
+  .addEventListener("click", () => {
+    document.getElementById("modal-instrucciones-damas").style.display = "none";
+  });

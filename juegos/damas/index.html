@@ -18,6 +18,8 @@
         <div id="tablero-damas"></div>
 
         <div class="info-panel-damas">
+          <div><b>Tus piezas:</b> <span id="color-humano-info">—</span></div>
+
           <div><b>Tu lado:</b> <span id="lado-humano-info">—</span></div>
           <div><b>Turno:</b> <span id="turno-info">—</span></div>
           <div><b>Ganador:</b> <span id="ganador-info">—</span></div>
@@ -36,9 +38,13 @@
         </div>
         <div>
           <button class="boton-damas" id="boton-reinicio-damas">Sortear</button>
-          <button class="boton-damas" id="boton-voltear-damas">
+          <!-- <button class="boton-damas" id="boton-voltear-damas">
             Girar Tablero
+          </button>-->
+          <button class="boton-damas" id="boton-instrucciones-damas">
+            Instrucciones
           </button>
+
           <button id="salirDamas" class="boton-damas">Salir</button>
         </div>
       </div>
@@ -53,6 +59,25 @@
             Volver a jugar
           </button>
           <button class="boton-damas" id="boton-salir-modal">Salir</button>
+        </div>
+      </div>
+    </div>
+    <div id="modal-instrucciones-damas" class="modal-fin-damas">
+      <div class="modal-contenido modal-instrucciones">
+        <h2>Cómo jugar a las damas</h2>
+
+        <p class="texto-instrucciones-damas">
+          • El objetivo es capturar todas las fichas del rival.<br /><br />
+          • Las fichas se mueven en diagonal hacia adelante.<br /><br />
+          • Las capturas son obligatorias si existen.<br /><br />
+          • Si una ficha llega al extremo contrario, se convierte en reina.<br /><br />
+          • Las reinas pueden moverse en todas las diagonales.
+        </p>
+
+        <div class="botones-modal">
+          <button class="boton-damas" id="boton-cerrar-instrucciones">
+            Salir
+          </button>
         </div>
       </div>
     </div>
