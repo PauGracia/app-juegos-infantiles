@@ -52,10 +52,12 @@ const JuegoDamas = (() => {
   // ======================================================================
   const tableroDamasPrincipal = document.getElementById("tablero-damas");
 
+  let animacionEnCurso = false;
+
   const estadoGlobalDamas = {
     matrizDamas: [],
-    ladoHumanoAsignado: null, // 'top' / 'bottom'
-    turnoActualDamas: null, // 'humano' / 'ia'
+    ladoHumanoAsignado: null,
+    turnoActualDamas: null,
     seleccionActualDamas: null,
     movimientosDisponiblesDamas: [],
     tableroGiradoFlag: false,
@@ -80,13 +82,11 @@ const JuegoDamas = (() => {
       Array(8).fill(null)
     );
 
-    // Coloca fichas arriba (top)
     for (let r = 0; r < 3; r++)
       for (let c = 0; c < 8; c++)
         if ((r + c) % 2 === 1)
           estadoGlobalDamas.matrizDamas[r][c] = { dueño: "top", rey: false };
 
-    // Coloca fichas abajo (bottom)
     for (let r = 5; r < 8; r++)
       for (let c = 0; c < 8; c++)
         if ((r + c) % 2 === 1)
@@ -108,7 +108,6 @@ const JuegoDamas = (() => {
   // ======================================================================
   // DIBUJAR TABLERO
   // ======================================================================
-
   function dibujarTableroDamas() {
     tableroDamasPrincipal.innerHTML = "";
 
@@ -129,7 +128,16 @@ const JuegoDamas = (() => {
             const esHumano =
               pieza.dueño === estadoGlobalDamas.ladoHumanoAsignado;
             dot.classList.add(esHumano ? "pieza-humano" : "pieza-ia");
-            if (pieza.rey) dot.classList.add("rey-damas");
+
+            if (pieza.rey) {
+              dot.classList.add("rey-damas");
+              if (!dot.querySelector(".corona-simbolo")) {
+                const corona = document.createElement("div");
+                corona.className = "corona-simbolo";
+                corona.textContent = "♔";
+                dot.appendChild(corona);
+              }
+            }
           } else {
             dot.style.background = "transparent";
             dot.style.cursor = "default";
@@ -255,20 +263,34 @@ const JuegoDamas = (() => {
 
     function buscarSaltos(matriz, x, y, caps, reyAhora) {
       let encontro = false;
-      for (const [dr, dc] of reyAhora
-        ? direcciones
+      const direccionesSaltos = reyAhora
+        ? [
+            [1, 1],
+            [1, -1],
+            [-1, 1],
+            [-1, -1],
+          ]
         : [
             [mueveAbajo, 1],
             [mueveAbajo, -1],
-          ]) {
+          ];
+
+      for (const [dr, dc] of direccionesSaltos) {
         const mr = x + dr,
           mc = y + dc;
         const tr = x + 2 * dr,
           tc = y + 2 * dc;
+
         if (enLimiteDamas(mr, mc) && enLimiteDamas(tr, tc)) {
           const medio = matriz[mr][mc];
           const dest = matriz[tr][tc];
-          if (medio && medio.dueño !== matriz[x][y].dueño && !dest) {
+
+          if (
+            medio &&
+            medio.dueño !== matriz[x][y].dueño &&
+            !dest &&
+            !caps.some((c) => c.r === mr && c.c === mc)
+          ) {
             encontro = true;
             const copia = clonarMatrizDamas(matriz);
             copia[tr][tc] = copia[x][y];
@@ -282,6 +304,7 @@ const JuegoDamas = (() => {
             if (coronar) copia[tr][tc].rey = true;
 
             const nuevasCaps = caps.concat([{ r: mr, c: mc }]);
+
             const rec = buscarSaltos(
               copia,
               tr,
@@ -307,7 +330,6 @@ const JuegoDamas = (() => {
 
     if (capturasTotales.length) return capturasTotales;
 
-    // Movimientos simples
     const movsSimples = [];
     for (const [dr, dc] of direcciones) {
       const nr = r + dr,
@@ -329,23 +351,13 @@ const JuegoDamas = (() => {
   }
 
   function ejecutarMovimientoDamas(mov) {
+    if (animacionEnCurso) return;
+
     const { desde, hacia, capturas, reyDespues } = mov;
-
     const pieza = estadoGlobalDamas.matrizDamas[desde.r][desde.c];
-    estadoGlobalDamas.matrizDamas[hacia.r][hacia.c] = pieza;
-    estadoGlobalDamas.matrizDamas[desde.r][desde.c] = null;
 
-    if (capturas.length) {
-      capturas.forEach((c) => (estadoGlobalDamas.matrizDamas[c.r][c.c] = null));
-      if (estadoGlobalDamas.turnoActualDamas === "humano") {
-        estadoGlobalDamas.capturasHumano += capturas.length;
-      } else {
-        estadoGlobalDamas.capturasIA += capturas.length;
-      }
-    }
-
+    // SONIDO
     if (reyDespues && !pieza.rey) {
-      pieza.rey = true;
       sonidosDamas.coronar();
     } else if (capturas.length) {
       sonidosDamas.comer();
@@ -354,28 +366,247 @@ const JuegoDamas = (() => {
     }
 
     estadoGlobalDamas.seleccionActualDamas = null;
-    estadoGlobalDamas.movimientosDisponiblesDamas = [];
-    dibujarTableroDamas();
 
-    if (capturas.length && estadoGlobalDamas.turnoActualDamas === "humano") {
-      const nuevas = calcularMovimientosDesdeDamas(hacia.r, hacia.c).filter(
-        (m) => m.capturas.length
-      );
-      if (nuevas.length) {
-        estadoGlobalDamas.seleccionActualDamas = { r: hacia.r, c: hacia.c };
-        estadoGlobalDamas.movimientosDisponiblesDamas = nuevas;
-        resaltarSeleccionDamas();
-        return;
+    const idxDesde = indicePlanoDamas(desde.r, desde.c);
+    const celdaDesde = tableroDamasPrincipal.children[idxDesde];
+    const ficha = celdaDesde.querySelector(".dot-pieza");
+
+    if (ficha) {
+      ficha.classList.add("ficha-animada");
+      ficha.style.zIndex = "100";
+      animacionEnCurso = true;
+
+      if (capturas.length > 0) {
+        // Capturas (simples o múltiples)
+        animarCapturasConRuta(desde, capturas, ficha, () => {
+          finalizarMovimiento();
+        });
+      } else {
+        // Movimiento simple
+        animarMovimientoSimple(desde, hacia, ficha, () => {
+          finalizarMovimiento();
+        });
       }
     }
 
-    terminarTurnoDamas();
+    function finalizarMovimiento() {
+      // Actualizar matriz
+      estadoGlobalDamas.matrizDamas[hacia.r][hacia.c] = pieza;
+      estadoGlobalDamas.matrizDamas[desde.r][desde.c] = null;
+
+      // Actualizar contadores
+      if (capturas.length) {
+        if (estadoGlobalDamas.turnoActualDamas === "humano") {
+          estadoGlobalDamas.capturasHumano += capturas.length;
+        } else {
+          estadoGlobalDamas.capturasIA += capturas.length;
+        }
+
+        capturas.forEach((cap) => {
+          estadoGlobalDamas.matrizDamas[cap.r][cap.c] = null;
+        });
+      }
+
+      // Limpiar animación
+      animacionEnCurso = false;
+
+      // Redibujar
+      dibujarTableroDamas();
+
+      // Continuar
+      continuarDespuesDeCapturas();
+    }
+
+    function continuarDespuesDeCapturas() {
+      if (reyDespues && !pieza.rey) {
+        pieza.rey = true;
+        efectoCoronacion(hacia.r, hacia.c);
+      }
+
+      estadoGlobalDamas.seleccionActualDamas = null;
+      estadoGlobalDamas.movimientosDisponiblesDamas = [];
+
+      // Verificar capturas encadenadas
+      if (capturas.length && estadoGlobalDamas.turnoActualDamas === "humano") {
+        const nuevas = calcularMovimientosDesdeDamas(hacia.r, hacia.c).filter(
+          (m) => m.capturas.length
+        );
+        if (nuevas.length) {
+          estadoGlobalDamas.seleccionActualDamas = { r: hacia.r, c: hacia.c };
+          estadoGlobalDamas.movimientosDisponiblesDamas = nuevas;
+          resaltarSeleccionDamas();
+          return;
+        }
+      }
+
+      terminarTurnoDamas();
+    }
+  }
+
+  // ======================================================================
+  // ANIMACIONES SIMPLIFICADAS
+  // ======================================================================
+  function animarCapturasConRuta(desde, capturas, ficha, callback) {
+    const posiciones = [];
+    let posActual = { r: desde.r, c: desde.c };
+
+    // Calcular cada destino de salto
+    capturas.forEach((cap) => {
+      const dr = Math.sign(cap.r - posActual.r);
+      const dc = Math.sign(cap.c - posActual.c);
+
+      const destinoSalto = {
+        r: posActual.r + dr * 2,
+        c: posActual.c + dc * 2,
+      };
+
+      posiciones.push({
+        captura: cap,
+        destino: destinoSalto,
+      });
+
+      posActual = { ...destinoSalto };
+    });
+
+    // Animar paso a paso
+    animarPasosDeCaptura(posiciones, 0, ficha, callback);
+  }
+
+  function animarPasosDeCaptura(posiciones, pasoIndex, ficha, callback) {
+    if (pasoIndex >= posiciones.length) {
+      callback();
+      return;
+    }
+
+    const paso = posiciones[pasoIndex];
+
+    // Mover al destino del salto
+    animarMovimientoASalto(ficha, paso.destino, () => {
+      // Eliminar ficha capturada
+      const idxCaptura = indicePlanoDamas(paso.captura.r, paso.captura.c);
+      const celdaCaptura = tableroDamasPrincipal.children[idxCaptura];
+      const fichaCapturada = celdaCaptura.querySelector(".dot-pieza");
+
+      if (fichaCapturada) {
+        fichaCapturada.classList.add("capturada");
+        setTimeout(() => {
+          fichaCapturada.remove();
+          // Siguiente paso
+          animarPasosDeCaptura(posiciones, pasoIndex + 1, ficha, callback);
+        }, 300);
+      } else {
+        animarPasosDeCaptura(posiciones, pasoIndex + 1, ficha, callback);
+      }
+    });
+  }
+
+  function animarMovimientoASalto(ficha, destino, callback) {
+    const celdaActual = ficha.parentElement;
+    const idxDestino = indicePlanoDamas(destino.r, destino.c);
+    const celdaDestino = tableroDamasPrincipal.children[idxDestino];
+
+    if (!celdaActual || !celdaDestino) {
+      console.error("Celda no encontrada");
+      callback();
+      return;
+    }
+
+    const rectActual = celdaActual.getBoundingClientRect();
+    const rectDestino = celdaDestino.getBoundingClientRect();
+    const dx = rectDestino.left - rectActual.left;
+    const dy = rectDestino.top - rectActual.top;
+
+    ficha.style.transition = "transform 500ms ease-in-out";
+    ficha.style.transform = `translate(${dx}px, ${dy}px)`;
+
+    setTimeout(() => {
+      ficha.style.transition = "none";
+      ficha.style.transform = "translate(0, 0)";
+      celdaDestino.appendChild(ficha);
+      callback();
+    }, 500);
+  }
+
+  function animarMovimientoSimple(desde, hacia, ficha, callback) {
+    const idxDestino = indicePlanoDamas(hacia.r, hacia.c);
+    const celdaDestino = tableroDamasPrincipal.children[idxDestino];
+    const celdaActual = ficha.parentElement;
+
+    if (!celdaActual || !celdaDestino) {
+      console.error("Celda no encontrada");
+      callback();
+      return;
+    }
+
+    const rectActual = celdaActual.getBoundingClientRect();
+    const rectDestino = celdaDestino.getBoundingClientRect();
+    const dx = rectDestino.left - rectActual.left;
+    const dy = rectDestino.top - rectActual.top;
+
+    ficha.style.transition = "transform 500ms ease-in-out";
+    ficha.style.transform = `translate(${dx}px, ${dy}px)`;
+
+    setTimeout(() => {
+      ficha.style.transition = "none";
+      ficha.style.transform = "translate(0, 0)";
+      celdaDestino.appendChild(ficha);
+      callback();
+    }, 500);
+  }
+
+  function efectoCoronacion(r, c) {
+    const idx = indicePlanoDamas(r, c);
+    const celda = tableroDamasPrincipal.children[idx];
+    const ficha = celda.querySelector(".dot-pieza");
+
+    if (!ficha) return;
+
+    const efecto = document.createElement("div");
+    efecto.className = "efecto-coronacion";
+    efecto.style.position = "absolute";
+    efecto.style.width = "100%";
+    efecto.style.height = "100%";
+    efecto.style.borderRadius = "50%";
+    efecto.style.pointerEvents = "none";
+    efecto.style.zIndex = "50";
+
+    celda.appendChild(efecto);
+
+    efecto.animate(
+      [
+        { transform: "scale(1)", opacity: 1 },
+        { transform: "scale(2.5)", opacity: 0 },
+      ],
+      { duration: 1200, easing: "ease-out" }
+    );
+
+    ficha.animate(
+      [
+        { transform: "scale(1)" },
+        { transform: "scale(1.2)" },
+        { transform: "scale(1)" },
+      ],
+      { duration: 800, easing: "ease-in-out" }
+    );
+
+    ficha.classList.add("rey-damas");
+
+    if (!ficha.querySelector(".corona-simbolo")) {
+      const corona = document.createElement("div");
+      corona.className = "corona-simbolo";
+      corona.textContent = "♔";
+      ficha.appendChild(corona);
+    }
+
+    setTimeout(() => efecto.remove(), 1200);
   }
 
   // ======================================================================
   // FIN DE TURNO / IA / GANADOR
   // ======================================================================
   function terminarTurnoDamas() {
+    if (animacionEnCurso) return;
+
     evaluarGanadorDamas();
     if (estadoGlobalDamas.juegoTerminadoFlag) return;
 
@@ -428,7 +659,6 @@ const JuegoDamas = (() => {
       sonidosDamas.perder();
     }
 
-    // Botones
     document.getElementById("boton-reiniciar-modal").onclick = () => {
       modal.style.display = "none";
       estadoGlobalDamas.juegoTerminadoFlag = false;
@@ -464,7 +694,7 @@ const JuegoDamas = (() => {
     estadoGlobalDamas.seleccionActualDamas = choice.desde;
     dibujarTableroDamas();
 
-    setTimeout(() => ejecutarMovimientoDamas(choice), 600);
+    setTimeout(() => ejecutarMovimientoDamas(choice), 1000);
   }
 
   // ======================================================================
@@ -521,19 +751,16 @@ const JuegoDamas = (() => {
     dibujarTableroDamas();
 
     if (estadoGlobalDamas.turnoActualDamas === "ia")
-      setTimeout(movimientoIA_Damas, 300);
+      setTimeout(movimientoIA_Damas, 500);
   }
 
   // ======================================================================
   // INICIALIZACIÓN
   // ======================================================================
   function init() {
-    const salirDamas = document.getElementById("salirDamas");
-    if (salirDamas)
-      salirDamas.addEventListener(
-        "click",
-        () => (location.href = "../../index.html")
-      );
+    document
+      .getElementById("salirDamas")
+      ?.addEventListener("click", () => (location.href = "../../index.html"));
 
     document
       .getElementById("boton-reinicio-damas")
@@ -553,9 +780,6 @@ const JuegoDamas = (() => {
 
   document.addEventListener("DOMContentLoaded", init);
 
-  // ==========================
-  // EXPONER FUNCIONES (OPCIONAL)
-  // ==========================
   return {
     reset: resetGameDamasUltra,
   };

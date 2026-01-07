@@ -25,7 +25,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.12s;
+}
+#tablero-damas .dot-pieza {
+  position: relative;
+  z-index: 10;
+  transition: transform 1s ease;
 }
 
 /* Rey humano o IA con pseudo-clase */
@@ -82,6 +86,100 @@
   }
 }
 
+/* Efecto de captura simple */
+.dot-pieza.capturada {
+  animation: desaparecerFicha 0.3s ease forwards;
+}
+
+@keyframes desaparecerFicha {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+/* Animación suave para movimiento */
+.ficha-animada {
+  will-change: transform;
+  z-index: 100 !important;
+}
+
+/* Efecto para coronación (solo durante la transformación) */
+.efecto-coronacion {
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 0, 0.8) 0%,
+    rgba(255, 215, 0, 0) 70%
+  );
+}
+
+@keyframes destelloCoronacion {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Rey estático - sin animaciones infinitas */
+.dot-pieza.rey-damas {
+  box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8),
+    inset 0 0 10px rgba(255, 255, 255, 0.6);
+  position: relative;
+  /* Sin animación infinita para evitar parpadeo */
+}
+
+/* Simbolo de corona fijo */
+.corona-simbolo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: gold;
+  font-size: 60%;
+  font-weight: bold;
+  text-shadow: 0 0 3px #000, 0 0 5px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Asegurar que las fichas en movimiento tengan z-index alto */
+.ficha-animada {
+  will-change: transform;
+  z-index: 100 !important;
+}
+
+/* Para animaciones suaves de ruta múltiple */
+.ficha-animada {
+  will-change: transform;
+  z-index: 100 !important;
+  pointer-events: none; /* Evitar clicks durante animación */
+}
+
+/* Efecto sutil durante capturas múltiples */
+@keyframes pulseCaptura {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.ficha-animada.capturando {
+  animation: pulseCaptura 500ms ease-in-out;
+}
+
 .titulo-damas {
   font-size: calc(60px * var(--escala-ui));
   text-align: center;
@@ -110,6 +208,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: visible;
 }
 
 .contenedor-juego-damas {
@@ -117,6 +216,19 @@
   flex-direction: row;
   gap: 20px;
   align-items: flex-start;
+}
+
+/* Simbolo de corona */
+.corona-simbolo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: gold;
+  font-size: 60%;
+  font-weight: bold;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
 }
 
 .info-panel-damas {
