@@ -12,6 +12,32 @@ let nivelDesafio = 1;
 let tiempoRestante = 480;
 let intervaloCrono = null;
 let modoActual = "normal";
+let comprobacionBloqueada = false;
+
+// ───── SONIDOS ─────
+const sonidoComprobar = new Audio("sounds/ping.mp3");
+const sonidoFinal = new Audio("sounds/finalOperaciones.mp3");
+const sonidoFinTiempo = new Audio("sounds/fin-time.mp3");
+const sonidoNuevoNivel = new Audio("sounds/new-level.mp3");
+
+// Para evitar retrasos al reproducir
+[sonidoComprobar, sonidoFinal, sonidoFinTiempo, sonidoNuevoNivel].forEach(
+  (audio) => (audio.preload = "auto")
+);
+
+function reproducirSonido(audio) {
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+}
+
+// Modal instrucciones
+function abrirModalInstrucciones() {
+  document.getElementById("modal-instrucciones").classList.remove("oculto");
+}
+
+function cerrarModalInstrucciones() {
+  document.getElementById("modal-instrucciones").classList.add("oculto");
+}
 
 function reglasNivel(nivel) {
   let reglas = {
@@ -27,6 +53,7 @@ function reglasNivel(nivel) {
   }
 
   if (nivel === 2) {
+    reglas.tiempo = 480; // 7 minutos
     reglas.cantidad = 10;
   }
 
@@ -116,6 +143,7 @@ function lanzarNivelDesafio() {
   document.getElementById("cronometro").classList.remove("oculto");
 
   const reglas = reglasNivel(nivelDesafio);
+  comprobacionBloqueada = false;
 
   tiempoRestante = reglas.tiempo; // USAR EL TIEMPO DEL NIVEL
   iniciarCronometro();
@@ -160,6 +188,7 @@ function salirModoDesafio() {
   // parar cronómetro
   clearInterval(intervaloCrono);
   intervaloCrono = null;
+  comprobacionBloqueada = false;
 
   // reset estado
   modoActual = "normal";
@@ -182,6 +211,9 @@ function salirModoDesafio() {
 }
 
 function mostrarModalNivelSuperado() {
+  // nuevo nivel
+  reproducirSonido(sonidoNuevoNivel);
+
   mostrarModalAviso(`🎉 Nivel ${nivelDesafio - 1} superado`);
   setTimeout(() => {
     cerrarModalAviso();
@@ -190,6 +222,9 @@ function mostrarModalNivelSuperado() {
 }
 
 function derrotaTiempo() {
+  // fin por tiempo
+  reproducirSonido(sonidoFinTiempo);
+
   mostrarModalAviso("⏰ Se acabó el tiempo. ¡Inténtalo de nuevo!");
 
   setTimeout(() => {
@@ -198,6 +233,9 @@ function derrotaTiempo() {
 }
 
 function mostrarVictoriaFinal() {
+  // victoria final
+  reproducirSonido(sonidoFinal);
+
   mostrarModalAviso("🏆 ¡Has superado el modo desafío completo!");
 
   setTimeout(() => {
@@ -398,6 +436,14 @@ if (nivelSelect && inputMaximo) {
   nivelSelect.dispatchEvent(new Event("change"));
 }
 
+document.getElementById("btn-comprobar").addEventListener("click", (e) => {
+  e.preventDefault();
+
+  if (comprobacionBloqueada) return;
+
+  comprobarRespuestas();
+});
+
 function comprobarRespuestas() {
   numeroComprobaciones++;
 
@@ -444,7 +490,15 @@ function comprobarRespuestas() {
     (op) => op.dataset.estado === "bien"
   );
 
-  if (!terminado) return;
+  if (!terminado) {
+    // SOLO si NO se completa
+    reproducirSonido(sonidoComprobar);
+
+    return;
+  }
+
+  // bloquear nuevas comprobaciones
+  comprobacionBloqueada = true;
 
   // ───── MODO DESAFÍO ─────
   if (modoActual === "desafio") {
@@ -465,6 +519,9 @@ function comprobarRespuestas() {
 
 function generarResumenFinal() {
   const operaciones = document.querySelectorAll(".operacion");
+
+  // victoria modo normal
+  reproducirSonido(sonidoFinal);
 
   const estadisticas = {
     "+": { bien: 0, mal: 0 },
@@ -497,6 +554,8 @@ function generarResumenFinal() {
 
 // Modal modo de juego
 function modoNormal() {
+  comprobacionBloqueada = false;
+
   document.getElementById("modal-modo").style.display = "none";
   document.getElementById("modal-operaciones").style.display = "flex";
 }

@@ -469,6 +469,67 @@ body.body-operaciones {
   display: none;
 }
 
+/* Modal instrucciones estilo operativo */
+.modal-instrucciones {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  background-color: #fdf6e3;
+  color: #333;
+}
+
+.instrucciones-content {
+  padding: 20px;
+  border-radius: 12px;
+  border: 3px solid #ffa500;
+  background-color: #fff8dc;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.instrucciones-content h2 {
+  color: #ff6600;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.instrucciones-content h3 {
+  color: #ff8c00;
+  margin-top: 10px;
+}
+
+.instrucciones-content p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.instrucciones-content button {
+  display: block;
+  margin: 20px auto 0 auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.instrucciones-content button:hover {
+  background-color: #ff8c00;
+}
+
+@media (max-width: 1280px) {
+  .cronometro {
+    top: 9px;
+    right: 9px;
+    font-size: 12px;
+    padding: 5px 9px;
+  }
+
+  #cronometro #tiempo {
+    font-size: 18px;
+  }
+}
+
 /* Móvil */
 @media (max-width: 480px) {
   #modal-final .modal-aviso-content {

@@ -16,6 +16,34 @@
 
         <button onclick="modoNormal()">Modo normal</button>
         <button onclick="modoDesafio()">Modo desafío</button>
+        <button onclick="abrirModalInstrucciones()">Cómo jugar</button>
+      </div>
+    </div>
+
+    <!-- Modal de instrucciones -->
+    <div class="modal-operaciones oculto" id="modal-instrucciones">
+      <div class="modal-content instrucciones-content">
+        <h2>Cómo jugar</h2>
+
+        <h3>Modo normal</h3>
+        <p>
+          - Selecciona el nivel de dificultad.<br />
+          - Indica el número de operaciones que quieres resolver.<br />
+          - Introduce tus respuestas y pulsa "Comprobar".<br />
+          - Al finalizar verás un resumen de aciertos y errores.
+        </p>
+
+        <h3>Modo desafío</h3>
+        <p>
+          - Se resolverán niveles consecutivos con tiempo límite.<br />
+          - Cada nivel tiene un número de operaciones distinto y operadores
+          variados.<br />
+          - Si completas todas las operaciones antes del tiempo, pasarás al
+          siguiente nivel.<br />
+          - Si se acaba el tiempo, deberás reiniciar el desafío.
+        </p>
+
+        <button onclick="cerrarModalInstrucciones()">Cerrar</button>
       </div>
     </div>
 
@@ -90,7 +118,8 @@
     <div class="operaciones-pizarra" id="pizarra"></div>
 
     <div class="botones-operaciones">
-      <button onclick="comprobarRespuestas()">Comprobar</button>
+      <button id="btn-comprobar">Comprobar</button>
+
       <button onclick="location.reload()">Reiniciar</button>
     </div>
 
