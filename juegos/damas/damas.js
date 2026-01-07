@@ -516,7 +516,7 @@ const JuegoDamas = (() => {
     const dx = rectDestino.left - rectActual.left;
     const dy = rectDestino.top - rectActual.top;
 
-    ficha.style.transition = "transform 500ms ease-in-out";
+    ficha.style.transition = "transform 1000ms ease-in-out";
     ficha.style.transform = `translate(${dx}px, ${dy}px)`;
 
     setTimeout(() => {
@@ -524,7 +524,7 @@ const JuegoDamas = (() => {
       ficha.style.transform = "translate(0, 0)";
       celdaDestino.appendChild(ficha);
       callback();
-    }, 500);
+    }, 1000);
   }
 
   function animarMovimientoSimple(desde, hacia, ficha, callback) {
@@ -543,7 +543,7 @@ const JuegoDamas = (() => {
     const dx = rectDestino.left - rectActual.left;
     const dy = rectDestino.top - rectActual.top;
 
-    ficha.style.transition = "transform 500ms ease-in-out";
+    ficha.style.transition = "transform 1000ms ease-in-out";
     ficha.style.transform = `translate(${dx}px, ${dy}px)`;
 
     setTimeout(() => {
@@ -551,7 +551,7 @@ const JuegoDamas = (() => {
       ficha.style.transform = "translate(0, 0)";
       celdaDestino.appendChild(ficha);
       callback();
-    }, 500);
+    }, 1000);
   }
 
   function efectoCoronacion(r, c) {
