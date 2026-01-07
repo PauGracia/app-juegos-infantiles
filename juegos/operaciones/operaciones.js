@@ -8,6 +8,202 @@ const nivelSelect = document.getElementById("nivel");
 const inputMaximo = document.getElementById("input-maximo");
 
 let numeroComprobaciones = 0;
+let nivelDesafio = 1;
+let tiempoRestante = 480;
+let intervaloCrono = null;
+let modoActual = "normal";
+
+function reglasNivel(nivel) {
+  let reglas = {
+    cantidad: 5,
+    max: 9,
+    negativos: false,
+    ops: ["+", "-"],
+    tiempo: 480, // tiempo por defecto (8 minutos)
+  };
+
+  if (nivel === 1) {
+    reglas.tiempo = 480; // 7 minutos
+  }
+
+  if (nivel === 2) {
+    reglas.cantidad = 10;
+  }
+
+  if (nivel === 3) {
+    reglas.max = 20;
+  }
+
+  if (nivel === 4) {
+    reglas.cantidad = 5;
+    reglas.max = 20;
+    reglas.tiempo = 360;
+  }
+
+  if (nivel === 5) {
+    reglas.cantidad = 8;
+    reglas.max = 25;
+    reglas.tiempo = 420;
+  }
+
+  if (nivel === 6) {
+    reglas.cantidad = 10;
+    reglas.max = 30;
+  }
+
+  if (nivel === 7) {
+    reglas.cantidad = 10;
+    reglas.max = 30;
+  }
+
+  if (nivel === 8) {
+    reglas.negativos = true;
+    reglas.cantidad = 8;
+    reglas.max = 10;
+  }
+
+  if (nivel === 9) {
+    reglas.negativos = true;
+    reglas.cantidad = 8;
+    reglas.max = 20;
+  }
+
+  if (nivel === 10) {
+    reglas.negativos = true;
+    reglas.cantidad = 10;
+    reglas.max = 30;
+  }
+
+  if (nivel === 11) {
+    reglas.negativos = true;
+    reglas.cantidad = 10;
+    reglas.max = 100;
+    reglas.tiempo = 540;
+  }
+
+  if (nivel === 12) {
+    reglas.negativos = true;
+    reglas.cantidad = 15;
+    reglas.max = 100;
+  }
+
+  if (nivel >= 13) {
+    reglas.negativos = true;
+    reglas.ops = ["+", "-", "*"];
+  }
+
+  if (nivel >= 17) {
+    reglas.ops = ["+", "-", "*", "/"];
+  }
+
+  if (nivel === 20) {
+    reglas.cantidad = 18;
+    reglas.max = 100;
+    reglas.tiempo = 600;
+  }
+
+  return reglas;
+}
+
+function iniciarModoDesafio() {
+  modoActual = "desafio";
+  nivelDesafio = 1;
+  lanzarNivelDesafio();
+}
+
+function lanzarNivelDesafio() {
+  document.getElementById("pizarra").innerHTML = "";
+  document.getElementById("cronometro").classList.remove("oculto");
+
+  const reglas = reglasNivel(nivelDesafio);
+
+  tiempoRestante = reglas.tiempo; // USAR EL TIEMPO DEL NIVEL
+  iniciarCronometro();
+
+  for (let i = 0; i < reglas.cantidad; i++) {
+    let op = reglas.ops[Math.floor(Math.random() * reglas.ops.length)];
+    let a, b;
+
+    if (op === "/") {
+      b = random(reglas.max, false) || 1;
+      a = random(reglas.max, false);
+      a = Math.floor(a / b) * b;
+    } else {
+      a = random(reglas.max, reglas.negativos);
+      b = random(reglas.max, reglas.negativos);
+      if (op === "-" && !reglas.negativos && b > a) [a, b] = [b, a];
+    }
+
+    crearOperacion(a, b, op);
+  }
+}
+
+function iniciarCronometro() {
+  clearInterval(intervaloCrono);
+
+  intervaloCrono = setInterval(() => {
+    tiempoRestante--;
+
+    const min = String(Math.floor(tiempoRestante / 60)).padStart(2, "0");
+    const sec = String(tiempoRestante % 60).padStart(2, "0");
+
+    document.getElementById("tiempo").textContent = `${min}:${sec}`;
+
+    if (tiempoRestante <= 0) {
+      clearInterval(intervaloCrono);
+      derrotaTiempo();
+    }
+  }, 1000);
+}
+
+function salirModoDesafio() {
+  // parar cronómetro
+  clearInterval(intervaloCrono);
+  intervaloCrono = null;
+
+  // reset estado
+  modoActual = "normal";
+  nivelDesafio = 1;
+  tiempoRestante = 480;
+  numeroComprobaciones = 0;
+
+  // limpiar pizarra
+  document.getElementById("pizarra").innerHTML = "";
+
+  // ocultar cronómetro
+  document.getElementById("cronometro").classList.add("oculto");
+
+  // cerrar modales
+  cerrarModalAviso();
+  document.getElementById("modal-final").classList.add("oculto");
+
+  // volver a elegir modo
+  document.getElementById("modal-modo").style.display = "flex";
+}
+
+function mostrarModalNivelSuperado() {
+  mostrarModalAviso(`🎉 Nivel ${nivelDesafio - 1} superado`);
+  setTimeout(() => {
+    cerrarModalAviso();
+    lanzarNivelDesafio();
+  }, 2000);
+}
+
+function derrotaTiempo() {
+  mostrarModalAviso("⏰ Se acabó el tiempo. ¡Inténtalo de nuevo!");
+
+  setTimeout(() => {
+    salirModoDesafio();
+  }, 2500);
+}
+
+function mostrarVictoriaFinal() {
+  mostrarModalAviso("🏆 ¡Has superado el modo desafío completo!");
+
+  setTimeout(() => {
+    salirModoDesafio();
+  }, 3000);
+}
 
 function cambiarNivel() {
   const nivel = document.getElementById("nivel").value;
@@ -248,9 +444,23 @@ function comprobarRespuestas() {
     (op) => op.dataset.estado === "bien"
   );
 
-  if (terminado) {
-    generarResumenFinal();
+  if (!terminado) return;
+
+  // ───── MODO DESAFÍO ─────
+  if (modoActual === "desafio") {
+    clearInterval(intervaloCrono);
+    nivelDesafio++;
+
+    if (nivelDesafio > 20) {
+      mostrarVictoriaFinal();
+    } else {
+      mostrarModalNivelSuperado();
+    }
+    return;
   }
+
+  // ───── MODO NORMAL ─────
+  generarResumenFinal();
 }
 
 function generarResumenFinal() {
@@ -283,6 +493,17 @@ function generarResumenFinal() {
   });
 
   mostrarModalFinal(estadisticas, listaBien, listaMal, numeroComprobaciones);
+}
+
+// Modal modo de juego
+function modoNormal() {
+  document.getElementById("modal-modo").style.display = "none";
+  document.getElementById("modal-operaciones").style.display = "flex";
+}
+
+function modoDesafio() {
+  document.getElementById("modal-modo").style.display = "none";
+  iniciarModoDesafio();
 }
 
 // Mostrar mensaje en el modal de aviso

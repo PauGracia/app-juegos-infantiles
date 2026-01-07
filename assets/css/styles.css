@@ -736,6 +736,15 @@ body {
   margin-top: 10px;
 }
 
+.cronometro {
+  font-size: 28px;
+  color: #f5f5f0;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 8px 18px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
 .correcto {
   background-color: #c3f7c3;
 }

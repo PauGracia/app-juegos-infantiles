@@ -10,10 +10,17 @@
     <link rel="stylesheet" href="operaciones.css" />
   </head>
   <body class="body-operaciones">
-    <!-- Fondo de pantalla -->
+    <div class="modal-operaciones" id="modal-modo">
+      <div class="modal-content">
+        <h2>Selecciona modo de juego</h2>
+
+        <button onclick="modoNormal()">Modo normal</button>
+        <button onclick="modoDesafio()">Modo desafío</button>
+      </div>
+    </div>
 
     <!-- Modal -->
-    <div class="modal-operaciones" id="modal-operaciones">
+    <div class="modal-operaciones oculto" id="modal-operaciones">
       <div class="modal-content">
         <h2>Configuración de Operaciones</h2>
 
@@ -74,6 +81,10 @@
       </div>
     </div>
     <!-- Pantalla principal -->
+    <div id="cronometro" class="cronometro oculto">
+      ⏳ Tiempo restante: <span id="tiempo">00:00</span>
+    </div>
+
     <h1 class="titulo-operaciones">Operaciones</h1>
 
     <div class="operaciones-pizarra" id="pizarra"></div>

@@ -314,6 +314,36 @@ body.body-operaciones {
 }
 
 /* ============================= */
+/* CRONÓMETRO MODO DESAFÍO */
+/* ============================= */
+
+.cronometro {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fffff0;
+
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 22px;
+
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 3px solid black;
+
+  z-index: 1200;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Tiempo en grande */
+#cronometro #tiempo {
+  font-weight: bold;
+  font-size: 26px;
+  margin-left: 6px;
+}
+
+/* ============================= */
 /* Modal final resultados */
 /* ============================= */
 
@@ -487,11 +517,23 @@ body.body-operaciones {
   .titulo-operaciones {
     font-size: 30px;
     margin-bottom: 20px;
+    margin-top: 50px;
   }
 
   #boton-salir-operaciones button {
     width: 100px;
     font-size: 15px;
     padding: 8px;
+  }
+
+  .cronometro {
+    top: 8px;
+    right: 8px;
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  #cronometro #tiempo {
+    font-size: 16px;
   }
 }
