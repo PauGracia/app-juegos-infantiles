@@ -12,42 +12,42 @@ document.addEventListener("DOMContentLoaded", () => {
     const registro = document.getElementById("registro");
     const registrarBtn = document.getElementById("registrar");
     const nombreJugador = document.getElementById("nombreJugador");
-
+    const rankingBtn = document.getElementById("ranking-btn");
     // ------------------ BOTONES SALIR ------------------
     function volverAlModalInicial() {
-      // Oculta modal final si estaba abierto
+      // Cerrar modal de victoria si está abierto
       modal.classList.remove("mostrar");
 
-      // Limpia tablero y variables
+      // Limpiar tablero y estado
       tablero.innerHTML = "";
       puntuacion = 0;
       parejasEncontradas = 0;
       primeraCarta = null;
       bloqueo = false;
+
       if (intervaloTiempo) clearInterval(intervaloTiempo);
 
-      // Mostrar el modal de selección de modo
-      const modalModo = document.createElement("div");
-      modalModo.classList.add("modal-memori", "mostrar");
-      modalModo.innerHTML = `
-    <div class="modal-contentMemori">
-      <h2>Selecciona un modo</h2>
-      <button id="modoNormal">Modo Normal</button>
-      <button id="modoDesafio">Modo Desafío</button>
-    </div>
-  `;
-      document.body.appendChild(modalModo);
-
-      // Eventos de selección
-      document.getElementById("modoNormal").addEventListener("click", () => {
-        modalModo.remove();
-        iniciarJuegoNormal();
-      });
-      document.getElementById("modoDesafio").addEventListener("click", () => {
-        modalModo.remove();
-        iniciarJuegoDesafio();
-      });
+      // Mostrar el modal ORIGINAL (el que tiene instrucciones)
+      modalInicio.classList.add("mostrar");
     }
+
+    // ---------- BOTÓN REINICIAR ----------
+    reiniciarBtn.addEventListener("click", () => {
+      modal.classList.remove("mostrar");
+      tablero.innerHTML = "";
+      puntuacion = 0;
+      parejasEncontradas = 0;
+      primeraCarta = null;
+      bloqueo = false;
+
+      iniciarJuegoNormal();
+    });
+
+    // ---------- BOTÓN RANKING ----------
+
+    rankingBtn.addEventListener("click", () => {
+      window.location.href = "../rankingMemori/index.html";
+    });
 
     const modalInicio = document.getElementById("modal-inicio");
     const modalInstrucciones = document.getElementById("modal-instrucciones");
@@ -196,7 +196,8 @@ document.addEventListener("DOMContentLoaded", () => {
             puntuacion += 100;
             parejasEncontradas++;
             actualizarMarcador();
-            if (parejasEncontradas === 40) mostrarModal();
+            if (parejasEncontradas === 1) mostrarModal();
+            //if (parejasEncontradas === 40) mostrarModal();
             primeraCarta = null;
             bloqueo = false;
           } else {
@@ -215,6 +216,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
       tablero.appendChild(div);
+    }
+
+    function mostrarModal() {
+      // Mostrar el modal de victoria
+      modal.classList.add("mostrar");
+
+      // Mostrar puntuación final
+      puntuacionFinal.textContent = `Puntuación final: ${puntuacion}`;
+
+      // Ocultar registro por si estaba abierto
+      registro.style.display = "none";
+
+      // Preparar botón guardar
+      actualizarBotonGuardar("ranking_memori");
     }
 
     // ------------------ MODO DESAFÍO ------------------
