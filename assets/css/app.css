@@ -1,0 +1,182 @@
+/* -----Index.html----- */
+
+/* Fuentes */
+@font-face {
+  font-family: "ChalkRegular";
+  src: url("./fonts/Chalk-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: "ChalkRegular", Arial, sans-serif;
+}
+
+/* Reset básico */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Estilo general del menu */
+#body-index {
+  text-align: center;
+  margin: 0;
+  min-height: 100vh; /* Asegura que ocupe toda la ventana */
+  background-image: url("../img/imagenes/fondoIndice.jpg");
+  background-size: cover; /* Escala la imagen para cubrir toda la pantalla */
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: hidden;
+  padding: 20px;
+}
+
+/* Contenedor del título */
+#titulo-container {
+  background-color: #f5f5f0;
+  color: black;
+  border-radius: 15px;
+  display: inline-block;
+  padding: 20px 40px;
+  margin-top: 40px;
+}
+
+#title-index {
+  font-size: 60px;
+  margin: 0;
+}
+
+/* Lista de juegos */
+#lista-enlaces {
+  width: 40%;
+  margin: 50px auto 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+#lista-enlaces ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#lista-enlaces li {
+  margin: 20px 0;
+}
+
+#lista-enlaces a {
+  display: inline-block;
+  background-color: #f5f5f0;
+  color: black;
+  text-decoration: none;
+  font-size: 50px;
+  padding: 15px 30px;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#lista-enlaces a:hover {
+  background-color: darkgray;
+  transform: scale(1.05);
+}
+
+/* Footer del menu */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: right;
+  padding: 10px;
+  background-color: #f5f5f0;
+  color: black;
+  font-size: 14px;
+  margin-top: 0;
+}
+
+footer a {
+  color: blue;
+  text-decoration: none;
+}
+
+/* Media Queries para tablet del menu */
+@media (max-width: 1024px) {
+  #title-index {
+    font-size: 45px;
+  }
+
+  #lista-enlaces a {
+    font-size: 35px;
+    padding: 12px 25px;
+  }
+
+  #lista-enlaces {
+    width: 60%;
+    padding: 15px;
+  }
+}
+
+/* Media Queries para móviles del menu */
+@media (max-width: 768px) {
+  #title-index {
+    font-size: 35px;
+  }
+
+  #titulo-container {
+    padding: 15px 25px;
+  }
+
+  #lista-enlaces {
+    width: 80%;
+    padding: 10px;
+  }
+
+  #lista-enlaces a {
+    font-size: 30px;
+    padding: 10px 20px;
+  }
+
+  footer {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
+
+/* Media Queries para móviles muy pequeños */
+@media (max-width: 480px) {
+  #title-index {
+    font-size: 30px;
+  }
+
+  #titulo-container {
+    padding: 10px 15px;
+  }
+
+  #lista-enlaces a {
+    font-size: 20px;
+    padding: 8px 15px;
+  }
+
+  #lista-enlaces {
+    width: 90%;
+    padding: 5px;
+  }
+
+  footer {
+    font-size: 11px;
+    padding: 6px;
+  }
+}

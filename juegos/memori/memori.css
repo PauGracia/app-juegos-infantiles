@@ -1,0 +1,351 @@
+/* ----- Juego de Memori ----- */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
+#body-memori {
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+  overflow-x: hidden;
+}
+#titulo-memori {
+  color: black;
+  font-size: 45px;
+  margin: 40px;
+}
+
+/* Marcador escritorio */
+#marcador {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: whitesmoke;
+  border: 4px solid black;
+  color: gray;
+  font-size: 24px;
+  font-weight: bold;
+  width: 150px;
+  padding: 10px;
+  text-align: right;
+  border-radius: 8px;
+}
+
+/* Tablero escritorio */
+.tablero {
+  display: grid;
+  grid-template-columns: repeat(10, 100px);
+  max-width: 100%;
+  gap: 10px;
+  justify-content: center;
+}
+
+/*Las cartas */
+.carta {
+  width: 80px;
+  height: 80px;
+  background: #444;
+  color: transparent;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.carta.volteada {
+  background: #fff;
+  color: #000;
+  font-weight: bold;
+}
+
+/* Modal del memori */
+.modal-memori {
+  display: none; /* No aparece inicialmente */
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  align-items: center;
+  justify-content: center;
+}
+.modal-memori.mostrar {
+  display: flex; /* Solo se aplica cuando tiene la clase "mostrar" */
+}
+
+#nombreJugador {
+  width: 100%;
+  font-size: 15px;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+.modal-contentMemori {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 350px;
+}
+.modal-contentMemori h2 {
+  margin-bottom: 10px;
+}
+
+/* Botón guardar */
+.guardar-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.guardar-btn:hover {
+  background-color: #45a049;
+}
+
+/* Botón registrar */
+.registrar-btn {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.registrar-btn:hover {
+  background-color: #1976d2;
+}
+
+/* Botones principales */
+.botones button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 2px solid gray;
+  cursor: pointer;
+  flex: 1;
+  margin: 0 5px;
+  font-weight: bold;
+}
+
+.salir-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+}
+.salir-btn:hover {
+  background-color: #d32f2f;
+}
+
+.reiniciar-btn {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+}
+.reiniciar-btn:hover {
+  background-color: #f57c00;
+}
+
+.ranking-btn {
+  background-color: #9c27b0;
+  color: white;
+  border: none;
+}
+.ranking-btn:hover {
+  background-color: #7b1fa2;
+}
+
+/* Ajuste del contenedor de botones */
+.botones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.modal-content input {
+  padding: 6px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* estilos para el ranking*/
+
+#ranking {
+  position: absolute;
+  top: 100px;
+  right: 20px;
+  background: whitesmoke;
+  border: 4px solid black;
+  color: black;
+  font-size: 18px;
+  width: 150px;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: left;
+}
+#ranking h3 {
+  margin: 0 0 5px 0;
+  font-size: 18px;
+  color: gray;
+}
+#ranking ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#ranking li {
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+#ranking ol {
+  padding-left: 18px; /* deja espacio para los números */
+  margin: 0;
+}
+
+#salir-juego-memori {
+  position: absolute;
+  background-color: white;
+  color: black;
+  top: 270px;
+  right: 20px;
+  width: 75px;
+  padding: 7px;
+  border-radius: 8px;
+  border: 4px solid black;
+  font-size: 18px;
+}
+
+#salir-juego-memori:hover {
+  position: absolute;
+  background-color: white;
+  color: grey;
+  top: 270px;
+  right: 20px;
+  width: 75px;
+  padding: 7px;
+  border-radius: 8px;
+  border: 4px solid black;
+  font-size: 18px;
+}
+
+/*Media Queries (Entre 1351px y 1500px) del memori */
+@media (min-width: 1351px) and (max-width: 1500px) {
+  .carta {
+    width: 80px;
+    height: 80px;
+  }
+  #ranking {
+    position: static;
+    width: 200px;
+    text-align: left;
+    margin: 40px 0 0 180px; /* más separación del tablero y de la izquierda */
+  }
+  #salir-juego-memori {
+    position: static;
+    display: block;
+    margin: 40px 0 0 180px;
+  }
+}
+
+/*Media Queries TABLET del memori */
+@media (max-width: 1350px) {
+  body {
+    text-align: left;
+    margin: 10px;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-top: 40px;
+  }
+  #marcador {
+    position: static;
+    font-size: 20px;
+    width: 100px;
+    margin-left: auto;
+  }
+  #titulo-memori {
+    font-size: 40px;
+    margin: 20px;
+  }
+  .tablero {
+    grid-template-columns: repeat(10, 1fr);
+    gap: 6px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+  .carta {
+    /*width: auto;*/
+    width: 55px;
+    height: 55px;
+    aspect-ratio: 1/1;
+    font-size: 2vw;
+  }
+
+  #ranking {
+    position: static;
+    margin: 20px 0 0 0;
+    width: 200px;
+    text-align: left;
+  }
+
+  #salir-juego-memori {
+    position: static;
+    margin: 20px 0 0 0;
+    display: block;
+  }
+  #salir-juego-memori:hover {
+    position: static;
+    margin: 20px 0 0 0;
+    display: block;
+  }
+}
+
+/*Media Queries MÓVIL del memori*/
+@media (max-width: 600px) {
+  #body-memori {
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+  .header {
+    justify-content: space-between;
+    margin-top: 50px;
+  }
+  #titulo-memori {
+    font-size: 30px;
+  }
+  #marcador {
+    font-size: 18px;
+    padding: 6px 10px;
+    margin-left: auto;
+  }
+  .tablero {
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+  .carta {
+    width: 35px;
+    height: 35px;
+    aspect-ratio: 1/1;
+    font-size: 4vw;
+  }
+}

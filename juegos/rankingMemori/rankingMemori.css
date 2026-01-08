@@ -1,0 +1,103 @@
+/*-----Pag. Ranking-----*/
+
+:root {
+  --card-bg: #f7f7f7;
+  --accent: black;
+  --border: #cfcfcf;
+}
+
+* {
+  box-sizing: border-box;
+}
+#body-ranking {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: #111;
+}
+
+#titulo-ranking {
+  color: var(--accent);
+  margin: 20px 0;
+  font-size: 1.6rem;
+}
+
+#lista {
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  width: min(720px, 95%);
+  padding: 18px;
+  text-align: left;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  min-height: 120px;
+}
+
+#lista ol {
+  padding-left: 28px;
+  margin: 0;
+}
+
+#lista li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: monospace; /* ayuda a alinear los puntos */
+  font-size: 1rem;
+  margin: 6px 0;
+}
+
+#lista li .nombre {
+  white-space: nowrap;
+}
+
+#lista li .relleno {
+  flex-grow: 1;
+  border-bottom: 1px dotted var(--accent); /* los puntos */
+  margin: 0 8px; /* espacio entre nombre y puntos */
+}
+
+#lista li .puntos {
+  white-space: nowrap;
+}
+
+.paginador {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.paginador button,
+#atras {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: white;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.paginador button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+#pagina {
+  font-weight: 600;
+  color: var(--accent);
+}
+/* Media para pagina del ranking */
+@media (max-width: 480px) {
+  #lista {
+    padding: 12px;
+  }
+  h1 {
+    font-size: 1.3rem;
+  }
+  .paginador {
+    flex-wrap: wrap;
+  }
+}

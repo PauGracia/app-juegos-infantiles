@@ -243,6 +243,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
+    document.getElementById("btnSalir").addEventListener("click", () => {
+      window.location.href = "../../index.html";
+    });
+
     function ah_nuevaPalabra() {
       const lista = palabras[ah_idioma] || palabras.es;
 

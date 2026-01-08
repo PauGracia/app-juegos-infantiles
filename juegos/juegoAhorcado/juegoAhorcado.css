@@ -16,7 +16,7 @@ html {
 
 .titulo-ahorcado {
   font-size: 4em;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   color: #333;
   margin-top: 100px;
 }
@@ -38,7 +38,7 @@ html {
   justify-content: center;
 
   gap: 50px;
-  margin-top: 30px;
+  margin-top: 10px;
   flex-wrap: wrap;
 }
 
@@ -204,15 +204,7 @@ html {
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-.boton-volver-ahorcado button:hover {
-  background: #218838;
-  transform: scale(1.05);
-}
-
-.boton-volver-ahorcado button:active {
-  transform: scale(0.97);
+  margin-top: 40px;
 }
 
 .modal-ranking {
@@ -267,27 +259,49 @@ html {
 }
 
 @media (max-width: 780px) {
-  .contenedor-juego {
+  .body-ahorcado {
+    min-height: 100vh;
+    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%; /* ocupa toda la altura disponible */
-    max-height: 100vh; /* no sobrepasa la pantalla */
-    gap: 20px;
-    padding: 10px;
-    box-sizing: border-box;
-    overflow: hidden; /* evita scroll vertical */
+  }
+
+  .contenedor-juego {
+    flex: 1;
+  }
+
+  #marcador-ahorcado {
+    top: 15px;
+    right: 20px;
+
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 1.2em;
+  }
+
+  .boton-volver-ahorcado {
+    padding: 20px 0;
+  }
+
+  .imagen-ahorcado {
+    margin-top: 10px;
+
+    width: 200px;
+    height: 200px;
   }
 
   .boton-volver-ahorcado button {
-    width: 30%;
-    font-size: 1em;
-    padding: 12px 0;
+    width: 80%;
+    margin-top: 0;
+  }
+
+  .boton-volver-ahorcado {
+    margin-top: 20px;
   }
 
   .titulo-ahorcado {
     font-size: 1.5em;
     margin-top: 1px;
+    margin-bottom: 10px;
   }
 
   .palabra {

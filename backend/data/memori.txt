@@ -1,8 +1,0 @@
--Pau1:3920;
--Antonio:500;
--mireia:3615;
--Pepe:0;
--Mario:0;
--polo:0;
--Pauito:3935;
--lolo:0;
