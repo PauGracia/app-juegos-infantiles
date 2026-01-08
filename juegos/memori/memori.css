@@ -243,6 +243,267 @@ body {
   font-size: 18px;
 }
 
+/* ----- Modales dinámicos (inicio, niveles, victoria, tiempo) ----- */
+.modal-dinamico {
+  display: none; /* oculto por defecto */
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-dinamico.mostrar {
+  display: flex;
+}
+
+.modal-dinamico .modal-contentMemori {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 350px;
+  max-width: 90%;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.modal-dinamico h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: black;
+}
+
+.modal-dinamico p {
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Botones genéricos para los modales */
+.modal-dinamico button {
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  margin: 6px 0;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+/* Botones específicos */
+.modal-dinamico button#modoNormal {
+  background-color: #4caf50;
+  color: white;
+}
+.modal-dinamico button#modoNormal:hover {
+  background-color: #45a049;
+}
+
+.modal-dinamico button#modoDesafio {
+  background-color: #2196f3;
+  color: white;
+}
+.modal-dinamico button#modoDesafio:hover {
+  background-color: #1976d2;
+}
+
+.modal-dinamico button#iniciarNivel {
+  background-color: #ff9800;
+  color: white;
+}
+.modal-dinamico button#iniciarNivel:hover {
+  background-color: #f57c00;
+}
+
+.modal-dinamico button#salirModal {
+  background-color: #f44336;
+  color: white;
+}
+.modal-dinamico button#salirModal:hover {
+  background-color: #d32f2f;
+}
+
+/* Modal de victoria o fin de tiempo */
+.modal-dinamico.victoria p,
+.modal-dinamico.tiempo p {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* ----- Modal general ----- */
+.modal-contentMemori {
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  text-align: center;
+  width: 350px;
+  max-width: 90%;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px; /* espacio entre elementos */
+}
+
+/* Título del modal */
+.modal-contentMemori h2 {
+  font-size: 24px;
+  color: #000;
+  margin-bottom: 10px;
+}
+
+/* Párrafos dentro del modal */
+.modal-contentMemori p {
+  font-size: 16px;
+  color: #333;
+  margin: 5px 0;
+}
+
+/* Input dentro del modal */
+.modal-contentMemori input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+/* Botones dentro del modal en columna */
+.modal-contentMemori button {
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* Colores específicos de botones por ID */
+.modal-contentMemori button#modoNormal {
+  background-color: #4caf50;
+  color: white;
+}
+.modal-contentMemori button#modoNormal:hover {
+  background-color: #45a049;
+}
+
+.modal-contentMemori button#modoDesafio {
+  background-color: #2196f3;
+  color: white;
+}
+.modal-contentMemori button#modoDesafio:hover {
+  background-color: #1976d2;
+}
+
+.modal-contentMemori button#iniciarNivel {
+  background-color: #ff9800;
+  color: white;
+}
+.modal-contentMemori button#iniciarNivel:hover {
+  background-color: #f57c00;
+}
+
+.modal-contentMemori button#salirModal,
+.modal-contentMemori button.salir-btn {
+  background-color: #f44336;
+  color: white;
+}
+.modal-contentMemori button#salirModal:hover,
+.modal-contentMemori button.salir-btn:hover {
+  background-color: #d32f2f;
+}
+
+.modal-contentMemori button#guardar,
+.modal-contentMemori button.guardar-btn {
+  background-color: #4caf50;
+  color: white;
+}
+.modal-contentMemori button#guardar:hover,
+.modal-contentMemori button.guardar-btn:hover {
+  background-color: #45a049;
+}
+
+.modal-contentMemori button#registrar,
+.modal-contentMemori button.registrar-btn {
+  background-color: #2196f3;
+  color: white;
+}
+.modal-contentMemori button#registrar:hover,
+.modal-contentMemori button.registrar-btn:hover {
+  background-color: #1976d2;
+}
+
+/* Modal de instrucciones */
+#modal-instrucciones {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 3000; /* Mayor que otros modales */
+
+  align-items: center;
+  justify-content: center;
+}
+
+#modal-instrucciones.mostrar {
+  display: flex;
+}
+
+#modal-instrucciones .modal-contentInstrucciones {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+#modal-instrucciones h2 {
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+#modal-instrucciones p {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #333;
+}
+
+#modal-instrucciones button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+.boton-instrucciones {
+  background-color: #607d8b;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+.boton-instrucciones:hover {
+  background-color: #455a64;
+}
+
 /*Media Queries (Entre 1351px y 1500px) del memori */
 @media (min-width: 1351px) and (max-width: 1500px) {
   .carta {
@@ -347,5 +608,42 @@ body {
     height: 35px;
     aspect-ratio: 1/1;
     font-size: 4vw;
+  }
+
+  .modal-dinamico .modal-contentMemori {
+    width: 90%;
+    padding: 15px 20px;
+  }
+
+  .modal-dinamico h2 {
+    font-size: 20px;
+  }
+
+  .modal-dinamico p {
+    font-size: 14px;
+  }
+
+  .modal-dinamico button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .modal-contentMemori {
+    width: 90%;
+    padding: 15px 20px;
+    gap: 10px;
+  }
+
+  .modal-contentMemori h2 {
+    font-size: 20px;
+  }
+
+  .modal-contentMemori p {
+    font-size: 14px;
+  }
+
+  .modal-contentMemori button {
+    font-size: 14px;
+    padding: 8px 0;
   }
 }

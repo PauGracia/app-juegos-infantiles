@@ -1,107 +1,315 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ------------------ MEMORI ------------------
   function iniciarMemori() {
-    // Obtener referencias a elementos del DOM
+    // Referencias DOM
     const tablero = document.getElementById("tablero");
     const marcador = document.getElementById("marcador");
     const modal = document.getElementById("modal-memori");
     const puntuacionFinal = document.getElementById("puntuacionFinal");
     const salirBtn = document.getElementById("salir");
     const salirJuegoBtn = document.getElementById("salir-juego-memori");
-
     const reiniciarBtn = document.getElementById("reiniciar");
     const guardarBtn = document.getElementById("guardar");
     const registro = document.getElementById("registro");
     const registrarBtn = document.getElementById("registrar");
     const nombreJugador = document.getElementById("nombreJugador");
 
-    // Variables de estado del juego
+    // ------------------ BOTONES SALIR ------------------
+    function volverAlModalInicial() {
+      // Oculta modal final si estaba abierto
+      modal.classList.remove("mostrar");
+
+      // Limpia tablero y variables
+      tablero.innerHTML = "";
+      puntuacion = 0;
+      parejasEncontradas = 0;
+      primeraCarta = null;
+      bloqueo = false;
+      if (intervaloTiempo) clearInterval(intervaloTiempo);
+
+      // Mostrar el modal de selección de modo
+      const modalModo = document.createElement("div");
+      modalModo.classList.add("modal-memori", "mostrar");
+      modalModo.innerHTML = `
+    <div class="modal-contentMemori">
+      <h2>Selecciona un modo</h2>
+      <button id="modoNormal">Modo Normal</button>
+      <button id="modoDesafio">Modo Desafío</button>
+    </div>
+  `;
+      document.body.appendChild(modalModo);
+
+      // Eventos de selección
+      document.getElementById("modoNormal").addEventListener("click", () => {
+        modalModo.remove();
+        iniciarJuegoNormal();
+      });
+      document.getElementById("modoDesafio").addEventListener("click", () => {
+        modalModo.remove();
+        iniciarJuegoDesafio();
+      });
+    }
+
+    const modalInicio = document.getElementById("modal-inicio");
+    const modalInstrucciones = document.getElementById("modal-instrucciones");
+
+    const instruccionesBtn = document.getElementById("instruccionesBtn");
+    const cerrarInstruccionesBtn = document.getElementById(
+      "cerrarInstrucciones"
+    );
+
+    // Mostrar modal de inicio al cargar
+    modalInicio.classList.add("mostrar");
+
+    // Abrir modal instrucciones
+    instruccionesBtn.addEventListener("click", () => {
+      modalInstrucciones.classList.add("mostrar");
+    });
+
+    // Cerrar modal instrucciones
+    cerrarInstruccionesBtn.addEventListener("click", () => {
+      modalInstrucciones.classList.remove("mostrar");
+    });
+
+    // Selección de modo
+    document.getElementById("modoNormal").addEventListener("click", () => {
+      modalInicio.classList.remove("mostrar");
+      iniciarJuegoNormal();
+    });
+
+    document.getElementById("modoDesafio").addEventListener("click", () => {
+      modalInicio.classList.remove("mostrar");
+      iniciarJuegoDesafio();
+    });
+
+    // Cambiar funcionalidad de los botones dentro del juego
+    salirJuegoBtn.addEventListener("click", volverAlModalInicial);
+    salirBtn.addEventListener("click", volverAlModalInicial); // solo si es botón dentro del juego
+
+    // Variables generales
     let puntuacion = 0;
     let primeraCarta = null;
     let bloqueo = false;
     let parejasEncontradas = 0;
+    let parejasDelNivel = 0;
+    let tiempoRestante = 0;
+    let intervaloTiempo = null;
+    let nivelActual = 0;
 
-    // Seleccionar los primeros 40 elementos para el juego
-    const seleccionados = elementos.slice(0, 40);
-    // Validar que hay elementos suficientes
-    if (seleccionados.length === 0) {
-      alert("Error: No hay elementos suficientes para jugar.");
-      throw new Error("elementos.js vacío o insuficiente");
-    }
-
-    // Crear pares de cartas (duplicar y mezclar)
-    let valores = [
-      ...seleccionados.map((e) => ({ ...e })), // Primera copia de cada elemento
-      ...seleccionados.map((e) => ({ ...e })), // Segunda copia para formar pares
+    // ------------------ NIVELES DESAFÍO ------------------
+    const niveles = [
+      { nivel: 1, parejas: 4, tiempo: 300 },
+      { nivel: 2, parejas: 8, tiempo: 360 },
+      { nivel: 3, parejas: 12, tiempo: 420 },
+      { nivel: 4, parejas: 16, tiempo: 480 },
+      { nivel: 5, parejas: 20, tiempo: 540 },
     ];
-    valores = mezclar(valores); // Mezclar las cartas
 
-    // Función para mezclar array (algoritmo Fisher-Yates)
+    // ------------------ FUNCIONES COMUNES ------------------
     function mezclar(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]]; // Intercambiar elementos
+        [array[i], array[j]] = [array[j], array[i]];
       }
       return array;
     }
 
-    // Función para mostrar el modal de fin de juego
-    function mostrarModal() {
-      puntuacionFinal.textContent = "Puntuación: " + puntuacion;
-      modal.classList.add("mostrar");
+    function actualizarBotonGuardar(claveRanking) {
+      if (puntuacion <= 0) {
+        guardarBtn.disabled = true;
+        guardarBtn.textContent = "0 puntos no se pueden guardar";
+      } else {
+        guardarBtn.disabled = false;
+        guardarBtn.textContent = "Guardar";
+      }
+      // Guardar puntuación usando la clave correspondiente
+      guardarBtn.onclick = () => {
+        registro.style.display = "block";
+        registrarBtn.onclick = () => {
+          const nombre = nombreJugador.value.trim();
+          if (nombre.length < 3 || nombre.length > 10) {
+            alert("El nombre debe tener entre 3 y 10 caracteres");
+            return;
+          }
+          guardarRankingLocal(claveRanking, nombre, puntuacion);
+          registro.style.display = "none";
+          nombreJugador.value = "";
+          cargarRankingLocal(claveRanking);
+        };
+      };
     }
 
-    // Crear las cartas en el tablero
-    valores.forEach((elemento) => {
+    function mostrarRanking(ranking) {
+      const divRanking = document.getElementById("ranking");
+      divRanking.innerHTML =
+        "<h3>Ranking</h3><ol>" +
+        ranking.map((r) => `<li>${r.nombre}: ${r.puntuacion}</li>`).join("") +
+        "</ol>";
+    }
+
+    function guardarRankingLocal(clave, nombre, puntuacion) {
+      const ranking = JSON.parse(localStorage.getItem(clave)) || [];
+      ranking.push({ nombre, puntuacion });
+      ranking.sort((a, b) => b.puntuacion - a.puntuacion);
+      localStorage.setItem(clave, JSON.stringify(ranking.slice(0, 5)));
+    }
+
+    function cargarRankingLocal(clave) {
+      const ranking = JSON.parse(localStorage.getItem(clave)) || [];
+      mostrarRanking(ranking);
+    }
+
+    // ------------------ JUEGO NORMAL ------------------
+    function iniciarJuegoNormal() {
+      const seleccionados = elementos.slice(0, 40);
+      if (!seleccionados.length) return alert("No hay elementos para jugar.");
+      let valores = [...seleccionados, ...seleccionados];
+      valores = mezclar(valores);
+
+      // Crear cartas y lógica normal
+      tablero.innerHTML = "";
+      valores.forEach(crearCartaNormal);
+      puntuacion = 0;
+      parejasEncontradas = 0;
+      actualizarMarcador();
+      actualizarBotonGuardar("ranking_memori");
+      cargarRankingLocal("ranking_memori");
+    }
+
+    function crearCartaNormal(elemento) {
       const div = document.createElement("div");
       div.classList.add("carta");
-      div.dataset.valor = elemento.id; // Almacenar ID para comparar
-
-      // Crear elemento imagen para la carta
+      div.dataset.valor = elemento.id;
       const img = document.createElement("img");
       img.src = elemento.imagen;
       img.style.width = "70%";
-      img.style.display = "none"; // Ocultar inicialmente
+      img.style.display = "none";
       div.appendChild(img);
 
-      // Evento click para voltear carta
       div.addEventListener("click", () => {
-        // No hacer nada si el juego está bloqueado o la carta ya está volteada
         if (bloqueo || div.classList.contains("volteada")) return;
-
-        // Voltear la carta
         div.classList.add("volteada");
         img.style.display = "block";
-
-        // Lógica de comparación de cartas
         if (!primeraCarta) {
-          // Es la primera carta seleccionada
           primeraCarta = div;
         } else {
-          // Es la segunda carta - comparar con la primera
           if (primeraCarta.dataset.valor === div.dataset.valor) {
-            // ¡PAREJA ENCONTRADA!
             puntuacion += 100;
             parejasEncontradas++;
             actualizarMarcador();
-
-            // Verificar si se completó el juego
-            if (parejasEncontradas === seleccionados.length) {
-              puntuacion += 500; // Bonus por completar
-              actualizarMarcador();
-              mostrarModal(); // Mostrar modal de victoria
-            }
-
-            // Reiniciar para siguiente turno
+            if (parejasEncontradas === 40) mostrarModal();
             primeraCarta = null;
             bloqueo = false;
           } else {
-            // NO son pareja
             bloqueo = true;
-            puntuacion = Math.max(0, puntuacion - 5); // Penalización mínima 0
+            puntuacion = Math.max(0, puntuacion - 5);
             actualizarMarcador();
+            setTimeout(() => {
+              div.classList.remove("volteada");
+              primeraCarta.classList.remove("volteada");
+              div.querySelector("img").style.display = "none";
+              primeraCarta.querySelector("img").style.display = "none";
+              primeraCarta = null;
+              bloqueo = false;
+            }, 1000);
+          }
+        }
+      });
+      tablero.appendChild(div);
+    }
 
-            // Volver a ocultar las cartas después de un segundo
+    // ------------------ MODO DESAFÍO ------------------
+    function iniciarJuegoDesafio() {
+      nivelActual = 0;
+      siguienteNivel();
+    }
+
+    function siguienteNivel() {
+      if (nivelActual >= niveles.length) {
+        alert("¡Has completado todos los niveles!");
+        return;
+      }
+      parejasEncontradas = 0;
+      nivelActual++;
+      const nivel = niveles[nivelActual - 1];
+      parejasDelNivel = nivel.parejas;
+      tiempoRestante = nivel.tiempo;
+
+      // Modal nivel
+      const modalNivel = document.createElement("div");
+      modalNivel.classList.add("modal-memori", "mostrar");
+      modalNivel.innerHTML = `
+        <div class="modal-contentMemori">
+          <h2>Nivel ${nivel.nivel}</h2>
+          <p>${nivel.parejas} parejas - ${Math.floor(tiempoRestante / 60)}:${
+        tiempoRestante % 60
+      } minutos</p>
+          <button id="iniciarNivel">Iniciar</button>
+        </div>
+      `;
+      document.body.appendChild(modalNivel);
+      document.getElementById("iniciarNivel").addEventListener("click", () => {
+        modalNivel.remove();
+        cargarNivelDesafio();
+      });
+    }
+
+    function cargarNivelDesafio() {
+      // Seleccionamos parejas al azar
+      const seleccionados = mezclar(elementos).slice(0, parejasDelNivel);
+      let valores = [...seleccionados, ...seleccionados];
+      valores = mezclar(valores);
+
+      tablero.innerHTML = "";
+      valores.forEach(crearCartaDesafio);
+
+      actualizarMarcador();
+      actualizarBotonGuardar("ranking_desafio");
+      cargarRankingLocal("ranking_desafio");
+
+      // Iniciar cronómetro
+      if (intervaloTiempo) clearInterval(intervaloTiempo);
+      intervaloTiempo = setInterval(() => {
+        tiempoRestante--;
+        marcador.textContent = `${Math.floor(tiempoRestante / 60)}:${String(
+          tiempoRestante % 60
+        ).padStart(2, "0")}`;
+        if (tiempoRestante <= 0) {
+          clearInterval(intervaloTiempo);
+          mostrarModalTiempoAgotado();
+        }
+      }, 1000);
+    }
+
+    function crearCartaDesafio(elemento) {
+      const div = document.createElement("div");
+      div.classList.add("carta");
+      div.dataset.valor = elemento.id;
+      const img = document.createElement("img");
+      img.src = elemento.imagen;
+      img.style.width = "70%";
+      img.style.display = "none";
+      div.appendChild(img);
+
+      div.addEventListener("click", () => {
+        if (bloqueo || div.classList.contains("volteada")) return;
+        div.classList.add("volteada");
+        img.style.display = "block";
+        if (!primeraCarta) {
+          primeraCarta = div;
+        } else {
+          if (primeraCarta.dataset.valor === div.dataset.valor) {
+            puntuacion += 100;
+            parejasEncontradas++;
+            if (parejasEncontradas === parejasDelNivel) {
+              clearInterval(intervaloTiempo);
+              if (nivelActual < niveles.length) siguienteNivel();
+              else mostrarModal();
+            }
+            primeraCarta = null;
+            bloqueo = false;
+          } else {
+            bloqueo = true;
+            puntuacion = Math.max(0, puntuacion - 5);
             setTimeout(() => {
               div.classList.remove("volteada");
               primeraCarta.classList.remove("volteada");
@@ -114,101 +322,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // Añadir carta al tablero
       tablero.appendChild(div);
-    });
-
-    // Evento boton salir durante el juego (fuera del modal)
-    salirJuegoBtn.addEventListener(
-      "click",
-      () => (location.href = "../../index.html")
-    );
-
-    // Funciones para manejar el modal de fin de juego
-
-    // Función para controlar estado del botón Guardar
-    function actualizarBotonGuardar() {
-      if (puntuacion <= 0) {
-        guardarBtn.disabled = true;
-        guardarBtn.textContent = "0 puntos no se pueden guardar";
-      } else {
-        guardarBtn.disabled = false;
-        guardarBtn.textContent = "Guardar";
-      }
     }
 
-    // Sobrescribir función actualizarMarcador para incluir control del botón
+    function mostrarModalTiempoAgotado() {
+      alert("¡Se acabó el tiempo!");
+      reiniciarBtn.click();
+    }
+
     function actualizarMarcador() {
       marcador.textContent = puntuacion;
-      actualizarBotonGuardar(); // Actualizar estado del botón Guardar
     }
-
-    // Llamada inicial al cargar la página para configurar estado inicial
-    actualizarMarcador();
-
-    // Botón para ir a página de ranking (probablemente fuera del modal)
-    document.getElementById("ranking-btn").addEventListener("click", () => {
-      location.href = "../rankingMemori/rankingMemori.html";
-    });
-
-    // Eventos de botones del modal
-    salirBtn.addEventListener(
-      "click",
-      () => (location.href = "../../index.html")
-    );
-    reiniciarBtn.addEventListener("click", () => location.reload()); // Recargar página
-    guardarBtn.addEventListener(
-      "click",
-      () => (registro.style.display = "block") // Mostrar formulario de registro
-    );
-
-    // Evento para registrar puntuación
-    registrarBtn.addEventListener("click", () => {
-      const nombre = nombreJugador.value.trim();
-
-      if (nombre.length < 3 || nombre.length > 10) {
-        alert("El nombre debe tener entre 3 y 10 caracteres");
-        return;
-      }
-
-      guardarRankingLocal(nombre, puntuacion);
-      registro.style.display = "none";
-      nombreJugador.value = "";
-      cargarRankingLocal();
-    });
-
-    // Función para mostrar ranking en pantalla
-    function mostrarRanking(ranking) {
-      const divRanking = document.getElementById("ranking");
-      divRanking.innerHTML =
-        "<h3>Ranking</h3><ol>" +
-        ranking.map((r) => `<li>${r.nombre}: ${r.puntuacion}</li>`).join("") +
-        "</ol>";
-    }
-
-    function guardarRankingLocal(nombre, puntuacion) {
-      const clave = "ranking_memori";
-      const ranking = JSON.parse(localStorage.getItem(clave)) || [];
-
-      ranking.push({ nombre, puntuacion });
-
-      ranking.sort((a, b) => b.puntuacion - a.puntuacion);
-
-      localStorage.setItem(clave, JSON.stringify(ranking.slice(0, 5)));
-    }
-
-    // Función para cargar ranking desde archivo
-    function cargarRankingLocal() {
-      const ranking = JSON.parse(localStorage.getItem("ranking_memori")) || [];
-      mostrarRanking(ranking);
-    }
-
-    // Cargar ranking al iniciar el juego
-    cargarRankingLocal();
   }
 
-  // Iniciar el juego solo si existe el elemento tablero (página correcta)
-  if (document.getElementById("tablero")) {
-    iniciarMemori();
-  }
+  if (document.getElementById("tablero")) iniciarMemori();
 });

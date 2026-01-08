@@ -14,6 +14,43 @@
       <h1 id="titulo-memori">En Pareja</h1>
       <div id="marcador">0</div>
     </div>
+    <!-- Modal de selección de modo -->
+    <div id="modal-inicio" class="modal-memori mostrar">
+      <div class="modal-contentMemori">
+        <h2>Selecciona un modo</h2>
+        <button id="modoNormal">Modo Normal</button>
+        <button id="modoDesafio">Modo Desafío</button>
+        <button id="instruccionesBtn" class="boton-instrucciones">
+          Instrucciones
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal de instrucciones -->
+    <div id="modal-instrucciones">
+      <div class="modal-contentInstrucciones">
+        <h2>Instrucciones</h2>
+        <p>
+          Bienvenido al juego <strong>En Pareja</strong>.<br />
+          Existen dos modos de juego:
+        </p>
+        <ul style="text-align: left; margin-left: 20px">
+          <li>
+            <strong>Modo Normal:</strong> Encuentra todas las parejas. Cada
+            acierto suma puntos y cada error resta puntos.
+          </li>
+          <li>
+            <strong>Modo Desafío:</strong> Completa niveles en un tiempo
+            limitado. Aquí no se suman puntos, se mide tu progreso por niveles y
+            tiempo.
+          </li>
+        </ul>
+        <p>Selecciona el modo que prefieras y trata de mejorar tu récord.</p>
+        <p>¡Diviértete y desafía tu memoria!</p>
+        <button id="cerrarInstrucciones">Cerrar</button>
+      </div>
+    </div>
+
     <!-- Pantalla principal juego -->
     <div class="tablero" id="tablero"></div>
     <div id="ranking"></div>
