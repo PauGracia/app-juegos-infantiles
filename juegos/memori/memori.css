@@ -40,10 +40,10 @@ body {
 /* Tablero escritorio */
 .tablero {
   display: grid;
-  grid-template-columns: repeat(10, 100px);
-  max-width: 100%;
-  gap: 10px;
-  justify-content: center;
+  gap: 8px;
+  justify-content: start;
+  width: fit-content;
+  margin: 40px auto 0 auto; /* CENTRADO */
 }
 
 /*Las cartas */
@@ -541,10 +541,8 @@ body {
     margin: 20px;
   }
   .tablero {
-    grid-template-columns: repeat(10, 1fr);
-    gap: 6px;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    width: fit-content;
+    margin-left: 0;
   }
   .carta {
     /*width: auto;*/
@@ -566,11 +564,6 @@ body {
     margin: 20px 0 0 0;
     display: block;
   }
-  #salir-juego-memori:hover {
-    position: static;
-    margin: 20px 0 0 0;
-    display: block;
-  }
 }
 
 /*Media Queries MÓVIL del memori*/
@@ -584,22 +577,23 @@ body {
     margin-top: 50px;
   }
   #titulo-memori {
-    font-size: 30px;
+    font-size: 26px;
   }
   #marcador {
-    font-size: 18px;
-    padding: 6px 10px;
+    font-size: 15px;
+    padding: 4px 8px;
     margin-left: auto;
   }
   .tablero {
-    grid-template-columns: repeat(10, 1fr);
-    gap: 5px;
-    margin-top: 40px;
+    justify-content: center;
+    margin: 0 auto;
+    gap: 3px;
     margin-bottom: 40px;
+    margin-top: 40px;
   }
   .carta {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     aspect-ratio: 1/1;
     font-size: 4vw;
   }

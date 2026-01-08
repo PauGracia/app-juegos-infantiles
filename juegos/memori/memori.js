@@ -105,6 +105,20 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     // ------------------ FUNCIONES COMUNES ------------------
+
+    function ajustarGrid(totalCartas) {
+      let columnas;
+
+      if (totalCartas <= 8) columnas = 4;
+      else if (totalCartas <= 16) columnas = 4;
+      else if (totalCartas <= 24) columnas = 6;
+      else if (totalCartas <= 36) columnas = 6;
+      else if (totalCartas <= 48) columnas = 8;
+      else columnas = 10;
+
+      tablero.style.gridTemplateColumns = `repeat(${columnas}, auto)`;
+    }
+
     function mezclar(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -142,15 +156,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const divRanking = document.getElementById("ranking");
       divRanking.innerHTML =
         "<h3>Ranking</h3><ol>" +
-        ranking.map((r) => `<li>${r.nombre}: ${r.puntuacion}</li>`).join("") +
+        ranking
+          .slice(0, 3) // solo los 3 primeros
+          .map((r) => `<li>${r.nombre}: ${r.puntuacion}</li>`)
+          .join("") +
         "</ol>";
     }
 
     function guardarRankingLocal(clave, nombre, puntuacion) {
       const ranking = JSON.parse(localStorage.getItem(clave)) || [];
       ranking.push({ nombre, puntuacion });
-      ranking.sort((a, b) => b.puntuacion - a.puntuacion);
-      localStorage.setItem(clave, JSON.stringify(ranking.slice(0, 5)));
+      ranking.sort((a, b) => b.puntuacion - a.puntuacion); // ordenar de mayor a menor
+      localStorage.setItem(clave, JSON.stringify(ranking)); // sin slice, guardamos todo
     }
 
     function cargarRankingLocal(clave) {
@@ -168,6 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Crear cartas y lógica normal
       tablero.innerHTML = "";
       valores.forEach(crearCartaNormal);
+      ajustarGrid(valores.length);
       puntuacion = 0;
       parejasEncontradas = 0;
       actualizarMarcador();
@@ -276,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       tablero.innerHTML = "";
       valores.forEach(crearCartaDesafio);
-
+      ajustarGrid(valores.length);
       actualizarMarcador();
       actualizarBotonGuardar("ranking_desafio");
       cargarRankingLocal("ranking_desafio");
