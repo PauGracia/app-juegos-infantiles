@@ -10,15 +10,30 @@ body {
 }
 
 #body-memori {
+  background: linear-gradient(180deg, #f5f7fa 0%, #e9edf2 100%);
   text-align: center;
   margin: 0;
   padding: 20px;
   overflow-x: hidden;
 }
+
 #titulo-memori {
-  color: black;
+  color: #2c2c2c;
+  letter-spacing: 2px;
+  font-weight: 700;
+  position: relative;
   font-size: 45px;
   margin: 40px;
+}
+
+#titulo-memori::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: #4caf50;
+  margin: 12px auto 0;
+  border-radius: 2px;
 }
 
 /* Marcador escritorio */
@@ -43,10 +58,10 @@ body {
   gap: 8px;
   justify-content: start;
   width: fit-content;
-  margin: 40px auto 0 auto; /* CENTRADO */
+  margin: 40px auto 0 auto;
 }
 
-/*Las cartas */
+/* Las cartas */
 .carta {
   width: 80px;
   height: 80px;
@@ -69,7 +84,7 @@ body {
 
 /* Modal del memori */
 .modal-memori {
-  display: none; /* No aparece inicialmente */
+  display: none;
   position: fixed;
   z-index: 1000;
   inset: 0;
@@ -77,8 +92,9 @@ body {
   align-items: center;
   justify-content: center;
 }
+
 .modal-memori.mostrar {
-  display: flex; /* Solo se aplica cuando tiene la clase "mostrar" */
+  display: flex;
 }
 
 #nombreJugador {
@@ -88,230 +104,6 @@ body {
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 6px;
-}
-.modal-contentMemori {
-  background: #fff;
-  padding: 20px 30px;
-  border-radius: 10px;
-  text-align: center;
-  width: 350px;
-}
-.modal-contentMemori h2 {
-  margin-bottom: 10px;
-}
-
-/* Botón guardar */
-.guardar-btn {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.guardar-btn:hover {
-  background-color: #45a049;
-}
-
-/* Botón registrar */
-.registrar-btn {
-  background-color: #2196f3;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  width: 100%;
-}
-
-.registrar-btn:hover {
-  background-color: #1976d2;
-}
-
-/* Botones principales */
-.botones button {
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 2px solid gray;
-  cursor: pointer;
-  flex: 1;
-  margin: 0 5px;
-  font-weight: bold;
-}
-
-.salir-btn {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  margin: 5px;
-}
-
-.reiniciar-btn {
-  background-color: #ff9800;
-  color: white;
-  border: none;
-  margin: 5px;
-}
-
-.ranking-btn {
-  background-color: #9c27b0;
-  color: white;
-  border: none;
-  margin: 5px;
-}
-
-/* Ajuste del contenedor de botones */
-.botones {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-.modal-content input {
-  padding: 6px;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-/* estilos para el ranking*/
-
-#ranking {
-  position: absolute;
-  top: 150px;
-  right: 20px;
-  background: whitesmoke;
-  border: 4px solid black;
-  color: black;
-  font-size: 18px;
-  width: 150px;
-  padding: 10px;
-  border-radius: 8px;
-  text-align: left;
-}
-#ranking h3 {
-  margin: 0 0 5px 0;
-  font-size: 18px;
-  color: gray;
-}
-#ranking ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-#ranking li {
-  font-size: 15px;
-  margin-bottom: 4px;
-}
-#ranking ol {
-  padding-left: 18px; /* deja espacio para los números */
-  margin: 0;
-}
-
-#salir-juego-memori {
-  position: absolute;
-  background-color: white;
-  color: black;
-  top: 300px;
-  right: 20px;
-  width: 75px;
-  padding: 7px;
-  border-radius: 8px;
-  border: 4px solid black;
-  font-size: 18px;
-}
-
-/* ----- Modales dinámicos (inicio, niveles, victoria, tiempo) ----- */
-.modal-dinamico {
-  display: none; /* oculto por defecto */
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 2000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.modal-dinamico.mostrar {
-  display: flex;
-}
-
-.modal-dinamico .modal-contentMemori {
-  background: #fff;
-  padding: 20px 30px;
-  border-radius: 10px;
-  text-align: center;
-  width: 350px;
-  max-width: 90%;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-}
-
-.modal-dinamico h2 {
-  margin-bottom: 10px;
-  font-size: 24px;
-  color: black;
-}
-
-.modal-dinamico p {
-  margin-bottom: 15px;
-  font-size: 16px;
-  color: #333;
-}
-
-/* Botones genéricos para los modales */
-.modal-dinamico button {
-  padding: 10px 15px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  width: 100%;
-  margin: 6px 0;
-  font-size: 16px;
-  transition: background 0.2s;
-}
-
-/* Botones específicos */
-.modal-dinamico button#modoNormal {
-  background-color: #4caf50;
-  color: white;
-}
-.modal-dinamico button#modoNormal:hover {
-  background-color: #45a049;
-}
-
-.modal-dinamico button#modoDesafio {
-  background-color: #2196f3;
-  color: white;
-}
-.modal-dinamico button#modoDesafio:hover {
-  background-color: #1976d2;
-}
-
-.modal-dinamico button#iniciarNivel {
-  background-color: #ff9800;
-  color: white;
-}
-.modal-dinamico button#iniciarNivel:hover {
-  background-color: #f57c00;
-}
-
-.modal-dinamico button#salirModal {
-  background-color: #f44336;
-  color: white;
-}
-.modal-dinamico button#salirModal:hover {
-  background-color: #d32f2f;
-}
-
-/* Modal de victoria o fin de tiempo */
-.modal-dinamico.victoria p,
-.modal-dinamico.tiempo p {
-  font-weight: bold;
-  font-size: 18px;
 }
 
 /* ----- Modal general ----- */
@@ -326,24 +118,21 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px; /* espacio entre elementos */
+  gap: 12px;
 }
 
-/* Título del modal */
 .modal-contentMemori h2 {
   font-size: 24px;
   color: #000;
   margin-bottom: 10px;
 }
 
-/* Párrafos dentro del modal */
 .modal-contentMemori p {
   font-size: 16px;
   color: #333;
   margin: 5px 0;
 }
 
-/* Input dentro del modal */
 .modal-contentMemori input {
   width: 100%;
   padding: 8px;
@@ -355,7 +144,6 @@ body {
   box-sizing: border-box;
 }
 
-/* Botones dentro del modal en columna */
 .modal-contentMemori button {
   width: 100%;
   padding: 10px;
@@ -367,69 +155,142 @@ body {
   transition: background 0.2s;
 }
 
-/* Colores específicos de botones por ID */
-.modal-contentMemori button#modoNormal {
+/* Modal de niveles */
+.modal-memori .modal-contentMemori h2 {
+  position: relative;
+}
+
+.modal-memori .modal-contentMemori h2::before {
+  content: "🎯";
+  display: block;
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+/* Texto descriptivo del nivel */
+.modal-memori .modal-contentMemori p {
+  background: #f5f7fa;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+/* Botón iniciar nivel */
+.modal-memori button#iniciarNivel {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-memori button#iniciarNivel:hover {
+  transform: translateY(-2px);
+}
+
+/* Botones */
+.guardar-btn {
   background-color: #4caf50;
   color: white;
+  margin-bottom: 10px;
 }
-.modal-contentMemori button#modoNormal:hover {
+
+.guardar-btn:hover {
   background-color: #45a049;
 }
 
-.modal-contentMemori button#modoDesafio {
+.registrar-btn {
   background-color: #2196f3;
   color: white;
 }
-.modal-contentMemori button#modoDesafio:hover {
+
+.registrar-btn:hover {
   background-color: #1976d2;
 }
 
-.modal-contentMemori button#iniciarNivel {
-  background-color: #ff9800;
-  color: white;
-}
-.modal-contentMemori button#iniciarNivel:hover {
-  background-color: #f57c00;
+.botones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
-.modal-contentMemori button#salirModal,
-.modal-contentMemori button.salir-btn {
+.botones button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 2px solid gray;
+  cursor: pointer;
+  flex: 1;
+  margin: 0 5px;
+  font-weight: bold;
+}
+
+.salir-btn {
   background-color: #f44336;
   color: white;
 }
-.modal-contentMemori button#salirModal:hover,
-.modal-contentMemori button.salir-btn:hover {
-  background-color: #d32f2f;
-}
 
-.modal-contentMemori button#guardar,
-.modal-contentMemori button.guardar-btn {
-  background-color: #4caf50;
+.reiniciar-btn {
+  background-color: #ff9800;
   color: white;
 }
-.modal-contentMemori button#guardar:hover,
-.modal-contentMemori button.guardar-btn:hover {
-  background-color: #45a049;
-}
 
-.modal-contentMemori button#registrar,
-.modal-contentMemori button.registrar-btn {
-  background-color: #2196f3;
+.ranking-btn {
+  background-color: #9c27b0;
   color: white;
 }
-.modal-contentMemori button#registrar:hover,
-.modal-contentMemori button.registrar-btn:hover {
-  background-color: #1976d2;
+
+/* Ranking */
+#ranking {
+  position: absolute;
+  top: 150px;
+  right: 20px;
+  background: whitesmoke;
+  border: 4px solid black;
+  color: black;
+  font-size: 18px;
+  width: 150px;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: left;
 }
 
-/* Modal de instrucciones */
+#ranking h3 {
+  margin: 0 0 5px 0;
+  font-size: 18px;
+  color: gray;
+}
+
+#ranking li {
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+#ranking ol {
+  padding-left: 18px;
+  margin: 0;
+}
+
+#salir-juego-memori {
+  position: absolute;
+  background: #ffffff;
+  color: #333;
+  border: 3px solid #444;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  top: 300px;
+  right: 20px;
+  width: 75px;
+  padding: 7px;
+  border-radius: 8px;
+  border: 4px solid black;
+  font-size: 18px;
+}
+
+/* Modal instrucciones */
 #modal-instrucciones {
-  display: none; /* Oculto por defecto */
+  display: none;
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 3000; /* Mayor que otros modales */
-
+  z-index: 3000;
   align-items: center;
   justify-content: center;
 }
@@ -459,7 +320,8 @@ body {
   color: #333;
 }
 
-#modal-instrucciones button {
+#modal-instrucciones button,
+.boton-instrucciones {
   background-color: #333;
   color: white;
   border: none;
@@ -472,17 +334,47 @@ body {
 
 .boton-instrucciones {
   background-color: #607d8b;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
   margin-top: 10px;
 }
+
 .boton-instrucciones:hover {
   background-color: #455a64;
+}
+
+/* Modal instrucciones más amable */
+#modal-instrucciones .modal-contentInstrucciones {
+  border-top: 6px solid #2196f3;
+}
+
+/* Título instrucciones */
+#modal-instrucciones h2 {
+  color: #2196f3;
+}
+
+/* Lista más clara */
+#modal-instrucciones ul {
+  background: #f5f7fa;
+  padding: 15px 20px;
+  border-radius: 10px;
+}
+
+/* Iconos suaves para cada modo */
+#modal-instrucciones li {
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+#modal-instrucciones li strong {
+  color: #333;
+}
+
+/* Botón cerrar más “friendly” */
+#modal-instrucciones button {
+  background: linear-gradient(135deg, #607d8b, #455a64);
+}
+
+#modal-instrucciones button:hover {
+  background: #37474f;
 }
 
 /*Media Queries tablet del memori*/

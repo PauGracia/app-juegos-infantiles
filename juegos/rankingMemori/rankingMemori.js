@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Variables para gestionar el ranking y paginación
     let ranking = []; // Array para almacenar todas las puntuaciones
     let paginaActual = 1; // Página actual que se está mostrando
+    let tipoRanking = "normal"; // "normal" | "desafio"
+
     const porPagina = 25; // Número de elementos por página
 
     // Función para prevenir ataques XSS escapando caracteres HTML
@@ -55,14 +57,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Generar HTML para la lista de ranking
       let html = `<ol start="${inicio + 1}">`; // Iniciar numeración desde el índice correcto
-      paginaDatos.forEach(
-        (r) =>
-          (html += `<li>
-                    <span class="nombre">${escapeHtml(r.nombre)}</span>
-                    <span class="relleno"></span>  <!-- Espacio flexible entre nombre y puntos -->
-                    <span class="puntos">${r.puntuacion}</span>
-                  </li>`)
-      );
+      paginaDatos.forEach((r) => {
+        html += `
+    <li>
+      <span class="nombre">${escapeHtml(r.nombre)}</span>
+      <span class="relleno"></span>
+      <span class="puntos">
+        ${tipoRanking === "normal" ? r.puntuacion + " pts" : "Nivel " + r.nivel}
+      </span>
+    </li>
+  `;
+      });
+
       html += "</ol>";
       listaDiv.innerHTML = html;
 
@@ -75,11 +81,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Función asíncrona para cargar el ranking desde el servidor
     function cargarRanking() {
-      ranking = JSON.parse(localStorage.getItem("ranking_memori")) || [];
+      const clave =
+        tipoRanking === "normal" ? "ranking_memori" : "ranking_desafio";
 
-      // Ordenar por si acaso (seguridad)
-      ranking.sort((a, b) => b.puntuacion - a.puntuacion);
+      ranking = JSON.parse(localStorage.getItem(clave)) || [];
 
+      ranking.sort((a, b) =>
+        tipoRanking === "normal"
+          ? b.puntuacion - a.puntuacion
+          : b.nivel - a.nivel
+      );
+
+      paginaActual = 1;
       mostrarPagina();
     }
 
@@ -104,8 +117,17 @@ document.addEventListener("DOMContentLoaded", () => {
       () => (location.href = "../memori/index.html")
     );
 
-    // Cargar el ranking al iniciar la página
-    cargarRanking();
+    document.querySelectorAll(".tab").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document
+          .querySelectorAll(".tab")
+          .forEach((b) => b.classList.remove("activa"));
+
+        btn.classList.add("activa");
+        tipoRanking = btn.dataset.tipo;
+        cargarRanking();
+      });
+    });
   }
 
   // Iniciar el sistema de ranking solo si existe el elemento lista (página correcta)

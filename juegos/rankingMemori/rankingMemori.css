@@ -37,7 +37,7 @@
 }
 
 #lista ol {
-  padding-left: 28px;
+  padding-left: 0;
   margin: 0;
 }
 
@@ -48,6 +48,7 @@
   font-family: monospace; /* ayuda a alinear los puntos */
   font-size: 1rem;
   margin: 6px 0;
+  padding: 6px 0;
 }
 
 #lista li .nombre {
@@ -78,6 +79,8 @@
   background: white;
   cursor: pointer;
   font-size: 0.95rem;
+  margin-top: 10px;
+  font-weight: 500;
 }
 
 .paginador button:disabled {
@@ -89,6 +92,34 @@
   font-weight: 600;
   color: var(--accent);
 }
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.tab {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  opacity: 0.85;
+}
+
+.tab.activa {
+  opacity: 1;
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
 /* Media para pagina del ranking */
 @media (max-width: 480px) {
   #lista {

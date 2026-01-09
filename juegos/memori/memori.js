@@ -34,13 +34,25 @@ document.addEventListener("DOMContentLoaded", () => {
     // ---------- BOTÓN REINICIAR ----------
     reiniciarBtn.addEventListener("click", () => {
       modal.classList.remove("mostrar");
+
       tablero.innerHTML = "";
       puntuacion = 0;
       parejasEncontradas = 0;
       primeraCarta = null;
       bloqueo = false;
 
-      iniciarJuegoNormal();
+      if (intervaloTiempo) clearInterval(intervaloTiempo);
+
+      // Reset flags de desafío
+      desafioTerminado = false;
+      nivelActual = 0;
+
+      // Volver al modal inicial
+      modalInicio.classList.add("mostrar");
+    });
+
+    document.getElementById("rankingInicio").addEventListener("click", () => {
+      window.location.href = "../rankingMemori/index.html";
     });
 
     // ---------- BOTÓN RANKING ----------
@@ -90,18 +102,28 @@ document.addEventListener("DOMContentLoaded", () => {
     let primeraCarta = null;
     let bloqueo = false;
     let parejasEncontradas = 0;
-    let parejasDelNivel = 0;
+    let nivelMaximoAlcanzado = 0;
+    let desafioTerminado = false;
+    let modoActual = null; // "normal" | "desafio"
     let tiempoRestante = 0;
     let intervaloTiempo = null;
     let nivelActual = 0;
+    let columnasNivel = 0;
 
     // ------------------ NIVELES DESAFÍO ------------------
     const niveles = [
-      { nivel: 1, parejas: 4, tiempo: 300 },
-      { nivel: 2, parejas: 8, tiempo: 360 },
-      { nivel: 3, parejas: 12, tiempo: 420 },
-      { nivel: 4, parejas: 16, tiempo: 480 },
-      { nivel: 5, parejas: 20, tiempo: 540 },
+      { nivel: 1, parejas: 4, columnas: 4, tiempo: 300 },
+      { nivel: 2, parejas: 6, columnas: 4, tiempo: 330 },
+      { nivel: 3, parejas: 8, columnas: 4, tiempo: 360 },
+      { nivel: 4, parejas: 10, columnas: 5, tiempo: 390 },
+      { nivel: 5, parejas: 12, columnas: 6, tiempo: 420 },
+      { nivel: 6, parejas: 15, columnas: 6, tiempo: 450 },
+      { nivel: 7, parejas: 18, columnas: 6, tiempo: 480 },
+      { nivel: 8, parejas: 20, columnas: 8, tiempo: 510 },
+      { nivel: 9, parejas: 24, columnas: 8, tiempo: 540 },
+      { nivel: 10, parejas: 30, columnas: 10, tiempo: 570 },
+      { nivel: 11, parejas: 36, columnas: 9, tiempo: 585 },
+      { nivel: 12, parejas: 40, columnas: 10, tiempo: 600 }, // MODO NORMAL
     ];
 
     // ------------------ FUNCIONES COMUNES ------------------
@@ -119,6 +141,11 @@ document.addEventListener("DOMContentLoaded", () => {
       tablero.style.gridTemplateColumns = `repeat(${columnas}, auto)`;
     }
 
+    function ajustarGridPorNivel(parejas, columnas) {
+      const totalCartas = parejas * 2;
+      tablero.style.gridTemplateColumns = `repeat(${columnas}, auto)`;
+    }
+
     function mezclar(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -126,6 +153,18 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       return array;
     }
+
+    document.getElementById("modoNormal").addEventListener("click", () => {
+      modoActual = "normal";
+      modalInicio.classList.remove("mostrar");
+      iniciarJuegoNormal();
+    });
+
+    document.getElementById("modoDesafio").addEventListener("click", () => {
+      modoActual = "desafio";
+      modalInicio.classList.remove("mostrar");
+      iniciarJuegoDesafio();
+    });
 
     function actualizarBotonGuardar(claveRanking) {
       if (puntuacion <= 0) {
@@ -154,11 +193,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function mostrarRanking(ranking) {
       const divRanking = document.getElementById("ranking");
+
       divRanking.innerHTML =
         "<h3>Ranking</h3><ol>" +
         ranking
-          .slice(0, 3) // solo los 3 primeros
-          .map((r) => `<li>${r.nombre}: ${r.puntuacion}</li>`)
+          .slice(0, 3)
+          .map((r) =>
+            r.puntuacion !== undefined
+              ? `<li>${r.nombre}: ${r.puntuacion}</li>`
+              : `<li>${r.nombre} - Nivel ${r.nivel}</li>`
+          )
           .join("") +
         "</ol>";
     }
@@ -251,6 +295,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ------------------ MODO DESAFÍO ------------------
+    function mostrarModalDesafioFinal() {
+      modal.classList.add("mostrar");
+
+      puntuacionFinal.textContent = `
+    Has alcanzado el nivel ${nivelMaximoAlcanzado}
+  `;
+
+      registro.style.display = "none";
+
+      actualizarBotonGuardarDesafio();
+    }
+
     function iniciarJuegoDesafio() {
       nivelActual = 0;
       siguienteNivel();
@@ -265,6 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
       nivelActual++;
       const nivel = niveles[nivelActual - 1];
       parejasDelNivel = nivel.parejas;
+      columnasNivel = nivel.columnas;
       tiempoRestante = nivel.tiempo;
 
       // Modal nivel
@@ -294,7 +351,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       tablero.innerHTML = "";
       valores.forEach(crearCartaDesafio);
-      ajustarGrid(valores.length);
+      ajustarGridPorNivel(parejasDelNivel, columnasNivel);
+
       actualizarMarcador();
       actualizarBotonGuardar("ranking_desafio");
       cargarRankingLocal("ranking_desafio");
@@ -335,9 +393,20 @@ document.addEventListener("DOMContentLoaded", () => {
             parejasEncontradas++;
             if (parejasEncontradas === parejasDelNivel) {
               clearInterval(intervaloTiempo);
-              if (nivelActual < niveles.length) siguienteNivel();
-              else mostrarModal();
+
+              nivelMaximoAlcanzado = Math.max(
+                nivelMaximoAlcanzado,
+                nivelActual
+              );
+
+              if (nivelActual < niveles.length) {
+                siguienteNivel();
+              } else {
+                desafioTerminado = true;
+                mostrarModalDesafioFinal();
+              }
             }
+
             primeraCarta = null;
             bloqueo = false;
           } else {
@@ -358,9 +427,57 @@ document.addEventListener("DOMContentLoaded", () => {
       tablero.appendChild(div);
     }
 
+    function guardarRankingDesafio(nombre, nivel) {
+      const ranking = JSON.parse(localStorage.getItem("ranking_desafio")) || [];
+
+      ranking.push({ nombre, nivel });
+
+      ranking.sort((a, b) => b.nivel - a.nivel);
+
+      localStorage.setItem("ranking_desafio", JSON.stringify(ranking));
+    }
+
+    function actualizarBotonGuardarDesafio() {
+      guardarBtn.disabled = false;
+      guardarBtn.textContent = "Guardar récord";
+
+      guardarBtn.onclick = () => {
+        registro.style.display = "block";
+
+        registrarBtn.onclick = () => {
+          const nombre = nombreJugador.value.trim();
+
+          if (nombre.length < 3 || nombre.length > 10) {
+            alert("El nombre debe tener entre 3 y 10 caracteres");
+            return;
+          }
+
+          guardarRankingDesafio(nombre, nivelMaximoAlcanzado);
+          registro.style.display = "none";
+          nombreJugador.value = "";
+
+          cargarRankingDesafio();
+        };
+      };
+    }
+
+    function cargarRankingDesafio() {
+      const ranking = JSON.parse(localStorage.getItem("ranking_desafio")) || [];
+      mostrarRanking(ranking);
+    }
+
     function mostrarModalTiempoAgotado() {
-      alert("¡Se acabó el tiempo!");
-      reiniciarBtn.click();
+      clearInterval(intervaloTiempo);
+
+      // Guardamos el nivel alcanzado aunque no se complete
+      nivelMaximoAlcanzado = Math.max(nivelMaximoAlcanzado, nivelActual);
+
+      if (nivelActual >= 5) {
+        mostrarModalDesafioFinal();
+      } else {
+        alert("¡Se acabó el tiempo!");
+        reiniciarBtn.click();
+      }
     }
 
     function actualizarMarcador() {
