@@ -109,6 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let intervaloTiempo = null;
     let nivelActual = 0;
     let columnasNivel = 0;
+    let parejasDelNivel = 0; // para el modo desafío
 
     // ------------------ NIVELES DESAFÍO ------------------
     const niveles = [
@@ -317,6 +318,13 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("¡Has completado todos los niveles!");
         return;
       }
+
+      // Limpiar cualquier modal anterior
+      const modalExistente = document.getElementById("modal-nivel");
+      if (modalExistente) {
+        modalExistente.remove();
+      }
+
       parejasEncontradas = 0;
       nivelActual++;
       const nivel = niveles[nivelActual - 1];
@@ -327,22 +335,46 @@ document.addEventListener("DOMContentLoaded", () => {
       // Modal nivel
       const modalNivel = document.createElement("div");
       modalNivel.classList.add("modal-memori", "mostrar");
+      modalNivel.setAttribute("id", "modal-nivel");
       modalNivel.innerHTML = `
-        <div class="modal-contentMemori">
-          <h2>Nivel ${nivel.nivel}</h2>
-          <p>${nivel.parejas} parejas - ${Math.floor(tiempoRestante / 60)}:${
-        tiempoRestante % 60
-      } minutos</p>
-          <button id="iniciarNivel">Iniciar</button>
-        </div>
-      `;
+    <div class="modal-contentMemori">
+      <h2>Nivel ${nivel.nivel}</h2>
+      <p>${nivel.parejas} parejas - ${Math.floor(tiempoRestante / 60)}:${
+        tiempoRestante % 60 < 10 ? "0" : ""
+      }${tiempoRestante % 60} minutos</p>
+      <button id="iniciarNivel">Iniciar</button>
+    </div>
+  `;
       document.body.appendChild(modalNivel);
-      document.getElementById("iniciarNivel").addEventListener("click", () => {
-        modalNivel.remove();
-        cargarNivelDesafio();
-      });
-    }
 
+      // Obtener referencia al botón
+      const btnIniciar = modalNivel.querySelector("#iniciarNivel");
+
+      // Crear una función única para el handler
+      const iniciarHandler = () => {
+        console.log("Botón Iniciar clickeado, nivel:", nivelActual);
+
+        if (!elementos || elementos.length < parejasDelNivel) {
+          alert("No hay suficientes elementos para este nivel.");
+          return;
+        }
+
+        console.log("Removiendo modal...");
+
+        // IMPORTANTE: Remover el event listener primero
+        btnIniciar.removeEventListener("click", iniciarHandler);
+
+        // Remover el modal
+        modalNivel.remove();
+        console.log("Modal removido, cargando nivel...");
+
+        // Cargar el nivel
+        cargarNivelDesafio();
+      };
+
+      // Agregar el event listener solo una vez
+      btnIniciar.addEventListener("click", iniciarHandler, { once: true }); // { once: true } asegura que solo se ejecute una vez
+    }
     function cargarNivelDesafio() {
       // Seleccionamos parejas al azar
       const seleccionados = mezclar(elementos).slice(0, parejasDelNivel);
