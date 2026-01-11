@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // NUEVAS FUNCIONES PARA LOCALSTORAGE
     // ================================
 
-    // 1. Función para guardar en localStorage
+    // Función para guardar en localStorage
     function ah_guardarRankingLocal() {
       if (!ah_usuario || ah_puntos <= 0) return false;
 
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const nuevoRegistro = {
           usuario: ah_usuario,
           puntos: ah_puntos,
-          fecha: new Date().toLocaleString("es-ES"),
+          fecha: Date.now(),
         };
 
         ranking.push(nuevoRegistro);
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // 2. Función para mostrar ranking (exportada globalmente)
+    // Función para mostrar ranking (exportada globalmente)
     /*window.mostrarRankingLocal = function () {
       try {
         const ranking = JSON.parse(
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         if (ranking.length === 0) {
-          mostrarModalInfo(
+          window.mostrarModalInfo(
             "🏆 RANKING AHORCADO 🏆\n\nNo hay puntuaciones registradas aún.\n¡Sé el primero!"
           );
           return;
@@ -104,34 +104,34 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Mostrar en alerta o puedes crear un modal bonito
-        mostrarModalInfo(mensaje);
+        window.mostrarModalInfo(mensaje);
       } catch (error) {
         console.error("Error al mostrar ranking:", error);
-        mostrarModalInfo(
+        window.mostrarModalInfo(
           "Error al cargar el ranking. Asegúrate de que localStorage esté habilitado."
         );
       }
     };*/
 
-    // 3. Función para guardar puntuación desde el botón
+    // Función para guardar puntuación desde el botón
     window.guardarPuntuacionLocal = function () {
       if (ah_guardarRankingLocal()) {
-        mostrarModalInfo(
+        window.mostrarModalInfo(
           `¡Puntuación de ${ah_puntos} puntos guardada para ${ah_usuario}!`
         );
       } else {
-        mostrarModalInfo("Error al guardar la puntuación");
+        window.mostrarModalInfo("Error al guardar la puntuación");
       }
     };
 
-    // 4. Función para exportar ranking a archivo JSON
+    // Función para exportar ranking a archivo JSON
     window.exportarRanking = function () {
       try {
         const ranking = JSON.parse(
           localStorage.getItem("rankingAhorcado") || "[]"
         );
         if (ranking.length === 0) {
-          mostrarModalInfo("No hay datos para exportar.");
+          window.mostrarModalInfo("No hay datos para exportar.");
           return;
         }
 
@@ -147,14 +147,16 @@ document.addEventListener("DOMContentLoaded", () => {
         );
         linkElement.click();
 
-        mostrarModalInfo("Ranking exportado correctamente como archivo JSON.");
+        window.mostrarModalInfo(
+          "Ranking exportado correctamente como archivo JSON."
+        );
       } catch (error) {
         console.error("Error al exportar:", error);
-        mostrarModalInfo("Error al exportar el ranking.");
+        window.mostrarModalInfo("Error al exportar el ranking.");
       }
     };
 
-    // 5. Función para importar ranking desde archivo (opcional)
+    // Función para importar ranking desde archivo (opcional)
     window.importarRanking = function () {
       const input = document.createElement("input");
       input.type = "file";
@@ -173,16 +175,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 "rankingAhorcado",
                 JSON.stringify(importedData)
               );
-              mostrarModalInfo(
+              window.mostrarModalInfo(
                 `Ranking importado correctamente. ${importedData.length} registros cargados.`
               );
             } else {
-              mostrarModalInfo(
+              window.mostrarModalInfo(
                 "Error: El archivo no contiene un array válido."
               );
             }
           } catch (error) {
-            mostrarModalInfo("Error: Archivo JSON inválido.");
+            window.mostrarModalInfo("Error: Archivo JSON inválido.");
           }
         };
         reader.readAsText(file);
@@ -209,20 +211,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const inputUsuario = document.getElementById("usuario");
       if (!inputUsuario) {
-        mostrarModalInfo("No se encontró el campo usuario.");
+        window.mostrarModalInfo("Error", "No se encontró el campo usuario.");
+
         return;
       }
       ah_usuario = inputUsuario.value.trim();
       // Limitar a 3-8 caracteres
       if (ah_usuario.length < 3 || ah_usuario.length > 12) {
-        mostrarModalInfo(
+        window.mostrarModalInfo(
           "Nombre inválido",
           "El nombre debe tener entre 3 y 12 caracteres."
         );
         return;
       }
       if (!ah_usuario) {
-        mostrarModalInfo("Por favor ingresa un nombre de usuario");
+        window.mostrarModalInfo("Por favor ingresa un nombre de usuario");
         return;
       }
       const modalInicio = document.getElementById("modal-inicio");
@@ -233,6 +236,32 @@ document.addEventListener("DOMContentLoaded", () => {
       ah_nuevaPalabra();
     };
 
+    const btnEmpezar = document.getElementById("btnEmpezar");
+    if (btnEmpezar) {
+      btnEmpezar.addEventListener("click", iniciarAhorcado);
+    }
+
+    const btnVerRanking = document.getElementById("btnVerRanking");
+    if (btnVerRanking) {
+      btnVerRanking.addEventListener("click", () => {
+        window.location.href = "../ranking/rankingLocal.html";
+      });
+    }
+
+    const btnSalirModal = document.getElementById("btnSalir-modal");
+    if (btnSalirModal) {
+      btnSalirModal.addEventListener("click", () => {
+        window.location.href = "../../index.html";
+      });
+    }
+
+    const btnSalir = document.getElementById("btnSalir");
+    if (btnSalir) {
+      btnSalir.addEventListener("click", () => {
+        window.location.href = "../../index.html";
+      });
+    }
+
     // Función para resetear el SVG (ocultar todas las partes)
     function ah_resetearSVG() {
       ah_partesSVG.forEach((parteId) => {
@@ -242,10 +271,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     }
-
-    document.getElementById("btnSalir").addEventListener("click", () => {
-      window.location.href = "../../index.html";
-    });
 
     function ah_nuevaPalabra() {
       const lista = palabras[ah_idioma] || palabras.es;
@@ -349,7 +374,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Guardar automáticamente si la puntuación es buena (opcional)
       if (ah_puntos >= 3) {
-        // Puedes guardar automáticamente o dejar que el usuario decida
         // ah_guardarRankingLocal();
       }
     }
@@ -368,7 +392,7 @@ document.addEventListener("DOMContentLoaded", () => {
   })();
 
   // Funciones modal del ranking
-  window.mostrarModalInfo = function (titulo, mensaje) {
+  window.mostrarModalInfo = function (titulo, mensaje = "") {
     document.getElementById("modal-info-titulo").textContent = titulo;
     document.getElementById("modal-info-texto").textContent = mensaje;
     document.getElementById("modal-info").style.display = "flex";
@@ -377,4 +401,9 @@ document.addEventListener("DOMContentLoaded", () => {
   window.cerrarModalInfo = function () {
     document.getElementById("modal-info").style.display = "none";
   };
+
+  const btnModalInfoAceptar = document.getElementById("btnModalInfoAceptar");
+  if (btnModalInfoAceptar && window.cerrarModalInfo) {
+    btnModalInfoAceptar.addEventListener("click", window.cerrarModalInfo);
+  }
 });

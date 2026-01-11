@@ -23,11 +23,11 @@
         <input type="text" id="usuario" placeholder="Nombre de usuario" />
         <br />
 
-        <button onclick="iniciarAhorcado()">Empezar</button>
+        <button id="btnEmpezar">Empezar</button>
 
-        <button onclick="window.location.href='../ranking/rankingLocal.html'">
-          Ver ranking
-        </button>
+        <button id="btnVerRanking">Ver ranking</button>
+
+        <button id="btnSalir-modal">Salir</button>
         <label for="idioma">Idioma:</label>
         <select id="idioma">
           <option value="es">Español</option>
@@ -98,7 +98,7 @@
       <div class="modal-ranking-contenido">
         <h3 id="modal-info-titulo">Información</h3>
         <p id="modal-info-texto"></p>
-        <button onclick="cerrarModalInfo()">Aceptar</button>
+        <button id="btnModalInfoAceptar">Aceptar</button>
       </div>
     </div>
     <!-- Modal final -->

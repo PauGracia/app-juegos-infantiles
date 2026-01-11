@@ -1,4 +1,12 @@
 /* ----- Juego de Memori ----- */
+* {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+input {
+  user-select: text;
+}
 
 html,
 body {

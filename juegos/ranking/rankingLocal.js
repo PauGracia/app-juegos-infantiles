@@ -26,7 +26,7 @@ function initRanking() {
     if (orden === "puntos") {
       datos.sort((a, b) => b.puntos - a.puntos);
     } else if (orden === "fecha") {
-      datos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+      datos.sort((a, b) => b.fecha - a.fecha);
     } else if (orden === "usuario") {
       datos.sort((a, b) => a.usuario.localeCompare(b.usuario));
     }
@@ -44,7 +44,10 @@ function initRanking() {
           <div class="ranking-pos">${i + 1}</div>
           <div>
             <div class="ranking-usuario">${r.usuario}</div>
-            <div class="ranking-fecha">${r.fecha}</div>
+            <div class="ranking-fecha">
+              ${new Date(r.fecha).toLocaleString("es-ES")}
+            </div>
+
           </div>
           <div class="ranking-puntos">${r.puntos} pts</div>
         `;
