@@ -18,32 +18,50 @@ document.addEventListener(
   { once: true }
 );
 
-const sonidosDamas = {
-  movimiento: () => {
-    const a = new Audio("sounds/movement.mp3");
-    a.volume = 0.8;
-    a.play();
-  },
-  comer: () => {
-    const a = new Audio("sounds/comer1.mp3");
-    a.volume = 0.9;
-    a.play();
-  },
-  ganar: () => {
-    const a = new Audio("sounds/you-win.mp3");
-    a.volume = 1;
-    a.play();
-  },
-  perder: () => {
-    const a = new Audio("sounds/game-over.mp3");
-    a.volume = 1;
-    a.play();
-  },
-  coronar: () => {
-    const a = new Audio("sounds/christmas.mp3");
-    a.volume = 1;
-    a.play();
-  },
+// ================================
+// SONIDOS OPTIMIZADOS
+// ================================
+
+const sonidosDamas = (() => {
+  const sonidos = {
+    movimiento: new Audio("sounds/movement.mp3"),
+    comer: new Audio("sounds/comer1.mp3"),
+    ganar: new Audio("sounds/you-win.mp3"),
+    perder: new Audio("sounds/game-over.mp3"),
+    coronar: new Audio("sounds/christmas.mp3"),
+  };
+
+  sonidos.movimiento.volume = 0.8;
+  sonidos.comer.volume = 0.9;
+  sonidos.ganar.volume = 1;
+  sonidos.perder.volume = 1;
+  sonidos.coronar.volume = 1;
+
+  function play(audio) {
+    audio.currentTime = 0;
+    audio.play().catch(() => {});
+  }
+
+  return {
+    movimiento: () => play(sonidos.movimiento),
+    comer: () => play(sonidos.comer),
+    ganar: () => play(sonidos.ganar),
+    perder: () => play(sonidos.perder),
+    coronar: () => play(sonidos.coronar),
+  };
+})();
+
+// ================================
+// CONSTANTES DEL JUEGO
+// ================================
+
+const DAMAS = {
+  FILAS: 8,
+  COLUMNAS: 8,
+  ANIMACION_MS: 1000,
+  IA_DELAY_MS: 950,
+  CORONACION_FILA_TOP: 7,
+  CORONACION_FILA_BOTTOM: 0,
 };
 
 const JuegoDamas = (() => {
@@ -97,14 +115,6 @@ const JuegoDamas = (() => {
   // ======================================================================
   // SORTEO DE LADOS Y TURNO
   // ======================================================================
-  /*function sortearRolesDamas() {
-    estadoGlobalDamas.ladoHumanoAsignado =
-      Math.random() < 0.5 ? "top" : "bottom";
-    estadoGlobalDamas.turnoActualDamas = Math.random() < 0.5 ? "humano" : "ia";
-
-    document.getElementById("lado-humano-info").textContent =
-      estadoGlobalDamas.ladoHumanoAsignado === "top" ? "Arriba" : "Abajo";
-  }*/
 
   function sortearColoresYTurno() {
     estadoGlobalDamas.colorHumano = Math.random() < 0.5 ? "blancas" : "negras";
@@ -185,6 +195,7 @@ const JuegoDamas = (() => {
   // SELECCIÓN Y MOVIMIENTOS
   // ======================================================================
   function manejarClickPiezaDamas(r, c) {
+    if (!clickSeguro()) return;
     const seleccion = estadoGlobalDamas.seleccionActualDamas;
     if (seleccion && seleccion.r === r && seleccion.c === c) {
       estadoGlobalDamas.seleccionActualDamas = null;
@@ -367,6 +378,8 @@ const JuegoDamas = (() => {
   }
 
   function ejecutarMovimientoDamas(mov) {
+    if (estadoGlobalDamas.juegoTerminadoFlag) return;
+
     if (animacionEnCurso) return;
 
     const { desde, hacia, capturas, reyDespues } = mov;
@@ -532,7 +545,8 @@ const JuegoDamas = (() => {
     const dx = rectDestino.left - rectActual.left;
     const dy = rectDestino.top - rectActual.top;
 
-    ficha.style.transition = "transform 1000ms ease-in-out";
+    ficha.style.transition = `transform ${DAMAS.ANIMACION_MS}ms ease-in-out`;
+
     ficha.style.transform = `translate(${dx}px, ${dy}px)`;
 
     setTimeout(() => {
@@ -631,13 +645,13 @@ const JuegoDamas = (() => {
     actualizarPanelInfoDamas();
 
     if (estadoGlobalDamas.turnoActualDamas === "ia")
-      setTimeout(movimientoIA_Damas, 950);
+      setTimeout(movimientoIA_Damas, DAMAS.IA_DELAY_MS);
   }
 
   function evaluarGanadorDamas() {
     let humano = 0,
       ia = 0;
-    for (let r = 0; r < 8; r++)
+    for (let r = 0; r < DAMAS.FILAS; r++)
       for (let c = 0; c < 8; c++) {
         const p = estadoGlobalDamas.matrizDamas[r][c];
         if (!p) continue;
@@ -787,15 +801,6 @@ const JuegoDamas = (() => {
       .getElementById("boton-reinicio-damas")
       .addEventListener("click", resetGameDamasUltra);
 
-    /*document
-      .getElementById("boton-voltear-damas")
-      .addEventListener("click", () => {
-        estadoGlobalDamas.tableroGiradoFlag =
-          !estadoGlobalDamas.tableroGiradoFlag;
-        tableroDamasPrincipal.style.transform =
-          estadoGlobalDamas.tableroGiradoFlag ? "rotate(180deg)" : "";
-      });*/
-
     resetGameDamasUltra();
   }
 
@@ -821,3 +826,12 @@ document
   .addEventListener("click", () => {
     document.getElementById("modal-instrucciones-damas").style.display = "none";
   });
+
+let ultimoClickTiempo = 0;
+
+function clickSeguro() {
+  const ahora = Date.now();
+  if (ahora - ultimoClickTiempo < 250) return false;
+  ultimoClickTiempo = ahora;
+  return true;
+}

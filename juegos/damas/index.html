@@ -7,19 +7,19 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
     <title>Juego de damas</title>
-    <link rel="stylesheet" href="../assets/css/app.css?v=20251111" />
+    <link rel="stylesheet" href="../../assets/css/app.css?v=20251111" />
     <link rel="stylesheet" href="damas.css?v=20251111" />
   </head>
   <body class="body-damas">
+    <!-- En tu HTML, modifica desde la línea 19 aproximadamente: -->
     <div class="contenedor-juego-damas">
       <div id="juego-damas-contenedor">
-        <!--<h1 class="titulo-damas">Juego de damas</h1>-->
-
         <div id="tablero-damas"></div>
+      </div>
 
+      <div class="panel-y-botones">
         <div class="info-panel-damas">
           <div><b>Tus piezas:</b> <span id="color-humano-info">—</span></div>
-
           <div><b>Tu lado:</b> <span id="lado-humano-info">—</span></div>
           <div><b>Turno:</b> <span id="turno-info">—</span></div>
           <div><b>Ganador:</b> <span id="ganador-info">—</span></div>
@@ -33,18 +33,14 @@
           <div>
             <b>Capturas MÁQUINA:</b> <span id="capturas-ia-info">0</span>
           </div>
-
           <div style="margin-top: 10px" id="mensaje-estado-damas"></div>
         </div>
-        <div>
+
+        <div class="contenedor-botones-damas">
           <button class="boton-damas" id="boton-reinicio-damas">Sortear</button>
-          <!-- <button class="boton-damas" id="boton-voltear-damas">
-            Girar Tablero
-          </button>-->
           <button class="boton-damas" id="boton-instrucciones-damas">
             Instrucciones
           </button>
-
           <button id="salirDamas" class="boton-damas">Salir</button>
         </div>
       </div>
