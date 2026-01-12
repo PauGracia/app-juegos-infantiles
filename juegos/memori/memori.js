@@ -13,6 +13,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const registrarBtn = document.getElementById("registrar");
     const nombreJugador = document.getElementById("nombreJugador");
     const rankingBtn = document.getElementById("ranking-btn");
+
+    // ------------------ SONIDOS ------------------
+    const sonidos = {
+      girar: new Audio("sounds/girar2.mp3"),
+      pareja: new Audio("sounds/descubierto.mp3"),
+      error: new Audio("sounds/error.mp3"),
+      pasoNivel: new Audio("sounds/paso-nivel.mp3"),
+      finTiempo: new Audio("sounds/fin-tiempo.mp3"),
+      win: new Audio("sounds/win.mp3"),
+    };
+
+    Object.values(sonidos).forEach((audio) => {
+      audio.preload = "auto";
+    });
+
+    // Volúmenes individuales (0.0 a 1.0)
+    sonidos.girar.volume = 0.6;
+    sonidos.pareja.volume = 0.9;
+    sonidos.error.volume = 0.1;
+    sonidos.pasoNivel.volume = 0.2;
+    sonidos.finTiempo.volume = 0.5;
+    sonidos.win.volume = 0.7;
+
+    // Función segura para reproducir sonido
+    function playSound(sound) {
+      if (!sound) return;
+      sound.currentTime = 0;
+      sound.play().catch(() => {
+        // Evita errores en móviles si aún no hay interacción
+      });
+    }
+
     // ------------------ BOTONES SALIR ------------------
     function volverAlModalInicial() {
       // Cerrar modal de victoria si está abierto
@@ -113,7 +145,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ------------------ NIVELES DESAFÍO ------------------
     const niveles = [
-      { nivel: 1, parejas: 4, columnas: 4, tiempo: 300 },
+      //{ nivel: 1, parejas: 4, columnas: 4, tiempo: 300 },
+      { nivel: 1, parejas: 4, columnas: 4, tiempo: 30 },
       { nivel: 2, parejas: 6, columnas: 4, tiempo: 330 },
       { nivel: 3, parejas: 8, columnas: 4, tiempo: 360 },
       { nivel: 4, parejas: 10, columnas: 5, tiempo: 390 },
@@ -250,12 +283,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       div.addEventListener("click", () => {
         if (bloqueo || div.classList.contains("volteada")) return;
+        playSound(sonidos.girar);
         div.classList.add("volteada");
         img.style.display = "block";
         if (!primeraCarta) {
           primeraCarta = div;
         } else {
           if (primeraCarta.dataset.valor === div.dataset.valor) {
+            playSound(sonidos.pareja);
             puntuacion += 100;
             parejasEncontradas++;
             actualizarMarcador();
@@ -264,6 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
             primeraCarta = null;
             bloqueo = false;
           } else {
+            playSound(sonidos.error);
             bloqueo = true;
             puntuacion = Math.max(0, puntuacion - 5);
             actualizarMarcador();
@@ -282,6 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function mostrarModal() {
+      playSound(sonidos.win);
       // Mostrar el modal de victoria
       modal.classList.add("mostrar");
 
@@ -297,6 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ------------------ MODO DESAFÍO ------------------
     function mostrarModalDesafioFinal() {
+      playSound(sonidos.win);
       modal.classList.add("mostrar");
 
       puntuacionFinal.textContent = `
@@ -347,10 +385,8 @@ document.addEventListener("DOMContentLoaded", () => {
   `;
       document.body.appendChild(modalNivel);
 
-      // Obtener referencia al botón
       const btnIniciar = modalNivel.querySelector("#iniciarNivel");
 
-      // Crear una función única para el handler
       const iniciarHandler = () => {
         console.log("Botón Iniciar clickeado, nivel:", nivelActual);
 
@@ -361,18 +397,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         console.log("Removiendo modal...");
 
-        // IMPORTANTE: Remover el event listener primero
-        btnIniciar.removeEventListener("click", iniciarHandler);
+        btnIniciar.addEventListener("click", iniciarHandler, { once: true });
 
-        // Remover el modal
         modalNivel.remove();
         console.log("Modal removido, cargando nivel...");
 
-        // Cargar el nivel
         cargarNivelDesafio();
       };
 
-      // Agregar el event listener solo una vez
       btnIniciar.addEventListener("click", iniciarHandler, { once: true }); // { once: true } asegura que solo se ejecute una vez
     }
     function cargarNivelDesafio() {
@@ -415,12 +447,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       div.addEventListener("click", () => {
         if (bloqueo || div.classList.contains("volteada")) return;
+        playSound(sonidos.girar);
         div.classList.add("volteada");
         img.style.display = "block";
         if (!primeraCarta) {
           primeraCarta = div;
         } else {
           if (primeraCarta.dataset.valor === div.dataset.valor) {
+            playSound(sonidos.pareja);
             puntuacion += 100;
             parejasEncontradas++;
             if (parejasEncontradas === parejasDelNivel) {
@@ -432,7 +466,10 @@ document.addEventListener("DOMContentLoaded", () => {
               );
 
               if (nivelActual < niveles.length) {
-                siguienteNivel();
+                playSound(sonidos.pasoNivel);
+                setTimeout(() => {
+                  siguienteNivel();
+                }, 400);
               } else {
                 desafioTerminado = true;
                 mostrarModalDesafioFinal();
@@ -442,6 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
             primeraCarta = null;
             bloqueo = false;
           } else {
+            playSound(sonidos.error);
             bloqueo = true;
             puntuacion = Math.max(0, puntuacion - 5);
             setTimeout(() => {
@@ -499,6 +537,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function mostrarModalTiempoAgotado() {
+      playSound(sonidos.finTiempo);
       clearInterval(intervaloTiempo);
 
       // Guardamos el nivel alcanzado aunque no se complete
@@ -507,9 +546,39 @@ document.addEventListener("DOMContentLoaded", () => {
       if (nivelActual >= 5) {
         mostrarModalDesafioFinal();
       } else {
-        alert("¡Se acabó el tiempo!");
-        reiniciarBtn.click();
+        mostrarModalTiempoAgotadoDesafio();
       }
+    }
+
+    function mostrarModalTiempoAgotadoDesafio() {
+      playSound(sonidos.finTiempo);
+
+      // Eliminar si ya existe
+      const modalExistente = document.getElementById("modal-tiempo");
+      if (modalExistente) modalExistente.remove();
+
+      const modalTiempo = document.createElement("div");
+      modalTiempo.classList.add("modal-memori", "mostrar");
+      modalTiempo.id = "modal-tiempo";
+
+      modalTiempo.innerHTML = `
+    <div class="modal-contentMemori">
+      <h2>⏰ Tiempo agotado</h2>
+      <p>No has completado el nivel a tiempo.</p>
+      <p>Has alcanzado el nivel ${nivelMaximoAlcanzado}</p>
+      <button id="reiniciarTiempo">Volver a empezar</button>
+
+    </div>
+  `;
+
+      document.body.appendChild(modalTiempo);
+
+      const btnAceptar = modalTiempo.querySelector("#reiniciarTiempo");
+
+      btnAceptar.addEventListener("click", () => {
+        modalTiempo.remove();
+        reiniciarBtn.click(); // reutilizamos tu lógica existente
+      });
     }
 
     function actualizarMarcador() {
