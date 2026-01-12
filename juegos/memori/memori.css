@@ -25,6 +25,28 @@ body {
   overflow-x: hidden;
 }
 
+.zona-juego {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.ui-lateral {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* eliminamos absolutos */
+#marcador,
+#ranking,
+#salir-juego-memori {
+  position: static;
+}
+
 #titulo-memori {
   color: #2c2c2c;
   letter-spacing: 2px;
@@ -386,25 +408,48 @@ body {
 }
 
 /*Media Queries tablet del memori*/
-@media (max-width: 1280px) {
-  /*#titulo-memori {
-    font-size: 26px;
-  }*/
+@media (max-width: 1199px) {
+  .zona-juego {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ui-lateral {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+  }
+
+  #titulo-memori {
+    margin: 20px;
+  }
+
+  .tablero {
+    margin: 20px auto 0 auto;
+  }
+
+  #marcador,
+  #ranking {
+    width: auto;
+  }
   #marcador {
+    position: static;
     font-size: 18px;
     padding: 4px 8px;
     margin-left: auto;
-    width: 100px;
+    width: 70px;
   }
 
   .carta {
-    width: 70px;
-    height: 70px;
+    width: 65px;
+    height: 65px;
   }
 
   #ranking {
-    top: 150px;
-    right: 20px;
+    position: static;
 
     font-size: 18px;
     width: 120px;
@@ -422,16 +467,33 @@ body {
   }
 
   #salir-juego-memori {
-    top: 300px;
-    right: 20px;
-    width: 75px;
+    position: static;
+    display: block;
 
     font-size: 18px;
   }
 }
 
+@media (max-width: 800px) {
+  .tablero {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .carta {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 715px) {
+  .carta {
+    width: 45px;
+    height: 45px;
+  }
+}
 /*Media Queries MÓVIL del memori*/
-@media (max-width: 700px) {
+@media (max-width: 575px) {
   #body-memori {
     padding: 0 10px;
     box-sizing: border-box;
@@ -440,13 +502,18 @@ body {
     justify-content: space-between;
     margin-top: 50px;
   }
+
+  .ui-lateral {
+    flex-direction: column;
+    align-items: center;
+  }
   #titulo-memori {
     font-size: 22px;
     margin: 20px;
   }
   #marcador {
     position: static;
-    width: 70px;
+    width: 60px;
     font-size: 15px;
     padding: 4px 8px;
     margin-left: auto;
@@ -475,8 +542,6 @@ body {
 
   #salir-juego-memori {
     position: static;
-
-    display: block;
     margin-left: 10px;
   }
 

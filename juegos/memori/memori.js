@@ -145,8 +145,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ------------------ NIVELES DESAFÍO ------------------
     const niveles = [
-      //{ nivel: 1, parejas: 4, columnas: 4, tiempo: 300 },
-      { nivel: 1, parejas: 4, columnas: 4, tiempo: 30 },
+      { nivel: 1, parejas: 4, columnas: 4, tiempo: 300 },
+      //{ nivel: 1, parejas: 4, columnas: 4, tiempo: 30 },
       { nivel: 2, parejas: 6, columnas: 4, tiempo: 330 },
       { nivel: 3, parejas: 8, columnas: 4, tiempo: 360 },
       { nivel: 4, parejas: 10, columnas: 5, tiempo: 390 },
@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
         registrarBtn.onclick = () => {
           const nombre = nombreJugador.value.trim();
           if (nombre.length < 3 || nombre.length > 10) {
-            alert("El nombre debe tener entre 3 y 10 caracteres");
+            mostrarModalAviso("El nombre debe tener entre 3 y 10 caracteres");
             return;
           }
           guardarRankingLocal(claveRanking, nombre, puntuacion);
@@ -578,6 +578,31 @@ document.addEventListener("DOMContentLoaded", () => {
       btnAceptar.addEventListener("click", () => {
         modalTiempo.remove();
         reiniciarBtn.click(); // reutilizamos tu lógica existente
+      });
+    }
+
+    function mostrarModalAviso(mensaje) {
+      // Eliminar si ya existe
+      const existente = document.getElementById("modal-aviso");
+      if (existente) existente.remove();
+
+      const modalAviso = document.createElement("div");
+      modalAviso.classList.add("modal-memori", "mostrar");
+      modalAviso.id = "modal-aviso";
+
+      modalAviso.innerHTML = `
+    <div class="modal-contentMemori">
+      <h2>⚠️ Aviso</h2>
+      <p>${mensaje}</p>
+      <button id="cerrarAviso">Aceptar</button>
+    </div>
+  `;
+
+      document.body.appendChild(modalAviso);
+
+      modalAviso.querySelector("#cerrarAviso").addEventListener("click", () => {
+        modalAviso.remove();
+        nombreJugador.value = ""; // limpiar input
       });
     }
 

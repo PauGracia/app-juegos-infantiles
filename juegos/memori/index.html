@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="memori.css" />
   </head>
   <body id="body-memori">
-    <!-- Fondo de pantalla -->
     <div class="header">
       <h1 id="titulo-memori">En Pareja</h1>
       <div id="marcador">0</div>
@@ -54,9 +53,14 @@
     </div>
 
     <!-- Pantalla principal juego -->
-    <div class="tablero" id="tablero"></div>
-    <div id="ranking"></div>
-    <button id="salir-juego-memori">Salir</button>
+    <div class="zona-juego">
+      <div class="tablero" id="tablero"></div>
+
+      <div class="ui-lateral">
+        <div id="ranking"></div>
+        <button id="salir-juego-memori">Salir</button>
+      </div>
+    </div>
 
     <!-- Modal Victoria -->
     <div id="modal-memori" class="modal-memori">
