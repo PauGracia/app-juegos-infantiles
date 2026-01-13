@@ -407,6 +407,16 @@ body {
   background: #37474f;
 }
 
+.salir-btn {
+  margin-top: 12px;
+  background: #c94a4a;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+}
+
 /*Media Queries tablet del memori*/
 @media (max-width: 1199px) {
   .zona-juego {
@@ -450,9 +460,8 @@ body {
 
   #ranking {
     position: static;
-
     font-size: 18px;
-    width: 120px;
+    width: 140px;
     padding: 10px;
     border-radius: 8px;
   }

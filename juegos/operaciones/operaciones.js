@@ -310,7 +310,7 @@ function iniciar() {
 
     if (!operacionesSeleccionadas) {
       mostrarModalAviso("Selecciona al menos una operación en nivel 2.");
-      return; // <-- aquí no hacemos nada más hasta que el usuario corrija
+      return;
     }
 
     document.getElementById("pizarra").innerHTML = "";
@@ -574,7 +574,7 @@ function comprobarRespuestas() {
         opDiv.dataset.primer = "bien";
       }
     }
-    // FALLADO
+
     // FALLADO
     else {
       input.classList.add("incorrecto");

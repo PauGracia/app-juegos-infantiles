@@ -29,9 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Volúmenes individuales (0.0 a 1.0)
-    sonidos.girar.volume = 0.6;
-    sonidos.pareja.volume = 0.9;
-    sonidos.error.volume = 0.1;
+    sonidos.girar.volume = 0.8;
+    sonidos.pareja.volume = 1.0;
+    sonidos.error.volume = 0.2;
     sonidos.pasoNivel.volume = 0.2;
     sonidos.finTiempo.volume = 0.5;
     sonidos.win.volume = 0.7;
@@ -100,6 +100,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const cerrarInstruccionesBtn = document.getElementById(
       "cerrarInstrucciones"
     );
+
+    // ---------- BOTÓN SALIR ----------
+
+    document.getElementById("salirInicio").addEventListener("click", () => {
+      window.location.href = "../../index.html";
+    });
 
     // Mostrar modal de inicio al cargar
     modalInicio.classList.add("mostrar");
@@ -294,8 +300,8 @@ document.addEventListener("DOMContentLoaded", () => {
             puntuacion += 100;
             parejasEncontradas++;
             actualizarMarcador();
-            if (parejasEncontradas === 1) mostrarModal();
-            //if (parejasEncontradas === 40) mostrarModal();
+            //if (parejasEncontradas === 1) mostrarModal();
+            if (parejasEncontradas === 40) mostrarModal();
             primeraCarta = null;
             bloqueo = false;
           } else {
