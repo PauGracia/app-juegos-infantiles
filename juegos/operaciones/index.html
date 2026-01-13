@@ -14,9 +14,9 @@
       <div class="modal-content">
         <h2>Selecciona modo de juego</h2>
 
-        <button onclick="modoNormal()">Modo normal</button>
-        <button onclick="modoDesafio()">Modo desafío</button>
-        <button onclick="abrirModalInstrucciones()">Cómo jugar</button>
+        <button id="btn-modo-normal">Modo normal</button>
+        <button id="btn-modo-desafio">Modo desafío</button>
+        <button id="btn-instrucciones">Cómo jugar</button>
       </div>
     </div>
 
@@ -25,23 +25,27 @@
       <div class="modal-content instrucciones-content">
         <h2>Cómo jugar</h2>
 
-        <h3>Modo normal</h3>
-        <p>
-          - Selecciona el nivel de dificultad.<br />
-          - Indica el número de operaciones que quieres resolver.<br />
-          - Introduce tus respuestas y pulsa "Comprobar".<br />
-          - Al finalizar verás un resumen de aciertos y errores.
-        </p>
+        <div class="instrucciones-bloque">
+          <h3>Modo normal</h3>
+          <p>
+            - Selecciona el nivel de dificultad.<br />
+            - Indica el número de operaciones que quieres resolver.<br />
+            - Introduce tus respuestas y pulsa "Comprobar".<br />
+            - Al finalizar verás un resumen de aciertos y errores.
+          </p>
+        </div>
 
-        <h3>Modo desafío</h3>
-        <p>
-          - Se resolverán niveles consecutivos con tiempo límite.<br />
-          - Cada nivel tiene un número de operaciones distinto y operadores
-          variados.<br />
-          - Si completas todas las operaciones antes del tiempo, pasarás al
-          siguiente nivel.<br />
-          - Si se acaba el tiempo, deberás reiniciar el desafío.
-        </p>
+        <div class="instrucciones-bloque">
+          <h3>Modo desafío</h3>
+          <p>
+            - Se resolverán niveles consecutivos con tiempo límite.<br />
+            - Cada nivel tiene un número de operaciones distinto y operadores
+            variados.<br />
+            - Si completas todas las operaciones antes del tiempo, pasarás al
+            siguiente nivel.<br />
+            - Si se acaba el tiempo, deberás reiniciar el desafío.
+          </p>
+        </div>
 
         <button onclick="cerrarModalInstrucciones()">Cerrar</button>
       </div>
@@ -74,6 +78,18 @@
             min="0"
             max="1000"
           />
+
+          <div id="bloque-tiempo">
+            <label for="input-tiempo"
+              >Tiempo límite (segundos, opcional):</label
+            >
+            <input
+              type="number"
+              id="input-tiempo"
+              placeholder="Deja en blanco para sin límite"
+              min="1"
+            />
+          </div>
         </div>
 
         <!-- Opciones Nivel 2 -->
@@ -149,6 +165,20 @@
 
         <button onclick="location.reload()">Reiniciar</button>
         <button onclick="window.location.href='../../index.html'">Salir</button>
+      </div>
+    </div>
+
+    <!-- Modal gran victoria desafío -->
+    <div class="modal-aviso oculto" id="modal-gran-victoria">
+      <div class="modal-aviso-content gran-victoria">
+        <div class="trofeo">🏆</div>
+
+        <h2>¡Modo Desafío Superado!</h2>
+
+        <p>Has completado todos los niveles.</p>
+        <p class="mensaje-epico">Eres una auténtica leyenda matemática</p>
+
+        <button onclick="cerrarGranVictoria()">Aceptar</button>
       </div>
     </div>
 

@@ -13,12 +13,16 @@ let tiempoRestante = 480;
 let intervaloCrono = null;
 let modoActual = "normal";
 let comprobacionBloqueada = false;
+let inicioTiempo = null;
+let tiempoLimiteModoNormal = null;
 
 // ───── SONIDOS ─────
 const sonidoComprobar = new Audio("sounds/ping.mp3");
 const sonidoFinal = new Audio("sounds/finalOperaciones.mp3");
 const sonidoFinTiempo = new Audio("sounds/fin-time.mp3");
 const sonidoNuevoNivel = new Audio("sounds/new-level.mp3");
+const sonidoGranVictoria = new Audio("sounds/gran-victoria.mp3");
+sonidoGranVictoria.preload = "auto";
 
 // Para evitar retrasos al reproducir
 [sonidoComprobar, sonidoFinal, sonidoFinTiempo, sonidoNuevoNivel].forEach(
@@ -233,14 +237,16 @@ function derrotaTiempo() {
 }
 
 function mostrarVictoriaFinal() {
-  // victoria final
-  reproducirSonido(sonidoFinal);
+  clearInterval(intervaloCrono);
 
-  mostrarModalAviso("🏆 ¡Has superado el modo desafío completo!");
+  reproducirSonido(sonidoGranVictoria);
 
-  setTimeout(() => {
-    salirModoDesafio();
-  }, 3000);
+  document.getElementById("modal-gran-victoria").classList.remove("oculto");
+}
+
+function cerrarGranVictoria() {
+  document.getElementById("modal-gran-victoria").classList.add("oculto");
+  salirModoDesafio();
 }
 
 function cambiarNivel() {
@@ -274,6 +280,13 @@ function iniciar() {
     return;
   }
 
+  const tiempoInput = document.getElementById("input-tiempo").value;
+  tiempoLimiteModoNormal = parseInt(tiempoInput, 10);
+
+  if (isNaN(tiempoLimiteModoNormal) || tiempoLimiteModoNormal <= 0) {
+    tiempoLimiteModoNormal = null;
+  }
+
   if (nivel === "1") {
     // Validar máximo operando
     const max = parseInt(maxInput);
@@ -304,6 +317,77 @@ function iniciar() {
     document.getElementById("modal-operaciones").style.display = "none";
     generarNivel2(cantidad);
   }
+
+  inicioTiempo = Date.now();
+
+  if (tiempoLimiteModoNormal) {
+    modoActual = "normal";
+    tiempoRestante = tiempoLimiteModoNormal;
+
+    const cronometroElemento = document.getElementById("cronometro");
+    cronometroElemento.classList.remove("oculto");
+
+    actualizarCronometro(tiempoRestante);
+
+    intervaloCrono = setInterval(() => {
+      tiempoRestante--;
+
+      actualizarCronometro(tiempoRestante);
+
+      if (tiempoRestante <= 0) {
+        clearInterval(intervaloCrono);
+        derrotaTiempoNormal();
+      }
+    }, 1000);
+  }
+}
+
+function actualizarCronometro(segundos) {
+  const min = String(Math.floor(segundos / 60)).padStart(2, "0");
+  const sec = String(segundos % 60).padStart(2, "0");
+  document.getElementById("tiempo").textContent = `${min}:${sec}`;
+}
+
+function derrotaTiempoNormal() {
+  // Bloquear cronómetro y comprobar que no se pueda seguir
+  clearInterval(intervaloCrono);
+  intervaloCrono = null;
+  comprobacionBloqueada = true;
+  document.getElementById("cronometro").classList.add("oculto");
+
+  // Marcar todas las operaciones pendientes como incorrectas
+  const inputs = document.querySelectorAll(".resultado-input");
+  inputs.forEach((input) => {
+    const opDiv = input.closest(".operacion");
+    if (
+      !input.value ||
+      (opDiv.dataset.estado !== "bien" && opDiv.dataset.estado !== "mal")
+    ) {
+      input.value = input.value || "";
+      input.classList.remove("correcto");
+      input.classList.add("incorrecto");
+      input.disabled = true;
+      opDiv.dataset.estado = "mal";
+
+      if (opDiv.dataset.primer === "") {
+        opDiv.dataset.primer = "mal";
+      }
+    } else {
+      input.disabled = true;
+    }
+  });
+
+  // Reproducir sonido fin de tiempo
+  reproducirSonido(sonidoFinTiempo);
+
+  // Mostrar modal de fin de tiempo
+  mostrarModalAviso("⏰ Se acabó el tiempo. ¡Inténtalo de nuevo!");
+
+  // Tras cerrar modal de aviso (o tras 2.5s), generar resumen final
+  setTimeout(() => {
+    cerrarModalAviso();
+    generarResumenFinal();
+  }, 2500);
 }
 
 function generarNivel1(cantidad, max) {
@@ -408,13 +492,23 @@ function crearOperacion(a, b, op) {
   div.dataset.estado = "pendiente"; // pendiente | bien | mal
   div.dataset.texto = `${a} ${op} ${b}`;
   div.dataset.primer = ""; // aún no evaluada
+  div.dataset.intentos = "0"; // intentos fallidos
 
   div.innerHTML = `
-    <div class="linea arriba">${a}</div>
-    <div class="linea operador">${op} ${b}</div>
-    <div class="linea raya"></div>
-    <input type="number" class="resultado-input" />
-  `;
+  <div class="linea arriba">${a}</div>
+  <div class="linea operador">${op} ${b}</div>
+  <div class="linea raya"></div>
+  <input type="number" class="resultado-input" />
+`;
+
+  const input = div.querySelector(".resultado-input");
+
+  input.addEventListener("focus", () => {
+    if (input.classList.contains("incorrecto")) {
+      input.value = "";
+      input.classList.remove("incorrecto");
+    }
+  });
 
   pizarra.appendChild(div);
 }
@@ -436,12 +530,18 @@ if (nivelSelect && inputMaximo) {
   nivelSelect.dispatchEvent(new Event("change"));
 }
 
-document.getElementById("btn-comprobar").addEventListener("click", (e) => {
+const btnComprobar = document.getElementById("btn-comprobar");
+
+btnComprobar.addEventListener("click", (e) => {
   e.preventDefault();
 
   if (comprobacionBloqueada) return;
 
-  comprobarRespuestas();
+  reproducirSonido(sonidoComprobar);
+
+  setTimeout(() => {
+    comprobarRespuestas();
+  }, 80); // 60–100 ms es ideal
 });
 
 function comprobarRespuestas() {
@@ -475,12 +575,34 @@ function comprobarRespuestas() {
       }
     }
     // FALLADO
+    // FALLADO
     else {
       input.classList.add("incorrecto");
+
+      // shake visual
+      input.classList.add("shake");
+      input.addEventListener(
+        "animationend",
+        () => input.classList.remove("shake"),
+        { once: true }
+      );
+
+      // contar intentos
+      let intentos = Number(opDiv.dataset.intentos) + 1;
+      opDiv.dataset.intentos = intentos;
 
       // guardar PRIMER resultado si no existe
       if (opDiv.dataset.primer === "") {
         opDiv.dataset.primer = "mal";
+      }
+
+      // mostrar solución tras 3 fallos (solo modo normal)
+      if (modoActual === "normal" && intentos >= 3) {
+        input.value = correcto;
+        input.classList.remove("incorrecto");
+        input.classList.add("revelado");
+        input.disabled = true;
+        opDiv.dataset.estado = "bien";
       }
     }
   });
@@ -491,9 +613,6 @@ function comprobarRespuestas() {
   );
 
   if (!terminado) {
-    // SOLO si NO se completa
-    reproducirSonido(sonidoComprobar);
-
     return;
   }
 
@@ -504,8 +623,8 @@ function comprobarRespuestas() {
   if (modoActual === "desafio") {
     clearInterval(intervaloCrono);
     nivelDesafio++;
-
-    if (nivelDesafio > 20) {
+    if (nivelDesafio > 1) {
+      //if (nivelDesafio > 20) {
       mostrarVictoriaFinal();
     } else {
       mostrarModalNivelSuperado();
@@ -549,7 +668,31 @@ function generarResumenFinal() {
     }
   });
 
-  mostrarModalFinal(estadisticas, listaBien, listaMal, numeroComprobaciones);
+  // ───── DETENER CRONÓMETRO ─────
+  clearInterval(intervaloCrono);
+  intervaloCrono = null;
+  document.getElementById("cronometro").classList.add("oculto");
+
+  // Calcular tiempo total transcurrido
+  let tiempoTotalSeg = tiempoLimiteModoNormal
+    ? tiempoLimiteModoNormal - tiempoRestante
+    : Math.floor((Date.now() - inicioTiempo) / 1000);
+
+  const minutos = Math.floor(tiempoTotalSeg / 60);
+  const segundos = tiempoTotalSeg % 60;
+
+  // Añadir al resumen general
+  document.getElementById("resumen-general").innerHTML =
+    `Comprobaciones realizadas: ${numeroComprobaciones}<br>` +
+    `Tiempo transcurrido: ${minutos} min ${segundos} seg`;
+
+  mostrarModalFinal(
+    estadisticas,
+    listaBien,
+    listaMal,
+    numeroComprobaciones,
+    tiempoTotalSeg
+  );
 }
 
 // Modal modo de juego
@@ -581,12 +724,23 @@ function cerrarModalAviso() {
   modal.classList.add("oculto");
 }
 
-function mostrarModalFinal(stats, listaBien, listaMal, comprobaciones) {
+function mostrarModalFinal(
+  stats,
+  listaBien,
+  listaMal,
+  comprobaciones,
+  tiempoSeg
+) {
   document.getElementById("modal-final").classList.remove("oculto");
 
-  document.getElementById(
-    "resumen-general"
-  ).textContent = `Comprobaciones realizadas: ${comprobaciones}`;
+  // calcular minutos y segundos
+  const minutos = Math.floor(tiempoSeg / 60);
+  const segundos = tiempoSeg % 60;
+
+  // mostrar comprobaciones y tiempo en líneas separadas
+  document.getElementById("resumen-general").innerHTML =
+    `Comprobaciones realizadas: ${comprobaciones}<br>` +
+    `Tiempo transcurrido: ${minutos} min ${segundos} seg`;
 
   const nombres = {
     "+": "Sumas",
@@ -626,4 +780,25 @@ function mostrarModalFinal(stats, listaBien, listaMal, comprobaciones) {
 
 function cerrarModalFinal() {
   document.getElementById("modal-final").classList.add("oculto");
+}
+
+// =============================
+// EVENTOS DE BOTONES
+// =============================
+
+// Modal selección de modo
+const btnModoNormal = document.getElementById("btn-modo-normal");
+const btnModoDesafio = document.getElementById("btn-modo-desafio");
+const btnInstrucciones = document.getElementById("btn-instrucciones");
+
+if (btnModoNormal) {
+  btnModoNormal.addEventListener("click", modoNormal);
+}
+
+if (btnModoDesafio) {
+  btnModoDesafio.addEventListener("click", modoDesafio);
+}
+
+if (btnInstrucciones) {
+  btnInstrucciones.addEventListener("click", abrirModalInstrucciones);
 }

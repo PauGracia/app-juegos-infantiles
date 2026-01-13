@@ -1,4 +1,24 @@
 /*----Juego Operaciones-----*/
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  min-height: 100%;
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 255, 255, 0.06),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 30%,
+      rgba(255, 255, 255, 0.04),
+      transparent 45%
+    ),
+    linear-gradient(180deg, #2e7d5b 0%, #1f5f45 100%);
+}
 
 .body-operaciones {
   background-color: #ffffd2;
@@ -11,18 +31,34 @@
   padding-bottom: 20px;
 }
 
-body.body-operaciones {
-  background-image: url("../../assets/img/imagenes/pizarra.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100%;
+.body-operaciones {
+  min-height: 100vh;
   margin: 0;
-  padding: 0;
+  padding-bottom: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* Fondo verde moderno y discreto */
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 255, 255, 0.06),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 30%,
+      rgba(255, 255, 255, 0.04),
+      transparent 45%
+    ),
+    linear-gradient(180deg, #2e7d5b 0%, #1f5f45 100%);
+
+  background-attachment: scroll; /* CLAVE para móvil */
 }
 
 .titulo-operaciones {
   color: #f5f5f0;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   font-size: 90px;
   margin-bottom: 40px;
   margin-top: 40px;
@@ -54,6 +90,11 @@ body.body-operaciones {
 .botones-operaciones button:active {
   background-color: gray;
   transform: scale(0.97);
+}
+
+.botones-operaciones button.pulsado {
+  transform: scale(0.95);
+  background-color: rgb(70, 70, 70);
 }
 
 #boton-salir-operaciones {
@@ -95,7 +136,8 @@ body.body-operaciones {
   font-family: monospace;
   font-size: 30px;
   text-align: right;
-  background-color: white;
+  background-color: #f7f7f2; /* blanco tiza */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
   padding: 15px;
   width: 150px;
   border-radius: 10px;
@@ -118,6 +160,8 @@ body.body-operaciones {
 
 .resultado-input {
   width: 100%;
+  background-color: #fbfbf7; /* perla */
+  border: 1px solid #333;
   font-size: 28px;
   text-align: right;
   margin-top: 8px;
@@ -132,47 +176,39 @@ body.body-operaciones {
   background-color: #f7c3c3;
 }
 
-/* Modal de juego operaciones */
+/* Contenedor del modal operaciones */
 .modal-operaciones {
-  position: fixed;
+  position: fixed; /* importante para centrar sobre la pantalla */
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* fondo semi-transparente */
   display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
+  justify-content: center; /* centrado horizontal */
+  align-items: center; /* centrado vertical */
+  z-index: 1000; /* asegurarse que esté por encima de todo */
+  overflow: auto; /* scroll si el contenido es muy grande */
 }
 
-.modal-content {
-  background-color: #fffff0;
+/* Ya tu modal-content */
+.modal-operaciones .modal-content {
+  background-color: #f7f7f2;
   padding: 30px;
   border-radius: 15px;
   text-align: center;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-
-  display: flex; /* Flexbox para centrar vertical y horizontal */
-  flex-direction: column; /* Columna vertical */
-  align-items: center; /* Centrar horizontal */
+  width: 80%;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .modal-content h2 {
   margin-bottom: 20px;
   color: black;
-}
-
-.modal-content {
-  background-color: #fffff0;
-  padding: 30px;
-  border-radius: 15px;
-  text-align: center;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-
-  display: flex; /* Flexbox para centrar vertical y horizontal */
-  flex-direction: column; /* Columna vertical */
-  align-items: center; /* Centrar horizontal */
 }
 
 .modal-inputs input {
@@ -184,10 +220,32 @@ body.body-operaciones {
   text-align: center;
 }
 
+.input-tiempo {
+  font-size: 15px;
+  padding: 8px;
+  border: 2px solid black;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#bloque-tiempo {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#bloque-tiempo label,
+#bloque-tiempo input {
+  width: 100%;
+}
+
 .modal-content button {
   margin-top: 30px;
   font-family: "Comic Sans MS", cursive, sans-serif;
-  background-color: #ffffd2;
+  background-color: #f1f1e8;
   color: black;
   font-size: 15px;
   border: 4px solid black;
@@ -255,6 +313,10 @@ body.body-operaciones {
   margin-left: 20px;
   font-size: 14px;
   opacity: 0.85;
+}
+
+#input-maximo {
+  margin-bottom: 10px;
 }
 
 #input-maximo-nivel2 {
@@ -517,7 +579,73 @@ body.body-operaciones {
   background-color: #ff8c00;
 }
 
+.resultado-input.revelado {
+  background-color: #e8f3ff;
+  border-color: #3399ff;
+  color: #004477;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+  75% {
+    transform: translateX(-4px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.resultado-input.shake {
+  animation: shake 0.3s;
+}
+
+.gran-victoria {
+  text-align: center;
+  padding: 30px;
+}
+
+.gran-victoria .trofeo {
+  font-size: 90px;
+  margin-bottom: 15px;
+  animation: pulse 1.5s infinite;
+}
+
+.gran-victoria h2 {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.gran-victoria .mensaje-epico {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 15px 0;
+  color: #d4a017;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 @media (max-width: 1280px) {
+  .titulo-operaciones {
+    margin-top: 60px;
+  }
   .cronometro {
     top: 9px;
     right: 9px;
@@ -578,7 +706,6 @@ body.body-operaciones {
   .titulo-operaciones {
     font-size: 30px;
     margin-bottom: 20px;
-    margin-top: 50px;
   }
 
   #boton-salir-operaciones button {
