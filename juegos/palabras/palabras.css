@@ -115,6 +115,7 @@ body {
   font-size: 24px;
   text-align: center;
   margin: 5px;
+  user-select: none;
 }
 
 .botones-palabras {
@@ -245,6 +246,28 @@ body {
     transform: scale(1);
     opacity: 1;
   }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+  75% {
+    transform: translateX(-4px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.letra-error {
+  animation: shake 0.3s;
 }
 
 @media (min-width: 681px) and (max-width: 1024px) and (orientation: portrait) {

@@ -1,5 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
   // -----------------------------
+  // SONIDOS
+  // -----------------------------
+  const sonidos = {
+    acierto: new Audio("sounds/acierto.mp3"),
+    fallo: new Audio("sounds/fallo.mp3"),
+    ganar: new Audio("sounds/ganar.mp3"),
+  };
+
+  function reproducirSonido(nombre) {
+    const sonido = sonidos[nombre];
+    if (!sonido) return;
+
+    sonido.currentTime = 0;
+    sonido.play().catch(() => {});
+  }
+
+  Object.values(sonidos).forEach((s) => {
+    s.load();
+  });
+
+  const RETRASO_FEEDBACK = 150; // ms – ajustado para Android
+
+  // -----------------------------
   // SELECT IDIOMA
   // -----------------------------
   const selectIdioma = document.getElementById("idioma");
@@ -22,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let aciertos = 0;
   let errores = 0;
   let resumen = [];
+  let intentosFallidosPalabra = 0;
 
   // Normalizar texto (quitar tildes, pasar a minúsculas)
   function normalizar(texto) {
@@ -40,6 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // FUNCIONES PRINCIPALES
   // -----------------------------
   function iniciarJuego() {
+    resumen = [];
+    aciertos = 0;
+    errores = 0;
+    actual = 0;
     idiomaSeleccionado = parseInt(selectIdioma.value);
     const cantidad = parseInt(document.getElementById("cantidad").value);
 
@@ -61,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
     comprobado = false;
     resultadoCorrecto = false;
     falloEstaPalabra = false;
+    intentosFallidosPalabra = 0;
 
     objetoActual = seleccionados[actual];
     palabraObjetivo = normalizar(
@@ -98,7 +127,29 @@ document.addEventListener("DOMContentLoaded", () => {
       inputsDiv.appendChild(input);
     }
 
-    document.getElementById("btnSiguiente").disabled = true;
+    const btnSiguiente = document.getElementById("btnSiguiente");
+
+    // Si es la última palabra, cambiar texto a "Finalizar"
+    if (actual === seleccionados.length - 1) {
+      btnSiguiente.textContent = "Finalizar";
+    } else {
+      btnSiguiente.textContent = "Siguiente";
+    }
+
+    btnSiguiente.disabled = true;
+  }
+
+  function siguiente() {
+    resumen.push({ palabra: palabraObjetivo, correcta: !falloEstaPalabra });
+
+    if (actual < seleccionados.length - 1) {
+      actual++;
+      document.getElementById("info-actual").textContent = actual + 1;
+      mostrarImagen();
+    } else {
+      // Última palabra: abrir modal final
+      mostrarResultadoFinal();
+    }
   }
 
   function comprobar() {
@@ -110,57 +161,93 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const contenedor = document.querySelector(".imagen-contenedor");
 
-    for (let i = 0; i < palabraObjetivo.length; i++) {
-      inputs[i].style.backgroundColor =
-        normalizar(inputs[i].value) === palabraObjetivo[i] ? "#9f9" : "#f99";
-    }
-
     resultadoCorrecto = resultado === palabraObjetivo;
-    contenedor.style.borderColor = resultadoCorrecto ? "green" : "red";
-    document.getElementById("btnSiguiente").disabled = !resultadoCorrecto;
 
-    if (!comprobado) {
-      if (resultadoCorrecto) aciertos++;
-      else {
-        errores++;
-        falloEstaPalabra = true;
+    if (resultadoCorrecto) {
+      if (!comprobado) aciertos++;
+
+      reproducirSonido("acierto");
+
+      // Retrasar el efecto visual para sincronizar con el sonido
+      setTimeout(() => {
+        contenedor.style.borderColor = "green";
+
+        for (let i = 0; i < palabraObjetivo.length; i++) {
+          inputs[i].style.backgroundColor = "#9f9";
+          inputs[i].disabled = true;
+        }
+
+        document.getElementById("btnSiguiente").disabled = false;
+        document.getElementById("info-aciertos").textContent = aciertos;
+      }, RETRASO_FEEDBACK);
+    } else {
+      // Error
+      intentosFallidosPalabra++;
+      errores++;
+      falloEstaPalabra = true;
+
+      reproducirSonido("fallo");
+
+      for (let i = 0; i < palabraObjetivo.length; i++) {
+        if (normalizar(inputs[i].value) !== palabraObjetivo[i]) {
+          inputs[i].style.backgroundColor = "#f99";
+          inputs[i].classList.remove("letra-error");
+          void inputs[i].offsetWidth;
+          inputs[i].classList.add("letra-error");
+        } else {
+          inputs[i].style.backgroundColor = "#9f9";
+          inputs[i].disabled = true;
+        }
       }
+
+      // NO habilitar el botón Siguiente aquí
       document.getElementById("info-aciertos").textContent = aciertos;
       document.getElementById("info-errores").textContent = errores;
+
+      // Revelar palabra si hay 3 intentos fallidos (esto sí habilita el botón)
+      if (intentosFallidosPalabra >= 3) {
+        revelarPalabra(inputs);
+      }
     }
 
     comprobado = true;
   }
 
-  function siguiente() {
-    resumen.push({ palabra: palabraObjetivo, correcta: !falloEstaPalabra });
-
-    if (actual < seleccionados.length - 1) {
-      actual++;
-      document.getElementById("info-actual").textContent = actual + 1;
-      mostrarImagen();
-    } else {
-      mostrarResultadoFinal();
+  function revelarPalabra(inputs) {
+    for (let i = 0; i < palabraObjetivo.length; i++) {
+      inputs[i].value = palabraObjetivo[i];
+      inputs[i].style.backgroundColor = "#9dd7ff";
+      inputs[i].disabled = true;
     }
+
+    falloEstaPalabra = true;
+    comprobado = true;
+
+    // Solo ahora habilitar el botón Siguiente
+    document.getElementById("btnSiguiente").disabled = false;
   }
 
   function mostrarResultadoFinal() {
-    document.getElementById("juego").style.display = "none";
-    document.getElementById("panel-info").style.display = "none";
+    reproducirSonido("ganar");
 
-    document.getElementById("total-aciertos").textContent = aciertos;
-    document.getElementById("total-errores").textContent = errores;
+    setTimeout(() => {
+      document.getElementById("juego").style.display = "none";
+      document.getElementById("panel-info").style.display = "none";
 
-    const lista = document.getElementById("lista-resultados");
-    lista.innerHTML = "";
+      document.getElementById("total-aciertos").textContent = aciertos;
+      document.getElementById("total-errores").textContent = errores;
 
-    resumen.forEach((r) => {
-      const li = document.createElement("li");
-      li.textContent = `${r.correcta ? "✅" : "❌"} ${r.palabra}`;
-      lista.appendChild(li);
-    });
+      const lista = document.getElementById("lista-resultados");
+      lista.innerHTML = "";
 
-    document.getElementById("modal-final").style.display = "flex";
+      resumen.forEach((r) => {
+        const li = document.createElement("li");
+        li.textContent = `${r.correcta ? "✅" : "❌"} ${r.palabra}`;
+        lista.appendChild(li);
+      });
+
+      document.getElementById("modal-final").style.display = "flex";
+    }, RETRASO_FEEDBACK + 100);
   }
 
   // -----------------------------
