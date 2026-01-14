@@ -1,5 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
   // -----------------------------
+  // INICIALIZACIÓN DE IDIOMA DE INTERFAZ
+  // -----------------------------
+  // Inicializar idioma del juego (interfaz) desde localStorage
+  initLanguage();
+
+  // -----------------------------
+  // CONFIGURACIÓN DE IDIOMA DE PALABRAS
+  // -----------------------------
+  const selectPalabrasIdioma = document.getElementById("palabras-idioma");
+  let idiomaPalabrasSeleccionado = parseInt(selectPalabrasIdioma.value);
+
+  selectPalabrasIdioma.addEventListener("change", () => {
+    idiomaPalabrasSeleccionado = parseInt(selectPalabrasIdioma.value);
+  });
+
+  // -----------------------------
   // SONIDOS
   // -----------------------------
   const sonidos = {
@@ -20,17 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     s.load();
   });
 
-  const RETRASO_FEEDBACK = 150; // ms – ajustado para Android
-
-  // -----------------------------
-  // SELECT IDIOMA
-  // -----------------------------
-  const selectIdioma = document.getElementById("idioma");
-  let idiomaSeleccionado = parseInt(selectIdioma.value);
-
-  selectIdioma.addEventListener("change", () => {
-    idiomaSeleccionado = parseInt(selectIdioma.value);
-  });
+  const RETRASO_FEEDBACK = 150;
 
   // -----------------------------
   // VARIABLES DEL JUEGO
@@ -47,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let resumen = [];
   let intentosFallidosPalabra = 0;
 
-  // Normalizar texto (quitar tildes, pasar a minúsculas)
+  // Normalizar texto
   function normalizar(texto) {
     return texto
       .toLowerCase()
@@ -68,7 +74,10 @@ document.addEventListener("DOMContentLoaded", () => {
     aciertos = 0;
     errores = 0;
     actual = 0;
-    idiomaSeleccionado = parseInt(selectIdioma.value);
+
+    // Usar el selector específico para palabras
+    idiomaPalabrasSeleccionado = parseInt(selectPalabrasIdioma.value);
+
     const cantidad = parseInt(document.getElementById("cantidad").value);
 
     seleccionados = [...elementos]
@@ -77,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("modal").style.display = "none";
     document.getElementById("juego").style.display = "flex";
+
     document.getElementById("info-total").textContent = seleccionados.length;
     document.getElementById("info-actual").textContent = actual + 1;
     document.getElementById("info-aciertos").textContent = aciertos;
@@ -92,8 +102,10 @@ document.addEventListener("DOMContentLoaded", () => {
     intentosFallidosPalabra = 0;
 
     objetoActual = seleccionados[actual];
+
+    // Usar el idioma seleccionado para las PALABRAS
     palabraObjetivo = normalizar(
-      objetoActual.palabras[idiomaSeleccionado].trim()
+      objetoActual.palabras[idiomaPalabrasSeleccionado].trim()
     );
 
     document.getElementById("imagen").src = objetoActual.imagen;
@@ -129,14 +141,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const btnSiguiente = document.getElementById("btnSiguiente");
 
-    // Si es la última palabra, cambiar texto a "Finalizar"
+    // Actualizar texto del botón según idioma
     if (actual === seleccionados.length - 1) {
-      btnSiguiente.textContent = "Finalizar";
+      btnSiguiente.setAttribute("data-i18n", "palabras.buttons.finish");
     } else {
-      btnSiguiente.textContent = "Siguiente";
+      btnSiguiente.setAttribute("data-i18n", "palabras.buttons.next");
     }
 
+    // Aplicar traducción automáticamente
+    applyTranslationsToElement(btnSiguiente);
+
     btnSiguiente.disabled = true;
+  }
+
+  // Función auxiliar para aplicar traducción a un elemento específico
+  function applyTranslationsToElement(element) {
+    const key = element.getAttribute("data-i18n");
+    if (key && window.translations && window.translations[key]) {
+      element.textContent = window.translations[key];
+    }
   }
 
   function siguiente() {
@@ -147,7 +170,6 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("info-actual").textContent = actual + 1;
       mostrarImagen();
     } else {
-      // Última palabra: abrir modal final
       mostrarResultadoFinal();
     }
   }
@@ -168,7 +190,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       reproducirSonido("acierto");
 
-      // Retrasar el efecto visual para sincronizar con el sonido
       setTimeout(() => {
         contenedor.style.borderColor = "green";
 
@@ -181,7 +202,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("info-aciertos").textContent = aciertos;
       }, RETRASO_FEEDBACK);
     } else {
-      // Error
       intentosFallidosPalabra++;
       errores++;
       falloEstaPalabra = true;
@@ -200,11 +220,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      // NO habilitar el botón Siguiente aquí
       document.getElementById("info-aciertos").textContent = aciertos;
       document.getElementById("info-errores").textContent = errores;
 
-      // Revelar palabra si hay 3 intentos fallidos (esto sí habilita el botón)
       if (intentosFallidosPalabra >= 3) {
         revelarPalabra(inputs);
       }
@@ -222,8 +240,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     falloEstaPalabra = true;
     comprobado = true;
-
-    // Solo ahora habilitar el botón Siguiente
     document.getElementById("btnSiguiente").disabled = false;
   }
 

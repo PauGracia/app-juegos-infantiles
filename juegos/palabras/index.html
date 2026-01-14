@@ -1,5 +1,3 @@
-<!-- Página del juego de adivinar palabras -->
-
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -8,36 +6,43 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
-    <title>Escribe el nombre</title>
+    <title data-i18n="palabras.title">Escribe el nombre</title>
     <link rel="stylesheet" href="../../assets/css/app.css?v=20251111" />
     <link rel="stylesheet" href="palabras.css?v=20251111" />
   </head>
 
   <body>
-    <!-- Modal-->
+    <!-- Modal de configuración -->
     <div class="modal-palabras" id="modal">
       <div class="modal-contentPalabras">
-        <h2>Configuración</h2>
-        <label for="idioma">Idioma:</label>
-        <select id="idioma">
-          <option value="0" selected>Castellano</option>
+        <h2 data-i18n="palabras.config.title">Configuración</h2>
 
+        <!-- Selector de idioma de las PALABRAS (contenido) -->
+        <label for="palabras-idioma" data-i18n="palabras.config.wordLanguage"
+          >Idioma de las palabras:</label
+        >
+        <select id="palabras-idioma">
+          <option value="0" selected>Español</option>
           <option value="1">Catalán</option>
           <option value="2">Inglés</option>
         </select>
         <br /><br />
-        <label for="cantidad">Número de imágenes:</label>
+
+        <label for="cantidad" data-i18n="palabras.config.images"
+          >Número de imágenes:</label
+        >
         <input type="number" id="cantidad" min="1" max="56" value="3" />
         <br /><br />
-        <button onclick="iniciarJuego()">Iniciar</button>
+
+        <button onclick="iniciarJuego()" data-i18n="palabras.config.start">
+          Iniciar
+        </button>
       </div>
     </div>
 
-    <!--Estructura de la pantalla-->
-
+    <!-- Estructura de la pantalla -->
     <div class="contenedor-imagenPalabra" id="juego" style="display: none">
-      <!-- El titulo comparte estilo con el titulo de oiperaciones -->
-      <h1 class="titulo-operaciones">Palabras</h1>
+      <h1 class="titulo-operaciones" data-i18n="palabras.title">Palabras</h1>
 
       <div class="imagen-contenedor">
         <img id="imagen" class="imagen-palabras" src="" alt="" />
@@ -45,38 +50,78 @@
 
       <div class="letras-palabras" id="inputs"></div>
       <div class="botones-palabras">
-        <button onclick="comprobar()">Comprobar</button>
-        <button id="btnSiguiente" onclick="siguiente()" disabled>
+        <button onclick="comprobar()" data-i18n="palabras.buttons.check">
+          Comprobar
+        </button>
+        <button
+          id="btnSiguiente"
+          onclick="siguiente()"
+          disabled
+          data-i18n="palabras.buttons.next"
+        >
           Siguiente
         </button>
-        <button id="salir-palabras" class="salir-btn">Salir</button>
+        <button
+          id="salir-palabras"
+          class="salir-btn"
+          data-i18n="palabras.buttons.exit"
+        >
+          Salir
+        </button>
       </div>
     </div>
+
+    <!-- Modal final -->
     <div class="modal-palabras" id="modal-final" style="display: none">
       <div class="modal-contentPalabras">
-        <h2>Resultado final</h2>
-
-        <p>✅ Aciertos: <span id="total-aciertos"></span></p>
-        <p>❌ Errores: <span id="total-errores"></span></p>
+        <h2 data-i18n="palabras.results.title">Resultado final</h2>
+        <p>
+          ✅ <span data-i18n="palabras.results.correct">Aciertos:</span>
+          <span id="total-aciertos"></span>
+        </p>
+        <p>
+          ❌ <span data-i18n="palabras.results.errors">Errores:</span>
+          <span id="total-errores"></span>
+        </p>
         <br />
-
         <ul id="lista-resultados"></ul>
-
         <br />
-        <button class="btn-final" onclick="reiniciarJuego()">Reiniciar</button>
-        <button class="btn-final" onclick="salirJuego()">Salir</button>
+        <button
+          class="btn-final"
+          onclick="reiniciarJuego()"
+          data-i18n="palabras.buttons.restart"
+        >
+          Reiniciar
+        </button>
+        <button
+          class="btn-final"
+          onclick="salirJuego()"
+          data-i18n="palabras.buttons.exit"
+        >
+          Salir
+        </button>
       </div>
     </div>
 
+    <!-- Panel de información -->
     <div class="panel-info" id="panel-info">
       <p>
-        Palabra <span id="info-actual">1</span> de
+        <span data-i18n="palabras.info.word">Palabra</span>
+        <span id="info-actual">1</span>
+        <span data-i18n="palabras.info.of">de</span>
         <span id="info-total">5</span>
       </p>
-      <p>✅ Aciertos: <span id="info-aciertos">0</span></p>
-      <p>❌ Errores: <span id="info-errores">0</span></p>
+      <p>
+        ✅ <span data-i18n="palabras.results.correct">Aciertos:</span>
+        <span id="info-aciertos">0</span>
+      </p>
+      <p>
+        ❌ <span data-i18n="palabras.results.errors">Errores:</span>
+        <span id="info-errores">0</span>
+      </p>
     </div>
 
+    <script src="../../assets/js/i18n.js"></script>
     <script src="../../assets/js/elementos.js"></script>
     <script src="palabras.js"></script>
   </body>

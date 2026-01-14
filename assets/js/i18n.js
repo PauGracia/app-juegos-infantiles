@@ -12,7 +12,11 @@ async function loadLanguage(lang) {
   window.translations = translations;
 
   applyTranslations();
-  updateLanguageButtons(lang);
+  updateAllLanguageButtons(lang);
+
+  // Disparar evento para que otros scripts sepan que cambió el idioma
+  const event = new CustomEvent("languageChanged", { detail: { lang } });
+  document.dispatchEvent(event);
 }
 
 function applyTranslations() {
@@ -32,8 +36,9 @@ function initLanguage() {
   loadLanguage(lang);
 }
 
-function updateLanguageButtons(lang) {
-  document.querySelectorAll("#language-selector button").forEach((btn) => {
-    btn.classList.toggle("active", btn.textContent.toLowerCase() === lang);
+function updateAllLanguageButtons(lang) {
+  // Actualizar todos los selectores de idioma en la página
+  document.querySelectorAll(".language-selector button").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.lang === lang);
   });
 }
