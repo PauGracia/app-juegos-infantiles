@@ -1,65 +1,74 @@
-<!-- Página de operaciones matemáticas -->
-
 <!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Operaciones</title>
+    <title data-i18n="operaciones.title">Operaciones</title>
     <link rel="stylesheet" href="../../assets/css/app.css?v=20251111" />
     <link rel="stylesheet" href="operaciones.css" />
   </head>
   <body class="body-operaciones">
     <div class="modal-operaciones" id="modal-modo">
       <div class="modal-content">
-        <h2>Selecciona modo de juego</h2>
+        <h2 data-i18n="operaciones.selectMode">Selecciona modo de juego</h2>
 
-        <button id="btn-modo-normal">Modo normal</button>
-        <button id="btn-modo-desafio">Modo desafío</button>
-        <button id="btn-instrucciones">Cómo jugar</button>
+        <button id="btn-modo-normal" data-i18n="operaciones.normalMode">
+          Modo normal
+        </button>
+        <button id="btn-modo-desafio" data-i18n="operaciones.challengeMode">
+          Modo desafío
+        </button>
+        <button id="btn-instrucciones" data-i18n="operaciones.howToPlay">
+          Cómo jugar
+        </button>
+        <button
+          class="btn-exit"
+          onclick="window.location.href='../../index.html'"
+          data-i18n="common.exitMenu"
+        >
+          Salir
+        </button>
       </div>
     </div>
 
     <!-- Modal de instrucciones -->
     <div class="modal-operaciones oculto" id="modal-instrucciones">
       <div class="modal-content instrucciones-content">
-        <h2>Cómo jugar</h2>
+        <h2 data-i18n="operaciones.howToPlay">Cómo jugar</h2>
 
         <div class="instrucciones-bloque">
-          <h3>Modo normal</h3>
-          <p>
-            - Selecciona el nivel de dificultad.<br />
-            - Indica el número de operaciones que quieres resolver.<br />
-            - Introduce tus respuestas y pulsa "Comprobar".<br />
-            - Al finalizar verás un resumen de aciertos y errores.
-          </p>
+          <h3 data-i18n="operaciones.normalMode">Modo normal</h3>
+          <p data-i18n="operaciones.instructions.normal"></p>
         </div>
 
         <div class="instrucciones-bloque">
-          <h3>Modo desafío</h3>
-          <p>
-            - Se resolverán niveles consecutivos con tiempo límite.<br />
-            - Cada nivel tiene un número de operaciones distinto y operadores
-            variados.<br />
-            - Si completas todas las operaciones antes del tiempo, pasarás al
-            siguiente nivel.<br />
-            - Si se acaba el tiempo, deberás reiniciar el desafío.
-          </p>
+          <h3 data-i18n="operaciones.challengeMode">Modo desafío</h3>
+          <p data-i18n="operaciones.instructions.challenge"></p>
         </div>
 
-        <button onclick="cerrarModalInstrucciones()">Cerrar</button>
+        <button onclick="cerrarModalInstrucciones()" data-i18n="common.close">
+          Cerrar
+        </button>
       </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal configuración -->
     <div class="modal-operaciones oculto" id="modal-operaciones">
       <div class="modal-content">
-        <h2>Configuración de Operaciones</h2>
+        <h2 data-i18n="operaciones.configTitle">
+          Configuración de Operaciones
+        </h2>
 
-        <label for="nivel">Nivel de dificultad:</label><br />
+        <label for="nivel" data-i18n="operaciones.difficultyLevel"
+          >Nivel de dificultad:</label
+        ><br />
         <select id="nivel" onchange="cambiarNivel()">
-          <option value="1">Nivel 1 (fácil)</option>
-          <option value="2">Nivel 2 (avanzado)</option>
+          <option value="1" data-i18n="operaciones.level1">
+            Nivel 1 (fácil)
+          </option>
+          <option value="2" data-i18n="operaciones.level2">
+            Nivel 2 (avanzado)
+          </option>
         </select>
         <br /><br />
 
@@ -80,9 +89,9 @@
           />
 
           <div id="bloque-tiempo">
-            <label for="input-tiempo"
-              >Tiempo límite (segundos, opcional):</label
-            >
+            <label for="input-tiempo" data-i18n="operaciones.timeLimit">
+              Tiempo límite (segundos, opcional):
+            </label>
             <input
               type="number"
               id="input-tiempo"
@@ -94,22 +103,35 @@
 
         <!-- Opciones Nivel 2 -->
         <div id="opciones-nivel2" class="nivel2-opciones oculto">
-          <h3>Operaciones permitidas</h3>
+          <h3 data-i18n="operaciones.allowedOperations">
+            Operaciones permitidas
+          </h3>
 
-          <label><input type="checkbox" id="op-suma" checked /> Sumas</label
+          <label
+            ><input type="checkbox" id="op-suma" checked />
+            <span data-i18n="operaciones.additions">Sumas</span></label
           ><br />
-          <label><input type="checkbox" id="op-resta" checked /> Restas</label
+          <label
+            ><input type="checkbox" id="op-resta" checked />
+            <span data-i18n="operaciones.subtractions">Restas</span></label
           ><br />
 
           <label
             ><input type="checkbox" id="op-multi" checked />
-            Multiplicaciones</label
+            <span data-i18n="operaciones.multiplications"
+              >Multiplicaciones</span
+            ></label
           ><br />
-          <label><input type="checkbox" id="op-div" checked /> Divisiones</label
+          <label
+            ><input type="checkbox" id="op-div" checked />
+            <span data-i18n="operaciones.divisions">Divisiones</span></label
           ><br />
+
           <label class="sub-opcion">
             <input type="checkbox" id="resta-negativa" checked />
-            Permitir resultado negativo </label
+            <span data-i18n="operaciones.allowNegative"
+              >Permitir resultado negativo</span
+            > </label
           ><br /><br />
 
           <input
@@ -121,50 +143,72 @@
           />
         </div>
 
-        <button onclick="iniciar()">Iniciar</button>
+        <button onclick="iniciar()" data-i18n="common.start">Iniciar</button>
       </div>
     </div>
+
     <!-- Pantalla principal -->
     <div id="cronometro" class="cronometro oculto">
-      ⏳ Tiempo restante: <span id="tiempo">00:00</span>
+      ⏳ <span data-i18n="operaciones.timeRemaining">Tiempo restante:</span>
+      <span id="tiempo">00:00</span>
     </div>
 
-    <h1 class="titulo-operaciones">Operaciones</h1>
+    <h1 class="titulo-operaciones" data-i18n="operaciones.title">
+      Operaciones
+    </h1>
 
     <div class="operaciones-pizarra" id="pizarra"></div>
 
     <div class="botones-operaciones">
-      <button id="btn-comprobar">Comprobar</button>
-
-      <button onclick="location.reload()">Reiniciar</button>
+      <button id="btn-comprobar" data-i18n="common.check">Comprobar</button>
+      <button onclick="location.reload()" data-i18n="common.restart">
+        Reiniciar
+      </button>
     </div>
 
     <div id="boton-salir-operaciones">
-      <button onclick="window.location.href='../../index.html'">Salir</button>
+      <button
+        onclick="window.location.href='../../index.html'"
+        data-i18n="common.exit"
+      >
+        Salir
+      </button>
     </div>
 
     <!-- Modal final-->
     <div class="modal-aviso oculto" id="modal-final">
       <div class="modal-aviso-content">
-        <h2>Juego terminado 🎉</h2>
+        <h2 data-i18n="operaciones.gameFinished">Juego terminado</h2>
+        🎉
 
         <p id="resumen-general"></p>
         <div id="estadisticas-operaciones"></div>
 
         <div class="bloque-detalles">
           <details>
-            <summary>Operaciones correctas</summary>
+            <summary data-i18n="operaciones.correctOperations">
+              Operaciones correctas
+            </summary>
             <ul id="lista-bien"></ul>
           </details>
 
           <details>
-            <summary>Operaciones incorrectas</summary>
+            <summary data-i18n="operaciones.incorrectOperations">
+              Operaciones incorrectas
+            </summary>
             <ul id="lista-mal"></ul>
           </details>
         </div>
 
-        <button onclick="location.reload()">Reiniciar</button>
-        <button onclick="window.location.href='../../index.html'">Salir</button>
+        <button onclick="location.reload()" data-i18n="common.restart">
+          Reiniciar
+        </button>
+        <button
+          onclick="window.location.href='../../index.html'"
+          data-i18n="common.exit"
+        >
+          Salir
+        </button>
       </div>
     </div>
 
@@ -173,12 +217,20 @@
       <div class="modal-aviso-content gran-victoria">
         <div class="trofeo">🏆</div>
 
-        <h2>¡Modo Desafío Superado!</h2>
+        <h2 data-i18n="operaciones.challengeCompleted">
+          ¡Modo Desafío Superado!
+        </h2>
 
-        <p>Has completado todos los niveles.</p>
-        <p class="mensaje-epico">Eres una auténtica leyenda matemática</p>
+        <p data-i18n="operaciones.allLevelsCompleted">
+          Has completado todos los niveles.
+        </p>
+        <p class="mensaje-epico" data-i18n="operaciones.mathLegend">
+          Eres una auténtica leyenda matemática
+        </p>
 
-        <button onclick="cerrarGranVictoria()">Aceptar</button>
+        <button onclick="cerrarGranVictoria()" data-i18n="common.accept">
+          Aceptar
+        </button>
       </div>
     </div>
 
@@ -186,10 +238,14 @@
     <div class="modal-aviso oculto" id="modal-aviso">
       <div class="modal-aviso-content">
         <p id="mensaje-aviso">Este es un mensaje de prueba</p>
-        <button onclick="cerrarModalAviso()">Aceptar</button>
+        <button onclick="cerrarModalAviso()" data-i18n="common.accept">
+          Aceptar
+        </button>
       </div>
     </div>
 
+    <!-- Importar i18n primero -->
+    <script src="../../assets/js/i18n.js"></script>
     <script src="operaciones.js"></script>
   </body>
 </html>

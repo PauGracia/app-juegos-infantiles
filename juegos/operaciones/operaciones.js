@@ -3,6 +3,150 @@
 const MAX_OPERACIONES = 50;
 const MAX_OPERANDO = 1000;
 
+// =============================
+// INICIALIZACIÓN DE IDIOMA
+// =============================
+
+// Función auxiliar para obtener traducciones
+function t(key) {
+  if (!window.translations) {
+    return key; // Simple fallback
+  }
+
+  const translation = window.translations[key];
+  return translation || key;
+}
+
+// Función simplificada para actualizar textos dinámicos
+function updateDynamicTexts() {
+  if (!window.translations) return;
+
+  console.log("Actualizando textos dinámicos...");
+
+  // Actualizar placeholders
+  const elements = [
+    { id: "input-operaciones", key: "operaciones.numOperationsPlaceholder" },
+    { id: "input-maximo", key: "operaciones.maxOperatorPlaceholder" },
+    { id: "input-tiempo", key: "operaciones.timeOptionalPlaceholder" },
+    { id: "input-maximo-nivel2", key: "operaciones.maxCoefficientPlaceholder" },
+  ];
+
+  elements.forEach((item) => {
+    const element = document.getElementById(item.id);
+    if (element && window.translations[item.key]) {
+      element.placeholder = window.translations[item.key];
+    }
+  });
+
+  // Actualizar opciones del select
+  const nivelSelectElement = document.getElementById("nivel");
+  if (nivelSelectElement && window.translations) {
+    const option1 = nivelSelectElement.options[0];
+    const option2 = nivelSelectElement.options[1];
+
+    if (option1 && window.translations["operaciones.level1"]) {
+      option1.text = window.translations["operaciones.level1"];
+    }
+    if (option2 && window.translations["operaciones.level2"]) {
+      option2.text = window.translations["operaciones.level2"];
+    }
+  }
+
+  // Actualizar etiquetas de checkboxes
+  const labels = [
+    { selector: 'label[for="op-suma"] span', key: "operaciones.additions" },
+    { selector: 'label[for="op-resta"] span', key: "operaciones.subtractions" },
+    {
+      selector: 'label[for="op-multi"] span',
+      key: "operaciones.multiplications",
+    },
+    { selector: 'label[for="op-div"] span', key: "operaciones.divisions" },
+    {
+      selector: 'label[for="resta-negativa"] span',
+      key: "operaciones.allowNegative",
+    },
+  ];
+
+  labels.forEach((item) => {
+    const label = document.querySelector(item.selector);
+    if (label && window.translations[item.key]) {
+      label.textContent = window.translations[item.key];
+    }
+  });
+}
+
+// =============================
+// INICIALIZAR CUANDO TODO ESTÉ LISTO
+// =============================
+
+// Esperar a que la página esté completamente cargada
+window.addEventListener("load", function () {
+  console.log("Página cargada, verificando traducciones...");
+
+  // Verificar si las traducciones ya están cargadas
+  if (window.translations) {
+    console.log(
+      "Traducciones ya cargadas:",
+      Object.keys(window.translations).length,
+      "claves"
+    );
+    updateDynamicTexts();
+  } else {
+    // Si no, intentar cargar desde localStorage
+    const savedLang = localStorage.getItem("uiLang") || "es";
+    console.log("Intentando cargar idioma:", savedLang);
+
+    // Intentar cargar el archivo
+    fetch(`../../assets/i18n/${savedLang}.json`)
+      .then((response) => {
+        if (!response.ok) throw new Error("No se pudo cargar el archivo");
+        return response.json();
+      })
+      .then((data) => {
+        window.translations = data;
+        console.log("Traducciones cargadas exitosamente");
+
+        // Aplicar traducciones a elementos con data-i18n
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.dataset.i18n;
+          if (data[key]) {
+            // MANEJO ESPECIAL PARA INSTRUCCIONES
+            if (
+              key === "operaciones.instructions.normal" ||
+              key === "operaciones.instructions.challenge"
+            ) {
+              // Reemplazar \n por <br> para HTML
+              el.innerHTML = data[key].replace(/\n/g, "<br>");
+            } else {
+              el.textContent = data[key];
+            }
+          }
+        });
+
+        updateDynamicTexts();
+      })
+      .catch((error) => {
+        console.error("Error cargando traducciones:", error);
+        // Cargar español por defecto
+        fetch(`../../assets/i18n/es.json`)
+          .then((r) => r.json())
+          .then((data) => {
+            window.translations = data;
+
+            // Aplicar traducciones a elementos con data-i18n
+            document.querySelectorAll("[data-i18n]").forEach((el) => {
+              const key = el.dataset.i18n;
+              if (data[key]) {
+                el.textContent = data[key];
+              }
+            });
+
+            updateDynamicTexts();
+          });
+      });
+  }
+});
+
 // Obtener elementos del DOM para configuración
 const nivelSelect = document.getElementById("nivel");
 const inputMaximo = document.getElementById("input-maximo");
@@ -218,7 +362,11 @@ function mostrarModalNivelSuperado() {
   // nuevo nivel
   reproducirSonido(sonidoNuevoNivel);
 
-  mostrarModalAviso(`🎉 Nivel ${nivelDesafio - 1} superado`);
+  mostrarModalAviso(
+    `🎉 ${t("operaciones.levelCompleted") || "Nivel"} ${nivelDesafio - 1} ${
+      t("operaciones.superado") || "superado"
+    }`
+  );
   setTimeout(() => {
     cerrarModalAviso();
     lanzarNivelDesafio();
@@ -229,7 +377,7 @@ function derrotaTiempo() {
   // fin por tiempo
   reproducirSonido(sonidoFinTiempo);
 
-  mostrarModalAviso("⏰ Se acabó el tiempo. ¡Inténtalo de nuevo!");
+  mostrarModalAviso("operaciones.timeUp");
 
   setTimeout(() => {
     salirModoDesafio();
@@ -257,9 +405,21 @@ function cambiarNivel() {
   if (nivel === "2") {
     opciones.classList.remove("oculto");
     inputNivel1.style.display = "none";
+    if (inputNivel1) {
+      const translation =
+        window.translations && window.translations["operaciones.notApplicable"];
+      inputNivel1.placeholder = translation || "No aplicable en nivel 2";
+    }
   } else {
     opciones.classList.add("oculto");
     inputNivel1.style.display = "block";
+    if (inputNivel1) {
+      const translation =
+        window.translations &&
+        window.translations["operaciones.maxOperatorPlaceholder"];
+      inputNivel1.placeholder = translation || "Número Operador (solo nivel 1)";
+      inputNivel1.disabled = false;
+    }
   }
 }
 
@@ -276,7 +436,7 @@ function iniciar() {
     cantidad < 1 ||
     cantidad > MAX_OPERACIONES
   ) {
-    mostrarModalAviso("Introduce un número válido de operaciones (1-50).");
+    mostrarModalAviso("operaciones.invalidNumOperations");
     return;
   }
 
@@ -291,9 +451,7 @@ function iniciar() {
     // Validar máximo operando
     const max = parseInt(maxInput);
     if (!maxInput || isNaN(max) || max < 0 || max > MAX_OPERANDO) {
-      mostrarModalAviso(
-        "Introduce un número válido para el máximo operando (0-1000)."
-      );
+      mostrarModalAviso("operaciones.invalidMaxOperator");
       return;
     }
     document.getElementById("pizarra").innerHTML = "";
@@ -309,7 +467,7 @@ function iniciar() {
     ].some((id) => document.getElementById(id).checked);
 
     if (!operacionesSeleccionadas) {
-      mostrarModalAviso("Selecciona al menos una operación en nivel 2.");
+      mostrarModalAviso("operaciones.selectAtLeastOne");
       return;
     }
 
@@ -381,7 +539,7 @@ function derrotaTiempoNormal() {
   reproducirSonido(sonidoFinTiempo);
 
   // Mostrar modal de fin de tiempo
-  mostrarModalAviso("⏰ Se acabó el tiempo. ¡Inténtalo de nuevo!");
+  mostrarModalAviso("operaciones.timeUp");
 
   // Tras cerrar modal de aviso (o tras 2.5s), generar resumen final
   setTimeout(() => {
@@ -417,7 +575,7 @@ function generarNivel2(cantidad) {
   if (document.getElementById("op-div").checked) operaciones.push("/");
 
   if (operaciones.length === 0) {
-    mostrarModalAviso("Selecciona al menos una operación en nivel 2.");
+    mostrarModalAviso("operaciones.selectAtLeastOne");
 
     return;
   }
@@ -519,15 +677,24 @@ if (nivelSelect && inputMaximo) {
     if (nivelSelect.value === "2") {
       inputMaximo.disabled = true;
       inputMaximo.value = "";
-      inputMaximo.placeholder = "No aplicable en nivel 2";
+      const notApplicableText =
+        window.translations && window.translations["operaciones.notApplicable"];
+      inputMaximo.placeholder = notApplicableText || "No aplicable en nivel 2";
     } else {
       inputMaximo.disabled = false;
-      inputMaximo.placeholder = "Número Operador (solo nivel 1)";
+      const maxOpText =
+        window.translations &&
+        window.translations["operaciones.maxOperatorPlaceholder"];
+      inputMaximo.placeholder = maxOpText || "Número Operador (solo nivel 1)";
     }
   });
 
-  // Forzar estado al cargar la página para aplicar configuración inicial
-  nivelSelect.dispatchEvent(new Event("change"));
+  // Ejecutar cambio inicial después de un pequeño delay para que las traducciones se carguen
+  setTimeout(() => {
+    if (nivelSelect) {
+      nivelSelect.dispatchEvent(new Event("change"));
+    }
+  }, 500);
 }
 
 const btnComprobar = document.getElementById("btn-comprobar");
@@ -623,8 +790,9 @@ function comprobarRespuestas() {
   if (modoActual === "desafio") {
     clearInterval(intervaloCrono);
     nivelDesafio++;
-    if (nivelDesafio > 1) {
-      //if (nivelDesafio > 20) {
+    //if (nivelDesafio > 1) {
+    if (nivelDesafio > 20) {
+      // Cambiar a > 20 para el juego real
       mostrarVictoriaFinal();
     } else {
       mostrarModalNivelSuperado();
@@ -683,8 +851,12 @@ function generarResumenFinal() {
 
   // Añadir al resumen general
   document.getElementById("resumen-general").innerHTML =
-    `Comprobaciones realizadas: ${numeroComprobaciones}<br>` +
-    `Tiempo transcurrido: ${minutos} min ${segundos} seg`;
+    `${
+      t("operaciones.checksPerformed") || "Comprobaciones realizadas"
+    }: ${numeroComprobaciones}<br>` +
+    `${t("operaciones.timeElapsed") || "Tiempo transcurrido"}: ${minutos} ${
+      t("common.min") || "min"
+    } ${segundos} ${t("common.sec") || "seg"}`;
 
   mostrarModalFinal(
     estadisticas,
@@ -709,18 +881,21 @@ function modoDesafio() {
 }
 
 // Mostrar mensaje en el modal de aviso
-function mostrarModalAviso(mensaje) {
+function mostrarModalAviso(mensajeKey) {
   const modal = document.getElementById("modal-aviso");
   const mensajeP = document.getElementById("mensaje-aviso");
-  mensajeP.textContent = mensaje; // asigna el mensaje
-  modal.classList.remove("oculto"); // abre el modal
+
+  // Si es una clave de traducción, traducirla
+  const mensaje = t(mensajeKey) || mensajeKey;
+  mensajeP.textContent = mensaje;
+  modal.classList.remove("oculto");
 }
 
 // Cerrar modal
 function cerrarModalAviso() {
   const modal = document.getElementById("modal-aviso");
-  const mensajeP = document.getElementById("mensaje-aviso"); // definirlo aquí también
-  mensajeP.textContent = ""; // limpiar mensaje
+  const mensajeP = document.getElementById("mensaje-aviso");
+  mensajeP.textContent = "";
   modal.classList.add("oculto");
 }
 
@@ -739,14 +914,18 @@ function mostrarModalFinal(
 
   // mostrar comprobaciones y tiempo en líneas separadas
   document.getElementById("resumen-general").innerHTML =
-    `Comprobaciones realizadas: ${comprobaciones}<br>` +
-    `Tiempo transcurrido: ${minutos} min ${segundos} seg`;
+    `${
+      t("operaciones.checksPerformed") || "Comprobaciones realizadas"
+    }: ${comprobaciones}<br>` +
+    `${t("operaciones.timeElapsed") || "Tiempo transcurrido"}: ${minutos} ${
+      t("common.min") || "min"
+    } ${segundos} ${t("common.sec") || "seg"}`;
 
   const nombres = {
-    "+": "Sumas",
-    "-": "Restas",
-    "*": "Multiplicaciones",
-    "/": "Divisiones",
+    "+": t("operaciones.additions") || "Sumas",
+    "-": t("operaciones.subtractions") || "Restas",
+    "*": t("operaciones.multiplications") || "Multiplicaciones",
+    "/": t("operaciones.divisions") || "Divisiones",
   };
 
   const contenedorStats = document.getElementById("estadisticas-operaciones");

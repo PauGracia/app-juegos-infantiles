@@ -255,16 +255,24 @@ html {
   transition: all 0.2s ease;
 }
 
+.modal-content .btn-exit {
+  background-color: #6ac49d;
+}
+
+.modal-content #btn-instrucciones {
+  background-color: #d4a017;
+}
+
 .modal-content select {
-  font-size: 15px; /* Igual que los inputs */
-  padding: 8px; /* Igual que los inputs */
+  font-size: 15px;
+  padding: 8px;
   border: 2px solid black;
   border-radius: 8px;
-  width: 250px; /* Igual que los inputs */
-  margin: 8px auto; /* Centrado */
+  width: 250px;
+  margin: 8px auto;
   display: block;
   box-sizing: border-box;
-  background-color: #fffff0; /* mismo fondo que los inputs */
+  background-color: #fffff0;
   color: black;
 }
 
