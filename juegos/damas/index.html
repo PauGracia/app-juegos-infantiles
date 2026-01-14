@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="damas.css?v=20251111" />
   </head>
   <body class="body-damas">
-    <!-- En tu HTML, modifica desde la línea 19 aproximadamente: -->
     <div class="contenedor-juego-damas">
       <div id="juego-damas-contenedor">
         <div id="tablero-damas"></div>
@@ -19,29 +18,58 @@
 
       <div class="panel-y-botones">
         <div class="info-panel-damas">
-          <div><b>Tus piezas:</b> <span id="color-humano-info">—</span></div>
-          <div><b>Tu lado:</b> <span id="lado-humano-info">—</span></div>
-          <div><b>Turno:</b> <span id="turno-info">—</span></div>
-          <div><b>Ganador:</b> <span id="ganador-info">—</span></div>
           <div>
-            <b>Capturas obligatorias:</b>
+            <b data-i18n="damas.yourPieces">Les teves peces:</b>
+            <span id="color-humano-info">—</span>
+          </div>
+
+          <div>
+            <b data-i18n="damas.yourSide">Torn:</b>
+            <span id="turno-info">—</span>
+          </div>
+
+          <div>
+            <span id="ganador-info"></span>
+          </div>
+
+          <div>
+            <b data-i18n="damas.forcedCaptures">Captures obligatòries:</b>
             <span id="captura-obligatoria-info">—</span>
           </div>
+
           <div>
-            <b>Capturas TÚ:</b> <span id="capturas-humano-info">0</span>
+            <b data-i18n="damas.yourCaptures">Les teves captures:</b>
+            <span id="capturas-humano-info">0</span>
           </div>
+
           <div>
-            <b>Capturas MÁQUINA:</b> <span id="capturas-ia-info">0</span>
+            <b data-i18n="damas.aiCaptures">Captures MÀQUINA:</b>
+            <span id="capturas-ia-info">0</span>
           </div>
+
           <div style="margin-top: 10px" id="mensaje-estado-damas"></div>
         </div>
 
         <div class="contenedor-botones-damas">
-          <button class="boton-damas" id="boton-reinicio-damas">Sortear</button>
-          <button class="boton-damas" id="boton-instrucciones-damas">
+          <button
+            class="boton-damas"
+            id="boton-reinicio-damas"
+            data-i18n="damas.shuffle"
+          >
+            Sortear
+          </button>
+
+          <button
+            class="boton-damas"
+            id="boton-instrucciones-damas"
+            data-i18n="damas.instructions"
+          >
             Instrucciones
           </button>
-          <button id="salirDamas" class="boton-damas">Salir</button>
+
+          <button id="salirDamas" class="boton-damas" data-i18n="damas.exit">
+            Salir
+          </button>
         </div>
       </div>
     </div>
@@ -51,33 +79,50 @@
         <div id="icono-resultado" class="icono-resultado"></div>
         <h2 id="mensaje-resultado"></h2>
         <div class="botones-modal">
-          <button class="boton-damas" id="boton-reiniciar-modal">
+          <button
+            class="boton-damas"
+            id="boton-reiniciar-modal"
+            data-i18n="common.playAgain"
+          >
             Volver a jugar
           </button>
-          <button class="boton-damas" id="boton-salir-modal">Salir</button>
+
+          <button
+            class="boton-damas"
+            id="boton-salir-modal"
+            data-i18n="damas.exit"
+          >
+            Salir
+          </button>
         </div>
       </div>
     </div>
     <div id="modal-instrucciones-damas" class="modal-fin-damas">
       <div class="modal-contenido modal-instrucciones">
-        <h2>Cómo jugar a las damas</h2>
+        <h2 data-i18n="damas.howToPlay">Cómo jugar a las damas</h2>
 
-        <p class="texto-instrucciones-damas">
-          • El objetivo es capturar todas las fichas del rival.<br /><br />
-          • Las fichas se mueven en diagonal hacia adelante.<br /><br />
-          • Las capturas son obligatorias si existen.<br /><br />
-          • Si una ficha llega al extremo contrario, se convierte en reina.<br /><br />
-          • Las reinas pueden moverse en todas las diagonales.
-        </p>
+        <p
+          class="texto-instrucciones-damas"
+          data-i18n="damas.instructionsText"
+        ></p>
 
         <div class="botones-modal">
-          <button class="boton-damas" id="boton-cerrar-instrucciones">
+          <button
+            class="boton-damas"
+            id="boton-cerrar-instrucciones"
+            data-i18n="damas.exit"
+          >
             Salir
           </button>
         </div>
       </div>
     </div>
 
+    <script src="../../assets/js/i18n.js"></script>
+
     <script src="damas.js"></script>
+    <script>
+      initLanguage();
+    </script>
   </body>
 </html>

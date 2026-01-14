@@ -12,26 +12,64 @@
   </head>
 
   <body id="body-index">
+    <div id="language-selector">
+      <button onclick="loadLanguage('es')">ES</button>
+      <button onclick="loadLanguage('en')">EN</button>
+      <button onclick="loadLanguage('ca')">CA</button>
+    </div>
     <div id="titulo-container">
-      <h1 id="title-index">Juegos Educativos Infantiles</h1>
+      <h1 id="title-index" data-i18n="menu.title">
+        Juegos Educativos Infantiles
+      </h1>
     </div>
     <div id="lista-enlaces">
       <ul>
         <li>
-          <a href="./juegos/operaciones/index.html">Operaciones Básicas</a>
+          <a
+            href="./juegos/operaciones/index.html"
+            data-i18n="menu.operaciones"
+          >
+            Operaciones Básicas
+          </a>
         </li>
-        <li><a href="./juegos/palabras/index.html">Escribe las Palabras</a></li>
-        <li><a href="./juegos/memori/index.html">En Pareja</a></li>
-        <li><a href="./juegos/juegoAhorcado/index.html">Juego Ahorcado</a></li>
-        <li><a href="./juegos/damas/index.html">Juego de Damas</a></li>
+        <li>
+          <a href="./juegos/palabras/index.html" data-i18n="menu.palabras">
+            Escribe las Palabras
+          </a>
+        </li>
+        <li>
+          <a href="./juegos/memori/index.html" data-i18n="menu.memori">
+            En Pareja
+          </a>
+        </li>
+        <li>
+          <a href="./juegos/juegoAhorcado/index.html" data-i18n="menu.ahorcado">
+            Juego Ahorcado
+          </a>
+        </li>
+        <li>
+          <a href="./juegos/damas/index.html" data-i18n="menu.damas">
+            Juego de Damas
+          </a>
+        </li>
       </ul>
     </div>
     <footer>
-      &copy; 2025 Pau Gracia López. Todos los derechos reservados. |
-      <a href="https://www.linkedin.com/in/pau-gracia-lopez" target="_blank">
+      &copy; 2025 Pau Gracia López.
+      <span data-i18n="footer.rights">Todos los derechos reservados.</span> |
+      <a
+        href="https://www.linkedin.com/in/pau-gracia-lopez"
+        target="_blank"
+        data-i18n="footer.linkedin"
+      >
         Mi LinkedIn
       </a>
     </footer>
+
+    <script src="./assets/js/i18n.js"></script>
+    <script>
+      initLanguage();
+    </script>
 
     <script src="./assets/js/juegos.js"></script>
   </body>

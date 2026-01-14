@@ -1,0 +1,35 @@
+{
+  "menu.title": "Juegos Educativos Infantiles",
+  "menu.operaciones": "Operaciones Básicas",
+  "menu.palabras": "Escribe las Palabras",
+  "menu.memori": "En Pareja",
+  "menu.ahorcado": "Juego Ahorcado",
+  "menu.damas": "Juego de Damas",
+
+  "footer.rights": "Todos los derechos reservados.",
+  "footer.linkedin": "Mi LinkedIn",
+
+  "damas.yourPieces": "Tus piezas:",
+  "damas.yourSide": "Tu lado:",
+  "damas.turn": "Turno:",
+  "damas.winner": "Ganador:",
+  "damas.forcedCaptures": "Capturas obligatorias:",
+  "damas.yourCaptures": "Capturas TÚ:",
+  "damas.aiCaptures": "Capturas MÁQUINA:",
+  "damas.shuffle": "Sortear",
+  "damas.instructions": "Instrucciones",
+  "damas.howToPlay": "Cómo jugar a las damas",
+
+  "damas.instructionsText": "• El objetivo es capturar todas las fichas del rival.\n\n• Las fichas se mueven en diagonal hacia adelante.\n\n• Las capturas son obligatorias si existen.\n\n• Si una ficha llega al extremo contrario, se convierte en reina.\n\n• Las reinas pueden moverse en todas las diagonales.",
+
+  "damas.you": "TÚ",
+  "damas.ai": "MÁQUINA",
+  "damas.white": "Blancas",
+  "damas.black": "Negras",
+  "damas.youWin": "¡Has ganado!",
+  "damas.youLose": "Has perdido",
+  "damas.bottom": "Abajo",
+  "damas.none": "—",
+  "damas.restart": "Reiniciar",
+  "damas.exit": "Salir"
+}

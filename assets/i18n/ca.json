@@ -1,0 +1,35 @@
+{
+  "menu.title": "Jocs Educatius Infantils",
+  "menu.operaciones": "Operacions Bàsiques",
+  "menu.palabras": "Escriu les Paraules",
+  "menu.memori": "En Parella",
+  "menu.ahorcado": "Joc de Penjat",
+  "menu.damas": "Joc de Dames",
+
+  "footer.rights": "Tots els drets reservats.",
+  "footer.linkedin": "El meu LinkedIn",
+
+  "damas.yourPieces": "Les teves peces:",
+  "damas.yourSide": "El teu costat:",
+  "damas.turn": "Torn:",
+  "damas.winner": "Guanyador:",
+  "damas.forcedCaptures": "Captures obligatòries:",
+  "damas.yourCaptures": "Les teves captures:",
+  "damas.aiCaptures": "Captures MÀQUINA:",
+  "damas.shuffle": "Barrejar",
+  "damas.instructions": "Instruccions",
+  "damas.howToPlay": "Com jugar a les dames",
+
+  "damas.instructionsText": "• L'objectiu és capturar totes les fitxes de l'oponent.\n\n• Les fitxes es mouen en diagonal cap endavant.\n\n• Les captures són obligatòries si existeixen.\n\n• Si una fitxa arriba a l'extrem contrari, es converteix en reina.\n\n• Les reines es poden moure en totes les diagonals.",
+
+  "damas.you": "TU",
+  "damas.ai": "MÀQUINA",
+  "damas.white": "Blanques",
+  "damas.black": "Negres",
+  "damas.youWin": "Has guanyat!",
+  "damas.youLose": "Has perdut",
+  "damas.bottom": "A baix",
+  "damas.none": "—",
+  "damas.restart": "Reinicia",
+  "damas.exit": "Surt"
+}

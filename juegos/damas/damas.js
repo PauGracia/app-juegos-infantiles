@@ -2,6 +2,10 @@
 // Juego de Damas
 // ================================
 
+function t(key) {
+  return window.translations?.[key] || key;
+}
+
 // ================================
 // SONIDOS
 // ================================
@@ -386,7 +390,8 @@ const JuegoDamas = (() => {
     const pieza = estadoGlobalDamas.matrizDamas[desde.r][desde.c];
 
     // SONIDO
-    if (reyDespues && !pieza.rey) {
+    if (!pieza.rey && reyDespues) {
+      // Solo si NO era rey antes y se va a coronar
       sonidosDamas.coronar();
     } else if (capturas.length) {
       sonidosDamas.comer();
@@ -660,15 +665,15 @@ const JuegoDamas = (() => {
 
     if (humano === 0) {
       estadoGlobalDamas.juegoTerminadoFlag = true;
-      document.getElementById("ganador-info").textContent = "MÁQUINA";
+      document.getElementById("ganador-info").textContent = t("damas.ai");
       document.getElementById("mensaje-estado-damas").textContent =
-        "Perdiste sin fichas.";
+        t("damas.youLose");
       mostrarModalFin(false);
     } else if (ia === 0) {
       estadoGlobalDamas.juegoTerminadoFlag = true;
-      document.getElementById("ganador-info").textContent = "TÚ";
+      document.getElementById("ganador-info").textContent = t("damas.you");
       document.getElementById("mensaje-estado-damas").textContent =
-        "Ganaste sin oposición.";
+        t("damas.youWin");
       mostrarModalFin(true);
     }
   }
@@ -681,13 +686,17 @@ const JuegoDamas = (() => {
     modal.style.display = "flex";
     if (gano) {
       icono.textContent = "🏆";
-      mensaje.textContent = "¡Has ganado!";
+      mensaje.textContent = t("damas.youWin");
       sonidosDamas.ganar();
     } else {
       icono.textContent = "❌";
-      mensaje.textContent = "Has perdido";
+      mensaje.textContent = t("damas.youLose");
       sonidosDamas.perder();
     }
+
+    document.getElementById("boton-reiniciar-modal").innerText =
+      t("damas.restart");
+    document.getElementById("boton-salir-modal").innerText = t("damas.exit");
 
     document.getElementById("boton-reiniciar-modal").onclick = () => {
       modal.style.display = "none";
@@ -732,7 +741,9 @@ const JuegoDamas = (() => {
   // ======================================================================
   function actualizarPanelInfoDamas() {
     document.getElementById("turno-info").textContent =
-      estadoGlobalDamas.turnoActualDamas === "humano" ? "TÚ" : "MÁQUINA";
+      estadoGlobalDamas.turnoActualDamas === "humano"
+        ? t("damas.you")
+        : t("damas.ai");
 
     const caps = buscarCapturasGeneralesDamas(
       estadoGlobalDamas.turnoActualDamas
@@ -745,7 +756,9 @@ const JuegoDamas = (() => {
     document.getElementById("capturas-ia-info").textContent =
       estadoGlobalDamas.capturasIA;
     document.getElementById("color-humano-info").textContent =
-      estadoGlobalDamas.colorHumano === "blancas" ? "Blancas" : "Negras";
+      estadoGlobalDamas.colorHumano === "blancas"
+        ? t("damas.white")
+        : t("damas.black");
   }
 
   function buscarCapturasGeneralesDamas(turno) {
@@ -771,7 +784,7 @@ const JuegoDamas = (() => {
   function resetGameDamasUltra() {
     generarTableroInicialDamas();
     estadoGlobalDamas.ladoHumanoAsignado = "bottom";
-    document.getElementById("lado-humano-info").textContent = "Abajo";
+    document.getElementById("color-humano-info").textContent = "Abajo";
     sortearColoresYTurno();
 
     estadoGlobalDamas.seleccionActualDamas = null;
@@ -780,8 +793,10 @@ const JuegoDamas = (() => {
     estadoGlobalDamas.capturasHumano = 0;
     estadoGlobalDamas.capturasIA = 0;
 
-    document.getElementById("ganador-info").textContent = "—";
-    document.getElementById("mensaje-estado-damas").textContent = "";
+    document.getElementById("color-humano-info").textContent =
+      t("damas.bottom");
+
+    document.getElementById("ganador-info").textContent = "";
 
     dibujarTableroDamas();
 
@@ -793,6 +808,8 @@ const JuegoDamas = (() => {
   // INICIALIZACIÓN
   // ======================================================================
   function init() {
+    document.getElementById("salirDamas").innerText = t("damas.exit");
+
     document
       .getElementById("salirDamas")
       ?.addEventListener("click", () => (location.href = "../../index.html"));

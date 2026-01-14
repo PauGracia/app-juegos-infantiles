@@ -1,0 +1,35 @@
+{
+  "menu.title": "Educational Kids Games",
+  "menu.operaciones": "Basic Operations",
+  "menu.palabras": "Write the Words",
+  "menu.memori": "Memory Game",
+  "menu.ahorcado": "Hangman Game",
+  "menu.damas": "Checkers Game",
+
+  "footer.rights": "All rights reserved.",
+  "footer.linkedin": "My LinkedIn",
+
+  "damas.yourPieces": "Your pieces:",
+  "damas.yourSide": "Your side:",
+  "damas.turn": "Turn:",
+  "damas.winner": "Winner:",
+  "damas.forcedCaptures": "Forced captures:",
+  "damas.yourCaptures": "Your captures:",
+  "damas.aiCaptures": "AI captures:",
+  "damas.shuffle": "Shuffle",
+  "damas.instructions": "Instructions",
+  "damas.howToPlay": "How to play checkers",
+
+  "damas.instructionsText": "• The goal is to capture all the opponent's pieces.\n\n• Pieces move diagonally forward.\n\n• Captures are mandatory if available.\n\n• If a piece reaches the opposite end, it becomes a king.\n\n• Kings can move in all diagonal directions.",
+
+  "damas.you": "YOU",
+  "damas.ai": "AI",
+  "damas.white": "White",
+  "damas.black": "Black",
+  "damas.youWin": "You win!",
+  "damas.youLose": "You lose",
+  "damas.bottom": "Bottom",
+  "damas.none": "—",
+  "damas.restart": "Restart",
+  "damas.exit": "Exit"
+}
