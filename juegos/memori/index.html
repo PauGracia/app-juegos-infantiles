@@ -10,46 +10,48 @@
   </head>
   <body id="body-memori">
     <div class="header">
-      <h1 id="titulo-memori">En Pareja</h1>
+      <h1 id="titulo-memori" data-i18n="memori.title">En Pareja</h1>
+
       <div id="marcador">0</div>
     </div>
     <!-- Modal de selección de modo -->
     <div id="modal-inicio" class="modal-memori mostrar">
       <div class="modal-contentMemori">
-        <h2>Selecciona un modo</h2>
-        <button id="modoNormal">Modo Normal</button>
-        <button id="modoDesafio">Modo Desafío</button>
-        <button id="rankingInicio">Ranking</button>
+        <h2 data-i18n="memori.selectMode">Selecciona un modo</h2>
 
-        <button id="instruccionesBtn" class="boton-instrucciones">
+        <button id="modoNormal" data-i18n="memori.normal">Modo Normal</button>
+        <button id="modoDesafio" data-i18n="memori.challenge">
+          Modo Desafío
+        </button>
+        <button id="rankingInicio" data-i18n="memori.ranking">Ranking</button>
+
+        <button id="instruccionesBtn" data-i18n="memori.instructions">
           Instrucciones
         </button>
-        <button id="salirInicio" class="salir-btn">Salir</button>
+
+        <button id="salirInicio" class="salir-btn" data-i18n="common.exit">
+          Salir
+        </button>
       </div>
     </div>
 
     <!-- Modal de instrucciones -->
     <div id="modal-instrucciones">
       <div class="modal-contentInstrucciones">
-        <h2>Instrucciones</h2>
-        <p>
-          Bienvenido al juego <strong>En Pareja</strong>.<br />
-          Existen dos modos de juego:
-        </p>
-        <ul style="text-align: left; margin-left: 20px">
-          <li>
-            <strong>Modo Normal:</strong> Encuentra todas las parejas. Cada
-            acierto suma puntos y cada error resta puntos.
-          </li>
-          <li>
-            <strong>Modo Desafío:</strong> Completa niveles en un tiempo
-            limitado. Aquí no se suman puntos, se mide tu progreso por niveles y
-            tiempo.
-          </li>
+        <h2 data-i18n="memori.instructionsTitle">Instrucciones</h2>
+
+        <p data-i18n="memori.instructionsIntro"></p>
+
+        <ul>
+          <li data-i18n="memori.instructionsNormal"></li>
+          <li data-i18n="memori.instructionsChallenge"></li>
         </ul>
-        <p>Selecciona el modo que prefieras y trata de mejorar tu récord.</p>
-        <p>¡Diviértete y desafía tu memoria!</p>
-        <button id="cerrarInstrucciones">Cerrar</button>
+
+        <p data-i18n="memori.instructionsEnd"></p>
+
+        <button id="cerrarInstrucciones" data-i18n="common.close">
+          Cerrar
+        </button>
       </div>
     </div>
 
@@ -59,35 +61,62 @@
 
       <div class="ui-lateral">
         <div id="ranking"></div>
-        <button id="salir-juego-memori">Salir</button>
+        <button id="salir-juego-memori" data-i18n="common.exit">Salir</button>
       </div>
     </div>
 
     <!-- Modal Victoria -->
     <div id="modal-memori" class="modal-memori">
       <div class="modal-contentMemori">
-        <h2>¡Enhorabuena!</h2>
-        <p id="puntuacionFinal"></p>
-        <p>¿Quieres guardar tu récord?</p>
-
-        <!-- Botón guardar arriba -->
-        <button id="guardar" class="guardar-btn">Guardar</button>
+        <h2 data-i18n="memori.congrats">¡Enhorabuena!</h2>
+        <p data-i18n="memori.askSaveRecord">¿Quieres guardar tu récord?</p>
+        <button id="guardar" class="guardar-btn" data-i18n="memori.saveRecord">
+          Guardar récord
+        </button>
 
         <div id="registro" style="display: none; margin-top: 10px">
-          <input type="text" id="nombreJugador" placeholder="Tu nombre" />
-          <button id="registrar" class="registrar-btn">Registrar</button>
+          <input
+            type="text"
+            id="nombreJugador"
+            placeholder="Tu nombre"
+            data-placeholder-i18n="memori.playerNamePlaceholder"
+          />
+          <button
+            id="registrar"
+            class="registrar-btn"
+            data-i18n="memori.register"
+          >
+            Registrar
+          </button>
         </div>
 
         <!-- Botones principales abajo -->
         <div class="botones">
-          <button id="salir" class="salir-btn">Salir</button>
-          <button id="reiniciar" class="reiniciar-btn">Reiniciar</button>
-          <button id="ranking-btn" class="ranking-btn">Ranking</button>
+          <button id="salir" class="salir-btn" data-i18n="common.exit">
+            Salir
+          </button>
+          <button
+            id="reiniciar"
+            class="reiniciar-btn"
+            data-i18n="common.restart"
+          >
+            Reiniciar
+          </button>
+          <button
+            id="ranking-btn"
+            class="ranking-btn"
+            data-i18n="memori.ranking"
+          >
+            Ranking
+          </button>
         </div>
       </div>
     </div>
-
     <script src="../../assets/js/elementos.js"></script>
+    <script src="../../assets/js/i18n.js"></script>
+    <script>
+      initLanguage();
+    </script>
     <script src="memori.js"></script>
   </body>
 </html>

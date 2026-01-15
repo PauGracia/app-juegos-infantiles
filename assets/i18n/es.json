@@ -101,5 +101,41 @@
 
   "common.min": "min",
   "common.sec": "seg",
-  "common.exitMenu": "Salir"
+  "common.exitMenu": "Salir",
+  "memori.title": "En Pareja",
+  "memori.selectMode": "Selecciona un modo",
+  "memori.normal": "Modo Normal",
+  "memori.challenge": "Modo Desafío",
+  "memori.ranking": "Ranking",
+  "memori.instructions": "Instrucciones",
+  "memori.instructionsTitle": "Instrucciones",
+  "memori.instructionsIntro": "Bienvenido al juego En Pareja. Existen dos modos:",
+  "memori.instructionsNormal": "Modo Normal: Encuentra todas las parejas. Cada acierto suma puntos y cada error resta.",
+  "memori.instructionsChallenge": "Modo Desafío: Completa niveles en tiempo limitado.",
+  "memori.instructionsEnd": "¡Diviértete y desafía tu memoria!",
+
+  "memori.congrats": "¡Enhorabuena!",
+  "memori.finalScore": "Puntuación final:",
+  "memori.askSaveRecord": "¿Quieres guardar tu récord?",
+  "memori.saveRecord": "Guardar récord",
+
+  "memori.noSaveZero": "0 puntos no se pueden guardar",
+
+  "memori.completedAllLevels": "¡Has completado todos los niveles!",
+  "memori.notEnoughElements": "No hay suficientes elementos para este nivel.",
+
+  "memori.levelReached": "Has alcanzado el nivel",
+
+  "memori.timeUpTitle": "⏰ Tiempo agotado",
+  "memori.timeUpText": "No has completado el nivel a tiempo.",
+  "memori.restartChallenge": "Volver a empezar",
+
+  "memori.invalidName": "El nombre debe tener entre 3 y 10 caracteres",
+  "memori.warning": "⚠️ Aviso",
+  "ranking.title": "Ranking",
+  "memori.levelModalTitle": "Nivel {{level}}",
+  "memori.levelModalInfo": "{{pairs}} parejas - {{time}} minutos",
+
+  "memori.playerNamePlaceholder": "Tu nombre",
+  "memori.register": "Registrar"
 }

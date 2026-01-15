@@ -1,3 +1,20 @@
+function t(key) {
+  return window.translations?.[key] || key;
+}
+
+function applyTranslations() {
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.dataset.i18n;
+    el.innerText = translations[key] || key;
+  });
+
+  // Traducir placeholders de inputs
+  document.querySelectorAll("[data-placeholder-i18n]").forEach((input) => {
+    const key = input.getAttribute("data-placeholder-i18n");
+    input.placeholder = translations[key] || key;
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   function iniciarMemori() {
     // Referencias DOM
@@ -151,8 +168,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ------------------ NIVELES DESAFÍO ------------------
     const niveles = [
-      { nivel: 1, parejas: 4, columnas: 4, tiempo: 300 },
-      //{ nivel: 1, parejas: 4, columnas: 4, tiempo: 30 },
+      //{ nivel: 1, parejas: 4, columnas: 4, tiempo: 300 },
+      { nivel: 1, parejas: 4, columnas: 4, tiempo: 30 },
       { nivel: 2, parejas: 6, columnas: 4, tiempo: 330 },
       { nivel: 3, parejas: 8, columnas: 4, tiempo: 360 },
       { nivel: 4, parejas: 10, columnas: 5, tiempo: 390 },
@@ -209,10 +226,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function actualizarBotonGuardar(claveRanking) {
       if (puntuacion <= 0) {
         guardarBtn.disabled = true;
-        guardarBtn.textContent = "0 puntos no se pueden guardar";
+        guardarBtn.textContent = t("memori.noSaveZero");
       } else {
         guardarBtn.disabled = false;
-        guardarBtn.textContent = "Guardar";
+        guardarBtn.textContent = t("common.save");
       }
       // Guardar puntuación usando la clave correspondiente
       guardarBtn.onclick = () => {
@@ -220,7 +237,8 @@ document.addEventListener("DOMContentLoaded", () => {
         registrarBtn.onclick = () => {
           const nombre = nombreJugador.value.trim();
           if (nombre.length < 3 || nombre.length > 10) {
-            mostrarModalAviso("El nombre debe tener entre 3 y 10 caracteres");
+            mostrarModalAviso(t("memori.invalidName"));
+
             return;
           }
           guardarRankingLocal(claveRanking, nombre, puntuacion);
@@ -235,13 +253,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const divRanking = document.getElementById("ranking");
 
       divRanking.innerHTML =
-        "<h3>Ranking</h3><ol>" +
+        `<h3>${t("ranking.title")}</h3><ol>` +
         ranking
           .slice(0, 3)
           .map((r) =>
             r.puntuacion !== undefined
               ? `<li>${r.nombre}: ${r.puntuacion}</li>`
-              : `<li>${r.nombre} - Nivel ${r.nivel}</li>`
+              : `<li>${r.nombre} - ${t("operaciones.levelCompleted")} ${
+                  r.nivel
+                }</li>`
           )
           .join("") +
         "</ol>";
@@ -262,7 +282,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // ------------------ JUEGO NORMAL ------------------
     function iniciarJuegoNormal() {
       const seleccionados = elementos.slice(0, 40);
-      if (!seleccionados.length) return alert("No hay elementos para jugar.");
+      if (!seleccionados.length) return alert(t("memori.noElements"));
+
       let valores = [...seleccionados, ...seleccionados];
       valores = mezclar(valores);
 
@@ -281,17 +302,29 @@ document.addEventListener("DOMContentLoaded", () => {
       const div = document.createElement("div");
       div.classList.add("carta");
       div.dataset.valor = elemento.id;
+
+      const inner = document.createElement("div");
+      inner.classList.add("carta-inner");
+
+      const front = document.createElement("div");
+      front.classList.add("carta-front");
+
+      const back = document.createElement("div");
+      back.classList.add("carta-back");
       const img = document.createElement("img");
       img.src = elemento.imagen;
-      img.style.width = "70%";
-      img.style.display = "none";
-      div.appendChild(img);
+      img.alt = elemento.nombre || "Carta";
+      back.appendChild(img);
+
+      inner.appendChild(front);
+      inner.appendChild(back);
+      div.appendChild(inner);
 
       div.addEventListener("click", () => {
         if (bloqueo || div.classList.contains("volteada")) return;
         playSound(sonidos.girar);
         div.classList.add("volteada");
-        img.style.display = "block";
+
         if (!primeraCarta) {
           primeraCarta = div;
         } else {
@@ -300,8 +333,9 @@ document.addEventListener("DOMContentLoaded", () => {
             puntuacion += 100;
             parejasEncontradas++;
             actualizarMarcador();
-            //if (parejasEncontradas === 1) mostrarModal();
+
             if (parejasEncontradas === 40) mostrarModal();
+
             primeraCarta = null;
             bloqueo = false;
           } else {
@@ -309,27 +343,33 @@ document.addEventListener("DOMContentLoaded", () => {
             bloqueo = true;
             puntuacion = Math.max(0, puntuacion - 5);
             actualizarMarcador();
+
             setTimeout(() => {
               div.classList.remove("volteada");
               primeraCarta.classList.remove("volteada");
-              div.querySelector("img").style.display = "none";
-              primeraCarta.querySelector("img").style.display = "none";
               primeraCarta = null;
               bloqueo = false;
             }, 1000);
           }
         }
       });
+
       tablero.appendChild(div);
     }
-
     function mostrarModal() {
       playSound(sonidos.win);
-      // Mostrar el modal de victoria
       modal.classList.add("mostrar");
 
-      // Mostrar puntuación final
-      puntuacionFinal.textContent = `Puntuación final: ${puntuacion}`;
+      // Crear un elemento para mostrar la puntuación si no existe
+      let puntuacionElement = modal.querySelector("#puntuacionFinal");
+      if (!puntuacionElement) {
+        puntuacionElement = document.createElement("p");
+        puntuacionElement.id = "puntuacionFinal";
+        // Insertar después del título
+        modal.querySelector("h2").after(puntuacionElement);
+      }
+
+      puntuacionElement.textContent = `${t("memori.finalScore")} ${puntuacion}`;
 
       // Ocultar registro por si estaba abierto
       registro.style.display = "none";
@@ -343,10 +383,20 @@ document.addEventListener("DOMContentLoaded", () => {
       playSound(sonidos.win);
       modal.classList.add("mostrar");
 
-      puntuacionFinal.textContent = `
-    Has alcanzado el nivel ${nivelMaximoAlcanzado}
-  `;
+      // Crear/actualizar elemento para nivel alcanzado
+      let nivelElement = modal.querySelector("#nivelAlcanzado");
+      if (!nivelElement) {
+        nivelElement = document.createElement("p");
+        nivelElement.id = "nivelAlcanzado";
+        // Insertar después del título
+        modal.querySelector("h2").after(nivelElement);
+      }
 
+      nivelElement.textContent = `${t(
+        "memori.levelReached"
+      )} ${nivelMaximoAlcanzado}`;
+
+      // Ocultar registro por si estaba abierto
       registro.style.display = "none";
 
       actualizarBotonGuardarDesafio();
@@ -359,11 +409,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function siguienteNivel() {
       if (nivelActual >= niveles.length) {
-        alert("¡Has completado todos los niveles!");
+        alert(t("memori.completedAllLevels"));
         return;
       }
 
-      // Limpiar cualquier modal anterior
+      // Eliminar modal existente si lo hay
       const modalExistente = document.getElementById("modal-nivel");
       if (modalExistente) {
         modalExistente.remove();
@@ -376,34 +426,62 @@ document.addEventListener("DOMContentLoaded", () => {
       columnasNivel = nivel.columnas;
       tiempoRestante = nivel.tiempo;
 
-      // Modal nivel
+      // Función para actualizar el texto del modal
+      function actualizarModalTexto() {
+        if (!modalNivel) return;
+
+        const minutos = Math.floor(tiempoRestante / 60);
+        const segundos = tiempoRestante % 60;
+        const tiempoFormateado = `${minutos}:${
+          segundos < 10 ? "0" : ""
+        }${segundos}`;
+
+        const titulo = t("memori.levelModalTitle").replace(
+          "{{level}}",
+          nivel.nivel
+        );
+        const info = t("memori.levelModalInfo")
+          .replace("{{pairs}}", nivel.parejas)
+          .replace("{{time}}", tiempoFormateado);
+
+        modalNivel.querySelector("h2").textContent = titulo;
+        modalNivel.querySelector("p").textContent = info;
+        modalNivel.querySelector("button").textContent = t("common.start");
+      }
+
+      // Crear modal nivel
       const modalNivel = document.createElement("div");
       modalNivel.classList.add("modal-memori", "mostrar");
       modalNivel.setAttribute("id", "modal-nivel");
       modalNivel.innerHTML = `
-    <div class="modal-contentMemori">
-      <h2>Nivel ${nivel.nivel}</h2>
-      <p>${nivel.parejas} parejas - ${Math.floor(tiempoRestante / 60)}:${
-        tiempoRestante % 60 < 10 ? "0" : ""
-      }${tiempoRestante % 60} minutos</p>
-      <button id="iniciarNivel">Iniciar</button>
-    </div>
-  `;
+        <div class="modal-contentMemori">
+          <h2></h2>
+          <p></p>
+          <button id="iniciarNivel"></button>
+        </div>
+      `;
       document.body.appendChild(modalNivel);
 
+      // Actualizar texto inicial
+      actualizarModalTexto();
+
       const btnIniciar = modalNivel.querySelector("#iniciarNivel");
+
+      // Escuchar cambios de idioma
+      document.addEventListener("languageChanged", (e) => {
+        actualizarModalTexto();
+      });
 
       const iniciarHandler = () => {
         console.log("Botón Iniciar clickeado, nivel:", nivelActual);
 
         if (!elementos || elementos.length < parejasDelNivel) {
-          alert("No hay suficientes elementos para este nivel.");
+          alert(t("memori.notEnoughElements"));
           return;
         }
 
-        console.log("Removiendo modal...");
-
-        btnIniciar.addEventListener("click", iniciarHandler, { once: true });
+        // Remover el event listener del cambio de idioma
+        document.removeEventListener("languageChanged", actualizarModalTexto);
 
         modalNivel.remove();
         console.log("Modal removido, cargando nivel...");
@@ -411,7 +489,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cargarNivelDesafio();
       };
 
-      btnIniciar.addEventListener("click", iniciarHandler, { once: true }); // { once: true } asegura que solo se ejecute una vez
+      btnIniciar.addEventListener("click", iniciarHandler, { once: true });
     }
     function cargarNivelDesafio() {
       // Seleccionamos parejas al azar
@@ -445,17 +523,29 @@ document.addEventListener("DOMContentLoaded", () => {
       const div = document.createElement("div");
       div.classList.add("carta");
       div.dataset.valor = elemento.id;
+
+      const inner = document.createElement("div");
+      inner.classList.add("carta-inner");
+
+      const front = document.createElement("div");
+      front.classList.add("carta-front");
+
+      const back = document.createElement("div");
+      back.classList.add("carta-back");
       const img = document.createElement("img");
       img.src = elemento.imagen;
-      img.style.width = "70%";
-      img.style.display = "none";
-      div.appendChild(img);
+      img.alt = elemento.nombre || "Carta";
+      back.appendChild(img);
+
+      inner.appendChild(front);
+      inner.appendChild(back);
+      div.appendChild(inner);
 
       div.addEventListener("click", () => {
         if (bloqueo || div.classList.contains("volteada")) return;
         playSound(sonidos.girar);
         div.classList.add("volteada");
-        img.style.display = "block";
+
         if (!primeraCarta) {
           primeraCarta = div;
         } else {
@@ -463,6 +553,7 @@ document.addEventListener("DOMContentLoaded", () => {
             playSound(sonidos.pareja);
             puntuacion += 100;
             parejasEncontradas++;
+
             if (parejasEncontradas === parejasDelNivel) {
               clearInterval(intervaloTiempo);
 
@@ -488,11 +579,10 @@ document.addEventListener("DOMContentLoaded", () => {
             playSound(sonidos.error);
             bloqueo = true;
             puntuacion = Math.max(0, puntuacion - 5);
+
             setTimeout(() => {
               div.classList.remove("volteada");
               primeraCarta.classList.remove("volteada");
-              div.querySelector("img").style.display = "none";
-              primeraCarta.querySelector("img").style.display = "none";
               primeraCarta = null;
               bloqueo = false;
             }, 1000);
@@ -515,7 +605,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function actualizarBotonGuardarDesafio() {
       guardarBtn.disabled = false;
-      guardarBtn.textContent = "Guardar récord";
+      guardarBtn.textContent = t("memori.saveRecord");
 
       guardarBtn.onclick = () => {
         registro.style.display = "block";
@@ -568,14 +658,13 @@ document.addEventListener("DOMContentLoaded", () => {
       modalTiempo.id = "modal-tiempo";
 
       modalTiempo.innerHTML = `
-    <div class="modal-contentMemori">
-      <h2>⏰ Tiempo agotado</h2>
-      <p>No has completado el nivel a tiempo.</p>
-      <p>Has alcanzado el nivel ${nivelMaximoAlcanzado}</p>
-      <button id="reiniciarTiempo">Volver a empezar</button>
-
-    </div>
-  `;
+  <div class="modal-contentMemori">
+    <h2>${t("memori.timeUpTitle")}</h2>
+    <p>${t("memori.timeUpText")}</p>
+    <p>${t("memori.levelReached")} ${nivelMaximoAlcanzado}</p>
+    <button id="reiniciarTiempo">${t("memori.restartChallenge")}</button>
+  </div>
+`;
 
       document.body.appendChild(modalTiempo);
 
@@ -597,12 +686,12 @@ document.addEventListener("DOMContentLoaded", () => {
       modalAviso.id = "modal-aviso";
 
       modalAviso.innerHTML = `
-    <div class="modal-contentMemori">
-      <h2>⚠️ Aviso</h2>
-      <p>${mensaje}</p>
-      <button id="cerrarAviso">Aceptar</button>
-    </div>
-  `;
+  <div class="modal-contentMemori">
+    <h2>${t("memori.warning")}</h2>
+    <p>${mensaje}</p>
+    <button id="cerrarAviso">${t("common.accept")}</button>
+  </div>
+`;
 
       document.body.appendChild(modalAviso);
 
