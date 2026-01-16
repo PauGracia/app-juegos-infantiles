@@ -137,5 +137,16 @@
   "memori.levelModalInfo": "{{pairs}} parejas - {{time}} minutos",
 
   "memori.playerNamePlaceholder": "Tu nombre",
-  "memori.register": "Registrar"
+  "memori.register": "Registrar",
+  "ranking.loading": "Cargando ranking…",
+  "ranking.noScores": "No hay puntuaciones aún.",
+  "ranking.page": "Página",
+  "ranking.of": "de",
+  "ranking.normal": "Normal",
+  "ranking.challenge": "Desafío",
+  "ranking.points": "pts",
+  "ranking.level": "Nivel",
+  "common.previous": "Anterior",
+  "common.next": "Siguiente",
+  "common.back": "Atrás"
 }

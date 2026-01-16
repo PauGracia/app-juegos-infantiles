@@ -144,5 +144,16 @@
   "memori.levelModalTitle": "Niveau {{level}}",
   "memori.levelModalInfo": "{{pairs}} paires - {{time}} minutes",
   "memori.playerNamePlaceholder": "Ton nom",
-  "memori.register": "Enregistrer"
+  "memori.register": "Enregistrer",
+  "ranking.loading": "Chargement du classement…",
+  "ranking.noScores": "Aucun score pour l'instant.",
+  "ranking.page": "Page",
+  "ranking.of": "sur",
+  "ranking.normal": "Normal",
+  "ranking.challenge": "Défi",
+  "ranking.points": "pts",
+  "ranking.level": "Niveau",
+  "common.previous": "Précédent",
+  "common.next": "Suivant",
+  "common.back": "Retour"
 }

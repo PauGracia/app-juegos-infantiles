@@ -147,18 +147,6 @@ body {
   z-index: 2;
 }
 
-/* SOLO para desktop (ratón) */
-@media (hover: hover) and (pointer: fine) {
-  .carta:hover .carta-front {
-    border-color: #48bb78;
-  }
-
-  .carta:hover .carta-inner {
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.25);
-    transform: none;
-  }
-}
-
 .carta-back {
   background: linear-gradient(145deg, #ffffff, #f7fafc);
   color: #2d3748;
@@ -171,6 +159,11 @@ body {
   width: 70%;
   height: 70%;
   object-fit: contain;
+}
+
+.carta.volteada.emparejada .carta-back {
+  border: 3px solid #9f7aea; /* Morado vibrante */
+  box-shadow: 0 0 12px rgba(159, 122, 234, 0.4);
 }
 
 /* Modal del memori */
@@ -780,8 +773,9 @@ body {
   }
 
   .ui-lateral {
-    flex-direction: column;
-    align-items: center;
+    /*flex-direction: column;
+    align-items: center;*/
+    gap: 10;
   }
 
   .zona-juego {
@@ -789,7 +783,7 @@ body {
   }
   #titulo-memori {
     font-size: 26px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
   #titulo-memori::after {
     width: 60px;
@@ -809,7 +803,7 @@ body {
     width: auto;
     margin: 0 auto;
     gap: 1px;
-
+    margin-bottom: 20px;
     margin-top: 20px;
   }
   .carta {
@@ -819,9 +813,6 @@ body {
     font-size: 4vw;
     border-radius: 6px;
   }
-  .carta:hover {
-    transform: translateY(-1px);
-  }
 
   #ranking {
     position: static;
@@ -829,13 +820,13 @@ body {
     margin-top: 5px;
     margin-bottom: 20px;
     margin-left: 10px;
-    width: 140px;
+    width: 100px;
   }
 
   #salir-juego-memori {
     position: static;
     margin-left: 10px;
-    width: 120px;
+    width: 100px;
   }
 
   .modal-dinamico .modal-contentMemori {

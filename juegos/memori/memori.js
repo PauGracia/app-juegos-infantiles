@@ -320,6 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
       inner.appendChild(back);
       div.appendChild(inner);
 
+      // En la función crearCartaNormal, en el evento click donde se encuentra pareja:
       div.addEventListener("click", () => {
         if (bloqueo || div.classList.contains("volteada")) return;
         playSound(sonidos.girar);
@@ -330,6 +331,11 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
           if (primeraCarta.dataset.valor === div.dataset.valor) {
             playSound(sonidos.pareja);
+
+            // Añadir clase emparejada a ambas cartas
+            primeraCarta.classList.add("emparejada");
+            div.classList.add("emparejada");
+
             puntuacion += 100;
             parejasEncontradas++;
             actualizarMarcador();
@@ -551,6 +557,11 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
           if (primeraCarta.dataset.valor === div.dataset.valor) {
             playSound(sonidos.pareja);
+
+            // Añadir clase emparejada a ambas cartas
+            primeraCarta.classList.add("emparejada");
+            div.classList.add("emparejada");
+
             puntuacion += 100;
             parejasEncontradas++;
 

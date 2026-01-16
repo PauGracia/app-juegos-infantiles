@@ -144,5 +144,16 @@
   "memori.levelModalTitle": "Nivell {{level}}",
   "memori.levelModalInfo": "{{pairs}} parelles - {{time}} minuts",
   "memori.playerNamePlaceholder": "El teu nom",
-  "memori.register": "Registrar"
+  "memori.register": "Registrar",
+  "ranking.loading": "Carregant classificació…",
+  "ranking.noScores": "Encara no hi ha puntuacions.",
+  "ranking.page": "Pàgina",
+  "ranking.of": "de",
+  "ranking.normal": "Normal",
+  "ranking.challenge": "Desafiament",
+  "ranking.points": "punts",
+  "ranking.level": "Nivell",
+  "common.previous": "Anterior",
+  "common.next": "Següent",
+  "common.back": "Enrere"
 }

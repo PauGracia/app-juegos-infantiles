@@ -1,31 +1,55 @@
-<!-- Página del ranking -->
-
 <!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>RankingMemori</title>
+    <title data-i18n="ranking.title">Ranking</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../assets/css/app.css?v=20251111" />
     <link rel="stylesheet" href="rankingMemori.css" />
   </head>
   <body id="body-ranking">
-    <h1 id="titulo-ranking">Ranking</h1>
-
-    <div class="tabs">
-      <button class="tab activa" data-tipo="normal">Normal</button>
-      <button class="tab" data-tipo="desafio">Desafío</button>
+    <!-- Header fijo -->
+    <div class="ranking-header">
+      <h1 id="titulo-ranking" data-i18n="ranking.title">Ranking</h1>
     </div>
 
-    <div id="lista" aria-live="polite">Cargando ranking…</div>
-
-    <div class="paginador">
-      <button id="prev" disabled>Anterior</button>
-      <span id="pagina"></span>
-      <button id="next" disabled>Siguiente</button>
+    <!-- Tabs fijas -->
+    <div class="tabs-container">
+      <div class="tabs">
+        <button class="tab activa" data-tipo="normal" data-i18n="memori.normal">
+          Normal
+        </button>
+        <button class="tab" data-tipo="desafio" data-i18n="memori.challenge">
+          Desafío
+        </button>
+      </div>
     </div>
 
-    <button id="atras">Atrás</button>
+    <!-- Contenido principal con scroll -->
+    <main class="ranking-main">
+      <div class="ranking-content">
+        <!-- Lista de ranking -->
+        <div id="lista" aria-live="polite">
+          <div class="loading">
+            <div class="loading-spinner"></div>
+            <span data-i18n="ranking.loading">Cargando ranking…</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer fijo -->
+    <div class="ranking-footer">
+      <div class="paginador">
+        <button id="prev" disabled data-i18n="common.previous">Anterior</button>
+        <span id="pagina"></span>
+        <button id="next" disabled data-i18n="common.next">Siguiente</button>
+      </div>
+
+      <button id="atras" data-i18n="common.back">Atrás</button>
+    </div>
+
+    <script src="../assets/js/i18n.js"></script>
     <script src="rankingMemori.js"></script>
   </body>
 </html>

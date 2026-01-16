@@ -141,5 +141,16 @@
   "memori.levelModalTitle": "Level {{level}}",
   "memori.levelModalInfo": "{{pairs}} pairs - {{time}} minutes",
   "memori.playerNamePlaceholder": "Your name",
-  "memori.register": "Register"
+  "memori.register": "Register",
+  "ranking.loading": "Loading ranking…",
+  "ranking.noScores": "No scores yet.",
+  "ranking.page": "Page",
+  "ranking.of": "of",
+  "ranking.normal": "Normal",
+  "ranking.challenge": "Challenge",
+  "ranking.points": "pts",
+  "ranking.level": "Level",
+  "common.previous": "Previous",
+  "common.next": "Next",
+  "common.back": "Back"
 }
