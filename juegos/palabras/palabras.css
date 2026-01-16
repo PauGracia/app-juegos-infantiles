@@ -1,330 +1,450 @@
-/* -----Juego palabras-----*/
+/* -----Juego palabras - Mejorado -----*/
 
 /* Reset básico */
 html,
 body {
   margin: 0;
   padding: 0;
-  background: radial-gradient(
-      circle at 10% 20%,
-      rgba(255, 255, 255, 0.4),
-      transparent 40%
-    ),
-    linear-gradient(180deg, #f3e7b3, #e7d27b);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   box-sizing: border-box;
   min-height: 100dvh;
   overflow: hidden;
   overscroll-behavior: none;
   touch-action: none;
+  font-family: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
 
+/* Modal principal */
 .modal-palabras {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100dvh;
-
-  background-color: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 25px;
-  z-index: 10;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
 }
 
-.modal-palabras button {
-  background-color: #000;
-  color: white;
-  padding: 5px;
-  border-radius: 5px;
-  width: 70px;
-  font-size: 20px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .modal-contentPalabras {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
+  background: linear-gradient(145deg, #ffffff, #f8fafc);
+  padding: 32px;
+  border-radius: 20px;
   text-align: center;
-  max-width: 80%;
+  max-width: 500px;
+  width: 85%;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.modal-contentPalabras select#idioma {
-  width: 60%;
-
-  background-color: #f7f7f7;
-  color: #333;
-
-  margin-top: 5px;
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-/* Estilo móvil para el selector del modal de palabras */
+.modal-contentPalabras h2 {
+  color: #2d3748;
+  font-size: 28px;
+  margin-bottom: 24px;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 12px;
+}
 
-.modal-contentPalabras label,
-.modal-contentPalabras input,
-.modal-contentPalabras select {
+.modal-contentPalabras h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+.modal-contentPalabras label {
+  display: block;
+  text-align: left;
+  color: #4a5568;
   font-size: 16px;
-  line-height: 1.5;
-  padding: 5px 10px;
-  height: 30px;
-  box-sizing: border-box;
-  vertical-align: middle;
+  font-weight: 600;
+  margin-bottom: 8px;
+  margin-top: 16px;
 }
 
+.modal-contentPalabras select,
+.modal-contentPalabras input[type="number"] {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 16px;
+  background: #ffffff;
+  color: #2d3748;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.modal-contentPalabras select:focus,
+.modal-contentPalabras input[type="number"]:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Contenedor principal del juego */
 .contenedor-imagenPalabra {
   position: fixed;
   inset: 0;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   padding-top: 40px;
   padding-bottom: 160px;
-
   box-sizing: border-box;
-  color: white;
+  background: linear-gradient(135deg, #f3e7b3 0%, #e7d27b 100%);
 }
 
-.imagen-contenedor {
-  border: 5px solid gray;
-  border-radius: 20px;
-  padding: 50px;
-  display: inline-block;
+.titulo-operaciones {
+  color: #2d3748;
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 30px;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  padding-bottom: 10px;
+}
 
+.titulo-operaciones::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 5px;
+  background: linear-gradient(90deg, #48bb78, #38a169);
+  border-radius: 3px;
+}
+
+/* Contenedor de imagen */
+.imagen-contenedor {
+  border: 6px solid #2d3748;
+  border-radius: 24px;
+  padding: 40px;
+  display: inline-block;
   max-width: 370px;
   max-height: 370px;
+  background: white;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.imagen-contenedor::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
 }
 
 .imagen-palabras {
-  border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   max-width: 100%;
   max-height: 100%;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
 }
 
+/* Inputs de letras */
 .letras-palabras {
-  margin: 20px 0;
+  margin: 30px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
 }
 
 .letras-palabras input {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   font-size: 24px;
+  font-weight: 700;
   text-align: center;
-  margin: 5px;
+  border: 3px solid #cbd5e0;
+  border-radius: 12px;
+  background: white;
+  color: #2d3748;
+  transition: all 0.2s ease;
   user-select: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
+.letras-palabras input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
+}
+
+.letras-palabras input:disabled {
+  background: #f7fafc;
+  border-color: #e2e8f0;
+  color: #a0aec0;
+}
+
+/* Botones principales */
 .botones-palabras {
-  margin-top: 10px;
+  margin-top: 20px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .botones-palabras button {
-  background-color: black;
+  background: linear-gradient(135deg, #2d3748, #4a5568);
   color: white;
-  padding: 10px 20px;
-  margin: 0 10px;
-  font-size: 20px;
+  padding: 16px 32px;
+  font-size: 18px;
+  font-weight: 600;
   border: none;
-  border-radius: 8px;
+  border-radius: 14px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  min-width: 140px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  letter-spacing: 0.5px;
 }
 
-.botones-palabras button:disabled {
-  background-color: #444;
-  opacity: 0.5;
-  cursor: not-allowed;
+.botones-palabras button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .botones-palabras button:active {
-  transform: scale(0.95);
-  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
 }
 
+.botones-palabras button:disabled {
+  background: linear-gradient(135deg, #a0aec0, #718096);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón salir específico */
 #salir-palabras {
-  background-color: white;
-  color: black;
-  padding: 10px 20px;
-  margin: 0 10px;
-  font-size: 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  background: linear-gradient(135deg, #f56565, #e53e3e);
+  color: white;
+  box-shadow: 0 6px 12px rgba(245, 101, 101, 0.25);
 }
 
-/* Modal final – fondo */
+#salir-palabras:hover {
+  background: linear-gradient(135deg, #e53e3e, #c53030);
+}
+
+/* Modal final */
 #modal-final {
-  backdrop-filter: blur(4px);
-  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.9);
 }
 
 #modal-final .modal-contentPalabras {
-  max-width: 420px;
-  width: 90%;
-  max-height: 80dvh;
-  padding: 24px;
-  border-radius: 16px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  animation: modalFadeIn 0.25s ease;
+  max-width: 500px;
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
 }
 
 #modal-final h2 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 22px;
+  color: #2d3748;
+  font-size: 32px;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 #modal-final p {
-  margin: 6px 0;
-  font-size: 16px;
+  margin: 12px 0;
+  font-size: 18px;
+  color: #4a5568;
+  font-weight: 500;
 }
 
 #lista-resultados {
   list-style: none;
   padding: 0;
-  margin: 16px 0;
-  max-height: 200px;
+  margin: 24px 0;
+  max-height: 250px;
   overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
 }
 
 #lista-resultados li {
-  padding: 8px 12px;
-  font-size: 15px;
-  border-bottom: 1px solid #eee;
+  padding: 14px 20px;
+  font-size: 16px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: background 0.2s ease;
+}
+
+#lista-resultados li:hover {
+  background: #edf2f7;
 }
 
 #lista-resultados li:last-child {
   border-bottom: none;
 }
 
-#modal-final .modal-contentPalabras button {
+/* Botones en modal final */
+.btn-final {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
   margin: 8px;
+  min-width: 140px;
+  box-shadow: 0 6px 12px rgba(102, 126, 234, 0.25);
 }
 
+.btn-final:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.35);
+}
+
+/* Panel de información */
 .panel-info {
   position: fixed;
-  bottom: 16px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-
-  width: calc(100% - 32px);
-  max-width: 360px;
-
-  background: rgba(0, 0, 0, 0.85);
+  width: calc(100% - 48px);
+  max-width: 400px;
+  background: rgba(45, 55, 72, 0.95);
+  backdrop-filter: blur(10px);
   color: white;
-
-  padding: 12px 16px;
-  border-radius: 16px;
-
-  font-size: 15px;
+  padding: 20px 24px;
+  border-radius: 20px;
+  font-size: 16px;
   text-align: center;
-
-  z-index: 5;
+  z-index: 50;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   pointer-events: none;
-
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .panel-info p {
-  margin: 4px;
-  padding: 1px;
+  margin: 8px 0;
+  padding: 4px 0;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-/* Añade estas reglas al CSS existente */
-
-/* Contenedor para botones en configuración */
+/* Botones de configuración */
 .botones-configuracion {
   display: flex;
-  gap: 15px;
+  gap: 16px;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 32px;
   flex-wrap: wrap;
 }
 
-/* Botones del modal de configuración */
-.modal-contentPalabras button {
-  background-color: #000;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 18px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  min-width: 120px;
-  flex: 1;
-  max-width: 200px;
-}
-
-.modal-contentPalabras button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.modal-contentPalabras button:active {
-  transform: translateY(0);
-}
-
-/* Botón específico de salir en configuración */
-.btn-salir {
-  background-color: #dc3545 !important;
-  color: white !important;
-}
-
-.btn-salir:hover {
-  background-color: #c82333 !important;
-}
-
-/* Botón de iniciar */
 #btn-iniciar {
-  background-color: #28a745 !important;
-  color: white !important;
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  color: white;
+  box-shadow: 0 6px 12px rgba(72, 187, 120, 0.25);
 }
 
 #btn-iniciar:hover {
-  background-color: #218838 !important;
+  background: linear-gradient(135deg, #38a169, #2f855a);
 }
 
-@keyframes modalFadeIn {
-  from {
-    transform: scale(0.95);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+.btn-salir {
+  background: linear-gradient(135deg, #f56565, #e53e3e) !important;
+  color: white !important;
+  box-shadow: 0 6px 12px rgba(245, 101, 101, 0.25) !important;
 }
 
+.btn-salir:hover {
+  background: linear-gradient(135deg, #e53e3e, #c53030) !important;
+}
+
+/* Animaciones */
 @keyframes shake {
-  0% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-4px);
-  }
-  50% {
-    transform: translateX(4px);
-  }
-  75% {
-    transform: translateX(-4px);
-  }
+  0%,
   100% {
     transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-4px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(4px);
   }
 }
 
 .letra-error {
-  animation: shake 0.3s;
+  animation: shake 0.4s ease;
+  border-color: #f56565 !important;
+  background: #fed7d7 !important;
 }
 
+/* Feedback visual para aciertos */
+.letra-correcta {
+  background: #c6f6d5 !important;
+  border-color: #48bb78 !important;
+  color: #22543d !important;
+}
+
+/* Media Queries - Manteniendo las proporciones existentes */
 @media (min-width: 681px) and (max-width: 1024px) and (orientation: portrait) {
   .contenedor-imagenPalabra {
     justify-content: flex-start;
@@ -338,24 +458,23 @@ body {
   }
 
   .letras-palabras input {
-    width: 32px;
-    height: 32px;
-    font-size: 18px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
   }
 
   .botones-palabras button {
-    font-size: 18px;
-    padding: 12px 26px;
+    font-size: 16px;
+    padding: 14px 24px;
   }
 
   .titulo-operaciones {
     font-size: 36px;
-    margin-bottom: 20px;
   }
 
   .panel-info {
-    max-width: 420px;
-    font-size: 16px;
+    max-width: 380px;
+    padding: 16px 20px;
   }
 }
 
@@ -367,58 +486,86 @@ body {
   }
 
   .imagen-contenedor {
-    border: 8px solid black;
-
+    border: 6px solid #2d3748;
     padding: 20px;
-
     max-width: 175px;
     max-height: 175px;
+    border-radius: 16px;
   }
 
   .titulo-operaciones {
     display: none;
-    margin-bottom: 20px;
   }
 
   .letras-palabras input {
-    width: 20px;
-    height: 20px;
-    font-size: 10px;
-    margin: 2px;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    border-radius: 8px;
+    border-width: 2px;
+  }
+
+  .botones-palabras {
+    gap: 10px;
   }
 
   .botones-palabras button {
+    padding: 12px 20px;
     font-size: 14px;
+    min-width: 100px;
+    border-radius: 10px;
   }
+
   #salir-palabras {
     font-size: 14px;
   }
 
-  #modal-final .modal-contentPalabras {
-    padding: 20px;
-    width: auto;
-    max-width: 300px;
-  }
-
-  #modal-final .modal-contentPalabras button {
-    display: block;
-    width: 100%;
-    margin: 8px 0;
-  }
-  .panel-info {
-    width: calc(80% - 32px);
+  .modal-contentPalabras {
+    padding: 24px 20px;
   }
 
   .botones-configuracion {
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
 
   .modal-contentPalabras button {
     width: 100%;
-    max-width: none;
     margin: 0;
     padding: 14px;
+  }
+
+  .panel-info {
+    width: calc(90% - 32px);
+    padding: 16px;
+    font-size: 14px;
+  }
+
+  #modal-final .modal-contentPalabras {
+    padding: 24px 20px;
+    max-width: 320px;
+  }
+
+  #modal-final h2 {
+    font-size: 24px;
+  }
+
+  #modal-final p {
     font-size: 16px;
+  }
+}
+
+/* Efectos hover solo para dispositivos no táctiles */
+@media (hover: hover) and (pointer: fine) {
+  .botones-palabras button:hover,
+  .btn-final:hover,
+  #btn-iniciar:hover,
+  .btn-salir:hover {
+    transform: translateY(-3px);
+  }
+
+  .letras-palabras input:hover:not(:disabled) {
+    border-color: #667eea;
+    transform: translateY(-2px);
   }
 }
