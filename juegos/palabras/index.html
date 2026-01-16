@@ -34,12 +34,20 @@
         <input type="number" id="cantidad" min="1" max="56" value="3" />
         <br /><br />
 
-        <button onclick="iniciarJuego()" data-i18n="palabras.config.start">
-          Iniciar
-        </button>
+        <div class="botones-configuracion">
+          <button id="btn-iniciar" data-i18n="palabras.config.start">
+            Iniciar
+          </button>
+          <button
+            id="btn-salir-config"
+            class="btn-salir"
+            data-i18n="common.exit"
+          >
+            Salir
+          </button>
+        </div>
       </div>
     </div>
-
     <!-- Estructura de la pantalla -->
     <div class="contenedor-imagenPalabra" id="juego" style="display: none">
       <h1 class="titulo-operaciones" data-i18n="palabras.title">Palabras</h1>

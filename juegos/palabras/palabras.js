@@ -9,10 +9,29 @@ document.addEventListener("DOMContentLoaded", () => {
   // CONFIGURACIÓN DE IDIOMA DE PALABRAS
   // -----------------------------
   const selectPalabrasIdioma = document.getElementById("palabras-idioma");
+  const btnIniciar = document.getElementById("btn-iniciar");
+  const btnSalirConfig = document.getElementById("btn-salir-config");
+  const salirBtnJuego = document.getElementById("salir-palabras");
+
   let idiomaPalabrasSeleccionado = parseInt(selectPalabrasIdioma.value);
 
   selectPalabrasIdioma.addEventListener("change", () => {
     idiomaPalabrasSeleccionado = parseInt(selectPalabrasIdioma.value);
+  });
+
+  // Botón de iniciar juego
+  btnIniciar.addEventListener("click", () => {
+    iniciarJuego();
+  });
+
+  // Botón de salir en configuración
+  btnSalirConfig.addEventListener("click", () => {
+    location.href = "../../index.html";
+  });
+
+  // Botón de salir durante el juego
+  salirBtnJuego.addEventListener("click", () => {
+    location.href = "../../index.html";
   });
 
   // -----------------------------
@@ -60,11 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
   }
-
-  // Salir del juego
-  document.getElementById("salir-palabras").addEventListener("click", () => {
-    location.href = "../../index.html";
-  });
 
   // -----------------------------
   // FUNCIONES PRINCIPALES

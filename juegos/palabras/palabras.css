@@ -237,6 +237,61 @@ body {
   padding: 1px;
 }
 
+/* Añade estas reglas al CSS existente */
+
+/* Contenedor para botones en configuración */
+.botones-configuracion {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+/* Botones del modal de configuración */
+.modal-contentPalabras button {
+  background-color: #000;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+  flex: 1;
+  max-width: 200px;
+}
+
+.modal-contentPalabras button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-contentPalabras button:active {
+  transform: translateY(0);
+}
+
+/* Botón específico de salir en configuración */
+.btn-salir {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+.btn-salir:hover {
+  background-color: #c82333 !important;
+}
+
+/* Botón de iniciar */
+#btn-iniciar {
+  background-color: #28a745 !important;
+  color: white !important;
+}
+
+#btn-iniciar:hover {
+  background-color: #218838 !important;
+}
+
 @keyframes modalFadeIn {
   from {
     transform: scale(0.95);
@@ -352,5 +407,18 @@ body {
   }
   .panel-info {
     width: calc(80% - 32px);
+  }
+
+  .botones-configuracion {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-contentPalabras button {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 14px;
+    font-size: 16px;
   }
 }
