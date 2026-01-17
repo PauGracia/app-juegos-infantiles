@@ -44,7 +44,7 @@ body {
   padding: 32px;
   border-radius: 20px;
   text-align: center;
-  max-width: 500px;
+  max-width: 350px;
   width: 85%;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -277,7 +277,7 @@ body {
 }
 
 #modal-final .modal-contentPalabras {
-  max-width: 500px;
+  max-width: 350px;
   padding: 40px;
   border-radius: 24px;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
@@ -357,7 +357,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 48px);
-  max-width: 400px;
+  max-width: 180px;
   background: rgba(45, 55, 72, 0.95);
   backdrop-filter: blur(10px);
   color: white;
@@ -393,7 +393,10 @@ body {
 #btn-iniciar {
   background: linear-gradient(135deg, #48bb78, #38a169);
   color: white;
+  padding: 10px 12px;
   box-shadow: 0 6px 12px rgba(72, 187, 120, 0.25);
+  font-size: 16px;
+  border-radius: 14px;
 }
 
 #btn-iniciar:hover {
@@ -404,6 +407,9 @@ body {
   background: linear-gradient(135deg, #f56565, #e53e3e) !important;
   color: white !important;
   box-shadow: 0 6px 12px rgba(245, 101, 101, 0.25) !important;
+  padding: 10px 12px;
+  font-size: 16px;
+  border-radius: 14px;
 }
 
 .btn-salir:hover {
@@ -445,22 +451,23 @@ body {
 }
 
 /* Media Queries - Manteniendo las proporciones existentes */
-@media (min-width: 681px) and (max-width: 1024px) and (orientation: portrait) {
+@media (min-width: 781px) and (max-width: 1280px) and (orientation: portrait) {
   .contenedor-imagenPalabra {
     justify-content: flex-start;
     padding-top: 10px;
+    margin-top: 10px;
   }
 
   .imagen-contenedor {
-    max-width: 260px;
-    max-height: 260px;
+    max-width: 190px;
+    max-height: 190px;
     padding: 30px;
   }
 
   .letras-palabras input {
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
   }
 
   .botones-palabras button {
@@ -469,17 +476,12 @@ body {
   }
 
   .titulo-operaciones {
-    font-size: 36px;
-  }
-
-  .panel-info {
-    max-width: 380px;
-    padding: 16px 20px;
+    font-size: 32px;
   }
 }
 
 /* Media tablets juego palabras */
-@media (max-width: 680px) {
+@media (max-width: 780px) {
   .contenedor-imagenPalabra {
     justify-content: flex-start;
     padding-top: 5px;
@@ -488,8 +490,8 @@ body {
   .imagen-contenedor {
     border: 6px solid #2d3748;
     padding: 20px;
-    max-width: 175px;
-    max-height: 175px;
+    max-width: 150px;
+    max-height: 150px;
     border-radius: 16px;
   }
 
@@ -498,20 +500,20 @@ body {
   }
 
   .letras-palabras input {
-    width: 30px;
-    height: 30px;
+    width: 22px;
+    height: 22px;
     font-size: 16px;
     border-radius: 8px;
     border-width: 2px;
   }
 
   .botones-palabras {
-    gap: 10px;
+    gap: 6px;
   }
 
   .botones-palabras button {
-    padding: 12px 20px;
-    font-size: 14px;
+    padding: 12px 18px;
+    font-size: 12px;
     min-width: 100px;
     border-radius: 10px;
   }
@@ -532,18 +534,13 @@ body {
   .modal-contentPalabras button {
     width: 100%;
     margin: 0;
-    padding: 14px;
-  }
-
-  .panel-info {
-    width: calc(90% - 32px);
-    padding: 16px;
-    font-size: 14px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
   }
 
   #modal-final .modal-contentPalabras {
     padding: 24px 20px;
-    max-width: 320px;
+    max-width: 275px;
   }
 
   #modal-final h2 {
@@ -567,5 +564,37 @@ body {
   .letras-palabras input:hover:not(:disabled) {
     border-color: #667eea;
     transform: translateY(-2px);
+  }
+}
+
+/* =========================================
+   Panel info lateral (solo NO móvil)
+   ========================================= */
+
+@media (min-width: 781px) {
+  .panel-info {
+    position: fixed !important;
+    top: 120px;
+    right: 32px;
+    left: auto;
+    bottom: auto;
+
+    transform: none;
+
+    width: 180px;
+    max-width: 180px;
+
+    padding: 16px 18px;
+    font-size: 15px;
+    text-align: left;
+
+    pointer-events: none;
+  }
+}
+
+@media (min-width: 1281px) {
+  .panel-info {
+    top: 140px;
+    width: 180px;
   }
 }
