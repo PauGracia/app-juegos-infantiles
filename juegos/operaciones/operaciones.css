@@ -7,341 +7,257 @@ body {
 
 html {
   min-height: 100%;
-  background: radial-gradient(
+  background:
+    radial-gradient(
       circle at 20% 20%,
-      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.08),
       transparent 40%
     ),
     radial-gradient(
       circle at 80% 30%,
-      rgba(255, 255, 255, 0.04),
+      rgba(255, 255, 255, 0.05),
       transparent 45%
     ),
     linear-gradient(180deg, #2e7d5b 0%, #1f5f45 100%);
-}
-
-.body-operaciones {
-  background-color: #ffffd2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
-  overflow-y: auto;
-  min-height: 100vh;
-  padding-bottom: 20px;
+  background-attachment: fixed;
 }
 
 .body-operaciones {
   min-height: 100vh;
   margin: 0;
   padding-bottom: 20px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  /* Fondo verde moderno y discreto */
-  background: radial-gradient(
-      circle at 20% 20%,
-      rgba(255, 255, 255, 0.06),
-      transparent 40%
-    ),
-    radial-gradient(
-      circle at 80% 30%,
-      rgba(255, 255, 255, 0.04),
-      transparent 45%
-    ),
-    linear-gradient(180deg, #2e7d5b 0%, #1f5f45 100%);
-
-  background-attachment: scroll; /* CLAVE para móvil */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Título mejorado */
 .titulo-operaciones {
-  color: #f5f5f0;
-  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  font-size: 90px;
-  margin-bottom: 40px;
-  margin-top: 40px;
-  border-radius: 15px;
-  padding: 0 15px 15px 15px;
+  color: #ffffff;
+  text-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.3),
+    0 6px 12px rgba(0, 0, 0, 0.2);
+  font-size: 3.5rem;
+  margin: 30px 0;
+  border-radius: 20px;
+  padding: 15px 30px;
+  background: linear-gradient(
+    135deg,
+    rgba(46, 125, 91, 0.9),
+    rgba(31, 95, 69, 0.9)
+  );
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  letter-spacing: 1px;
+  text-align: center;
 }
 
-.botones-operaciones {
-  margin: 20px;
-}
-
-.botones-operaciones button {
-  background-color: black;
-  color: #f5f5f0;
-  font-size: 25px;
-  width: 200px;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-
-.botones-operaciones button:hover {
-  background-color: rgb(44, 43, 43);
-  color: #f5f5f0;
-  cursor: pointer;
-}
-
-.botones-operaciones button:active {
-  background-color: gray;
-  transform: scale(0.97);
-}
-
-.botones-operaciones button.pulsado {
-  transform: scale(0.95);
-  background-color: rgb(70, 70, 70);
-}
-
-#boton-salir-operaciones {
-  display: flex;
-  justify-content: center;
-}
-
-#boton-salir-operaciones button {
-  background-color: #f5f5f0;
-  color: black;
-  font-size: 25px;
-  width: 200px;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  transition: all 0.2s ease;
-}
-
-#boton-salir-operaciones button:hover {
-  background-color: rgba(255, 255, 255, 0.76);
-  cursor: pointer;
-}
-
-#boton-salir-operaciones button:active {
-  background-color: gray;
-  transform: scale(0.97);
-}
-
+/* Contenedor de operaciones mejorado */
 .operaciones-pizarra {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 25px;
   max-width: 95%;
-  overflow-y: visible;
+  margin: 20px auto;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 25px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
 }
 
+/* Tarjetas de operaciones modernizadas */
 .operacion {
-  font-family: monospace;
-  font-size: 30px;
+  font-family: "Courier New", "Roboto Mono", monospace;
+  font-size: 28px;
   text-align: right;
-  background-color: #f7f7f2; /* blanco tiza */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
-  padding: 15px;
-  width: 150px;
-  border-radius: 10px;
+  background: linear-gradient(145deg, #ffffff, #f8f8f2);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.15),
+    0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 160px;
+  border-radius: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.operacion::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #2e7d5b, #4caf50, #2e7d5b);
+}
+
+.operacion:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 12px 25px rgba(0, 0, 0, 0.2),
+    0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .operacion .linea {
   display: block;
   width: 100%;
-  font-weight: bold;
+  font-weight: 600;
+  margin: 6px 0;
+  color: #2e7d5b;
 }
 
 .operacion .operador {
-  font-weight: bold;
+  font-weight: 700;
+  color: #2e7d5b;
 }
 
 .operacion .raya {
-  border-top: 2px solid black;
-  margin: 4px 0;
+  border-top: 3px solid #444;
+  margin: 8px 0;
+  opacity: 0.8;
 }
 
+/* Inputs mejorados */
 .resultado-input {
   width: 100%;
-  background-color: #fbfbf7; /* perla */
-  border: 1px solid #333;
-  font-size: 28px;
+  background: #ffffff;
+  border: 2px solid #ddd;
+  font-size: 26px;
   text-align: right;
-  margin-top: 8px;
+  margin-top: 12px;
   box-sizing: border-box;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  color: #333;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
+.resultado-input:focus {
+  outline: none;
+  border-color: #2e7d5b;
+  box-shadow:
+    0 0 0 3px rgba(46, 125, 91, 0.2),
+    inset 0 2px 5px rgba(0, 0, 0, 0.05);
+  background: #f8fff8;
+}
+
+/* Estados visuales mejorados */
 .correcto {
-  background-color: #c3f7c3;
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  border-color: #4caf50;
+  color: #2e7d5b;
 }
 
 .incorrecto {
-  background-color: #f7c3c3;
+  background: linear-gradient(135deg, #ffebee, #ffcdd2);
+  border-color: #f44336;
+  color: #d32f2f;
 }
 
-/* Contenedor del modal operaciones */
+.resultado-input.revelado {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  border-color: #2196f3;
+  color: #1565c0;
+}
+
+/* Botones mejorados */
+.botones-operaciones {
+  margin: 30px 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.botones-operaciones button {
+  background: linear-gradient(145deg, #2e7d5b, #1f5f45);
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 600;
+  width: 220px;
+  padding: 15px 25px;
+  margin: 10px;
+  border-radius: 12px;
+  border: 2px solid #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow:
+    0 6px 15px rgba(46, 125, 91, 0.3),
+    0 3px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.botones-operaciones button:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 10px 20px rgba(46, 125, 91, 0.4),
+    0 5px 10px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(145deg, #3a8d6c, #2a7a5a);
+}
+
+.botones-operaciones button:active {
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 10px rgba(46, 125, 91, 0.3),
+    0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.botones-operaciones button.pulsado {
+  transform: scale(0.97);
+  background: linear-gradient(145deg, #1f5f45, #2e7d5b);
+}
+
+/* Botón salir mejorado */
+#boton-salir-operaciones {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+#boton-salir-operaciones button {
+  background: linear-gradient(145deg, #f5f5f0, #e8e8e0);
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 600;
+  width: 220px;
+  padding: 15px 25px;
+  border-radius: 12px;
+  border: 2px solid #2e7d5b;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#boton-salir-operaciones button:hover {
+  background: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  color: #2e7d5b;
+}
+
+#boton-salir-operaciones button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================== */
+/* MODALES - MANTENIENDO LA ESTRUCTURA ORIGINAL */
+/* ========================================== */
+
+/* Contenedor del modal operaciones - IMPORTANTE: NO CAMBIAR display */
 .modal-operaciones {
-  position: fixed; /* importante para centrar sobre la pantalla */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4); /* fondo semi-transparente */
-  display: flex;
-  justify-content: center; /* centrado horizontal */
-  align-items: center; /* centrado vertical */
-  z-index: 1000; /* asegurarse que esté por encima de todo */
-  overflow: auto; /* scroll si el contenido es muy grande */
-}
-
-/* Ya tu modal-content */
-.modal-operaciones .modal-content {
-  background-color: #f7f7f2;
-  padding: 30px;
-  border-radius: 15px;
-  text-align: center;
-  width: 80%;
-  max-height: 90vh;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
-}
-
-.modal-content h2 {
-  margin-bottom: 20px;
-  color: black;
-}
-
-.modal-inputs input {
-  width: 250px;
-  font-size: 15px;
-  padding: 8px;
-  border: 2px solid black;
-  border-radius: 8px;
-  text-align: center;
-}
-
-.input-tiempo {
-  font-size: 15px;
-  padding: 8px;
-  border: 2px solid black;
-  border-radius: 8px;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-#bloque-tiempo {
-  display: flex;
-  flex-direction: column;
-  width: 250px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-#bloque-tiempo label,
-#bloque-tiempo input {
-  width: 100%;
-}
-
-.modal-content button {
-  margin-top: 30px;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  background-color: #f1f1e8;
-  color: black;
-  font-size: 15px;
-  border: 4px solid black;
-  width: 150px;
-  padding: 5px;
-  margin: 5px;
-  transition: all 0.2s ease;
-}
-
-.modal-content .btn-exit {
-  background-color: #6ac49d;
-}
-
-.modal-content #btn-instrucciones {
-  background-color: #d4a017;
-}
-
-.modal-content select {
-  font-size: 15px;
-  padding: 8px;
-  border: 2px solid black;
-  border-radius: 8px;
-  width: 250px;
-  margin: 8px auto;
-  display: block;
-  box-sizing: border-box;
-  background-color: #fffff0;
-  color: black;
-}
-
-#input-operaciones {
-  margin-bottom: 10px;
-}
-
-/* Nivel 2 */
-.nivel2-opciones {
-  display: inline-block;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  padding: 10px;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.85);
-  max-width: 250px;
-  text-align: left;
-}
-
-.nivel2-opciones h3 {
-  margin-bottom: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.nivel2-opciones label {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin: 2px 0;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-/* Checkbox negro para Nivel 2 */
-.nivel2-opciones input[type="checkbox"] {
-  accent-color: black; /* hace que el check sea negro */
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-}
-
-.sub-opcion {
-  margin-left: 20px;
-  font-size: 14px;
-  opacity: 0.85;
-}
-
-#input-maximo {
-  margin-bottom: 10px;
-}
-
-#input-maximo-nivel2 {
-  width: 120px;
-  font-size: 12px;
-  padding: 8px;
-  border: 2px solid black;
-  border-radius: 4px;
-  text-align: center;
-}
-
-.oculto {
-  display: none;
-}
-
-/* Modal aviso */
-.modal-aviso {
   position: fixed;
   top: 0;
   left: 0;
@@ -352,328 +268,743 @@ html {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  overflow: auto;
 }
 
-.modal-aviso-content {
-  background-color: #fffff0;
-  padding: 25px 35px;
-  border-radius: 12px;
-  text-align: center;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  max-width: 350px;
-}
-
-.modal-aviso-content p {
-  margin-bottom: 20px;
-  font-size: 18px;
-  color: black;
-}
-
-.modal-aviso-content button {
-  font-size: 16px;
-  padding: 8px 16px;
-  border: 2px solid black;
-  border-radius: 6px;
-  background-color: #ffffd2;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
+/* Clase oculto */
 .oculto {
   display: none;
 }
 
-/* ============================= */
-/* CRONÓMETRO MODO DESAFÍO */
-/* ============================= */
-
-.cronometro {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-
-  background-color: rgba(0, 0, 0, 0.75);
-  color: #fffff0;
-
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  font-size: 22px;
-
-  padding: 10px 16px;
-  border-radius: 12px;
-  border: 3px solid black;
-
-  z-index: 1200;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+/* Modal content mejorado visualmente */
+.modal-operaciones .modal-content {
+  background: linear-gradient(145deg, #ffffff, #f8f8f2);
+  padding: 35px;
+  border-radius: 5px;
+  text-align: center;
+  width: 85%;
+  max-width: 450px;
+  max-height: 85vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.3),
+    0 10px 20px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  position: relative;
 }
 
-/* Tiempo en grande */
-#cronometro #tiempo {
-  font-weight: bold;
-  font-size: 26px;
-  margin-left: 6px;
+.modal-operaciones .modal-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #2e7d5b, #4caf50, #2e7d5b);
+  border-radius: 20px 20px 0 0;
 }
 
-/* ============================= */
-/* Modal final resultados */
-/* ============================= */
+.modal-content h2 {
+  margin-bottom: 25px;
+  color: #2e7d5b;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-#modal-final {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.55);
+.modal-inputs input {
+  width: 100%;
+  max-width: 280px;
+  font-size: 16px;
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  text-align: center;
+  margin: 8px 0;
+  background: #f9f9f9;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.modal-inputs input:focus {
+  border-color: #2e7d5b;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(46, 125, 91, 0.1);
+  outline: none;
+}
+
+.input-tiempo {
+  font-size: 16px;
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 15px;
+  background: #f9f9f9;
+}
+
+#bloque-tiempo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 280px;
+  margin: 15px 0;
+}
+
+#bloque-tiempo label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+#bloque-tiempo input {
+  width: 100%;
+}
+
+.modal-content button {
+  margin-top: 25px;
+  font-family: inherit;
+  background: linear-gradient(145deg, #f1f1e8, #e8e8d8);
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+  border: 3px solid #2e7d5b;
+  width: 180px;
+  padding: 12px 20px;
+  margin: 8px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content .btn-exit {
+  background: linear-gradient(145deg, #6ac49d, #5ab48d);
+  color: white;
+  border-color: #4caf50;
+}
+
+.modal-content #btn-instrucciones {
+  background: linear-gradient(145deg, #d4a017, #c49010);
+  color: white;
+  border-color: #ff9800;
+}
+
+.modal-content select {
+  font-size: 16px;
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 280px;
+  margin: 10px auto;
+  display: block;
+  box-sizing: border-box;
+  background: #f9f9f9;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232e7d5b' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 20px;
+}
+
+.modal-content select:focus {
+  border-color: #2e7d5b;
+  box-shadow: 0 0 0 3px rgba(46, 125, 91, 0.1);
+  outline: none;
+  background-color: white;
+}
+
+#input-operaciones {
+  margin-bottom: 15px;
+}
+
+/* Nivel 2 */
+.nivel2-opciones {
+  display: inline-block;
+  margin: 20px 0;
+  padding: 20px;
+  border: 2px solid rgba(46, 125, 91, 0.3);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  max-width: 280px;
+  text-align: left;
+}
+
+.nivel2-opciones h3 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  color: #2e7d5b;
+}
+
+.nivel2-opciones label {
   display: flex;
   align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+  color: #333;
+}
+
+.nivel2-opciones label:hover {
+  background: rgba(46, 125, 91, 0.08);
+}
+
+.nivel2-opciones input[type="checkbox"] {
+  accent-color: #2e7d5b;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.sub-opcion {
+  margin-left: 30px;
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+}
+
+#input-maximo {
+  margin-bottom: 15px;
+}
+
+#input-maximo-nivel2 {
+  width: 100%;
+  max-width: 150px;
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 10px;
+  background: #f9f9f9;
+}
+
+/* Modal aviso mejorado */
+.modal-aviso {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
   justify-content: center;
-  z-index: 1100;
+  align-items: center;
+  z-index: 2000;
 }
 
+.modal-aviso.oculto {
+  display: none;
+}
+
+.modal-aviso-content {
+  background: linear-gradient(145deg, #ffffff, #f8f8f2);
+  padding: 30px 40px;
+  border-radius: 20px;
+  text-align: center;
+  font-family: inherit;
+  max-width: 380px;
+  width: 85%;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.3),
+    0 10px 20px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  position: relative;
+}
+
+.modal-aviso-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #2e7d5b, #4caf50, #2e7d5b);
+  border-radius: 20px 20px 0 0;
+}
+
+.modal-aviso-content p {
+  margin-bottom: 25px;
+  font-size: 18px;
+  color: #333;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.modal-aviso-content button {
+  font-size: 16px;
+  padding: 12px 24px;
+  border: 3px solid #2e7d5b;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #ffffd2, #f5f5c8);
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-aviso-content button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(145deg, #ffffff, #ffffd2);
+}
+
+/* Cronómetro mejorado */
+.cronometro {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  background: linear-gradient(
+    145deg,
+    rgba(0, 0, 0, 0.85),
+    rgba(20, 20, 20, 0.9)
+  );
+  color: #fffff0;
+  font-family: "Courier New", monospace;
+  font-size: 1.2rem;
+  padding: 15px 20px;
+  border-radius: 15px;
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  z-index: 1200;
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.4),
+    0 5px 10px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cronometro.oculto {
+  display: none;
+}
+
+#cronometro #tiempo {
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #4caf50;
+  text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Modal final mejorado */
 #modal-final .modal-aviso-content {
-  background-color: #fffff0;
-  border: 4px solid black;
-  border-radius: 18px;
-  padding: 30px 35px;
+  background: linear-gradient(145deg, #fffff0, #f5f5e0);
+  border: 3px solid #2e7d5b;
+  border-radius: 20px;
+  padding: 35px 40px;
   width: 90%;
-  max-width: 350px;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  max-width: 400px;
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.35),
+    0 15px 30px rgba(0, 0, 0, 0.25);
 }
 
-/* Título */
 #modal-final h2 {
   margin-top: 0;
-  margin-bottom: 15px;
-  font-size: 28px;
-  color: black;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #2e7d5b;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Resumen general */
 #resumen-general {
   font-size: 18px;
-  margin-bottom: 15px;
-  padding: 10px;
-  background-color: #ffffd2;
-  border: 2px solid black;
-  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid rgba(46, 125, 91, 0.3);
+  border-radius: 12px;
+  line-height: 1.5;
+  font-weight: 500;
 }
 
-/* Estadísticas por operación */
 #estadisticas-operaciones p {
   font-size: 16px;
-  margin: 6px 0;
+  margin: 8px 0;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  border-left: 4px solid #2e7d5b;
 }
 
-/* Contenedor de los details */
 #modal-final .bloque-detalles {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 15px;
+  margin: 20px 0;
 }
 
-/* Desplegables */
 #modal-final details {
   display: inline-block;
-  width: auto;
+  width: 100%;
+  max-width: 320px;
   margin-top: 10px;
   text-align: left;
-  border: 2px dashed black;
-  border-radius: 10px;
-  padding: 8px 12px;
-  background-color: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(46, 125, 91, 0.3);
+  border-radius: 12px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
 }
+
+#modal-final details:hover {
+  border-color: #2e7d5b;
+  box-shadow: 0 5px 15px rgba(46, 125, 91, 0.1);
+}
+
+#modal-final details[open] {
+  background: rgba(232, 245, 233, 0.9);
+  border-color: #4caf50;
+}
+
 #modal-final summary {
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 17px;
+  font-weight: 700;
   cursor: pointer;
   list-style: none;
+  color: #2e7d5b;
+  padding: 5px 0;
+  position: relative;
+  padding-left: 30px;
 }
 
-/* Quitar marcador en todos los navegadores */
-#modal-final summary::marker {
-  content: "";
-  display: none;
+#modal-final summary::before {
+  content: "▶";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  transition: transform 0.3s ease;
 }
 
-#modal-final summary::-webkit-details-marker {
-  display: none;
+#modal-final details[open] summary::before {
+  transform: translateY(-50%) rotate(90deg);
 }
 
-#modal-final summary::marker {
-  display: none;
-}
-
-/* Listas */
 #modal-final ul {
   list-style: none;
-  margin-top: 8px;
-  padding-left: 18px;
+  margin-top: 15px;
+  padding-left: 0;
 }
 
 #modal-final li {
   font-size: 15px;
-  margin: 4px 0;
-  text-decoration: none;
+  margin: 8px 0;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  border-left: 3px solid #4caf50;
 }
 
-/* Botones */
 #modal-final button {
-  margin-top: 18px;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  background-color: #ffffd2;
-  color: black;
-  font-size: 16px;
-  border: 3px solid black;
-  border-radius: 10px;
-  padding: 8px 18px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-/* Separación botones */
-#modal-final button + button {
-  margin-left: 10px;
-}
-
-#modal-final.oculto {
-  display: none;
-}
-
-/* Modal instrucciones estilo operativo */
-.modal-instrucciones {
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  background-color: #fdf6e3;
+  margin-top: 20px;
+  font-family: inherit;
+  background: linear-gradient(145deg, #ffffd2, #f5f5c8);
   color: #333;
+  font-size: 16px;
+  font-weight: 600;
+  border: 3px solid #2e7d5b;
+  border-radius: 12px;
+  padding: 12px 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+#modal-final button + button {
+  margin-left: 15px;
+}
+
+#modal-final button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(145deg, #ffffff, #ffffd2);
+}
+
+/* Modal instrucciones mejorado */
 .instrucciones-content {
-  padding: 20px;
-  border-radius: 12px;
-  border: 3px solid #ffa500;
-  background-color: #fff8dc;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  border-radius: 20px;
+  border: 3px solid #ff9800;
+  background: linear-gradient(145deg, #fff8dc, #fff0c8);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  text-align: left;
 }
 
 .instrucciones-content h2 {
   color: #ff6600;
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  font-weight: 700;
 }
 
 .instrucciones-content h3 {
   color: #ff8c00;
-  margin-top: 10px;
+  margin-top: 15px;
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
 .instrucciones-content p {
   font-size: 16px;
-  line-height: 1.5;
-  margin-bottom: 10px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  color: #333;
 }
 
 .instrucciones-content button {
   display: block;
-  margin: 20px auto 0 auto;
-  padding: 10px 20px;
+  margin: 25px auto 0 auto;
+  padding: 12px 25px;
   font-size: 16px;
-  background-color: #ff6600;
+  font-weight: 600;
+  background: linear-gradient(145deg, #ff6600, #ff5500);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
 }
 
 .instrucciones-content button:hover {
-  background-color: #ff8c00;
+  background: linear-gradient(145deg, #ff8c00, #ff7700);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 102, 0, 0.4);
 }
 
-.resultado-input.revelado {
-  background-color: #e8f3ff;
-  border-color: #3399ff;
-  color: #004477;
-}
-
+/* Animaciones */
 @keyframes shake {
-  0% {
+  0%,
+  100% {
     transform: translateX(0);
   }
   25% {
-    transform: translateX(-4px);
-  }
-  50% {
-    transform: translateX(4px);
+    transform: translateX(-5px);
   }
   75% {
-    transform: translateX(-4px);
-  }
-  100% {
-    transform: translateX(0);
+    transform: translateX(5px);
   }
 }
 
 .resultado-input.shake {
-  animation: shake 0.3s;
-}
-
-.gran-victoria {
-  text-align: center;
-  padding: 30px;
-}
-
-.gran-victoria .trofeo {
-  font-size: 90px;
-  margin-bottom: 15px;
-  animation: pulse 1.5s infinite;
-}
-
-.gran-victoria h2 {
-  font-size: 26px;
-  margin-bottom: 10px;
-}
-
-.gran-victoria .mensaje-epico {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 15px 0;
-  color: #d4a017;
+  animation: shake 0.3s ease-in-out;
 }
 
 @keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
+  0%,
   100% {
     transform: scale(1);
   }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
+.gran-victoria .trofeo {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Modal gran victoria */
+.gran-victoria {
+  text-align: center;
+  padding: 40px;
+  background: linear-gradient(145deg, #fffde7, #fff9c4);
+  border: 4px solid #ffd700;
+}
+
+.gran-victoria .trofeo {
+  font-size: 100px;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+}
+
+.gran-victoria h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #2e7d5b;
+}
+
+.gran-victoria .mensaje-epico {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 20px 0;
+  color: #d4a017;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================= */
+/* MEDIA QUERIES RESPONSIVE */
+/* ============================= */
+
+/* Tablets grandes */
 @media (max-width: 1280px) {
   .titulo-operaciones {
-    margin-top: 60px;
+    font-size: 3rem;
+    margin-top: 40px;
+    margin-bottom: 30px;
   }
+
   .cronometro {
-    top: 9px;
-    right: 9px;
-    font-size: 12px;
-    padding: 5px 9px;
+    top: 20px;
+    right: 20px;
+    font-size: 1rem;
+    padding: 12px 18px;
   }
 
   #cronometro #tiempo {
-    font-size: 18px;
+    font-size: 1.5rem;
   }
 }
 
-/* Móvil */
+/* Tablets */
+@media (max-width: 1024px) {
+  .operacion {
+    width: 140px;
+    font-size: 24px;
+    padding: 18px;
+  }
+
+  .resultado-input {
+    font-size: 22px;
+  }
+
+  .botones-operaciones button,
+  #boton-salir-operaciones button {
+    width: 200px;
+    font-size: 1.2rem;
+    padding: 14px 22px;
+  }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+  .titulo-operaciones {
+    font-size: 2.5rem;
+    margin: 20px 10px;
+    padding: 12px 20px;
+  }
+
+  .operaciones-pizarra {
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .operacion {
+    width: 120px;
+    font-size: 22px;
+    padding: 15px;
+  }
+
+  .resultado-input {
+    font-size: 20px;
+    padding: 8px 10px;
+  }
+
+  .botones-operaciones {
+    margin: 20px 10px;
+    gap: 15px;
+  }
+
+  .botones-operaciones button,
+  #boton-salir-operaciones button {
+    width: 150px;
+    font-size: 1.1rem;
+    padding: 12px 20px;
+  }
+
+  .cronometro {
+    top: 15px;
+    right: 15px;
+    font-size: 0.9rem;
+    padding: 10px 15px;
+  }
+
+  #cronometro #tiempo {
+    font-size: 1.3rem;
+  }
+
+  .modal-operaciones .modal-content {
+    width: 90%;
+    padding: 25px;
+  }
+}
+
+/* Móviles pequeños */
 @media (max-width: 480px) {
-  #modal-final .modal-aviso-content {
+  .titulo-operaciones {
+    font-size: 2rem;
+    padding: 10px 15px;
+    margin: 15px 10px;
+    margin-top: 75px;
+  }
+
+  .operaciones-pizarra {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .operacion {
+    width: 100px;
+    font-size: 18px;
+    padding: 12px;
+  }
+
+  .resultado-input {
+    font-size: 16px;
+    padding: 6px 8px;
+  }
+
+  .botones-operaciones button,
+  #boton-salir-operaciones button {
+    width: 120px;
+    font-size: 1rem;
+    padding: 10px 16px;
+  }
+
+  .cronometro {
+    top: 10px;
+    right: 10px;
+    font-size: 0.5rem;
+    padding: 8px 12px;
+  }
+
+  #cronometro #tiempo {
+    font-size: 1.1rem;
+  }
+
+  .modal-operaciones .modal-content {
+    width: 95%;
     padding: 20px;
+    max-height: 90vh;
+  }
+
+  #modal-final .modal-aviso-content {
+    padding: 25px;
   }
 
   #modal-final h2 {
-    font-size: 22px;
+    font-size: 1.5rem;
   }
 
   #resumen-general {
@@ -685,51 +1016,21 @@ html {
   }
 }
 
-/* Móviles */
-@media (max-width: 680px) {
-  .operacion {
-    width: 90px;
-    font-size: 18px;
-    padding: 6px;
+/* Para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+  .operacion:hover {
+    transform: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   }
 
-  .operaciones-pizarra {
-    gap: 10px;
+  .botones-operaciones button:hover,
+  #boton-salir-operaciones button:hover {
+    transform: none;
   }
 
-  .resultado-input {
-    font-size: 14px;
-    padding: 2px 4px;
-    width: 100%;
-    text-align: right;
-  }
-
-  .botones-operaciones button {
-    width: 100px;
-    font-size: 15px;
-    padding: 8px;
-    margin-bottom: 20px;
-  }
-
-  .titulo-operaciones {
-    font-size: 30px;
-    margin-bottom: 20px;
-  }
-
-  #boton-salir-operaciones button {
-    width: 100px;
-    font-size: 15px;
-    padding: 8px;
-  }
-
-  .cronometro {
-    top: 8px;
-    right: 8px;
-    font-size: 10px;
-    padding: 4px 8px;
-  }
-
-  #cronometro #tiempo {
-    font-size: 16px;
+  .modal-content button:hover,
+  .modal-aviso-content button:hover,
+  #modal-final button:hover {
+    transform: none;
   }
 }

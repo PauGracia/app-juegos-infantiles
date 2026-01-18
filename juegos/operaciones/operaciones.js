@@ -88,7 +88,7 @@ window.addEventListener("load", function () {
     console.log(
       "Traducciones ya cargadas:",
       Object.keys(window.translations).length,
-      "claves"
+      "claves",
     );
     updateDynamicTexts();
   } else {
@@ -170,7 +170,7 @@ sonidoGranVictoria.preload = "auto";
 
 // Para evitar retrasos al reproducir
 [sonidoComprobar, sonidoFinal, sonidoFinTiempo, sonidoNuevoNivel].forEach(
-  (audio) => (audio.preload = "auto")
+  (audio) => (audio.preload = "auto"),
 );
 
 function reproducirSonido(audio) {
@@ -365,7 +365,7 @@ function mostrarModalNivelSuperado() {
   mostrarModalAviso(
     `🎉 ${t("operaciones.levelCompleted") || "Nivel"} ${nivelDesafio - 1} ${
       t("operaciones.superado") || "superado"
-    }`
+    }`,
   );
   setTimeout(() => {
     cerrarModalAviso();
@@ -751,7 +751,7 @@ function comprobarRespuestas() {
       input.addEventListener(
         "animationend",
         () => input.classList.remove("shake"),
-        { once: true }
+        { once: true },
       );
 
       // contar intentos
@@ -776,7 +776,7 @@ function comprobarRespuestas() {
 
   // ¿Juego terminado?
   const terminado = [...operaciones].every(
-    (op) => op.dataset.estado === "bien"
+    (op) => op.dataset.estado === "bien",
   );
 
   if (!terminado) {
@@ -863,7 +863,7 @@ function generarResumenFinal() {
     listaBien,
     listaMal,
     numeroComprobaciones,
-    tiempoTotalSeg
+    tiempoTotalSeg,
   );
 }
 
@@ -904,7 +904,7 @@ function mostrarModalFinal(
   listaBien,
   listaMal,
   comprobaciones,
-  tiempoSeg
+  tiempoSeg,
 ) {
   document.getElementById("modal-final").classList.remove("oculto");
 
@@ -959,6 +959,11 @@ function mostrarModalFinal(
 
 function cerrarModalFinal() {
   document.getElementById("modal-final").classList.add("oculto");
+}
+
+// Desactivar efectos hover en touch devices para mejor rendimiento
+if ("ontouchstart" in window) {
+  document.body.classList.add("touch-device");
 }
 
 // =============================
