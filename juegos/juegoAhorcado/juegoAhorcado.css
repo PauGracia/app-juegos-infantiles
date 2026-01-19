@@ -123,7 +123,9 @@ html {
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
   margin-top: 10px;
 }
 
@@ -290,6 +292,55 @@ html {
   background-position: right 10px center;
   background-size: 12px;
   padding-right: 30px; /* espacio para la flecha */
+}
+
+/* Mejoras para el modal de instrucciones */
+#modal-info .modal-ranking-contenido {
+  max-width: 500px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+#modal-info-texto {
+  text-align: left;
+  line-height: 1.6;
+  white-space: pre-line; /* Esto respeta los saltos de línea */
+  font-size: 16px;
+  color: #333;
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  border-left: 4px solid #007bff;
+}
+
+/* Estilo para los saltos de línea */
+#modal-info-texto br {
+  margin-bottom: 10px;
+  display: block;
+  content: ""; /* Añade espacio después de cada <br> */
+}
+
+/* Estilos para listas en instrucciones */
+#modal-info-texto strong {
+  color: #007bff;
+  font-weight: 600;
+}
+
+#btnModalInfoAceptar {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background 0.3s;
+}
+
+#btnModalInfoAceptar:hover {
+  background: #218838;
 }
 
 @media (max-width: 780px) {

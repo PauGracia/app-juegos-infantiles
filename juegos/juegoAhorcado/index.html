@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -6,37 +6,51 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
-
-    <title>El Ahorcado</title>
+    <title data-i18n="menu.ahorcado">El Ahorcado</title>
     <link rel="stylesheet" href="../../assets/css/app.css?v=20251111" />
     <link rel="stylesheet" href="juegoAhorcado.css" />
   </head>
 
   <body class="body-ahorcado">
-    <h1 class="titulo-ahorcado">El Ahorcado</h1>
+    <h1 class="titulo-ahorcado" data-i18n="menu.ahorcado">El Ahorcado</h1>
     <div id="marcador-ahorcado">0</div>
 
     <!-- Modal de inicio -->
     <div id="modal-inicio">
       <div id="modal-contenido">
-        <h2>Inicia tu juego</h2>
-        <input type="text" id="usuario" placeholder="Nombre de usuario" />
-        <br />
+        <h2 data-i18n="ahorcado.startGame">Inicia tu juego</h2>
 
-        <button id="btnEmpezar">Empezar</button>
+        <label for="usuario" data-i18n="ahorcado.username"
+          >Nombre de usuario:</label
+        >
+        <input
+          type="text"
+          id="usuario"
+          data-i18n-placeholder="ahorcado.usernamePlaceholder"
+        />
+        <br /><br />
 
-        <button id="btnVerRanking">Ver ranking</button>
-
-        <button id="btnSalir-modal">Salir</button>
-        <label for="idioma">Idioma:</label>
-        <select id="idioma">
-          <option value="es">Español</option>
-          <option value="ca">Català</option>
-          <option value="en">English</option>
+        <!-- SELECTOR DE IDIOMA DEL JUEGO -->
+        <label for="idioma-juego" data-i18n="ahorcado.gameLanguage"
+          >Idioma del juego:</label
+        >
+        <select id="idioma-juego">
+          <option value="es" data-i18n="language.es">Español</option>
+          <option value="ca" data-i18n="language.ca">Català</option>
+          <option value="en" data-i18n="language.en">English</option>
         </select>
+        <br /><br />
+
+        <button id="btnEmpezar" data-i18n="common.start">Empezar</button>
+        <button id="btnInstrucciones" data-i18n="common.instructions">
+          Instrucciones
+        </button>
+        <button id="btnVerRanking" data-i18n="ahorcado.viewRanking">
+          Ver ranking
+        </button>
+        <button id="btnSalir-modal" data-i18n="common.exitMenu">Salir</button>
       </div>
     </div>
-
     <div class="contenedor-juego">
       <div class="imagen-ahorcado">
         <svg id="ahorcadoSVG" width="225" height="225" viewBox="0 0 300 300">
@@ -90,37 +104,80 @@
       </div>
     </div>
     <div class="boton-volver-ahorcado">
-      <button id="btnSalir">Salir</button>
+      <button id="btnSalir" data-i18n="common.exit">Salir</button>
     </div>
 
     <!-- Modal informativo reutilizable -->
     <div id="modal-info" class="modal-ranking" style="display: none">
       <div class="modal-ranking-contenido">
-        <h3 id="modal-info-titulo">Información</h3>
+        <h3 id="modal-info-titulo" data-i18n="common.info">Información</h3>
         <p id="modal-info-texto"></p>
-        <button id="btnModalInfoAceptar">Aceptar</button>
+        <button id="btnModalInfoAceptar" data-i18n="common.accept">
+          Aceptar
+        </button>
       </div>
     </div>
     <!-- Modal final -->
     <div id="modal-final" style="display: none">
       <div id="modal-final-contenido">
-        <h2>Fin del juego</h2>
+        <h2 data-i18n="ahorcado.gameOver">Fin del juego</h2>
         <p id="resultado"></p>
-        <button onclick="reiniciarCompleto()">Volver a jugar</button>
-        <button onclick="window.location.href='../../index.html'">Salir</button>
+        <button onclick="reiniciarCompleto()" data-i18n="ahorcado.playAgain">
+          Volver a jugar
+        </button>
+        <button
+          onclick="window.location.href = '../../index.html'"
+          data-i18n="common.exitMenu"
+        >
+          Salir
+        </button>
 
         <div class="modal-final-acciones">
-          <button onclick="guardarPuntuacionLocal()">
+          <button
+            onclick="guardarPuntuacionLocal()"
+            data-i18n="ahorcado.saveLocalRecord"
+          >
             Guardar récord local
           </button>
-          <button onclick="window.location.href='../ranking/rankingLocal.html'">
+          <button
+            onclick="window.location.href = '../ranking/rankingLocal.html'"
+            data-i18n="ahorcado.viewRanking"
+          >
             Ver ranking
           </button>
 
-          <button onclick="exportarRanking()">Exportar ranking</button>
+          <button
+            onclick="exportarRanking()"
+            data-i18n="ahorcado.exportRanking"
+          >
+            Exportar ranking
+          </button>
         </div>
       </div>
     </div>
+
+    <script src="../../assets/js/i18n.js"></script>
+    <script>
+      // Inicializar el idioma desde localStorage cuando se carga el juego
+      document.addEventListener("DOMContentLoaded", function () {
+        // Cargar el idioma guardado desde el menú
+        const savedLang = localStorage.getItem("uiLang") || "es";
+
+        // Verificar si loadLanguage existe
+        if (typeof loadLanguage === "function") {
+          loadLanguage(savedLang);
+        } else {
+          // Si no está disponible, esperar un momento e intentar de nuevo
+          setTimeout(() => {
+            if (typeof loadLanguage === "function") {
+              loadLanguage(savedLang);
+            } else {
+              console.error("loadLanguage no está definido");
+            }
+          }, 100);
+        }
+      });
+    </script>
 
     <script src="../../assets/js/palabras.js"></script>
     <script src="juegoAhorcado.js"></script>

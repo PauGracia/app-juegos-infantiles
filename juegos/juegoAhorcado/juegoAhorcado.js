@@ -1,20 +1,21 @@
 /* =========================
-   JUEGO AHORCADO (namespaced)
+   JUEGO AHORCADO
    ========================= */
 document.addEventListener("DOMContentLoaded", () => {
   (function () {
+    // Elementos del DOM
     const palabraEl = document.getElementById("palabra");
     const letrasEl = document.getElementById("letras");
-    const marcadorEl =
-      document.getElementById("marcador-ahorcado") ||
-      document.getElementById("marcador") ||
-      null;
+    const marcadorEl = document.getElementById("marcador-ahorcado");
 
-    if (!palabraEl || !letrasEl) {
-      return;
-    }
+    // Variables de estado
+    let ah_palabraSecreta;
+    let ah_progreso;
+    let ah_errores = 0;
+    let ah_usuario = "";
+    let ah_puntos = 0;
+    let ah_idiomaJuego = "es"; // Idioma para las palabras del juego
 
-    // Array con los IDs de las partes del ahorcado SVG (10 partes)
     const ah_partesSVG = [
       "poste",
       "vertical",
@@ -27,175 +28,54 @@ document.addEventListener("DOMContentLoaded", () => {
       "pierna1",
       "pierna2",
     ];
-
-    // Estado privado del módulo
-    let ah_palabraSecreta;
-    let ah_progreso;
-    let ah_errores = 0;
-    const ah_maxErrores = ah_partesSVG.length; // Ahora es 10 errores máximos
-    let ah_usuario = "";
-    let ah_puntos = 0;
-    let ah_idioma = "es";
+    const ah_maxErrores = ah_partesSVG.length;
 
     // ================================
-    // NUEVAS FUNCIONES PARA LOCALSTORAGE
+    // FUNCIONES DEL JUEGO
     // ================================
 
-    // Función para guardar en localStorage
-    function ah_guardarRankingLocal() {
-      if (!ah_usuario || ah_puntos <= 0) return false;
+    // Función para mostrar instrucciones
+    function mostrarInstrucciones() {
+      const currentTranslations = window.translations || {};
+      const gameLanguage =
+        currentTranslations["language." + ah_idiomaJuego] || ah_idiomaJuego;
 
-      try {
-        // Obtener ranking actual de localStorage
-        let ranking = JSON.parse(
-          localStorage.getItem("rankingAhorcado") || "[]"
-        );
+      const instrucciones = `
+${getTranslation("ahorcado.howToPlay", "Cómo jugar al Ahorcado")}
 
-        // Añadir nuevo registro
-        const nuevoRegistro = {
-          usuario: ah_usuario,
-          puntos: ah_puntos,
-          fecha: Date.now(),
-        };
+${getTranslation("ahorcado.instructions.objective", "OBJETIVO:")}
+${getTranslation("ahorcado.instructions.objectiveText", "Adivinar la palabra secreta antes de que se complete el dibujo del ahorcado.")}
 
-        ranking.push(nuevoRegistro);
+${getTranslation("ahorcado.instructions.gameplay", "CÓMO JUGAR:")}
+• ${getTranslation("ahorcado.instructions.letters", "Haz clic en las letras para adivinar la palabra.")}
+• ${getTranslation("ahorcado.instructions.correct", "Si la letra es correcta, aparecerá en la palabra.")}
+• ${getTranslation("ahorcado.instructions.wrong", "Si la letra es incorrecta, se añadirá una parte al dibujo del ahorcado.")}
+• ${getTranslation("ahorcado.instructions.maxErrors", "Si completas el dibujo (10 errores), pierdes la palabra.")}
 
-        // Ordenar por puntos (descendente)
-        ranking.sort((a, b) => b.puntos - a.puntos);
+${getTranslation("ahorcado.instructions.scoring", "PUNTUACIÓN:")}
+• ${getTranslation("ahorcado.instructions.pointsPerWord", "Cada palabra acertada suma 1 punto al marcador.")}
+• ${getTranslation("ahorcado.instructions.scoreKeeps", "La puntuación se acumula durante toda la partida.")}
+• ${getTranslation("ahorcado.instructions.saveRecord", "Al finalizar puedes guardar tu récord en el ranking local.")}
 
-        // Mantener solo top 20
-        ranking = ranking.slice(0, 20);
+${getTranslation("ahorcado.instructions.ranking", "RANKING:")}
+• ${getTranslation("ahorcado.instructions.saveButton", "Puedes guardar tu puntuación desde el menú final.")}
+• ${getTranslation("ahorcado.instructions.viewRanking", "Puedes ver el ranking desde el menú inicial o final.")}
+• ${getTranslation("ahorcado.instructions.exportRanking", "También puedes exportar el ranking en formato JSON.")}
 
-        // Guardar en localStorage
-        localStorage.setItem("rankingAhorcado", JSON.stringify(ranking));
+${getTranslation("ahorcado.instructions.language", "IDIOMA:")}
+• ${getTranslation("ahorcado.instructions.interfaceLanguage", "La interfaz está en el idioma seleccionado en el menú principal.")}
+• ${getTranslation("ahorcado.instructions.gameLanguage", "Las palabras del juego están en el idioma seleccionado aquí:")} ${gameLanguage}
+• ${getTranslation("ahorcado.instructions.independent", "Puedes tener la interfaz en un idioma y las palabras en otro.")}
 
-        console.log("Puntuación guardada localmente:", nuevoRegistro);
-        return true;
-      } catch (error) {
-        console.error("Error al guardar ranking:", error);
-        return false;
-      }
+${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
+      `;
+
+      // Usar la función global mostrarModalInfo
+      window.mostrarModalInfo(
+        getTranslation("common.instructions", "Instrucciones"),
+        instrucciones,
+      );
     }
-
-    // Función para mostrar ranking (exportada globalmente)
-    /*window.mostrarRankingLocal = function () {
-      try {
-        const ranking = JSON.parse(
-          localStorage.getItem("rankingAhorcado") || "[]"
-        );
-
-        if (ranking.length === 0) {
-          window.mostrarModalInfo(
-            "🏆 RANKING AHORCADO 🏆\n\nNo hay puntuaciones registradas aún.\n¡Sé el primero!"
-          );
-          return;
-        }
-
-        let mensaje = "🏆 RANKING AHORCADO 🏆\n\n";
-        mensaje += "Posición | Usuario | Puntos | Fecha\n";
-        mensaje += "-----------------------------------\n";
-
-        ranking.forEach((item, index) => {
-          mensaje += `${(index + 1)
-            .toString()
-            .padStart(2)}. ${item.usuario.padEnd(15)} ${item.puntos
-            .toString()
-            .padStart(4)} pts   ${item.fecha}\n`;
-        });
-
-        // Mostrar en alerta o puedes crear un modal bonito
-        window.mostrarModalInfo(mensaje);
-      } catch (error) {
-        console.error("Error al mostrar ranking:", error);
-        window.mostrarModalInfo(
-          "Error al cargar el ranking. Asegúrate de que localStorage esté habilitado."
-        );
-      }
-    };*/
-
-    // Función para guardar puntuación desde el botón
-    window.guardarPuntuacionLocal = function () {
-      if (ah_guardarRankingLocal()) {
-        window.mostrarModalInfo(
-          `¡Puntuación de ${ah_puntos} puntos guardada para ${ah_usuario}!`
-        );
-      } else {
-        window.mostrarModalInfo("Error al guardar la puntuación");
-      }
-    };
-
-    // Función para exportar ranking a archivo JSON
-    window.exportarRanking = function () {
-      try {
-        const ranking = JSON.parse(
-          localStorage.getItem("rankingAhorcado") || "[]"
-        );
-        if (ranking.length === 0) {
-          window.mostrarModalInfo("No hay datos para exportar.");
-          return;
-        }
-
-        const dataStr = JSON.stringify(ranking, null, 2);
-        const dataUri =
-          "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
-
-        const linkElement = document.createElement("a");
-        linkElement.setAttribute("href", dataUri);
-        linkElement.setAttribute(
-          "download",
-          `ranking_ahorcado_${new Date().toISOString().split("T")[0]}.json`
-        );
-        linkElement.click();
-
-        window.mostrarModalInfo(
-          "Ranking exportado correctamente como archivo JSON."
-        );
-      } catch (error) {
-        console.error("Error al exportar:", error);
-        window.mostrarModalInfo("Error al exportar el ranking.");
-      }
-    };
-
-    // Función para importar ranking desde archivo (opcional)
-    window.importarRanking = function () {
-      const input = document.createElement("input");
-      input.type = "file";
-      input.accept = ".json";
-
-      input.onchange = function (event) {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          try {
-            const importedData = JSON.parse(e.target.result);
-            if (Array.isArray(importedData)) {
-              localStorage.setItem(
-                "rankingAhorcado",
-                JSON.stringify(importedData)
-              );
-              window.mostrarModalInfo(
-                `Ranking importado correctamente. ${importedData.length} registros cargados.`
-              );
-            } else {
-              window.mostrarModalInfo(
-                "Error: El archivo no contiene un array válido."
-              );
-            }
-          } catch (error) {
-            window.mostrarModalInfo("Error: Archivo JSON inválido.");
-          }
-        };
-        reader.readAsText(file);
-      };
-
-      input.click();
-    };
-
-    // ================================
-    // FUNCIONES
-    // ================================
 
     function normalizarLetra(letra) {
       return letra
@@ -206,84 +86,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Iniciar juego
     window.iniciarAhorcado = function () {
-      const selectIdioma = document.getElementById("idioma");
-      ah_idioma = selectIdioma ? selectIdioma.value : "es";
+      const selectIdiomaJuego = document.getElementById("idioma-juego");
+      ah_idiomaJuego = selectIdiomaJuego ? selectIdiomaJuego.value : "es";
 
       const inputUsuario = document.getElementById("usuario");
       if (!inputUsuario) {
-        window.mostrarModalInfo("Error", "No se encontró el campo usuario.");
-
-        return;
-      }
-      ah_usuario = inputUsuario.value.trim();
-      // Limitar a 3-8 caracteres
-      if (ah_usuario.length < 3 || ah_usuario.length > 12) {
         window.mostrarModalInfo(
-          "Nombre inválido",
-          "El nombre debe tener entre 3 y 12 caracteres."
+          getTranslation("common.info"),
+          "Error: No se encontró el campo usuario.",
         );
         return;
       }
-      if (!ah_usuario) {
-        window.mostrarModalInfo("Por favor ingresa un nombre de usuario");
+
+      ah_usuario = inputUsuario.value.trim();
+      if (ah_usuario.length < 3 || ah_usuario.length > 12) {
+        window.mostrarModalInfo(
+          getTranslation("common.info"),
+          "El nombre debe tener entre 3 y 12 caracteres.",
+        );
         return;
       }
+
+      if (!ah_usuario) {
+        window.mostrarModalInfo(
+          getTranslation("common.info"),
+          "Por favor ingresa un nombre de usuario",
+        );
+        return;
+      }
+
       const modalInicio = document.getElementById("modal-inicio");
       if (modalInicio) modalInicio.style.display = "none";
+
       ah_puntos = 0;
       ah_actualizarMarcador();
-      ah_resetearSVG(); // Resetear el dibujo SVG
+      ah_resetearSVG();
       ah_nuevaPalabra();
     };
 
-    const btnEmpezar = document.getElementById("btnEmpezar");
-    if (btnEmpezar) {
-      btnEmpezar.addEventListener("click", iniciarAhorcado);
-    }
-
-    const btnVerRanking = document.getElementById("btnVerRanking");
-    if (btnVerRanking) {
-      btnVerRanking.addEventListener("click", () => {
-        window.location.href = "../ranking/rankingLocal.html";
-      });
-    }
-
-    const btnSalirModal = document.getElementById("btnSalir-modal");
-    if (btnSalirModal) {
-      btnSalirModal.addEventListener("click", () => {
-        window.location.href = "../../index.html";
-      });
-    }
-
-    const btnSalir = document.getElementById("btnSalir");
-    if (btnSalir) {
-      btnSalir.addEventListener("click", () => {
-        window.location.href = "../../index.html";
-      });
-    }
-
-    // Función para resetear el SVG (ocultar todas las partes)
     function ah_resetearSVG() {
       ah_partesSVG.forEach((parteId) => {
         const elemento = document.getElementById(parteId);
-        if (elemento) {
-          elemento.style.display = "none";
-        }
+        if (elemento) elemento.style.display = "none";
       });
     }
 
     function ah_nuevaPalabra() {
-      const lista = palabras[ah_idioma] || palabras.es;
-
+      // Usar el idioma seleccionado para las palabras del juego
+      const lista = palabras[ah_idiomaJuego] || palabras.es;
       ah_palabraSecreta =
         lista[Math.floor(Math.random() * lista.length)].toUpperCase();
-
       ah_progreso = Array(ah_palabraSecreta.length).fill("_");
       ah_errores = 0;
 
-      // En lugar de cambiar la imagen, resetear el SVG
       ah_resetearSVG();
-
       letrasEl.innerHTML = "";
       ah_mostrarPalabra();
       ah_crearBotones();
@@ -320,6 +176,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!ah_progreso.includes("_")) {
           ah_puntos++;
           ah_actualizarMarcador();
+          // Mostrar mensaje de palabra acertada
+          const winMessage = getTranslation(
+            "ahorcado.winMessage",
+            "¡Palabra acertada!",
+          );
+          const nextWord = getTranslation(
+            "ahorcado.nextWord",
+            "¡Siguiente palabra!",
+          );
+          mostrarMensajeTemporal(`${winMessage} ${nextWord}`, 1500);
           setTimeout(() => ah_nuevaPalabra(), 700);
         }
       } else {
@@ -330,19 +196,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function ah_actualizarAhorcado() {
-      // Mostrar la parte correspondiente del ahorcado
       if (ah_errores > 0 && ah_errores <= ah_partesSVG.length) {
         const parteId = ah_partesSVG[ah_errores - 1];
         const elemento = document.getElementById(parteId);
-        if (elemento) {
-          elemento.style.display = "block";
-        }
+        if (elemento) elemento.style.display = "block";
       }
 
       if (ah_errores >= ah_maxErrores) {
-        // Revelar palabra con las no adivinadas en rojo
         ah_revelarPalabra();
-        // Mostrar modal final tras un pequeño retardo
         setTimeout(() => ah_mostrarFinal(), 1200);
       }
     }
@@ -357,6 +218,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
       palabraEl.innerHTML = palabraMostrada.trim();
+
+      // Mostrar mensaje de palabra perdida
+      const loseMessage = getTranslation(
+        "ahorcado.loseMessage",
+        "La palabra era:",
+      );
+      mostrarMensajeTemporal(`${loseMessage} ${ah_palabraSecreta}`, 1500);
     }
 
     function ah_actualizarMarcador() {
@@ -367,15 +235,43 @@ document.addEventListener("DOMContentLoaded", () => {
     function ah_mostrarFinal() {
       const modalFinal = document.getElementById("modal-final");
       if (modalFinal) modalFinal.style.display = "flex";
+
       const resultado = document.getElementById("resultado");
       if (resultado) {
-        resultado.textContent = `${ah_usuario}, tu puntuación final es: ${ah_puntos} puntos`;
+        // Usar traducción para el mensaje final
+        const scoreText = getTranslation("ahorcado.score", "Puntuación");
+        const pointsText = getTranslation("ahorcado.points", "puntos");
+        resultado.textContent = `${ah_usuario}, ${scoreText}: ${ah_puntos} ${pointsText}`;
       }
+    }
 
-      // Guardar automáticamente si la puntuación es buena (opcional)
-      if (ah_puntos >= 3) {
-        // ah_guardarRankingLocal();
-      }
+    // Función para mostrar mensajes temporales
+    function mostrarMensajeTemporal(mensaje, duracion = 2000) {
+      const mensajeEl = document.createElement("div");
+      mensajeEl.textContent = mensaje;
+      mensajeEl.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        z-index: 9999;
+        font-size: 1.2em;
+        text-align: center;
+        min-width: 300px;
+        max-width: 80%;
+      `;
+
+      document.body.appendChild(mensajeEl);
+
+      setTimeout(() => {
+        if (mensajeEl.parentNode) {
+          document.body.removeChild(mensajeEl);
+        }
+      }, duracion);
     }
 
     window.ah_reiniciarCompleto = function () {
@@ -385,25 +281,71 @@ document.addEventListener("DOMContentLoaded", () => {
       if (modalInicio) modalInicio.style.display = "flex";
     };
 
-    // Exportar la función reiniciarCompleto para el botón HTML
     window.reiniciarCompleto = function () {
       window.ah_reiniciarCompleto();
     };
+
+    // Función auxiliar para obtener traducciones
+    function getTranslation(key, fallback = "") {
+      return window.translations?.[key] || fallback || key;
+    }
+
+    // Configurar eventos de botones
+    const btnEmpezar = document.getElementById("btnEmpezar");
+    if (btnEmpezar) btnEmpezar.addEventListener("click", iniciarAhorcado);
+
+    const btnInstrucciones = document.getElementById("btnInstrucciones");
+    if (btnInstrucciones) {
+      btnInstrucciones.addEventListener("click", mostrarInstrucciones);
+    }
+
+    const btnVerRanking = document.getElementById("btnVerRanking");
+    if (btnVerRanking) {
+      btnVerRanking.addEventListener("click", () => {
+        window.location.href = "../ranking/rankingLocal.html";
+      });
+    }
+
+    const btnSalirModal = document.getElementById("btnSalir-modal");
+    if (btnSalirModal) {
+      btnSalirModal.addEventListener("click", () => {
+        window.location.href = "../../index.html";
+      });
+    }
+
+    const btnSalir = document.getElementById("btnSalir");
+    if (btnSalir) {
+      btnSalir.addEventListener("click", () => {
+        window.location.href = "../../index.html";
+      });
+    }
+
+    applyTranslations();
   })();
 
-  // Funciones modal del ranking
+  // Funciones modal globales - DEFINIR SOLO UNA VEZ FUERA DEL IIFE
   window.mostrarModalInfo = function (titulo, mensaje = "") {
-    document.getElementById("modal-info-titulo").textContent = titulo;
-    document.getElementById("modal-info-texto").textContent = mensaje;
-    document.getElementById("modal-info").style.display = "flex";
+    const modalTitulo = document.getElementById("modal-info-titulo");
+    const modalTexto = document.getElementById("modal-info-texto");
+    const modal = document.getElementById("modal-info");
+
+    if (modalTitulo) modalTitulo.textContent = titulo;
+    if (modalTexto) {
+      // Reemplazar saltos de línea por <br> para HTML
+      const mensajeConSaltos = mensaje.replace(/\n/g, "<br>");
+      modalTexto.innerHTML = mensajeConSaltos;
+    }
+    if (modal) modal.style.display = "flex";
   };
 
   window.cerrarModalInfo = function () {
-    document.getElementById("modal-info").style.display = "none";
+    const modal = document.getElementById("modal-info");
+    if (modal) modal.style.display = "none";
   };
 
+  // Configurar evento del botón Aceptar DESPUÉS de definir la función
   const btnModalInfoAceptar = document.getElementById("btnModalInfoAceptar");
-  if (btnModalInfoAceptar && window.cerrarModalInfo) {
+  if (btnModalInfoAceptar) {
     btnModalInfoAceptar.addEventListener("click", window.cerrarModalInfo);
   }
 });
