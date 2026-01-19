@@ -77,6 +77,109 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       );
     }
 
+    // ================================
+    // EFECTOS VISUALES MEJORADOS
+    // ================================
+
+    // Efecto de animación en el marcador
+    function animarMarcador() {
+      if (marcadorEl) {
+        marcadorEl.style.animation = "none";
+        setTimeout(() => {
+          marcadorEl.style.animation = "pulse 0.5s ease";
+        }, 10);
+      }
+    }
+
+    // Efecto de revelación de letra
+    function efectoLetraRevelada(letraElemento) {
+      letraElemento.style.animation = "none";
+      setTimeout(() => {
+        letraElemento.style.animation = "fadeIn 0.3s ease";
+      }, 10);
+    }
+
+    // Actualizar ah_manejarLetra para incluir efectos
+    function ah_manejarLetra(btn, letra) {
+      btn.disabled = true;
+      const letraNormalizada = normalizarLetra(letra);
+
+      if (normalizarLetra(ah_palabraSecreta).includes(letraNormalizada)) {
+        btn.style.background = "green";
+        for (let i = 0; i < ah_palabraSecreta.length; i++) {
+          if (normalizarLetra(ah_palabraSecreta[i]) === letraNormalizada) {
+            ah_progreso[i] = ah_palabraSecreta[i];
+            // Efecto en la letra revelada
+            if (palabraEl.children[i]) {
+              efectoLetraRevelada(palabraEl.children[i]);
+            }
+          }
+        }
+
+        ah_mostrarPalabra();
+        if (!ah_progreso.includes("_")) {
+          ah_puntos++;
+          animarMarcador(); // Efecto en marcador
+          ah_actualizarMarcador();
+          const winMessage = getTranslation(
+            "ahorcado.winMessage",
+            "¡Palabra acertada!",
+          );
+          const nextWord = getTranslation(
+            "ahorcado.nextWord",
+            "¡Siguiente palabra!",
+          );
+          mostrarMensajeTemporal(`${winMessage} ${nextWord}`, 1500);
+          setTimeout(() => ah_nuevaPalabra(), 700);
+        }
+      } else {
+        btn.style.background = "red";
+        ah_errores++;
+        ah_actualizarAhorcado();
+      }
+    }
+
+    // Mejorar función mostrarMensajeTemporal
+    function mostrarMensajeTemporal(mensaje, duracion = 2000) {
+      const mensajeEl = document.createElement("div");
+      mensajeEl.textContent = mensaje;
+      mensajeEl.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(50,50,50,0.95));
+    color: white;
+    padding: 20px 35px;
+    border-radius: 15px;
+    z-index: 9999;
+    font-size: 1.3em;
+    text-align: center;
+    min-width: 300px;
+    max-width: 80%;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    border: 2px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.3s ease-out;
+    font-weight: 600;
+  `;
+
+      document.body.appendChild(mensajeEl);
+
+      setTimeout(() => {
+        if (mensajeEl.parentNode) {
+          mensajeEl.style.opacity = "0";
+          mensajeEl.style.transform = "translate(-50%, -50%) scale(0.9)";
+          mensajeEl.style.transition = "all 0.3s ease";
+          setTimeout(() => {
+            if (mensajeEl.parentNode) {
+              document.body.removeChild(mensajeEl);
+            }
+          }, 300);
+        }
+      }, duracion);
+    }
+
     function normalizarLetra(letra) {
       return letra
         .normalize("NFD")
