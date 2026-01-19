@@ -5,8 +5,9 @@ body {
   padding: 0;
 }
 
-html {
-  min-height: 100%;
+html,
+body {
+  min-height: 100svh;
   background:
     radial-gradient(
       circle at 20% 20%,
@@ -25,7 +26,8 @@ html {
 .body-operaciones {
   min-height: 100vh;
   margin: 0;
-  padding-bottom: 20px;
+  padding-top: 50px;
+  padding-bottom: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -207,8 +209,11 @@ html {
   background: linear-gradient(145deg, #3a8d6c, #2a7a5a);
 }
 
-.botones-operaciones button:active {
-  transform: translateY(-1px);
+.botones-operaciones button:active,
+.botones-operaciones button:focus {
+  outline: none;
+  background: linear-gradient(145deg, #1f5f45, #2e7d5b);
+  border: 2px solid #333;
   box-shadow:
     0 4px 10px rgba(46, 125, 91, 0.3),
     0 2px 5px rgba(0, 0, 0, 0.1);
@@ -273,6 +278,10 @@ html {
 
 /* Clase oculto */
 .oculto {
+  display: none;
+}
+
+#opciones-nivel2.oculto {
   display: none;
 }
 
@@ -381,6 +390,28 @@ html {
   transition: all 0.3s ease;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  outline: none;
+}
+
+/* Mantener feedback visual al presionar */
+.modal-content button:active {
+  transform: scale(0.97);
+  box-shadow:
+    0 4px 10px rgba(46, 125, 91, 0.3),
+    0 2px 5px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(145deg, #f1f1e8, #e8e8d8);
+  border: 3px solid #2e7d5b;
+}
+
+/* Opcional: también al focus */
+.modal-content button:focus {
+  outline: none;
+  background: linear-gradient(145deg, #f1f1e8, #e8e8d8);
+  border: 3px solid #2e7d5b;
 }
 
 .modal-content .btn-exit {
@@ -565,11 +596,21 @@ html {
   background: linear-gradient(145deg, #ffffff, #ffffd2);
 }
 
+#modal-final .modal-aviso-content {
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+#modal-final details[open] ul {
+  max-height: 220px;
+  overflow-y: auto;
+}
+
 /* Cronómetro mejorado */
 .cronometro {
   position: fixed;
   top: 25px;
-  right: 25px;
+  right: 28px;
   background: linear-gradient(
     145deg,
     rgba(0, 0, 0, 0.85),
@@ -861,7 +902,7 @@ html {
 @media (max-width: 1280px) {
   .titulo-operaciones {
     font-size: 3rem;
-    margin-top: 40px;
+    margin-top: 60px;
     margin-bottom: 30px;
   }
 
@@ -894,17 +935,24 @@ html {
     width: 200px;
     font-size: 1.2rem;
     padding: 14px 22px;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+  }
+}
+
+@media (max-width: 850px) {
+  .titulo-operaciones {
+    font-size: 2.2rem;
+
+    padding: 10px 18px;
+    margin-top: 80px;
   }
 }
 
 /* Móviles */
 @media (max-width: 768px) {
-  .titulo-operaciones {
-    font-size: 2.5rem;
-    margin: 20px 10px;
-    padding: 12px 20px;
-  }
-
   .operaciones-pizarra {
     gap: 15px;
     padding: 15px;
@@ -931,6 +979,10 @@ html {
     width: 150px;
     font-size: 1.1rem;
     padding: 12px 20px;
+  }
+
+  #modal-final details[open] ul {
+    max-height: 150px;
   }
 
   .cronometro {

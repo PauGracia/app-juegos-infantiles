@@ -457,6 +457,9 @@ function iniciar() {
     document.getElementById("pizarra").innerHTML = "";
     document.getElementById("modal-operaciones").style.display = "none";
     generarNivel1(cantidad, max);
+    requestAnimationFrame(() => {
+      document.querySelector(".body-operaciones").scrollTop = 0;
+    });
   } else {
     // Nivel 2: validar que haya al menos un tipo de operación seleccionada
     const operacionesSeleccionadas = [
@@ -474,6 +477,9 @@ function iniciar() {
     document.getElementById("pizarra").innerHTML = "";
     document.getElementById("modal-operaciones").style.display = "none";
     generarNivel2(cantidad);
+    requestAnimationFrame(() => {
+      document.querySelector(".body-operaciones").scrollTop = 0;
+    });
   }
 
   inicioTiempo = Date.now();
