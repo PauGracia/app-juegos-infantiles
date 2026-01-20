@@ -184,5 +184,15 @@
   "ahorcado.instructions.interfaceLanguage": "La interfaz está en el idioma seleccionado en el menú principal.",
   "ahorcado.instructions.gameLanguage": "Las palabras del juego están en el idioma seleccionado aquí:",
   "ahorcado.instructions.independent": "Puedes tener la interfaz en un idioma y las palabras en otro.",
-  "ahorcado.instructions.goodLuck": "¡Buena suerte!"
+  "ahorcado.instructions.goodLuck": "¡Buena suerte!",
+
+  "ranking.sort.points": "Ordenar por puntos",
+  "ranking.sort.date": "Ordenar por fecha",
+  "ranking.sort.user": "Ordenar por nombre",
+  "ranking.filterUser": "Filtrar por usuario",
+  "ranking.clear": "Borrar ranking",
+  "ranking.noResults": "No hay resultados",
+  "common.clear": "Limpiar",
+  "ranking.clearConfirm": "¿Seguro que quieres borrar todo el ranking?",
+  "common.cancel": "Cancelar"
 }

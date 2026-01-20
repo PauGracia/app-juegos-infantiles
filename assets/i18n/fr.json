@@ -184,5 +184,14 @@
   "ahorcado.instructions.interfaceLanguage": "L'interface est dans la langue sélectionnée dans le menu principal.",
   "ahorcado.instructions.gameLanguage": "Les mots du jeu sont dans la langue sélectionnée ici:",
   "ahorcado.instructions.independent": "Vous pouvez avoir l'interface dans une langue et les mots dans une autre.",
-  "ahorcado.instructions.goodLuck": "Bonne chance!"
+  "ahorcado.instructions.goodLuck": "Bonne chance!",
+  "ranking.sort.points": "Trier par points",
+  "ranking.sort.date": "Trier par date",
+  "ranking.sort.user": "Trier par nom",
+  "ranking.filterUser": "Filtrer par utilisateur",
+  "ranking.clear": "Effacer le classement",
+  "ranking.noResults": "Aucun résultat",
+  "common.clear": "Effacer",
+  "ranking.clearConfirm": "Êtes-vous sûr de vouloir supprimer tout le classement ?",
+  "common.cancel": "Annuler"
 }

@@ -1,101 +1,390 @@
 /* =========================
-   RANKING LOCAL
+   RANKING AHORCADO – ESTILO UNIFICADO
    ========================= */
 
-.body-ranking {
-  font-family: system-ui, sans-serif;
-  background: #f4f6fb;
-  margin: 0;
-  padding: 10px;
-}
-
-.ranking-header {
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.ranking-controles {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
-.ranking-controles select,
-.ranking-controles input,
-.ranking-controles button {
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
-
-.ranking-lista ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.ranking-lista li {
-  background: white;
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 8px;
-  display: grid;
-  grid-template-columns: 30px 1fr auto;
-  align-items: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-}
-
-.ranking-pos {
-  font-weight: bold;
-}
-
-.ranking-usuario {
-  font-weight: 600;
-}
-
-.ranking-puntos {
-  background: #4caf50;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 13px;
-}
-
-.ranking-fecha {
-  font-size: 12px;
-  color: #666;
-}
-
-.ranking-footer {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-  width: 100%;
-  padding: 0 10px;
+* {
   box-sizing: border-box;
 }
 
-button.danger {
-  background: #e53935;
-  color: white;
-  border: none;
-  font-size: 18px;
-  margin: 5px;
-  padding: 5px 2px;
-  border-radius: 4px;
-  cursor: pointer;
+/* Quitar efecto azul al tocar botones en móvil */
+button,
+select,
+input {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
 }
 
-#btnVolverJuego {
-  background: #4d4646;
+:root {
+  --ranking-max-width: 900px;
+  --element-width: min(100%, var(--ranking-max-width));
+  --button-width: 150px;
+}
+
+.body-ranking {
+  display: flex;
+  flex-direction: column;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100dvh;
+  margin: 0;
+  padding: 12px;
+  color: #2d3748;
+  align-items: center;
+}
+
+/* Contenedor principal centrado */
+.ranking-container {
+  width: 100%;
+  max-width: var(--ranking-max-width);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* -------- HEADER -------- */
+.ranking-header {
+  text-align: center;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.ranking-header h1 {
   color: white;
+  font-size: 2.2em;
+  font-weight: 700;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* -------- CONTROLES -------- */
+.ranking-controles {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.controles-left {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex: 1;
+}
+
+.ranking-controles input {
+  padding: 12px 16px;
+  font-size: 1em;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  min-width: 200px;
+  flex: 1;
+  max-width: 300px;
+}
+
+.ranking-controles select {
+  padding: 12px 16px;
+  font-size: 1em;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  min-width: 180px;
+}
+
+.ranking-controles button {
+  padding: 12px 18px;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 12px;
   border: none;
-  font-size: 18px;
-  margin: 5px;
-  padding: 10px 5px;
-  border-radius: 4px;
   cursor: pointer;
+  color: white;
+  background: linear-gradient(45deg, #4299e1, #3182ce);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  min-width: var(--button-width);
+  white-space: nowrap;
+}
+
+.ranking-controles select:focus,
+.ranking-controles input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+}
+
+.ranking-controles button:active {
+  transform: scale(0.97);
+}
+
+/* -------- LISTA -------- */
+.ranking-lista {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+}
+
+#listaRanking {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ranking-lista li {
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%; /* Ocupa todo el ancho disponible */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease;
+  min-height: 70px;
+}
+
+/* Contenedor izquierdo: número + nombre/fecha */
+.ranking-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+  min-width: 0; /* Permite que se ajuste */
+}
+
+.ranking-pos {
+  font-weight: 700;
+  font-size: 1.3em;
+  text-align: center;
+  min-width: 40px;
+  color: #667eea;
+}
+
+.ranking-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0; /* Para el text-overflow */
+}
+
+.ranking-usuario {
+  font-weight: 700;
+  font-size: 1.1em;
+  color: #2d3748;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ranking-fecha {
+  font-size: 0.85em;
+  color: #718096;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+
+/* Contenedor derecho: puntos */
+.ranking-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 20px;
+}
+
+.ranking-puntos {
+  background: linear-gradient(45deg, #48bb78, #38a169);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.1em;
+  white-space: nowrap;
+  min-width: 100px;
+  text-align: center;
+}
+
+.ranking-puntos-text {
+  font-size: 0.8em;
+  font-weight: 500;
+  opacity: 0.9;
+  margin-left: 2px;
+}
+
+/* -------- FOOTER -------- */
+.ranking-footer {
+  width: 100%;
+  margin: 20px auto 0;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  background: transparent;
+  padding: 0 10px;
+}
+
+.ranking-footer button {
+  width: var(--button-width);
+  padding: 14px 0;
+  font-size: 1.1em;
+  font-weight: 600;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s;
+}
+
+button.danger {
+  background: linear-gradient(45deg, #f56565, #e53e3e);
+}
+
+.ranking-footer button:active {
+  transform: scale(0.97);
+}
+
+/* Modal overlay */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(45, 55, 72, 0.6); /* semi-transparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenido del modal */
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  padding: 24px 20px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Botones dentro del modal */
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  gap: 12px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 12px 0;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1em;
+  color: white;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal-buttons button.danger {
+  background: linear-gradient(45deg, #f56565, #e53e3e);
+}
+
+/* -------- ANIMACIONES -------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -------- RESPONSIVE -------- */
+@media (max-width: 768px) {
+  .ranking-controles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 12px;
+  }
+
+  .ranking-controles input {
+    grid-column: 2 / span 1;
+    grid-row: 1;
+    min-width: 40px;
+  }
+
+  .ranking-controles select {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .ranking-controles button {
+    grid-column: 2;
+    grid-row: 2;
+    min-width: 40px;
+  }
+
+  .controles-left {
+    display: contents; /* Elimina el contenedor para el grid */
+  }
+
+  .ranking-footer {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .ranking-footer button {
+    width: 48%;
+    min-width: 0;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    padding: 8px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .ranking-header h1 {
+    font-size: 1.8em;
+  }
+
+  .ranking-lista li {
+    padding: 14px;
+  }
+
+  .ranking-pos {
+    font-size: 1.2em;
+    min-width: 36px;
+  }
+
+  .ranking-usuario {
+    font-size: 1em;
+  }
+
+  .ranking-puntos {
+    font-size: 1em;
+    padding: 8px 12px;
+    min-width: 90px;
+  }
+
+  .ranking-footer {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .ranking-footer button {
+    width: 48%;
+  }
 }

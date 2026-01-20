@@ -181,5 +181,14 @@
   "ahorcado.instructions.interfaceLanguage": "La interfície està en l'idioma seleccionat al menú principal.",
   "ahorcado.instructions.gameLanguage": "Les paraules del joc estan en l'idioma seleccionat aquí:",
   "ahorcado.instructions.independent": "Pots tenir la interfície en un idioma i les paraules en un altre.",
-  "ahorcado.instructions.goodLuck": "Bona sort!"
+  "ahorcado.instructions.goodLuck": "Bona sort!",
+  "ranking.sort.points": "Ordenar per punts",
+  "ranking.sort.date": "Ordenar per data",
+  "ranking.sort.user": "Ordenar per nom",
+  "ranking.filterUser": "Filtrar per usuari",
+  "ranking.clear": "Esborrar rànquing",
+  "ranking.noResults": "No hi ha resultats",
+  "common.clear": "Netejar",
+  "ranking.clearConfirm": "Segur que vols esborrar tot el rànquing?",
+  "common.cancel": "Cancel·lar"
 }

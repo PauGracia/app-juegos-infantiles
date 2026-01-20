@@ -1,41 +1,89 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no"
-    />
-    <title>Ranking Ahorcado</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="ranking.title">Ranking Ahorcado</title>
+
     <link rel="stylesheet" href="../../assets/css/app.css" />
     <link rel="stylesheet" href="rankingLocal.css" />
   </head>
 
   <body class="body-ranking">
-    <header class="ranking-header">
-      <h1>🏆 Ranking Ahorcado</h1>
-    </header>
+    <!-- Contenedor principal para centrar todo -->
+    <div class="ranking-container">
+      <header class="ranking-header">
+        <h1 data-i18n="ranking.title">🏆 Ranking Ahorcado</h1>
+      </header>
 
-    <section class="ranking-controles">
-      <select id="ordenRanking">
-        <option value="puntos">Ordenar por puntos</option>
-        <option value="fecha">Ordenar por fecha</option>
-        <option value="usuario">Ordenar por nombre</option>
-      </select>
+      <section class="ranking-controles">
+        <div class="controles-left">
+          <select id="ordenRanking">
+            <option value="puntos" data-i18n="ranking.sort.points">
+              Ordenar por puntos
+            </option>
+            <option value="fecha" data-i18n="ranking.sort.date">
+              Ordenar por fecha
+            </option>
+            <option value="usuario" data-i18n="ranking.sort.user">
+              Ordenar por nombre
+            </option>
+          </select>
+          <input
+            type="text"
+            id="filtroUsuario"
+            data-i18n-placeholder="ranking.filterUser"
+            placeholder="Filtrar por usuario"
+          />
+        </div>
 
-      <input type="text" id="filtroUsuario" placeholder="Filtrar por usuario" />
+        <button id="btnLimpiarFiltro" data-i18n="common.clear">Limpiar</button>
+      </section>
 
-      <button id="btnLimpiarFiltro">Limpiar</button>
-    </section>
+      <section class="ranking-lista">
+        <ul id="listaRanking"></ul>
+      </section>
 
-    <section class="ranking-lista">
-      <ul id="listaRanking"></ul>
-    </section>
+      <footer class="ranking-footer">
+        <button id="btnVolverJuego" data-i18n="common.back">
+          Volver al juego
+        </button>
+        <button id="btnBorrarRanking" class="danger" data-i18n="ranking.clear">
+          Borrar ranking
+        </button>
+      </footer>
+    </div>
+    <!-- Modal de confirmación -->
+    <div id="modalConfirm" class="modal" style="display: none">
+      <div class="modal-content">
+        <p id="modalMessage" data-i18n="ranking.confirmDelete">
+          ¿Seguro que quieres borrar todo el ranking?
+        </p>
+        <div class="modal-buttons">
+          <button id="modalCancel" class="danger" data-i18n="common.cancel">
+            Cancelar
+          </button>
+          <button id="modalOk" data-i18n="common.accept">Aceptar</button>
+        </div>
+      </div>
+    </div>
 
-    <footer class="ranking-footer">
-      <button id="btnVolverJuego">Volver al juego</button>
-      <button id="btnBorrarRanking" class="danger">Borrar ranking</button>
-    </footer>
+    <script src="../../assets/js/i18n.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const savedLang = localStorage.getItem("uiLang") || "es";
+
+        if (typeof loadLanguage === "function") {
+          loadLanguage(savedLang);
+        } else {
+          setTimeout(() => {
+            if (typeof loadLanguage === "function") {
+              loadLanguage(savedLang);
+            }
+          }, 100);
+        }
+      });
+    </script>
 
     <script src="rankingLocal.js"></script>
   </body>

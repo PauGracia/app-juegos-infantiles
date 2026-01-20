@@ -1,5 +1,9 @@
+let rankingInicializado = false;
 function initRanking() {
   const lista = document.getElementById("listaRanking");
+
+  if (rankingInicializado) return;
+  rankingInicializado = true;
   if (!lista) return; // no estamos en rankingLocal.html
 
   const ordenSelect = document.getElementById("ordenRanking");
@@ -34,22 +38,29 @@ function initRanking() {
     lista.innerHTML = "";
 
     if (datos.length === 0) {
-      lista.innerHTML = "<li>No hay resultados</li>";
+      const li = document.createElement("li");
+      li.innerHTML = `<div class="no-results">${translations["ranking.noResults"]}</div>`;
+      lista.appendChild(li);
       return;
     }
 
     datos.forEach((r, i) => {
       const li = document.createElement("li");
       li.innerHTML = `
-          <div class="ranking-pos">${i + 1}</div>
-          <div>
-            <div class="ranking-usuario">${r.usuario}</div>
-            <div class="ranking-fecha">
-              ${new Date(r.fecha).toLocaleString("es-ES")}
+            <div class="ranking-left">
+                <div class="ranking-pos">${i + 1}</div>
+                <div class="ranking-info">
+                    <div class="ranking-usuario">${r.usuario}</div>
+                    <div class="ranking-fecha">
+                        ${new Date(r.fecha).toLocaleString("es-ES")}
+                    </div>
+                </div>
             </div>
-
-          </div>
-          <div class="ranking-puntos">${r.puntos} pts</div>
+            <div class="ranking-right">
+                <div class="ranking-puntos">
+                    ${r.puntos} <span class="ranking-puntos-text">pts</span>
+                </div>
+            </div>
         `;
       lista.appendChild(li);
     });
@@ -59,30 +70,60 @@ function initRanking() {
   ordenSelect.addEventListener("change", renderRanking);
   filtroInput.addEventListener("input", renderRanking);
 
-  document.getElementById("btnLimpiarFiltro").addEventListener("click", () => {
-    filtroInput.value = "";
-    renderRanking();
-  });
-
-  document.getElementById("btnBorrarRanking").addEventListener("click", () => {
-    mostrarModalInfo(
-      "Confirmación",
-      "¿Seguro que quieres borrar todo el ranking?"
+  document
+    .getElementById("btnVolverJuego")
+    .addEventListener(
+      "click",
+      () => (location.href = "../juegoAhorcado/index.html"),
     );
 
-    localStorage.removeItem("rankingAhorcado");
-    cargarRanking();
+  // Seleccionar elementos del modal
+  const modal = document.getElementById("modalConfirm");
+  const modalOk = document.getElementById("modalOk");
+  const modalCancel = document.getElementById("modalCancel");
+  const modalMessage = document.getElementById("modalMessage");
+
+  document.getElementById("btnBorrarRanking").addEventListener("click", () => {
+    // Actualizar texto del mensaje desde translations
+    const modalMessage = document.getElementById("modalMessage");
+    modalMessage.textContent =
+      translations["ranking.clearConfirm"] ||
+      "¿Seguro que quieres borrar todo el ranking?";
+
+    const modal = document.getElementById("modalConfirm");
+    const modalOk = document.getElementById("modalOk");
+    const modalCancel = document.getElementById("modalCancel");
+
+    modal.style.display = "flex";
+
+    // Función aceptar
+    const aceptar = () => {
+      localStorage.removeItem("rankingAhorcado");
+      cargarRanking();
+      cerrarModal();
+    };
+
+    // Función cerrar
+    const cerrarModal = () => {
+      modal.style.display = "none";
+      modalOk.removeEventListener("click", aceptar);
+      modalCancel.removeEventListener("click", cerrarModal);
+    };
+
+    modalOk.addEventListener("click", aceptar);
+    modalCancel.addEventListener("click", cerrarModal);
   });
 
   document
     .getElementById("btnVolverJuego")
     .addEventListener(
       "click",
-      () => (location.href = "../juegoAhorcado/index.html")
+      () => (location.href = "../juegoAhorcado/index.html"),
     );
 
   cargarRanking();
 }
 
-// Ejecutamos al cargar el DOM
-window.addEventListener("DOMContentLoaded", initRanking);
+document.addEventListener("languageChanged", () => {
+  initRanking();
+});
