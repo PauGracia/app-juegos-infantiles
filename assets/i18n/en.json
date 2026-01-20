@@ -161,7 +161,7 @@
   "common.info": "Information",
 
   "ahorcado.playAgain": "Play again",
-  "ahorcado.saveLocalRecord": "Save local record",
+  "ahorcado.saveLocalRecord": "Save record",
   "ahorcado.exportRanking": "Export ranking",
   "common.instructions": "Instructions",
   "ahorcado.howToPlay": "How to play Hangman",

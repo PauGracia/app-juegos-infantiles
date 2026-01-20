@@ -235,6 +235,14 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
     }
 
     function ah_nuevaPalabra() {
+      // Reactivar botón Guardar récord
+      if (btnGuardarRecord) {
+        btnGuardarRecord.disabled = false;
+        btnGuardarRecord.textContent = getTranslation(
+          "ahorcado.saveRecord",
+          "Guardar récord local",
+        );
+      }
       // Usar el idioma seleccionado para las palabras del juego
       const lista = palabras[ah_idiomaJuego] || palabras.es;
       ah_palabraSecreta =
@@ -263,39 +271,33 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       });
     }
 
-    function ah_manejarLetra(btn, letra) {
-      btn.disabled = true;
-      const letraNormalizada = normalizarLetra(letra);
+    function guardarPuntuacionLocal() {
+      const registro = {
+        usuario: ah_usuario,
+        puntos: ah_puntos,
+        juego: "Ahorcado",
+        fecha: new Date().toISOString(),
+        idioma: ah_idiomaJuego,
+      };
 
-      if (normalizarLetra(ah_palabraSecreta).includes(letraNormalizada)) {
-        btn.style.background = "green";
-        for (let i = 0; i < ah_palabraSecreta.length; i++) {
-          if (normalizarLetra(ah_palabraSecreta[i]) === letraNormalizada) {
-            ah_progreso[i] = ah_palabraSecreta[i];
-          }
-        }
+      const ranking = JSON.parse(localStorage.getItem("rankingAhorcado")) || [];
 
-        ah_mostrarPalabra();
-        if (!ah_progreso.includes("_")) {
-          ah_puntos++;
-          ah_actualizarMarcador();
-          // Mostrar mensaje de palabra acertada
-          const winMessage = getTranslation(
-            "ahorcado.winMessage",
-            "¡Palabra acertada!",
-          );
-          const nextWord = getTranslation(
-            "ahorcado.nextWord",
-            "¡Siguiente palabra!",
-          );
-          mostrarMensajeTemporal(`${winMessage} ${nextWord}`, 1500);
-          setTimeout(() => ah_nuevaPalabra(), 700);
-        }
-      } else {
-        btn.style.background = "red";
-        ah_errores++;
-        ah_actualizarAhorcado();
+      ranking.push(registro);
+      ranking.sort((a, b) => b.puntos - a.puntos);
+
+      localStorage.setItem("rankingAhorcado", JSON.stringify(ranking));
+      // Desactivar botón
+      if (btnGuardarRecord) {
+        btnGuardarRecord.disabled = true;
+        btnGuardarRecord.textContent = getTranslation(
+          "ahorcado.recordSaved",
+          "Récord guardado",
+        );
       }
+      mostrarMensajeTemporal(
+        getTranslation("ahorcado.recordSaved", "Récord guardado correctamente"),
+        1500,
+      );
     }
 
     function ah_actualizarAhorcado() {
@@ -348,6 +350,35 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       }
     }
 
+    function ah_resetearJuegoCompleto() {
+      // Reset variables
+      ah_palabraSecreta = "";
+      ah_progreso = [];
+      ah_errores = 0;
+      ah_puntos = 0;
+      ah_usuario = "";
+
+      // Limpiar UI
+      if (palabraEl) palabraEl.innerHTML = "";
+      if (letrasEl) letrasEl.innerHTML = "";
+      ah_actualizarMarcador();
+      ah_resetearSVG();
+
+      // Ocultar modales
+      const modalFinal = document.getElementById("modal-final");
+      const modalInfo = document.getElementById("modal-info");
+      if (modalFinal) modalFinal.style.display = "none";
+      if (modalInfo) modalInfo.style.display = "none";
+
+      // Mostrar modal inicio
+      const modalInicio = document.getElementById("modal-inicio");
+      if (modalInicio) modalInicio.style.display = "flex";
+
+      // Limpiar input usuario
+      const inputUsuario = document.getElementById("usuario");
+      if (inputUsuario) inputUsuario.value = "";
+    }
+
     // Función para mostrar mensajes temporales
     function mostrarMensajeTemporal(mensaje, duracion = 2000) {
       const mensajeEl = document.createElement("div");
@@ -366,6 +397,7 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
         text-align: center;
         min-width: 300px;
         max-width: 80%;
+        pointer-events: none;
       `;
 
       document.body.appendChild(mensajeEl);
@@ -419,14 +451,19 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
     const btnSalir = document.getElementById("btnSalir");
     if (btnSalir) {
       btnSalir.addEventListener("click", () => {
-        window.location.href = "../../index.html";
+        ah_resetearJuegoCompleto();
       });
+    }
+
+    const btnGuardarRecord = document.getElementById("btnGuardarRecord");
+    if (btnGuardarRecord) {
+      btnGuardarRecord.addEventListener("click", guardarPuntuacionLocal);
     }
 
     applyTranslations();
   })();
 
-  // Funciones modal globales - DEFINIR SOLO UNA VEZ FUERA DEL IIFE
+  // Funciones modal globales
   window.mostrarModalInfo = function (titulo, mensaje = "") {
     const modalTitulo = document.getElementById("modal-info-titulo");
     const modalTexto = document.getElementById("modal-info-texto");

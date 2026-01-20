@@ -1,12 +1,6 @@
 /* === ESTILOS ESPECÍFICOS: JUEGO DEL AHORCADO === */
 * {
-  -webkit-user-select: none;
-  user-select: none;
   box-sizing: border-box;
-}
-input,
-textarea {
-  user-select: text;
 }
 
 /* Quitar efecto azul al tocar botones en móvil */
@@ -19,8 +13,6 @@ input {
 
 body,
 html {
-  overscroll-behavior: contain;
-  touch-action: manipulation;
   min-height: 100dvh;
   margin: 0;
 }
