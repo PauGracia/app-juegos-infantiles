@@ -80,7 +80,7 @@ input {
   font-size: 1em;
   border-radius: 12px;
   border: 2px solid #e2e8f0;
-  min-width: 200px;
+
   flex: 1;
   max-width: 300px;
 }
@@ -90,7 +90,6 @@ input {
   font-size: 1em;
   border-radius: 12px;
   border: 2px solid #e2e8f0;
-  min-width: 180px;
 }
 
 .ranking-controles button {
@@ -225,12 +224,13 @@ input {
   justify-content: center;
   background: transparent;
   padding: 0 10px;
+  margin-bottom: 20px;
 }
 
 .ranking-footer button {
-  width: var(--button-width);
-  padding: 14px 0;
-  font-size: 1.1em;
+  width: 160px;
+  padding: 10px 0;
+  font-size: 1.6em;
   font-weight: 600;
   border-radius: 14px;
   border: none;
@@ -314,44 +314,15 @@ button.danger {
 /* -------- RESPONSIVE -------- */
 @media (max-width: 768px) {
   .ranking-controles {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
+    display: flex;
+    flex-direction: column;
+
     gap: 12px;
   }
 
-  .ranking-controles input {
-    grid-column: 2 / span 1;
-    grid-row: 1;
-    min-width: 40px;
-  }
-
-  .ranking-controles select {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .ranking-controles button {
-    grid-column: 2;
-    grid-row: 2;
-    min-width: 40px;
-  }
-
   .controles-left {
-    display: contents; /* Elimina el contenedor para el grid */
-  }
-
-  .ranking-footer {
+    display: flex;
     flex-direction: row;
-    gap: 16px;
-  }
-
-  .ranking-footer button {
-    width: 48%;
-    min-width: 0;
-    margin-bottom: 20px;
-    font-size: 1.5em;
-    padding: 8px 0;
   }
 }
 
@@ -364,6 +335,13 @@ button.danger {
     padding: 14px;
   }
 
+  .controles-left input {
+    width: 100px;
+  }
+
+  .controles-left select {
+    width: 200px;
+  }
   .ranking-pos {
     font-size: 1.2em;
     min-width: 36px;
@@ -377,14 +355,5 @@ button.danger {
     font-size: 1em;
     padding: 8px 12px;
     min-width: 90px;
-  }
-
-  .ranking-footer {
-    flex-direction: row;
-    gap: 16px;
-  }
-
-  .ranking-footer button {
-    width: 48%;
   }
 }
