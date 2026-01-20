@@ -144,9 +144,13 @@ html {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
-  overflow: hidden;
-}
+  overflow: hidden; /* Cambié "auto" por "hidden" */
 
+  min-height: auto; /* Quita el min-height fijo */
+  min-width: auto; /* Quita el min-width fijo */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
 .letras button::before {
   content: "";
   position: absolute;
@@ -673,6 +677,7 @@ html {
   .body-ahorcado {
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
   }
 
   .contenedor-juego {
@@ -682,6 +687,9 @@ html {
     gap: 15px;
     padding: 15px;
     margin: 3px;
+    width: 95%;
+    max-width: 95%;
+    overflow: hidden;
   }
 
   #marcador-ahorcado {
@@ -705,8 +713,8 @@ html {
 
   .imagen-ahorcado {
     margin-top: 0;
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
   }
 
   .titulo-ahorcado {
@@ -718,24 +726,40 @@ html {
 
   .palabra {
     font-size: 1.8em;
-    letter-spacing: 4px;
+    letter-spacing: 6px;
     padding: 8px 12px;
-    min-height: 30px;
+    min-height: 50px;
+    width: 100%;
+    overflow: hidden;
   }
 
   .palabra-contenedor {
     gap: 15px;
+    width: 100%;
+    order: 2;
   }
 
   .letras {
     grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
+    gap: 8px;
     padding: 10px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
   }
 
   .letras button {
-    padding: 10px;
-    font-size: 1em;
+    padding: 6px;
+    font-size: 0.9em;
+    min-height: 35px;
+    min-width: 35px;
+    font-weight: 800;
+  }
+  .boton-volver-ahorcado {
+    order: 3; /* Aparece tercero */
+    margin-top: 15px;
+    padding-bottom: 10px;
+    width: 100%;
   }
 
   #modal-contenido,
@@ -750,26 +774,138 @@ html {
 @media (max-width: 480px) {
   .letras {
     grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    padding: 8px;
   }
 
   .titulo-ahorcado {
     font-size: 1.5em;
-
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 12px;
+    margin-bottom: 12px;
   }
 
   .imagen-ahorcado {
-    width: 190px;
-    height: 190px;
+    width: 180px;
+    height: 180px;
   }
 
   #marcador-ahorcado {
     font-size: 1.1em;
-    padding: 7px 12px;
+    padding: 6px 10px;
+    top: 10px;
+    right: 10px;
   }
 
   .boton-volver-ahorcado {
-    margin-top: 5px;
+    margin-top: 10px;
   }
+  .letras button {
+    min-height: 30px;
+    min-width: 30px;
+    font-size: 0.8em;
+    padding: 5px;
+    margin: 1px;
+  }
+
+  .palabra {
+    font-size: 1.4em;
+    letter-spacing: 6px;
+  }
+
+  /* Prevenir scroll horizontal */
+  .contenedor-juego {
+    overflow-x: hidden;
+  }
+
+  /* Asegurar que todo quepa */
+  .letras {
+    max-width: 100%;
+    gap: 6px;
+  }
+}
+
+/* Prevenir problemas de touch específicos */
+
+/* Deshabilitar selección de texto en botones */
+.letras button {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Feedback visual mejorado para touch */
+.letras button:active {
+  opacity: 0.8;
+  transition: opacity 0.1s;
+}
+
+/* Asegurar z-index para evitar superposiciones */
+.contenedor-juego {
+  position: relative;
+  z-index: 1;
+}
+
+.letras {
+  position: relative;
+  z-index: 2;
+}
+
+/* Garantizar que los botones sean clicables en iOS */
+.letras button {
+  cursor: pointer;
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 360px) {
+  .letras {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  .letras button {
+    min-height: 30px;
+    min-width: 30px;
+    font-size: 0.8em;
+    padding: 4px;
+  }
+}
+
+/* Estado activo para touch */
+.letras button.active {
+  opacity: 0.7 !important;
+  transform: scale(0.95) !important;
+}
+
+.imagen-ahorcado {
+  width: 160px;
+  height: 160px;
+}
+
+.palabra {
+  font-size: 1.2em;
+  letter-spacing: 4px;
+}
+
+/* Deshabilitar efectos hover en móvil */
+@media (hover: none) and (pointer: coarse) {
+  .letras button:hover {
+    transform: none !important;
+    background: linear-gradient(145deg, #4a90e2, #357abd) !important;
+  }
+
+  .letras button:hover::before {
+    display: none !important;
+  }
+}
+
+/* Garantizar que sea táctil */
+.letras button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Quitar cualquier pseudo-elemento que interfiera */
+.letras button::before {
+  pointer-events: none;
 }

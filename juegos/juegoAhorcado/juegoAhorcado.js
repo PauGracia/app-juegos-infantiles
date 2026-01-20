@@ -101,6 +101,13 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
 
     // Actualizar ah_manejarLetra para incluir efectos
     function ah_manejarLetra(btn, letra) {
+      // 🔴 NUEVA LÍNEA: Prevenir si ya está deshabilitado
+      if (btn.disabled) return;
+
+      // 🔴 AÑADE ESTAS 2 LÍNEAS: Feedback visual inmediato
+      btn.style.transform = "scale(0.95)";
+
+      // Tu código original sigue IGUAL aquí:
       btn.disabled = true;
       const letraNormalizada = normalizarLetra(letra);
 
@@ -109,7 +116,6 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
         for (let i = 0; i < ah_palabraSecreta.length; i++) {
           if (normalizarLetra(ah_palabraSecreta[i]) === letraNormalizada) {
             ah_progreso[i] = ah_palabraSecreta[i];
-            // Efecto en la letra revelada
             if (palabraEl.children[i]) {
               efectoLetraRevelada(palabraEl.children[i]);
             }
@@ -119,7 +125,7 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
         ah_mostrarPalabra();
         if (!ah_progreso.includes("_")) {
           ah_puntos++;
-          animarMarcador(); // Efecto en marcador
+          animarMarcador();
           ah_actualizarMarcador();
           const winMessage = getTranslation(
             "ahorcado.winMessage",
@@ -137,6 +143,11 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
         ah_errores++;
         ah_actualizarAhorcado();
       }
+
+      // 🔴 AÑADE AL FINAL: Restaurar tamaño después de un momento
+      setTimeout(() => {
+        btn.style.transform = "";
+      }, 150);
     }
 
     // Mejorar función mostrarMensajeTemporal
@@ -262,11 +273,64 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
 
     function ah_crearBotones() {
       const abecedario = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
+
+      // Vaciar contenedor
+      letrasEl.innerHTML = "";
+
+      // Detectar si es dispositivo táctil
+      const isTouchDevice =
+        "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
       abecedario.forEach((letra) => {
         const btn = document.createElement("button");
         btn.textContent = letra;
         btn.type = "button";
-        btn.addEventListener("click", () => ah_manejarLetra(btn, letra));
+
+        // Para dispositivos táctiles (móviles)
+        if (isTouchDevice) {
+          // Evento touchstart (al presionar)
+          btn.addEventListener(
+            "touchstart",
+            function (e) {
+              e.preventDefault();
+              this.style.opacity = "0.8";
+              this.style.transform = "scale(0.95)";
+            },
+            { passive: false },
+          );
+
+          // Evento touchend (al soltar)
+          btn.addEventListener(
+            "touchend",
+            function (e) {
+              e.preventDefault();
+              this.style.opacity = "1";
+              this.style.transform = "scale(1)";
+
+              // Llamar a la función que maneja la letra
+              ah_manejarLetra(this, letra);
+            },
+            { passive: false },
+          );
+
+          // Evento touchcancel (si se cancela el touch)
+          btn.addEventListener("touchcancel", function () {
+            this.style.opacity = "1";
+            this.style.transform = "scale(1)";
+          });
+        }
+
+        // Para ordenadores (mantener el click normal)
+        btn.addEventListener("click", (e) => {
+          // En móviles, prevenir doble llamada
+          if (isTouchDevice) {
+            e.preventDefault();
+            return;
+          }
+          ah_manejarLetra(btn, letra);
+        });
+
+        // Añadir al contenedor
         letrasEl.appendChild(btn);
       });
     }
@@ -488,4 +552,41 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
   if (btnModalInfoAceptar) {
     btnModalInfoAceptar.addEventListener("click", window.cerrarModalInfo);
   }
+  document.addEventListener(
+    "touchmove",
+    function (e) {
+      if (e.target.closest(".letras button")) {
+        e.preventDefault();
+      }
+    },
+    { passive: false },
+  );
+
+  // Prevenir zoom en iOS cuando se tocan los botones
+  document.addEventListener("gesturestart", function (e) {
+    if (e.target.closest(".letras button")) {
+      e.preventDefault();
+    }
+  });
+  // DEBUG: Ver eventos de touch
+  console.log("UserAgent:", navigator.userAgent);
+  console.log("Touch events:", "ontouchstart" in window);
+
+  // Verificar clicks
+  document.addEventListener(
+    "click",
+    function (e) {
+      console.log("CLICK:", e.target.tagName, e.target.textContent);
+    },
+    true,
+  );
+
+  // Verificar touches
+  document.addEventListener(
+    "touchstart",
+    function (e) {
+      console.log("TOUCH:", e.target.tagName, e.target.textContent);
+    },
+    true,
+  );
 });
