@@ -7,8 +7,6 @@
   "menu.damas": "Jeu de Dames",
 
   "footer.rights": "Tous droits réservés.",
-  "footer.linkedin": "Mon LinkedIn",
-
   "damas.yourPieces": "Tes pièces:",
   "damas.yourSide": "Ton côté:",
   "damas.turn": "Tour:",
@@ -52,7 +50,7 @@
   "language.es": "Espagnol",
   "language.ca": "Català",
   "language.en": "Anglais",
-
+  "language.fr": "Français",
   "operaciones.title": "Opérations",
   "operaciones.selectMode": "Sélectionne le mode de jeu",
   "operaciones.normalMode": "Mode normal",
@@ -193,5 +191,19 @@
   "ranking.noResults": "Aucun résultat",
   "common.clear": "Effacer",
   "ranking.clearConfirm": "Êtes-vous sûr de vouloir supprimer tout le classement ?",
-  "common.cancel": "Annuler"
+  "common.cancel": "Annuler",
+  "menu.settings.language": "Langues",
+  "menu.settings.objective": "Objectif",
+
+  "menu.language.title": "Sélectionner la langue",
+
+  "menu.objective.title": "Objectif du projet",
+  "menu.objective.text": "Ce projet est une collection de jeux éducatifs conçus pour les enfants et les jeunes à partir de 7 ans. Son objectif est de favoriser l’apprentissage de manière ludique, en travaillant des domaines tels que les mathématiques, le langage, la mémoire et la logique. Chaque jeu propose des instructions simples et claires afin que tout utilisateur puisse commencer à jouer facilement.",
+
+  "footer.contact": "Contact",
+  "footer.privacy": "Politique de Confidentialité",
+  "footer.copyright": "© 2025 Jeux Éducatifs pour Enfants",
+  "footer.about": "À propos du Projet",
+  "footer.terms": "Conditions",
+  "footer.educational": "Application Éducative | v1.0.0"
 }

@@ -1,5 +1,5 @@
 <!-- Página de menú inicial -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -10,12 +10,59 @@
   </head>
 
   <body id="body-index">
-    <div id="language-selector">
-      <button onclick="loadLanguage('es')">ES</button>
-      <button onclick="loadLanguage('en')">EN</button>
-      <button onclick="loadLanguage('ca')">CA</button>
-      <button onclick="loadLanguage('fr')">FR</button>
+    <!-- Botón flotante de ajustes -->
+    <div id="settings-container">
+      <button id="settings-btn">⚙️</button>
+
+      <div id="settings-menu">
+        <button id="btn-settings-language" data-i18n="menu.settings.language">
+          🌍 Idiomas
+        </button>
+        <button id="btn-settings-objective" data-i18n="menu.settings.objective">
+          🎯 Objetivo
+        </button>
+      </div>
     </div>
+
+    <!-- Modal idiomas -->
+    <div id="modal-language" class="modal-settings">
+      <div class="modal-box">
+        <h2 data-i18n="menu.language.title">Idioma</h2>
+
+        <div class="language-list">
+          <button onclick="loadLanguage('es')" data-i18n="language.es"></button>
+          <button onclick="loadLanguage('en')" data-i18n="language.en"></button>
+          <button onclick="loadLanguage('ca')" data-i18n="language.ca"></button>
+          <button onclick="loadLanguage('fr')" data-i18n="language.fr"></button>
+        </div>
+
+        <button
+          class="close-btn"
+          onclick="cerrarModalSettings()"
+          data-i18n="common.close"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal objetivo -->
+    <div id="modal-objective" class="modal-settings">
+      <div class="modal-box">
+        <h2 data-i18n="menu.objective.title">Objetivo del proyecto</h2>
+
+        <p data-i18n="menu.objective.text"></p>
+
+        <button
+          class="close-btn"
+          onclick="cerrarModalSettings()"
+          data-i18n="common.close"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+
     <div id="titulo-container">
       <h1 id="title-index" data-i18n="menu.title">
         Juegos Educativos Infantiles
@@ -54,15 +101,45 @@
       </ul>
     </div>
     <footer>
-      &copy; 2025 Pau Gracia López.
-      <span data-i18n="footer.rights">Todos los derechos reservados.</span> |
-      <a
-        href="https://www.linkedin.com/in/pau-gracia-lopez"
-        target="_blank"
-        data-i18n="footer.linkedin"
-      >
-        Mi LinkedIn
-      </a>
+      <div class="footer-copyright">
+        <p>
+          <span data-i18n="footer.copyright"
+            >© 2025 Juegos Educativos Infantiles</span
+          >
+          <span data-i18n="footer.rights">
+            - Todos los derechos reservados.</span
+          >
+        </p>
+        <div class="educational-symbols">
+          <span class="math-symbol">+</span>
+          <span class="math-symbol">−</span>
+          <span class="math-symbol">×</span>
+          <span class="math-symbol">÷</span>
+          <span class="letter-symbol">A</span>
+          <span class="letter-symbol">B</span>
+          <span class="letter-symbol">C</span>
+        </div>
+
+        <div class="footer-links">
+          <a
+            href="#"
+            onclick="
+              document.getElementById('modal-objective').style.display = 'flex'
+            "
+            data-i18n="footer.about"
+          >
+            Sobre el Proyecto
+          </a>
+          <span>•</span>
+          <a href="#" data-i18n="footer.privacy"> Privacidad </a>
+          <span>•</span>
+          <a href="#" data-i18n="footer.terms"> Términos </a>
+        </div>
+
+        <p class="footer-version" data-i18n="footer.educational">
+          Aplicación Educativa | v1.0.0
+        </p>
+      </div>
     </footer>
 
     <script src="./assets/js/i18n.js"></script>

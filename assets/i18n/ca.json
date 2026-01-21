@@ -7,8 +7,6 @@
   "menu.damas": "Joc de Dames",
 
   "footer.rights": "Tots els drets reservats.",
-  "footer.linkedin": "El meu LinkedIn",
-
   "damas.yourPieces": "Les teves peces:",
   "damas.yourSide": "El teu costat:",
   "damas.turn": "Torn:",
@@ -52,7 +50,7 @@
   "language.es": "Español",
   "language.ca": "Català",
   "language.en": "English",
-
+  "language.fr": "Frances",
   "operaciones.title": "Operacions",
   "operaciones.selectMode": "Selecciona mode de joc",
   "operaciones.normalMode": "Mode normal",
@@ -190,5 +188,19 @@
   "ranking.noResults": "No hi ha resultats",
   "common.clear": "Netejar",
   "ranking.clearConfirm": "Segur que vols esborrar tot el rànquing?",
-  "common.cancel": "Cancel·lar"
+  "common.cancel": "Cancel·lar",
+  "menu.settings.language": "Idiomes",
+  "menu.settings.objective": "Objectiu",
+
+  "menu.language.title": "Selecciona l’idioma",
+
+  "menu.objective.title": "Objectiu del projecte",
+  "menu.objective.text": "Aquest projecte és una col·lecció de jocs educatius pensats per a infants i joves a partir dels 7 anys. El seu objectiu és fomentar l’aprenentatge d’una manera divertida, treballant àrees com les matemàtiques, el llenguatge, la memòria i la lògica. Cada joc inclou instruccions clares i senzilles perquè qualsevol usuari pugui començar a jugar sense dificultat.",
+
+  "footer.contact": "Contacte",
+  "footer.privacy": "Política de Privacitat",
+  "footer.copyright": "© 2025 Jocs Educatius Infantils",
+  "footer.about": "Sobre el Projecte",
+  "footer.terms": "Termes",
+  "footer.educational": "Aplicació Educativa | v1.0.0"
 }

@@ -7,8 +7,6 @@
   "menu.damas": "Juego de Damas",
 
   "footer.rights": "Todos los derechos reservados.",
-  "footer.linkedin": "Mi LinkedIn",
-
   "damas.yourPieces": "Tus piezas:",
   "damas.yourSide": "Tu lado:",
   "damas.turn": "Turno:",
@@ -50,9 +48,9 @@
   "palabras.config.gameLanguage": "Idioma del juego:",
   "palabras.config.wordLanguage": "Idioma de las palabras:",
   "language.es": "Español",
-  "language.ca": "Català",
-  "language.en": "English",
-
+  "language.ca": "Catalán",
+  "language.en": "Ingles",
+  "language.fr": "Francés",
   "operaciones.title": "Operaciones",
   "operaciones.selectMode": "Selecciona modo de juego",
   "operaciones.normalMode": "Modo normal",
@@ -194,5 +192,19 @@
   "ranking.noResults": "No hay resultados",
   "common.clear": "Limpiar",
   "ranking.clearConfirm": "¿Seguro que quieres borrar todo el ranking?",
-  "common.cancel": "Cancelar"
+  "common.cancel": "Cancelar",
+  "menu.settings.language": "Idiomas",
+  "menu.settings.objective": "Objetivo",
+
+  "menu.language.title": "Selecciona idioma",
+
+  "menu.objective.title": "Objetivo del proyecto",
+  "menu.objective.text": "Este proyecto es una colección de juegos educativos pensados para niños y jóvenes a partir de 7 años. Su objetivo es fomentar el aprendizaje de forma divertida, trabajando áreas como las matemáticas, el lenguaje, la memoria y la lógica. Cada juego incluye instrucciones claras y sencillas, adaptadas para que cualquier usuario pueda empezar a jugar sin dificultad. El proyecto combina educación y entretenimiento, ayudando a desarrollar habilidades cognitivas mientras se disfruta del juego.",
+
+  "footer.contact": "Contacto",
+  "footer.privacy": "Política de Privacidad",
+  "footer.copyright": "© 2025 Juegos Educativos Infantiles",
+  "footer.about": "Sobre el Proyecto",
+  "footer.terms": "Términos",
+  "footer.educational": "Aplicación Educativa | v1.0.0"
 }

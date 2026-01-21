@@ -7,8 +7,6 @@
   "menu.damas": "Checkers Game",
 
   "footer.rights": "All rights reserved.",
-  "footer.linkedin": "My LinkedIn",
-
   "damas.yourPieces": "Your pieces:",
   "damas.yourSide": "Your side:",
   "damas.turn": "Turn:",
@@ -52,7 +50,7 @@
   "language.es": "Spanish",
   "language.ca": "Català",
   "language.en": "English",
-
+  "language.fr": "french",
   "operaciones.title": "Operations",
   "operaciones.selectMode": "Select game mode",
   "operaciones.normalMode": "Normal mode",
@@ -193,5 +191,17 @@
   "ranking.noResults": "No results found",
   "common.clear": "Clear",
   "ranking.clearConfirm": "Are you sure you want to delete the entire ranking?",
-  "common.cancel": "Cancel"
+  "common.cancel": "Cancel",
+  "menu.settings.language": "Languages",
+  "menu.settings.objective": "Objective",
+  "menu.language.title": "Select language",
+  "menu.objective.title": "Project objective",
+  "menu.objective.text": "This project is a collection of educational games designed for children and young people from the age of 7. Its goal is to encourage learning through fun activities, covering areas such as mathematics, language, memory and logic. Each game includes simple and clear instructions so anyone can start playing easily.",
+
+  "footer.contact": "Contact",
+  "footer.privacy": "Privacy Policy",
+  "footer.copyright": "© 2025 Educational Children's Games",
+  "footer.about": "About the Project",
+  "footer.terms": "Terms",
+  "footer.educational": "Educational App | v1.0.0"
 }
