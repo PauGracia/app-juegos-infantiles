@@ -201,6 +201,21 @@ html {
 
 /* -------- MODALES -------- */
 
+/* === BOTONES DEL MODAL INICIAL === */
+#modal-contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Contenedor lógico de los botones */
+#modal-contenido button {
+  width: 100%;
+  max-width: 260px; /* mismo ancho para todos */
+  height: 52px; /* misma altura */
+  margin: 8px 0;
+}
+
 #modal-inicio,
 #modal-final,
 #modal-info {
@@ -248,7 +263,7 @@ html {
 #modal-final-contenido h2,
 .modal-ranking-contenido h3 {
   color: #2d3748;
-  margin-bottom: 25px;
+  margin-bottom: 18px;
   font-size: 1.8em;
   font-weight: 700;
 }
@@ -270,7 +285,7 @@ html {
   border-radius: 12px;
   background: white;
   transition: all 0.3s;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 #modal-contenido input:focus,
@@ -765,8 +780,7 @@ html {
   #modal-contenido,
   #modal-final-contenido,
   .modal-ranking-contenido {
-    width: 90%;
-    padding: 25px;
+    padding: 20px;
     margin: 10px;
   }
 }

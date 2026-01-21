@@ -8,6 +8,54 @@ document.addEventListener("DOMContentLoaded", () => {
     const letrasEl = document.getElementById("letras");
     const marcadorEl = document.getElementById("marcador-ahorcado");
 
+    // ================================
+    // SONIDOS DEL JUEGO
+    // ================================
+
+    const sonidos = {
+      bien: new Audio("sounds/letra-bien.mp3"),
+      mal: new Audio("sounds/letra-mal.mp3"),
+      nuevaPalabra: new Audio("sounds/nueva-palabra.mp3"),
+      fin: new Audio("sounds/fin.mp3"),
+    };
+
+    // Configuración recomendada
+    Object.values(sonidos).forEach((audio) => {
+      audio.preload = "auto";
+      audio.volume = 0.6;
+    });
+
+    // Función segura para reproducir sonido
+    function reproducirSonido(audio) {
+      if (!audio) return;
+      audio.currentTime = 0;
+      audio.play().catch(() => {
+        // Evita errores de autoplay en móviles
+      });
+    }
+
+    // ================================
+    // DESBLOQUEO AUDIO EN MÓVIL
+    // ================================
+
+    let audioDesbloqueado = false;
+
+    function desbloquearAudioMovil() {
+      if (audioDesbloqueado) return;
+
+      Object.values(sonidos).forEach((audio) => {
+        audio
+          .play()
+          .then(() => {
+            audio.pause();
+            audio.currentTime = 0;
+          })
+          .catch(() => {});
+      });
+
+      audioDesbloqueado = true;
+    }
+
     // Variables de estado
     let ah_palabraSecreta;
     let ah_progreso;
@@ -99,19 +147,17 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       }, 10);
     }
 
-    // Actualizar ah_manejarLetra para incluir efectos
     function ah_manejarLetra(btn, letra) {
-      // 🔴 NUEVA LÍNEA: Prevenir si ya está deshabilitado
       if (btn.disabled) return;
 
-      // 🔴 AÑADE ESTAS 2 LÍNEAS: Feedback visual inmediato
       btn.style.transform = "scale(0.95)";
 
-      // Tu código original sigue IGUAL aquí:
       btn.disabled = true;
       const letraNormalizada = normalizarLetra(letra);
 
       if (normalizarLetra(ah_palabraSecreta).includes(letraNormalizada)) {
+        reproducirSonido(sonidos.bien);
+
         btn.style.background = "green";
         for (let i = 0; i < ah_palabraSecreta.length; i++) {
           if (normalizarLetra(ah_palabraSecreta[i]) === letraNormalizada) {
@@ -135,59 +181,71 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
             "ahorcado.nextWord",
             "¡Siguiente palabra!",
           );
-          mostrarMensajeTemporal(`${winMessage} ${nextWord}`, 1500);
-          setTimeout(() => ah_nuevaPalabra(), 700);
+          setTimeout(() => {
+            reproducirSonido(sonidos.nuevaPalabra);
+            mostrarMensajeTemporal(`${winMessage} ${nextWord}`, 2200);
+          }, 500);
+
+          setTimeout(() => {
+            ah_nuevaPalabra();
+          }, 2800);
         }
       } else {
+        reproducirSonido(sonidos.mal);
         btn.style.background = "red";
         ah_errores++;
         ah_actualizarAhorcado();
       }
 
-      // 🔴 AÑADE AL FINAL: Restaurar tamaño después de un momento
       setTimeout(() => {
         btn.style.transform = "";
       }, 150);
     }
 
     // Mejorar función mostrarMensajeTemporal
-    function mostrarMensajeTemporal(mensaje, duracion = 2000) {
+    function mostrarMensajeTemporal(mensaje, duracion = 2200) {
       const mensajeEl = document.createElement("div");
       mensajeEl.textContent = mensaje;
+
       mensajeEl.style.cssText = `
     position: fixed;
-    top: 50%;
+    top: 18%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -10px);
     background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(50,50,50,0.95));
     color: white;
-    padding: 20px 35px;
-    border-radius: 15px;
+    padding: 18px 32px;
+    border-radius: 14px;
     z-index: 9999;
-    font-size: 1.3em;
+    font-size: 1.25em;
     text-align: center;
-    min-width: 300px;
-    max-width: 80%;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    border: 2px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    animation: fadeIn 0.3s ease-out;
+    min-width: 280px;
+    max-width: 85%;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
     font-weight: 600;
   `;
 
       document.body.appendChild(mensajeEl);
 
+      // Fade IN
+      requestAnimationFrame(() => {
+        mensajeEl.style.opacity = "1";
+        mensajeEl.style.transform = "translate(-50%, 0)";
+      });
+
+      // Fade OUT
       setTimeout(() => {
-        if (mensajeEl.parentNode) {
-          mensajeEl.style.opacity = "0";
-          mensajeEl.style.transform = "translate(-50%, -50%) scale(0.9)";
-          mensajeEl.style.transition = "all 0.3s ease";
-          setTimeout(() => {
-            if (mensajeEl.parentNode) {
-              document.body.removeChild(mensajeEl);
-            }
-          }, 300);
-        }
+        mensajeEl.style.opacity = "0";
+        mensajeEl.style.transform = "translate(-50%, -10px)";
+        setTimeout(() => {
+          if (mensajeEl.parentNode) {
+            mensajeEl.remove();
+          }
+        }, 400);
       }, duracion);
     }
 
@@ -200,6 +258,8 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
 
     // Iniciar juego
     window.iniciarAhorcado = function () {
+      // DESBLOQUEAR AUDIO EN MÓVIL
+      desbloquearAudioMovil();
       const selectIdiomaJuego = document.getElementById("idioma-juego");
       ah_idiomaJuego = selectIdiomaJuego ? selectIdiomaJuego.value : "es";
 
@@ -373,7 +433,7 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
 
       if (ah_errores >= ah_maxErrores) {
         ah_revelarPalabra();
-        setTimeout(() => ah_mostrarFinal(), 1200);
+        setTimeout(() => ah_mostrarFinal(), 3200);
       }
     }
 
@@ -393,7 +453,10 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
         "ahorcado.loseMessage",
         "La palabra era:",
       );
-      mostrarMensajeTemporal(`${loseMessage} ${ah_palabraSecreta}`, 1500);
+      setTimeout(() => {
+        reproducirSonido(sonidos.fin);
+        mostrarMensajeTemporal(`${loseMessage} ${ah_palabraSecreta}`, 2500);
+      }, 500);
     }
 
     function ah_actualizarMarcador() {
@@ -441,36 +504,6 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       // Limpiar input usuario
       const inputUsuario = document.getElementById("usuario");
       if (inputUsuario) inputUsuario.value = "";
-    }
-
-    // Función para mostrar mensajes temporales
-    function mostrarMensajeTemporal(mensaje, duracion = 2000) {
-      const mensajeEl = document.createElement("div");
-      mensajeEl.textContent = mensaje;
-      mensajeEl.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 15px 25px;
-        border-radius: 10px;
-        z-index: 9999;
-        font-size: 1.2em;
-        text-align: center;
-        min-width: 300px;
-        max-width: 80%;
-        pointer-events: none;
-      `;
-
-      document.body.appendChild(mensajeEl);
-
-      setTimeout(() => {
-        if (mensajeEl.parentNode) {
-          document.body.removeChild(mensajeEl);
-        }
-      }, duracion);
     }
 
     window.ah_reiniciarCompleto = function () {
