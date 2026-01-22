@@ -385,7 +385,7 @@
 .info-panel-damas span {
   color: #2c3e50;
   font-weight: 500;
-  margin-left: 5px;
+
   flex: 1;
   text-align: right;
   min-width: 60px; /* Ancho mínimo para valores */
@@ -850,27 +850,27 @@
     align-items: center;
     gap: 20px;
     width: 100%;
-    max-width: 100vw;
+    max-width: 100%;
     padding: 10px;
     margin: 0 auto;
   }
 
   #juego-damas-contenedor {
-    width: 100%;
-    max-width: 100vw;
+    width: 90%;
+    max-width: 90%;
   }
 
   #tablero-damas {
-    width: 90vw;
-    max-width: 90vw;
+    width: 90%;
+    max-width: 90%;
     aspect-ratio: 1/1;
     margin: 0 auto;
     border-width: 4px;
   }
 
   .panel-y-botones {
-    width: 90vw;
-    max-width: 90vw;
+    width: 90%;
+    max-width: 90%;
     margin: 0 auto;
     /* Layout especial 70/30 */
     display: grid;
@@ -948,21 +948,20 @@
   }
 
   .body-damas {
-    padding: 8px;
+    padding: 0;
     align-items: center;
     min-height: 100vh;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     overflow-x: hidden;
-    max-width: 100vw;
   }
 
   .contenedor-juego-damas {
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    width: 100%;
+
     max-width: 100vw;
-    padding: 5px;
+    padding: 8px;
     margin: 0 auto;
     box-sizing: border-box;
   }
@@ -973,8 +972,8 @@
   }
 
   #tablero-damas {
-    width: 94vw;
-    max-width: 94vw;
+    width: 100%;
+    max-width: 100%;
     aspect-ratio: 1/1;
     border-width: 3px;
     border-radius: 12px;
@@ -983,12 +982,12 @@
   }
 
   .panel-y-botones {
-    width: 94vw;
-    max-width: 94vw;
+    width: 94%;
+    max-width: 94%;
     margin: 0 auto;
     /* Layout especial 70/30 más compacto */
     display: grid;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: 65% 30%;
     grid-template-rows: auto;
     align-items: stretch;
     gap: 12px;
@@ -1013,7 +1012,6 @@
     line-height: 1.2;
     font-size: 12px;
     min-height: 16px;
-    padding: 1px 0;
   }
 
   .info-panel-damas b {
@@ -1023,6 +1021,7 @@
 
   .info-panel-damas span {
     font-size: 11px;
+    padding-right: 5px;
   }
 
   .contenedor-botones-damas {
@@ -1067,141 +1066,6 @@
     min-width: 110px;
     padding: 10px 12px;
     font-size: 13px;
-  }
-}
-
-/* PANTALLAS MUY PEQUEÑAS (Hasta 380px) - Ajustes específicos */
-@media (max-width: 380px) {
-  :root {
-    --escala-ui: 0.75;
-  }
-
-  .body-damas {
-    padding: 6px;
-    max-width: 100vw;
-  }
-
-  .contenedor-juego-damas {
-    gap: 12px;
-    padding: 3px;
-    max-width: 100vw;
-  }
-
-  #tablero-damas {
-    width: 96vw;
-    max-width: 96vw;
-    border-width: 2px;
-    border-radius: 10px;
-  }
-
-  .panel-y-botones {
-    width: 96vw;
-    max-width: 96vw;
-    gap: 10px;
-    grid-template-columns: 68% 32%; /* Ajuste fino 68/32 */
-  }
-
-  .info-panel-damas {
-    padding: 10px;
-    font-size: calc(11px * var(--escala-ui));
-    min-height: 170px;
-  }
-
-  .info-panel-damas div {
-    font-size: 11px;
-    margin-bottom: 4px;
-    min-height: 14px;
-    line-height: 1.1;
-  }
-
-  .info-panel-damas b {
-    min-width: 85px;
-    font-size: 10px;
-  }
-
-  .info-panel-damas span {
-    font-size: 10px;
-  }
-
-  .contenedor-botones-damas {
-    gap: 5px;
-  }
-
-  .contenedor-botones-damas .boton-damas {
-    padding: 5px 3px;
-    font-size: 10px;
-    min-height: 36px;
-    border-radius: 5px;
-  }
-
-  .info-panel-damas,
-  .contenedor-botones-damas {
-    min-height: 170px;
-  }
-
-  #mensaje-estado-damas {
-    padding: 5px;
-    font-size: 10px;
-  }
-}
-
-/* MÓVILES MUY PEQUEÑOS (Hasta 320px) */
-@media (max-width: 320px) {
-  :root {
-    --escala-ui: 0.7;
-  }
-
-  .body-damas {
-    padding: 4px;
-  }
-
-  .contenedor-juego-damas {
-    gap: 8px;
-    padding: 2px;
-  }
-
-  #tablero-damas {
-    width: 98vw;
-    max-width: 98vw;
-  }
-
-  .panel-y-botones {
-    width: 98vw;
-    max-width: 98vw;
-    gap: 8px;
-    grid-template-columns: 67% 33%; /* Ajuste fino 67/33 */
-  }
-
-  .info-panel-damas {
-    padding: 8px;
-    font-size: calc(10px * var(--escala-ui));
-    min-height: 160px;
-  }
-
-  .info-panel-damas div {
-    font-size: 10px;
-    margin-bottom: 3px;
-    min-height: 12px;
-  }
-
-  .info-panel-damas b {
-    min-width: 75px;
-    font-size: 9px;
-  }
-
-  .info-panel-damas span {
-    font-size: 9px;
-  }
-
-  .contenedor-botones-damas .boton-damas {
-    padding: 4px 2px;
-    font-size: 9px;
-    min-height: 32px;
-  }
-
-  .info-panel-damas,
-  .contenedor-botones-damas {
-    min-height: 160px;
   }
 }
 
