@@ -206,5 +206,16 @@
   "footer.copyright": "© 2025 Juegos Educativos Infantiles",
   "footer.about": "Sobre el Proyecto",
   "footer.terms": "Términos",
-  "footer.educational": "Aplicación Educativa | v1.0.0"
+  "footer.educational": "Aplicación Educativa | v1.0.0",
+  "damas.config.title": "Configuración de partida",
+  "damas.config.shuffleColors": "🎲 Sortear colores",
+  "damas.config.enableHints": "Activar sugerencia de movimientos",
+  "damas.config.play": "Jugar",
+  "damas.config.exit": "Salir",
+
+  "damas.config.result.white": "Tú juegas con BLANCAS",
+  "damas.config.result.black": "Tú juegas con NEGRAS",
+
+  "damas.warning.title": "Aviso",
+  "damas.warning.mustShuffle": "Debes realizar el sorteo antes de jugar"
 }

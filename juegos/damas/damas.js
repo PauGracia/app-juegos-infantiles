@@ -19,7 +19,7 @@ document.addEventListener(
       a.play().catch(() => {});
     });
   },
-  { once: true }
+  { once: true },
 );
 
 // ================================
@@ -86,6 +86,9 @@ const JuegoDamas = (() => {
     tableroGiradoFlag: false,
     juegoTerminadoFlag: false,
     capturasHumano: 0,
+    mostrarSugerencias: true,
+    sorteoRealizado: false,
+
     capturasIA: 0,
   };
 
@@ -102,7 +105,7 @@ const JuegoDamas = (() => {
   // ======================================================================
   function generarTableroInicialDamas() {
     estadoGlobalDamas.matrizDamas = Array.from({ length: 8 }, () =>
-      Array(8).fill(null)
+      Array(8).fill(null),
     );
 
     for (let r = 0; r < 3; r++)
@@ -126,6 +129,21 @@ const JuegoDamas = (() => {
     // El que tiene blancas empieza
     estadoGlobalDamas.turnoActualDamas =
       estadoGlobalDamas.colorHumano === "blancas" ? "humano" : "ia";
+  }
+
+  function realizarSorteoColores() {
+    estadoGlobalDamas.colorHumano = Math.random() < 0.5 ? "blancas" : "negras";
+
+    estadoGlobalDamas.turnoActualDamas =
+      estadoGlobalDamas.colorHumano === "blancas" ? "humano" : "ia";
+
+    estadoGlobalDamas.sorteoRealizado = true;
+
+    const res = document.getElementById("resultado-sorteo");
+    res.textContent =
+      estadoGlobalDamas.colorHumano === "blancas"
+        ? t("damas.config.result.white")
+        : t("damas.config.result.black");
   }
 
   // ======================================================================
@@ -181,9 +199,8 @@ const JuegoDamas = (() => {
             dot.style.outline = "4px solid #ffd700";
           }
 
-          dot.addEventListener("click", (e) => {
+          celda.addEventListener("click", () => {
             manejarClickPiezaDamas(r, c);
-            e.stopPropagation();
           });
 
           celda.appendChild(dot);
@@ -199,36 +216,41 @@ const JuegoDamas = (() => {
   // SELECCIÓN Y MOVIMIENTOS
   // ======================================================================
   function manejarClickPiezaDamas(r, c) {
-    if (!clickSeguro()) return;
-    const seleccion = estadoGlobalDamas.seleccionActualDamas;
-    if (seleccion && seleccion.r === r && seleccion.c === c) {
-      estadoGlobalDamas.seleccionActualDamas = null;
-      estadoGlobalDamas.movimientosDisponiblesDamas = [];
-      dibujarTableroDamas();
-      return;
-    }
     if (estadoGlobalDamas.juegoTerminadoFlag) return;
     if (estadoGlobalDamas.turnoActualDamas !== "humano") return;
 
-    const ficha = estadoGlobalDamas.matrizDamas[r][c];
-    const esHumano =
-      ficha && ficha.dueño === estadoGlobalDamas.ladoHumanoAsignado;
+    const seleccion = estadoGlobalDamas.seleccionActualDamas;
 
-    if (esHumano) {
+    if (seleccion) {
+      const mov = estadoGlobalDamas.movimientosDisponiblesDamas.find(
+        (m) => m.hacia.r === r && m.hacia.c === c,
+      );
+      if (mov) {
+        ejecutarMovimientoDamas(mov);
+        return;
+      }
+    }
+
+    if (!clickSeguro()) return;
+
+    const ficha = estadoGlobalDamas.matrizDamas[r][c];
+
+    // Si se hace click en una ficha humana seleccionar
+    if (ficha && ficha.dueño === estadoGlobalDamas.ladoHumanoAsignado) {
       estadoGlobalDamas.seleccionActualDamas = { r, c };
 
       const todasLasCapturas = buscarCapturasGeneralesDamas("humano");
 
       if (todasLasCapturas.length) {
         estadoGlobalDamas.movimientosDisponiblesDamas = todasLasCapturas.filter(
-          (m) => m.desde.r === r && m.desde.c === c
+          (m) => m.desde.r === r && m.desde.c === c,
         );
       } else {
         estadoGlobalDamas.movimientosDisponiblesDamas =
           calcularMovimientosDesdeDamas(r, c);
       }
 
-      if (estadoGlobalDamas.movimientosDisponiblesDamas.length === 0) {
+      if (!estadoGlobalDamas.movimientosDisponiblesDamas.length) {
         estadoGlobalDamas.seleccionActualDamas = null;
         return;
       }
@@ -237,21 +259,16 @@ const JuegoDamas = (() => {
       return;
     }
 
-    if (estadoGlobalDamas.seleccionActualDamas) {
-      const mov = estadoGlobalDamas.movimientosDisponiblesDamas.find(
-        (m) => m.hacia.r === r && m.hacia.c === c
-      );
-      if (mov) ejecutarMovimientoDamas(mov);
-    }
+    // Click en vacío sin movimiento válido limpiar selección
+    estadoGlobalDamas.seleccionActualDamas = null;
+    estadoGlobalDamas.movimientosDisponiblesDamas = [];
+    dibujarTableroDamas();
   }
 
   function resaltarSeleccionDamas() {
     dibujarTableroDamas();
-    const { r, c } = estadoGlobalDamas.seleccionActualDamas;
-    const idx = indicePlanoDamas(r, c);
-    const celda = tableroDamasPrincipal.children[idx];
-    const dot = celda.querySelector(".dot-pieza");
-    if (dot) dot.style.outline = "4px solid #fff8";
+
+    if (!estadoGlobalDamas.mostrarSugerencias) return;
 
     estadoGlobalDamas.movimientosDisponiblesDamas.forEach((m) => {
       const id2 = indicePlanoDamas(m.hacia.r, m.hacia.c);
@@ -341,7 +358,7 @@ const JuegoDamas = (() => {
               tr,
               tc,
               nuevasCaps,
-              copia[tr][tc].rey
+              copia[tr][tc].rey,
             );
             if (!rec) {
               capturasTotales.push({
@@ -463,7 +480,7 @@ const JuegoDamas = (() => {
       // Verificar capturas encadenadas
       if (capturas.length && estadoGlobalDamas.turnoActualDamas === "humano") {
         const nuevas = calcularMovimientosDesdeDamas(hacia.r, hacia.c).filter(
-          (m) => m.capturas.length
+          (m) => m.capturas.length,
         );
         if (nuevas.length) {
           estadoGlobalDamas.seleccionActualDamas = { r: hacia.r, c: hacia.c };
@@ -612,7 +629,7 @@ const JuegoDamas = (() => {
         { transform: "scale(1)", opacity: 1 },
         { transform: "scale(2.5)", opacity: 0 },
       ],
-      { duration: 1200, easing: "ease-out" }
+      { duration: 1200, easing: "ease-out" },
     );
 
     ficha.animate(
@@ -621,7 +638,7 @@ const JuegoDamas = (() => {
         { transform: "scale(1.2)" },
         { transform: "scale(1)" },
       ],
-      { duration: 800, easing: "ease-in-out" }
+      { duration: 800, easing: "ease-in-out" },
     );
 
     ficha.classList.add("rey-damas");
@@ -746,7 +763,7 @@ const JuegoDamas = (() => {
         : t("damas.ai");
 
     const caps = buscarCapturasGeneralesDamas(
-      estadoGlobalDamas.turnoActualDamas
+      estadoGlobalDamas.turnoActualDamas,
     );
     document.getElementById("captura-obligatoria-info").textContent =
       caps.length ? caps.length : "—";
@@ -770,7 +787,7 @@ const JuegoDamas = (() => {
         const esHum = p.dueño === estadoGlobalDamas.ladoHumanoAsignado;
         if ((turno === "humano" && esHum) || (turno === "ia" && !esHum)) {
           const m = calcularMovimientosDesdeDamas(r, c).filter(
-            (x) => x.capturas.length
+            (x) => x.capturas.length,
           );
           res.push(...m);
         }
@@ -785,7 +802,6 @@ const JuegoDamas = (() => {
     generarTableroInicialDamas();
     estadoGlobalDamas.ladoHumanoAsignado = "bottom";
     document.getElementById("color-humano-info").textContent = "Abajo";
-    sortearColoresYTurno();
 
     estadoGlobalDamas.seleccionActualDamas = null;
     estadoGlobalDamas.movimientosDisponiblesDamas = [];
@@ -825,6 +841,10 @@ const JuegoDamas = (() => {
 
   return {
     reset: resetGameDamasUltra,
+    realizarSorteoColores,
+    dibujarTableroDamas,
+    movimientoIA_Damas,
+    estado: estadoGlobalDamas,
   };
 })();
 
@@ -844,6 +864,38 @@ document
     document.getElementById("modal-instrucciones-damas").style.display = "none";
   });
 
+document
+  .getElementById("boton-sortear-colores")
+  .addEventListener("click", () => {
+    JuegoDamas.realizarSorteoColores();
+  });
+
+document.getElementById("check-sugerencias").addEventListener("change", (e) => {
+  JuegoDamas.estado.mostrarSugerencias = e.target.checked;
+});
+
+document.getElementById("boton-jugar-config").addEventListener("click", () => {
+  const estado = JuegoDamas.estado;
+
+  if (!estado.sorteoRealizado) {
+    mostrarAvisoDamas(t("damas.warning.mustShuffle"));
+
+    return;
+  }
+
+  document.getElementById("modal-config-damas").style.display = "none";
+
+  JuegoDamas.dibujarTableroDamas();
+
+  if (estado.turnoActualDamas === "ia") {
+    setTimeout(JuegoDamas.movimientoIA_Damas, 500);
+  }
+});
+
+document.getElementById("boton-salir-config").addEventListener("click", () => {
+  location.href = "../../index.html";
+});
+
 let ultimoClickTiempo = 0;
 
 function clickSeguro() {
@@ -851,4 +903,16 @@ function clickSeguro() {
   if (ahora - ultimoClickTiempo < 250) return false;
   ultimoClickTiempo = ahora;
   return true;
+}
+// Funcion de avisos
+function mostrarAvisoDamas(texto) {
+  const modal = document.getElementById("modal-aviso-damas");
+  const mensaje = document.getElementById("modal-aviso-texto");
+
+  mensaje.textContent = texto;
+  modal.style.display = "flex";
+
+  document.getElementById("boton-cerrar-aviso").onclick = () => {
+    modal.style.display = "none";
+  };
 }

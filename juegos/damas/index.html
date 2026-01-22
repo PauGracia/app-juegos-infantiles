@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="utf-8" />
@@ -11,6 +11,55 @@
     <link rel="stylesheet" href="damas.css?v=20251111" />
   </head>
   <body class="body-damas">
+    <!-- Modal configuración inicial -->
+    <div id="modal-config-damas" class="modal-fin-damas" style="display: flex">
+      <div class="modal-contenido modal-configuracion">
+        <h2 data-i18n="damas.config.title"></h2>
+
+        <!-- Sorteo -->
+        <div class="config-bloque">
+          <button
+            class="boton-damas"
+            id="boton-sortear-colores"
+            data-i18n="damas.config.shuffleColors"
+          ></button>
+
+          <!-- Espacio reservado para el resultado -->
+          <div id="resultado-sorteo" class="resultado-sorteo">—</div>
+        </div>
+
+        <!-- Checkbox sugerencias -->
+        <div class="config-bloque checkbox-bloque">
+          <label>
+            <input type="checkbox" id="check-sugerencias" checked />
+            <span data-i18n="damas.config.enableHints"></span>
+          </label>
+        </div>
+
+        <!-- Botones finales -->
+        <div class="botones-modal">
+          <button
+            id="boton-jugar-config"
+            data-i18n="damas.config.play"
+          ></button>
+          <button
+            id="boton-salir-config"
+            data-i18n="damas.config.exit"
+          ></button>
+        </div>
+      </div>
+    </div>
+    <div id="modal-aviso-damas" class="modal-fin-damas" style="display: none">
+      <div class="modal-contenido">
+        <h3 id="modal-aviso-texto" data-i18n="damas.warning.title"></h3>
+        <button
+          class="boton-damas"
+          id="boton-cerrar-aviso"
+          data-i18n="common.accept"
+        ></button>
+      </div>
+    </div>
+
     <div class="contenedor-juego-damas">
       <div id="juego-damas-contenedor">
         <div id="tablero-damas"></div>

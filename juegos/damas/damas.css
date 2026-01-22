@@ -13,6 +13,33 @@
   box-sizing: border-box;
 }
 
+/* ---------------- CONFIGURACIÓN INICIAL ---------------- */
+
+.modal-configuracion {
+  max-width: 420px;
+}
+
+.config-bloque {
+  margin: 15px 0;
+  text-align: center;
+}
+
+.resultado-sorteo {
+  margin-top: 10px;
+  min-height: 24px; /* Reserva espacio para que no se deforme */
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.checkbox-bloque {
+  text-align: left;
+  font-size: 16px;
+}
+
+.checkbox-bloque input {
+  margin-right: 8px;
+}
+
 /* -------------------- TABLERO Y CELDAS -------------------- */
 #juego-damas-contenedor #tablero-damas > .celda-damas.oscura-damas {
   background: #2f5f3a;
@@ -64,7 +91,8 @@
 
 /* Rey estático - sin animaciones infinitas */
 .dot-pieza.rey-damas {
-  box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8),
+  box-shadow:
+    0 0 15px 5px rgba(255, 215, 0, 0.8),
     inset 0 0 10px rgba(255, 255, 255, 0.6);
   position: relative;
 }

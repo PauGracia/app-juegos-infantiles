@@ -203,5 +203,16 @@
   "footer.copyright": "© 2025 Educational Children's Games",
   "footer.about": "About the Project",
   "footer.terms": "Terms",
-  "footer.educational": "Educational App | v1.0.0"
+  "footer.educational": "Educational App | v1.0.0",
+  "damas.config.title": "Game Configuration",
+  "damas.config.shuffleColors": "🎲 Shuffle Colors",
+  "damas.config.enableHints": "Enable Move Hints",
+  "damas.config.play": "Play",
+  "damas.config.exit": "Exit",
+
+  "damas.config.result.white": "You play with WHITE",
+  "damas.config.result.black": "You play with BLACK",
+
+  "damas.warning.title": "Warning",
+  "damas.warning.mustShuffle": "You must shuffle colors before playing"
 }

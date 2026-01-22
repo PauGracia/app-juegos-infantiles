@@ -205,5 +205,16 @@
   "footer.copyright": "© 2025 Jeux Éducatifs pour Enfants",
   "footer.about": "À propos du Projet",
   "footer.terms": "Conditions",
-  "footer.educational": "Application Éducative | v1.0.0"
+  "footer.educational": "Application Éducative | v1.0.0",
+  "damas.config.title": "Configuration de la partie",
+  "damas.config.shuffleColors": "🎲 Mélanger les couleurs",
+  "damas.config.enableHints": "Activer les suggestions de mouvements",
+  "damas.config.play": "Jouer",
+  "damas.config.exit": "Quitter",
+
+  "damas.config.result.white": "Vous jouez avec les BLANCHES",
+  "damas.config.result.black": "Vous jouez avec les NOIRES",
+
+  "damas.warning.title": "Avertissement",
+  "damas.warning.mustShuffle": "Vous devez mélanger les couleurs avant de jouer"
 }

@@ -202,5 +202,16 @@
   "footer.copyright": "© 2025 Jocs Educatius Infantils",
   "footer.about": "Sobre el Projecte",
   "footer.terms": "Termes",
-  "footer.educational": "Aplicació Educativa | v1.0.0"
+  "footer.educational": "Aplicació Educativa | v1.0.0",
+  "damas.config.title": "Configuració de la partida",
+  "damas.config.shuffleColors": "🎲 Barrejar colors",
+  "damas.config.enableHints": "Activar suggeriments de moviments",
+  "damas.config.play": "Jugar",
+  "damas.config.exit": "Sortir",
+
+  "damas.config.result.white": "Jugues amb BLANQUES",
+  "damas.config.result.black": "Jugues amb NEGRES",
+
+  "damas.warning.title": "Avís",
+  "damas.warning.mustShuffle": "Has de barrejar els colors abans de jugar"
 }
