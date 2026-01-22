@@ -138,6 +138,7 @@
   justify-content: center;
   overflow: visible;
   transition: all 0.2s ease;
+  aspect-ratio: 1/1;
 }
 
 .celda-damas.oscura-damas:hover {
@@ -305,6 +306,9 @@
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
   border: 6px solid var(--color-primario);
   position: relative;
+  min-height: auto;
+  max-height: none;
+  background: #fff;
 }
 
 #tablero-damas::before {

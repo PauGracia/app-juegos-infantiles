@@ -8,7 +8,7 @@
 
   "footer.rights": "Todos los derechos reservados.",
   "damas.yourPieces": "Tus piezas:",
-  "damas.yourSide": "Tu lado:",
+  "damas.yourSide": "Turno:",
   "damas.turn": "Turno:",
   "damas.winner": "Ganador:",
   "damas.forcedCaptures": "Capturas obligatorias:",
@@ -208,7 +208,7 @@
   "footer.terms": "Términos",
   "footer.educational": "Aplicación Educativa | v1.0.0",
   "damas.config.title": "Configuración de partida",
-  "damas.config.shuffleColors": "🎲 Sortear colores",
+  "damas.config.shuffleColors": "🎲 Sortear piezas",
   "damas.config.enableHints": "Activar sugerencia de movimientos",
   "damas.config.play": "Jugar",
   "damas.config.exit": "Salir",

@@ -8,7 +8,7 @@
 
   "footer.rights": "Tots els drets reservats.",
   "damas.yourPieces": "Les teves peces:",
-  "damas.yourSide": "El teu costat:",
+  "damas.yourSide": "Torn:",
   "damas.turn": "Torn:",
   "damas.winner": "Guanyador:",
   "damas.forcedCaptures": "Captures obligatòries:",
@@ -204,7 +204,7 @@
   "footer.terms": "Termes",
   "footer.educational": "Aplicació Educativa | v1.0.0",
   "damas.config.title": "Configuració de la partida",
-  "damas.config.shuffleColors": "🎲 Barrejar colors",
+  "damas.config.shuffleColors": "🎲 Sorteig de peces",
   "damas.config.enableHints": "Activar suggeriments de moviments",
   "damas.config.play": "Jugar",
   "damas.config.exit": "Sortir",

@@ -497,6 +497,9 @@ const JuegoDamas = (() => {
   // ======================================================================
   // ANIMACIONES SIMPLIFICADAS
   // ======================================================================
+  // ======================================================================
+  // ANIMACIONES SIMPLIFICADAS - VERSIÓN CORREGIDA
+  // ======================================================================
   function animarCapturasConRuta(desde, capturas, ficha, callback) {
     const posiciones = [];
     let posActual = { r: desde.r, c: desde.c };
@@ -562,21 +565,26 @@ const JuegoDamas = (() => {
       return;
     }
 
-    const rectActual = celdaActual.getBoundingClientRect();
-    const rectDestino = celdaDestino.getBoundingClientRect();
-    const dx = rectDestino.left - rectActual.left;
-    const dy = rectDestino.top - rectActual.top;
+    // Obtener dimensiones de las celdas
+    const cellSize = celdaActual.offsetWidth; // Todas las celdas son del mismo tamaño
 
+    // Calcular desplazamiento en celdas
+    const dx = (destino.c - parseInt(celdaActual.dataset.c)) * cellSize;
+    const dy = (destino.r - parseInt(celdaActual.dataset.r)) * cellSize;
+
+    // Aplicar animación
     ficha.style.transition = `transform ${DAMAS.ANIMACION_MS}ms ease-in-out`;
-
     ficha.style.transform = `translate(${dx}px, ${dy}px)`;
 
     setTimeout(() => {
       ficha.style.transition = "none";
       ficha.style.transform = "translate(0, 0)";
+
+      // Mover la ficha al DOM de destino
       celdaDestino.appendChild(ficha);
+
       callback();
-    }, 1000);
+    }, DAMAS.ANIMACION_MS);
   }
 
   function animarMovimientoSimple(desde, hacia, ficha, callback) {
@@ -590,10 +598,12 @@ const JuegoDamas = (() => {
       return;
     }
 
-    const rectActual = celdaActual.getBoundingClientRect();
-    const rectDestino = celdaDestino.getBoundingClientRect();
-    const dx = rectDestino.left - rectActual.left;
-    const dy = rectDestino.top - rectActual.top;
+    // Obtener dimensiones de las celdas
+    const cellSize = celdaActual.offsetWidth; // Todas las celdas son del mismo tamaño
+
+    // Calcular desplazamiento en celdas
+    const dx = (hacia.c - desde.c) * cellSize;
+    const dy = (hacia.r - desde.r) * cellSize;
 
     ficha.style.transition = "transform 1000ms ease-in-out";
     ficha.style.transform = `translate(${dx}px, ${dy}px)`;
@@ -601,11 +611,13 @@ const JuegoDamas = (() => {
     setTimeout(() => {
       ficha.style.transition = "none";
       ficha.style.transform = "translate(0, 0)";
+
+      // Mover la ficha al DOM de destino
       celdaDestino.appendChild(ficha);
+
       callback();
     }, 1000);
   }
-
   function efectoCoronacion(r, c) {
     const idx = indicePlanoDamas(r, c);
     const celda = tableroDamasPrincipal.children[idx];

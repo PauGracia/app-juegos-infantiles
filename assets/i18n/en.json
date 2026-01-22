@@ -8,7 +8,7 @@
 
   "footer.rights": "All rights reserved.",
   "damas.yourPieces": "Your pieces:",
-  "damas.yourSide": "Your side:",
+  "damas.yourSide": "Turn :",
   "damas.turn": "Turn:",
   "damas.winner": "Winner:",
   "damas.forcedCaptures": "Forced captures:",
@@ -205,7 +205,7 @@
   "footer.terms": "Terms",
   "footer.educational": "Educational App | v1.0.0",
   "damas.config.title": "Game Configuration",
-  "damas.config.shuffleColors": "🎲 Shuffle Colors",
+  "damas.config.shuffleColors": "🎲 Piece draw",
   "damas.config.enableHints": "Enable Move Hints",
   "damas.config.play": "Play",
   "damas.config.exit": "Exit",
