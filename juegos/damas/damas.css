@@ -4,6 +4,14 @@
 
 :root {
   --escala-ui: 1;
+  --color-primario: #2c3e50;
+  --color-secundario: #3498db;
+  --color-fondo: #ecf0f1;
+  --color-boton: #7f8c8d;
+  --color-boton-hover: #95a5a6;
+  --color-exito: #27ae60;
+  --color-error: #e74c3c;
+  --color-aviso: #f39c12;
 }
 
 /* -------------------- RESET Y BASE -------------------- */
@@ -17,36 +25,110 @@
 
 .modal-configuracion {
   max-width: 420px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid var(--color-primario);
+}
+
+.modal-configuracion h2 {
+  color: var(--color-primario);
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .config-bloque {
-  margin: 15px 0;
+  margin: 20px 0;
   text-align: center;
+  padding: 15px;
+  background: rgba(236, 240, 241, 0.5);
+  border-radius: 10px;
+  border: 1px solid #dfe6e9;
 }
 
 .resultado-sorteo {
   margin-top: 10px;
-  min-height: 24px; /* Reserva espacio para que no se deforme */
-  font-size: 16px;
+  min-height: 28px;
+  font-size: 18px;
   font-weight: bold;
+  color: var(--color-primario);
+  padding: 8px;
+  background: white;
+  border-radius: 6px;
+  border: 2px dashed #bdc3c7;
+  min-width: 150px;
+  display: inline-block;
 }
 
 .checkbox-bloque {
   text-align: left;
   font-size: 16px;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #dfe6e9;
+  margin: 15px 0;
 }
 
 .checkbox-bloque input {
-  margin-right: 8px;
+  margin-right: 10px;
+  transform: scale(1.2);
+}
+
+.checkbox-bloque label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--color-primario);
+  font-weight: 500;
+}
+
+/* Estilos para botones de configuración */
+#boton-jugar-config,
+#boton-salir-config {
+  font-size: 17px;
+  padding: 16px 28px;
+  background: linear-gradient(145deg, var(--color-boton), #6c7a7d);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+  min-width: 140px;
+  margin: 0 5px;
+}
+
+#boton-jugar-config {
+  background: linear-gradient(145deg, var(--color-exito), #219653);
+}
+
+#boton-jugar-config:hover {
+  background: linear-gradient(145deg, #2ecc71, #27ae60);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+#boton-salir-config {
+  background: linear-gradient(145deg, var(--color-error), #c0392b);
+}
+
+#boton-salir-config:hover {
+  background: linear-gradient(145deg, #e74c3c, #a93226);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* -------------------- TABLERO Y CELDAS -------------------- */
 #juego-damas-contenedor #tablero-damas > .celda-damas.oscura-damas {
-  background: #2f5f3a;
+  background: linear-gradient(145deg, #2f5f3a, #1e3a24);
 }
 
 #juego-damas-contenedor #tablero-damas > .celda-damas.clara-damas {
-  background: #f0d9b5;
+  background: linear-gradient(145deg, #f0d9b5, #e6cfa0);
 }
 
 .celda-damas {
@@ -55,17 +137,24 @@
   align-items: center;
   justify-content: center;
   overflow: visible;
+  transition: all 0.2s ease;
+}
+
+.celda-damas.oscura-damas:hover {
+  filter: brightness(1.1);
 }
 
 /* -------------------- PIEZAS -------------------- */
 #tablero-damas .celda-damas.oscura-damas > div.dot-pieza.pieza-humano,
 #tablero-damas .celda-damas.oscura-damas > div.dot-pieza.pieza-ia {
   border-radius: 50%;
-  width: 76%;
-  height: 76%;
+  width: 78%;
+  height: 78%;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
 }
 
 #tablero-damas .dot-pieza {
@@ -76,24 +165,36 @@
 
 /* Pieza humana (blanco roto) */
 #tablero-damas .celda-damas.oscura-damas > .dot-pieza.pieza-humano {
-  background: linear-gradient(180deg, #f5f5f2, #dcdcd6);
+  background: linear-gradient(145deg, #ffffff, #dcdcd6);
+  border: 2px solid rgba(255, 255, 255, 0.8);
 }
 
 /* Pieza IA (negro / gris muy oscuro) */
 #tablero-damas .celda-damas.oscura-damas > .dot-pieza.pieza-ia {
-  background: linear-gradient(180deg, #2b2b2b, #0f0f0f);
+  background: linear-gradient(145deg, #2b2b2b, #0f0f0f);
+  border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Rey humano o IA */
 #tablero-damas div.dot-pieza.rey-damas:is(.pieza-humano, .pieza-ia) {
-  box-shadow: 0 0 18px 4px rgba(255, 215, 0, 0.9);
+  box-shadow: 0 0 25px 6px rgba(255, 215, 0, 0.7);
+  animation: brilloRey 2s ease-in-out infinite alternate;
+}
+
+@keyframes brilloRey {
+  0% {
+    box-shadow: 0 0 15px 4px rgba(255, 215, 0, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 25px 8px rgba(255, 215, 0, 0.9);
+  }
 }
 
 /* Rey estático - sin animaciones infinitas */
 .dot-pieza.rey-damas {
   box-shadow:
-    0 0 15px 5px rgba(255, 215, 0, 0.8),
-    inset 0 0 10px rgba(255, 255, 255, 0.6);
+    0 0 18px 6px rgba(255, 215, 0, 0.7),
+    inset 0 0 12px rgba(255, 255, 255, 0.7);
   position: relative;
 }
 
@@ -104,9 +205,9 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: gold;
-  font-size: 60%;
+  font-size: 65%;
   font-weight: bold;
-  text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
   pointer-events: none;
   z-index: 5;
 }
@@ -114,24 +215,54 @@
 /* -------------------- MOVIMIENTOS SUGERIDOS -------------------- */
 #tablero-damas .celda-damas.oscura-damas > .sugerencia-movimiento {
   position: absolute;
-  width: 28%;
-  height: 28%;
-  background: rgba(255, 255, 255, 0.7);
+  width: 30%;
+  height: 30%;
+  background: rgba(52, 152, 219, 0.8);
   border-radius: 50%;
   cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+  animation: pulsoMovimiento 1.5s ease-in-out infinite;
+  z-index: 5;
+}
+
+@keyframes pulsoMovimiento {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
 }
 
 #tablero-damas .celda-damas.oscura-damas > .sugerencia-movimiento.captura {
-  background: #ffc5c5;
-  border: 2px solid #ff3c3c;
+  background: rgba(231, 76, 60, 0.8);
+  border: 2px solid #c0392b;
+  box-shadow: 0 0 10px rgba(231, 76, 60, 0.6);
+  animation: pulsoCaptura 1s ease-in-out infinite;
+}
+
+@keyframes pulsoCaptura {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
 }
 
 /* -------------------- CONTENEDORES PRINCIPALES -------------------- */
 .body-damas {
-  font-family: "ChalkRegular", Arial, sans-serif;
-  background: linear-gradient(120deg, #f7fbff, #e0f0fb, #cfe5f5, #eaf3fb);
-  background-size: 500% 500%;
-  animation: fondoAzulSuave 14s ease infinite;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+    sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -139,18 +270,6 @@
   width: 100%;
   padding: 20px;
   overflow-x: hidden;
-}
-
-@keyframes fondoAzulSuave {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
 .contenedor-juego-damas {
@@ -175,21 +294,29 @@
   max-width: 600px;
 }
 
-.titulo-damas {
-  font-size: calc(60px * var(--escala-ui));
-  text-align: center;
-  margin: 0 0 20px 0;
-}
-
 #tablero-damas {
   width: 100%;
   max-width: 520px;
   aspect-ratio: 1/1;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  border: 6px solid var(--color-primario);
+  position: relative;
+}
+
+#tablero-damas::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border-radius: 20px;
+  background: linear-gradient(45deg, #2c3e50, #34495e);
+  z-index: -1;
 }
 
 /* Contenedor derecho (panel y botones) */
@@ -204,25 +331,95 @@
 }
 
 .info-panel-damas {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   width: 100%;
-  font-size: calc(18px * var(--escala-ui));
+  font-size: calc(17px * var(--escala-ui));
   margin: 0;
+  border: 2px solid var(--color-primario);
+  position: relative;
+  overflow: hidden;
+  min-height: 280px; /* Altura fija */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.info-panel-damas::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(
+    90deg,
+    var(--color-secundario),
+    var(--color-exito)
+  );
 }
 
 .info-panel-damas div {
-  margin-bottom: 8px;
-  line-height: 1.4;
+  margin-bottom: 12px;
+  line-height: 1.5;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  min-height: 24px; /* Altura mínima para cada línea */
+  display: flex;
+  align-items: center;
+}
+
+.info-panel-damas div:last-child {
+  border-bottom: none;
+}
+
+.info-panel-damas b {
+  color: var(--color-primario);
+  font-weight: 600;
+  min-width: 180px; /* Ancho fijo para etiquetas */
+  display: inline-block;
+}
+
+.info-panel-damas span {
+  color: #2c3e50;
+  font-weight: 500;
+  margin-left: 5px;
+  flex: 1;
+  text-align: right;
+  min-width: 60px; /* Ancho mínimo para valores */
+}
+
+#mensaje-estado-damas {
+  background: rgba(52, 152, 219, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: auto !important; /* Empuja hacia abajo */
+  text-align: center;
+  font-weight: 600;
+  color: var(--color-secundario);
+  border-left: 4px solid var(--color-secundario);
+  min-height: auto;
+  display: block;
+}
+
+#ganador-info {
+  color: var(--color-exito);
+  font-weight: 700;
+  font-size: 1.2em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  text-align: center;
+  min-height: auto;
+  justify-content: center;
 }
 
 /* Contenedor de botones */
 .contenedor-botones-damas {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 15px;
   width: 100%;
 }
 
@@ -233,34 +430,88 @@
 
 /* -------------------- BOTONES -------------------- */
 .boton-damas {
-  font-size: 16px;
-  padding: 14px 24px;
-  background: darkgray;
-  color: black;
+  font-size: 17px;
+  padding: 16px 28px;
+  background: linear-gradient(145deg, var(--color-boton), #6c7a7d);
+  color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: "ChalkRegular", Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.boton-damas::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: translateX(-100%);
+}
+
+.boton-damas:hover::after {
+  animation: brilloBoton 0.8s ease;
+}
+
+@keyframes brilloBoton {
+  to {
+    transform: translateX(100%);
+  }
 }
 
 .boton-damas:hover {
-  color: #dcdcd6;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(145deg, var(--color-boton-hover), #7f8c8d);
+}
+
+.boton-damas:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+#boton-reinicio-damas {
+  background: linear-gradient(145deg, var(--color-aviso), #e67e22);
+}
+
+#boton-reinicio-damas:hover {
+  background: linear-gradient(145deg, #f39c12, #d35400);
+}
+
+#salirDamas {
+  background: linear-gradient(145deg, var(--color-error), #c0392b);
+}
+
+#salirDamas:hover {
+  background: linear-gradient(145deg, #e74c3c, #a93226);
 }
 
 /* -------------------- ANIMACIONES -------------------- */
 /* Efecto de captura simple */
 .dot-pieza.capturada {
-  animation: desaparecerFicha 0.3s ease forwards;
+  animation: desaparecerFicha 0.4s ease forwards;
 }
 
 @keyframes desaparecerFicha {
   0% {
     transform: scale(1);
     opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
   }
   100% {
     transform: scale(0);
@@ -281,7 +532,7 @@
     transform: scale(1);
   }
   50% {
-    transform: scale(1.15);
+    transform: scale(1.2);
   }
   100% {
     transform: scale(1);
@@ -289,104 +540,164 @@
 }
 
 .ficha-animada.capturando {
-  animation: pulseCaptura 500ms ease-in-out;
+  animation: pulseCaptura 600ms ease-in-out;
 }
 
 /* Efecto para coronación */
 .efecto-coronacion {
   background: radial-gradient(
     circle,
-    rgba(255, 215, 0, 0.8) 0%,
-    rgba(255, 215, 0, 0) 70%
+    rgba(255, 215, 0, 0.9) 0%,
+    rgba(255, 215, 0, 0) 80%
   );
+  z-index: 50;
 }
 
 @keyframes destelloCoronacion {
   0% {
-    transform: scale(1);
+    transform: scale(0.8);
     opacity: 1;
   }
   100% {
-    transform: scale(2.5);
+    transform: scale(3);
     opacity: 0;
   }
 }
 
 /* -------------------- MODALES -------------------- */
-/* Modal de fin de partida */
 .modal-fin-damas {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
   display: none;
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .modal-contenido {
-  background: #fff;
-  border-radius: 12px;
-  padding: 30px;
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  border-radius: 20px;
+  padding: 35px;
   text-align: center;
-  max-width: 300px;
+  max-width: 350px;
   width: 90%;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  border: 3px solid var(--color-primario);
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .icono-resultado {
-  font-size: 80px;
-  margin-bottom: 20px;
+  font-size: 90px;
+  margin-bottom: 25px;
+  animation: bounceIn 0.8s ease;
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .icono-resultado.ganador {
-  color: gold;
+  color: var(--color-exito);
+  text-shadow: 0 0 20px rgba(39, 174, 96, 0.5);
 }
 
 .icono-resultado.perdedor {
-  color: red;
+  color: var(--color-error);
+  text-shadow: 0 0 20px rgba(231, 76, 60, 0.5);
 }
 
 #mensaje-resultado {
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: var(--color-primario);
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .botones-modal {
   display: flex;
   gap: 15px;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .botones-modal .boton-damas {
   font-size: 16px;
-  padding: 12px 18px;
+  padding: 14px 22px;
+  flex: 1;
+  min-width: 140px;
 }
 
 /* Modal instrucciones */
 .modal-instrucciones {
-  max-width: 420px;
+  max-width: 450px;
 }
 
 .texto-instrucciones-damas {
   text-align: left;
   font-size: 16px;
-  line-height: 1.5;
-  margin: 20px 0;
-  color: #222;
+  line-height: 1.6;
+  margin: 25px 0;
+  color: #2c3e50;
+  padding: 20px;
+  background: rgba(236, 240, 241, 0.5);
+  border-radius: 12px;
+  border-left: 4px solid var(--color-secundario);
+}
+
+/* Modal aviso */
+#modal-aviso-damas .modal-contenido {
+  border-color: var(--color-aviso);
+}
+
+#modal-aviso-texto {
+  color: var(--color-aviso);
+  margin-bottom: 25px;
 }
 
 /* -------------------- MEDIA QUERIES -------------------- */
 
-/* PANTALLAS GRANDES (Desktop) - Mayor a 1024px */
+/* PANTALLAS GRANDES (Desktop) */
 @media (min-width: 1024px) {
-  :root {
-    --escala-ui: 1;
-  }
-
   .contenedor-juego-damas {
     justify-content: center;
     align-items: flex-start;
@@ -400,228 +711,553 @@
   }
 
   .panel-y-botones {
-    max-width: 320px;
+    max-width: 340px;
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
   }
 }
 
-/* TABLETS HORIZONTALES (768px - 1023px) */
+/* TABLETS (768px - 1023px) - LAYOUT ESPECIAL */
 @media (min-width: 768px) and (max-width: 1023px) {
   :root {
-    --escala-ui: 0.9;
+    --escala-ui: 0.95;
   }
 
   .body-damas {
     padding: 15px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
   }
 
   .contenedor-juego-damas {
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 30px;
+    flex-direction: column;
     width: 100%;
-    padding: 0;
+    max-width: 768px;
+    gap: 25px;
+    padding: 10px;
   }
 
   #juego-damas-contenedor {
-    flex: 1;
-    max-width: 55%;
-    align-items: center;
+    width: 100%;
+    order: 1;
+    max-width: 100%;
   }
 
   #tablero-damas {
-    max-width: 100%;
-    width: 100%;
+    width: 85vw;
+    max-width: 85vw;
+    height: auto;
+    aspect-ratio: 1/1;
+    margin: 0 auto;
   }
 
   .panel-y-botones {
-    flex: 1;
-    max-width: 40%;
-    margin-top: 0;
+    width: 85vw;
+    max-width: 85vw;
+    margin: 0 auto;
+    order: 2;
+    /* Layout especial: info a la izquierda, botones a la derecha en paralelo 70/30 */
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: auto;
+    align-items: stretch;
+    gap: 20px;
   }
 
   .info-panel-damas {
-    font-size: calc(16px * var(--escala-ui));
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    height: 100%;
+    font-size: calc(15px * var(--escala-ui));
     padding: 18px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 240px;
+  }
+
+  .info-panel-damas div {
+    margin-bottom: 8px;
+    line-height: 1.4;
+    font-size: 14px;
+    padding: 3px 0;
+    min-height: 20px;
+  }
+
+  .info-panel-damas b {
+    min-width: 150px;
+    font-size: 14px;
+  }
+
+  .info-panel-damas span {
+    font-size: 14px;
+  }
+
+  .contenedor-botones-damas {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+  }
+
+  .contenedor-botones-damas .boton-damas {
+    width: 100%;
+    height: auto;
+    min-height: 50px;
+    padding: 10px 8px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Ajustar altura para que coincidan */
+  .info-panel-damas,
+  .contenedor-botones-damas {
+    min-height: 240px;
+  }
+
+  #mensaje-estado-damas {
+    padding: 10px;
+    font-size: 13px;
+    margin-top: auto !important;
   }
 }
 
-/* TABLETS VERTICALES Y MÓVILES GRANDES (481px - 767px) */
+/* MÓVILES GRANDES (481px - 767px) - CORREGIDO: Layout especial y tablero más pequeño */
 @media (max-width: 767px) and (min-width: 481px) {
   :root {
     --escala-ui: 0.85;
   }
 
   .body-damas {
-    padding: 10px;
+    padding: 12px;
     align-items: center;
-    justify-content: flex-start;
     min-height: 100vh;
-    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .contenedor-juego-damas {
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
-    gap: 25px;
+    gap: 20px;
     width: 100%;
-    max-width: 520px;
-    margin: 0 auto;
+    max-width: 100vw;
     padding: 10px;
+    margin: 0 auto;
   }
 
   #juego-damas-contenedor {
     width: 100%;
-    max-width: 100%;
+    max-width: 100vw;
   }
 
   #tablero-damas {
-    width: 85%;
-    max-width: 480px;
+    width: 90vw;
+    max-width: 90vw;
+    aspect-ratio: 1/1;
     margin: 0 auto;
+    border-width: 4px;
   }
 
   .panel-y-botones {
-    width: 70%;
-    max-width: 480px;
+    width: 90vw;
+    max-width: 90vw;
     margin: 0 auto;
-    gap: 20px;
+    /* Layout especial 70/30 */
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: auto;
+    align-items: stretch;
+    gap: 15px;
   }
 
   .info-panel-damas {
-    width: 70%;
-    font-size: calc(16px * var(--escala-ui));
-    padding: 16px;
-    margin: 5px;
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    height: 100%;
+    font-size: calc(13px * var(--escala-ui));
+    padding: 14px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .info-panel-damas div {
+    margin-bottom: 6px;
+    line-height: 1.3;
+    font-size: 13px;
+    min-height: 18px;
+    padding: 2px 0;
+  }
+
+  .info-panel-damas b {
+    min-width: 120px;
+    font-size: 13px;
+  }
+
+  .info-panel-damas span {
+    font-size: 13px;
+  }
+
+  .contenedor-botones-damas {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+  }
+
+  .contenedor-botones-damas .boton-damas {
+    width: 100%;
+    min-height: 45px;
+    padding: 8px 6px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+
+  .info-panel-damas,
+  .contenedor-botones-damas {
+    min-height: 200px;
+  }
+
+  #mensaje-estado-damas {
+    padding: 8px;
+    font-size: 12px;
+    margin-top: auto !important;
   }
 }
 
-/* MÓVILES (Hasta 480px) */
+/* MÓVILES (Hasta 480px) - CORREGIDO: Layout especial y más compacto */
 @media (max-width: 480px) {
   :root {
     --escala-ui: 0.8;
   }
 
   .body-damas {
-    padding: 5px;
+    padding: 8px;
     align-items: center;
-    justify-content: center;
     min-height: 100vh;
-    overflow-y: auto;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     overflow-x: hidden;
+    max-width: 100vw;
   }
 
   .contenedor-juego-damas {
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
     gap: 15px;
     width: 100%;
+    max-width: 100vw;
     padding: 5px;
-    margin: 0;
+    margin: 0 auto;
+    box-sizing: border-box;
   }
 
   #juego-damas-contenedor {
     width: 100%;
+    max-width: 100vw;
   }
 
   #tablero-damas {
-    width: 80vw;
-    max-width: 80vw;
+    width: 94vw;
+    max-width: 94vw;
+    aspect-ratio: 1/1;
+    border-width: 3px;
+    border-radius: 12px;
     margin: 0 auto;
+    box-sizing: border-box;
   }
 
   .panel-y-botones {
-    width: 70vw;
-    max-width: 70vw;
+    width: 94vw;
+    max-width: 94vw;
     margin: 0 auto;
-    gap: 15px;
+    /* Layout especial 70/30 más compacto */
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: auto;
+    align-items: stretch;
+    gap: 12px;
+    box-sizing: border-box;
   }
 
   .info-panel-damas {
-    width: 70%;
-    font-size: calc(16px * var(--escala-ui));
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    font-size: calc(12px * var(--escala-ui));
     padding: 12px;
-    margin: 0;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 10px;
   }
 
-  .boton-damas {
-    padding: 12px 16px;
-    font-size: 14px;
-    width: 30%;
+  .info-panel-damas div {
+    margin-bottom: 5px;
+    line-height: 1.2;
+    font-size: 12px;
+    min-height: 16px;
+    padding: 1px 0;
+  }
+
+  .info-panel-damas b {
+    min-width: 100px;
+    font-size: 11px;
+  }
+
+  .info-panel-damas span {
+    font-size: 11px;
+  }
+
+  .contenedor-botones-damas {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    box-sizing: border-box;
+  }
+
+  .contenedor-botones-damas .boton-damas {
+    width: 100%;
+    min-height: 40px;
+    padding: 6px 4px;
+    font-size: 11px;
+    border-radius: 6px;
+  }
+
+  .info-panel-damas,
+  .contenedor-botones-damas {
+    min-height: 180px;
+  }
+
+  #mensaje-estado-damas {
+    padding: 6px;
+    font-size: 11px;
+    margin-top: auto !important;
   }
 
   .modal-contenido {
     padding: 20px 15px;
-    width: 95%;
+    width: 94vw;
+    max-width: 94vw;
+    border-radius: 14px;
   }
 
-  .texto-instrucciones-damas {
-    font-size: 14px;
-  }
-}
-
-/* MÓVILES MUY PEQUEÑOS (Hasta 360px) */
-@media (max-width: 360px) {
-  :root {
-    --escala-ui: 0.75;
-  }
-
-  .body-damas {
-    padding: 3px;
-  }
-
-  .contenedor-juego-damas {
-    gap: 10px;
-    padding: 3px;
-  }
-
-  #tablero-damas {
-    width: 78vw;
-    max-width: 78vw;
-  }
-
-  .panel-y-botones {
-    width: 70vw;
-    max-width: 70vw;
-  }
-
-  .info-panel-damas {
-    padding: 10px;
-    font-size: calc(14px * var(--escala-ui));
-  }
-
-  .boton-damas {
+  .botones-modal .boton-damas {
+    min-width: 110px;
     padding: 10px 12px;
     font-size: 13px;
   }
 }
 
-/* TABLETS EN MODO HORIZONTAL ESPECÍFICO */
-@media (orientation: landscape) and (max-height: 600px) and (min-width: 768px) {
+/* PANTALLAS MUY PEQUEÑAS (Hasta 380px) - Ajustes específicos */
+@media (max-width: 380px) {
+  :root {
+    --escala-ui: 0.75;
+  }
+
+  .body-damas {
+    padding: 6px;
+    max-width: 100vw;
+  }
+
   .contenedor-juego-damas {
-    gap: 20px;
-    padding: 10px;
+    gap: 12px;
+    padding: 3px;
+    max-width: 100vw;
   }
 
   #tablero-damas {
-    max-width: 450px;
+    width: 96vw;
+    max-width: 96vw;
+    border-width: 2px;
+    border-radius: 10px;
+  }
+
+  .panel-y-botones {
+    width: 96vw;
+    max-width: 96vw;
+    gap: 10px;
+    grid-template-columns: 68% 32%; /* Ajuste fino 68/32 */
+  }
+
+  .info-panel-damas {
+    padding: 10px;
+    font-size: calc(11px * var(--escala-ui));
+    min-height: 170px;
+  }
+
+  .info-panel-damas div {
+    font-size: 11px;
+    margin-bottom: 4px;
+    min-height: 14px;
+    line-height: 1.1;
+  }
+
+  .info-panel-damas b {
+    min-width: 85px;
+    font-size: 10px;
+  }
+
+  .info-panel-damas span {
+    font-size: 10px;
+  }
+
+  .contenedor-botones-damas {
+    gap: 5px;
+  }
+
+  .contenedor-botones-damas .boton-damas {
+    padding: 5px 3px;
+    font-size: 10px;
+    min-height: 36px;
+    border-radius: 5px;
+  }
+
+  .info-panel-damas,
+  .contenedor-botones-damas {
+    min-height: 170px;
+  }
+
+  #mensaje-estado-damas {
+    padding: 5px;
+    font-size: 10px;
+  }
+}
+
+/* MÓVILES MUY PEQUEÑOS (Hasta 320px) */
+@media (max-width: 320px) {
+  :root {
+    --escala-ui: 0.7;
+  }
+
+  .body-damas {
+    padding: 4px;
+  }
+
+  .contenedor-juego-damas {
+    gap: 8px;
+    padding: 2px;
+  }
+
+  #tablero-damas {
+    width: 98vw;
+    max-width: 98vw;
+  }
+
+  .panel-y-botones {
+    width: 98vw;
+    max-width: 98vw;
+    gap: 8px;
+    grid-template-columns: 67% 33%; /* Ajuste fino 67/33 */
+  }
+
+  .info-panel-damas {
+    padding: 8px;
+    font-size: calc(10px * var(--escala-ui));
+    min-height: 160px;
+  }
+
+  .info-panel-damas div {
+    font-size: 10px;
+    margin-bottom: 3px;
+    min-height: 12px;
+  }
+
+  .info-panel-damas b {
+    min-width: 75px;
+    font-size: 9px;
+  }
+
+  .info-panel-damas span {
+    font-size: 9px;
+  }
+
+  .contenedor-botones-damas .boton-damas {
+    padding: 4px 2px;
+    font-size: 9px;
+    min-height: 32px;
+  }
+
+  .info-panel-damas,
+  .contenedor-botones-damas {
+    min-height: 160px;
+  }
+}
+
+/* TABLETS EN MODO HORIZONTAL */
+@media (orientation: landscape) and (max-height: 600px) and (min-width: 768px) {
+  .body-damas {
+    padding: 10px;
+    min-height: auto;
+    height: 100vh;
+  }
+
+  .contenedor-juego-damas {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    padding: 10px;
+    height: 100%;
+  }
+
+  #juego-damas-contenedor {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #tablero-damas {
+    max-width: 70vh;
+    width: 70vh;
+    max-height: 70vh;
   }
 
   .panel-y-botones {
     max-width: 280px;
-    gap: 15px;
+    gap: 20px;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
   }
 
   .info-panel-damas {
-    padding: 12px;
-    font-size: calc(14px * var(--escala-ui));
+    padding: 20px;
+    font-size: calc(15px * var(--escala-ui));
+    min-height: auto;
+    display: block;
+  }
+
+  .contenedor-botones-damas .boton-damas {
+    padding: 12px 16px;
+    font-size: 14px;
   }
 }
 
-/* PANTALLAS MUY GRANDES (Mayor a 1400px) */
+/* PANTALLAS MUY GRANDES */
 @media (min-width: 1400px) {
   .contenedor-juego-damas {
     max-width: 1400px;
@@ -633,6 +1269,8 @@
   }
 
   .panel-y-botones {
-    max-width: 350px;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
   }
 }

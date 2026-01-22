@@ -821,18 +821,61 @@ const JuegoDamas = (() => {
   }
 
   // ======================================================================
+  // RESET COMPLETO DEL JUEGO
+  // ======================================================================
+  function reiniciarJuegoDamas() {
+    const estado = JuegoDamas.estado;
+
+    // Ocultar tablero y modal de fin
+    document.getElementById("juego-damas-contenedor").style.display = "none";
+    document.getElementById("modal-fin-damas").style.display = "none";
+
+    // Mostrar modal de configuración inicial
+    document.getElementById("modal-config-damas").style.display = "flex";
+
+    // Limpiar tablero y paneles de info
+    document.getElementById("tablero-damas").innerHTML = "";
+    document.getElementById("color-humano-info").textContent = "—";
+    document.getElementById("turno-info").textContent = "—";
+    document.getElementById("ganador-info").textContent = "";
+    document.getElementById("captura-obligatoria-info").textContent = "—";
+    document.getElementById("capturas-humano-info").textContent = "0";
+    document.getElementById("capturas-ia-info").textContent = "0";
+    document.getElementById("mensaje-estado-damas").textContent = "";
+
+    // Resetear estado de JuegoDamas
+    estado.matrizDamas = [];
+    estado.ladoHumanoAsignado = null;
+    estado.colorHumano = null;
+    estado.turnoActualDamas = null;
+    estado.seleccionActualDamas = null;
+    estado.movimientosDisponiblesDamas = [];
+    estado.tableroGiradoFlag = false;
+    estado.juegoTerminadoFlag = false;
+    estado.capturasHumano = 0;
+    estado.capturasIA = 0;
+    estado.mostrarSugerencias = true;
+    estado.sorteoRealizado = false;
+
+    // Inicialización segura de inputs del modal
+    document.getElementById("check-sugerencias").checked = true;
+    document.getElementById("resultado-sorteo").textContent = "—";
+  }
+
+  // ======================================================================
   // INICIALIZACIÓN
   // ======================================================================
+
   function init() {
     document.getElementById("salirDamas").innerText = t("damas.exit");
 
     document
       .getElementById("salirDamas")
-      ?.addEventListener("click", () => (location.href = "../../index.html"));
+      ?.addEventListener("click", reiniciarJuegoDamas);
 
     document
       .getElementById("boton-reinicio-damas")
-      .addEventListener("click", resetGameDamasUltra);
+      ?.addEventListener("click", resetGameDamasUltra);
 
     resetGameDamasUltra();
   }

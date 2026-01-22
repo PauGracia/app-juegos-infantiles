@@ -3,7 +3,6 @@
   box-sizing: border-box;
 }
 
-/* Quitar efecto azul al tocar botones en móvil */
 button,
 select,
 input {
@@ -144,10 +143,10 @@ html {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
-  overflow: hidden; /* Cambié "auto" por "hidden" */
+  overflow: hidden;
 
-  min-height: auto; /* Quita el min-height fijo */
-  min-width: auto; /* Quita el min-width fijo */
+  min-height: auto;
+  min-width: auto;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
@@ -837,8 +836,6 @@ html {
     gap: 6px;
   }
 }
-
-/* Prevenir problemas de touch específicos */
 
 /* Deshabilitar selección de texto en botones */
 .letras button {
