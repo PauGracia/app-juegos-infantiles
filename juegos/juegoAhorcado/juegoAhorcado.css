@@ -871,6 +871,9 @@ html {
     max-width: 100%;
     gap: 6px;
   }
+  .letras .btn-ayuda {
+    font-size: 0.5em;
+  }
 }
 
 /* Deshabilitar selección de texto en botones */
