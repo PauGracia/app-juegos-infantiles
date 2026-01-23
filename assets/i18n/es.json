@@ -179,9 +179,7 @@
   "ahorcado.instructions.viewRanking": "Puedes ver el ranking desde el menú inicial o final.",
   "ahorcado.instructions.exportRanking": "También puedes exportar el ranking en formato JSON.",
   "ahorcado.instructions.language": "IDIOMA:",
-  "ahorcado.instructions.interfaceLanguage": "La interfaz está en el idioma seleccionado en el menú principal.",
-  "ahorcado.instructions.gameLanguage": "Las palabras del juego están en el idioma seleccionado aquí:",
-  "ahorcado.instructions.independent": "Puedes tener la interfaz en un idioma y las palabras en otro.",
+  "ahorcado.instructions.interfaceLanguage": "Puedes jugar a este juego en diferentes idiomas para practicar.",
   "ahorcado.instructions.goodLuck": "¡Buena suerte!",
 
   "ranking.sort.points": "Ordenar por puntos",

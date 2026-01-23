@@ -56,7 +56,7 @@ html {
 .contenedor-juego {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 60px;
   margin-top: 20px;
   flex-wrap: wrap;
@@ -70,8 +70,8 @@ html {
 }
 
 .imagen-ahorcado {
-  width: 280px;
-  height: 280px;
+  width: 320px;
+  height: 320px;
   border-radius: 16px;
   background: linear-gradient(145deg, #f0f0f0, #ffffff);
   border: 4px solid #5d5fef;
@@ -99,16 +99,17 @@ html {
 }
 
 .palabra {
-  font-size: 2.5em;
+  font-size: 2em;
   letter-spacing: 12px;
   font-weight: 700;
   color: #2d3748;
   min-height: 60px;
   padding: 15px 25px;
-  background: linear-gradient(135deg, #e9ecef, #f8f9fa);
+  /*background: linear-gradient(135deg, #e9ecef, #f8f9fa);*/
   border-radius: 15px;
-  border: 3px solid #4a90e2;
-  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.1);
+  /*border: 3px solid #4a90e2;*/
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
 }
 
 #palabra {
@@ -406,8 +407,9 @@ html {
 
 /* Estilos para el ahorcado SVG */
 #ahorcadoSVG {
-  max-width: 280px;
-  height: auto;
+  width: 320px;
+  height: 320px;
+
   border-radius: 8px;
   background-color: transparent;
   padding: 10px;
@@ -743,7 +745,7 @@ html {
     letter-spacing: 6px;
     padding: 8px 12px;
     min-height: 50px;
-    width: 100%;
+
     overflow: hidden;
   }
 
@@ -798,8 +800,8 @@ html {
   }
 
   .imagen-ahorcado {
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 220px;
   }
 
   #marcador-ahorcado {
@@ -889,8 +891,8 @@ html {
 }
 
 .imagen-ahorcado {
-  width: 160px;
-  height: 160px;
+  width: 220px;
+  height: 220px;
 }
 
 .palabra {

@@ -111,9 +111,8 @@ ${getTranslation("ahorcado.instructions.ranking", "RANKING:")}
 • ${getTranslation("ahorcado.instructions.exportRanking", "También puedes exportar el ranking en formato JSON.")}
 
 ${getTranslation("ahorcado.instructions.language", "IDIOMA:")}
-• ${getTranslation("ahorcado.instructions.interfaceLanguage", "La interfaz está en el idioma seleccionado en el menú principal.")}
-• ${getTranslation("ahorcado.instructions.gameLanguage", "Las palabras del juego están en el idioma seleccionado aquí:")} ${gameLanguage}
-• ${getTranslation("ahorcado.instructions.independent", "Puedes tener la interfaz en un idioma y las palabras en otro.")}
+• ${getTranslation("ahorcado.instructions.interfaceLanguage", "Puedes jugar a este juego en diferentes idiomas para practicar.")}
+
 
 ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       `;
