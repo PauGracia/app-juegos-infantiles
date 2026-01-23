@@ -133,7 +133,6 @@ html {
 }
 
 .letras button {
-  padding: 14px;
   font-size: 1.2em;
   font-weight: bold;
   border-radius: 10px;
@@ -145,8 +144,14 @@ html {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
   overflow: hidden;
+  /**/
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  padding: 0; /* IMPORTANTE */
 
-  min-height: auto;
+  user-select: none;
+  /**/
+  min-height: 55px;
   min-width: auto;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -688,6 +693,14 @@ html {
   }
 }
 
+@media (max-width: 845px) {
+  .letras button {
+    min-height: 40px;
+    min-width: auto;
+    font-size: 0.9em;
+  }
+}
+
 /* Responsive */
 @media (max-width: 780px) {
   .body-ahorcado {
@@ -760,16 +773,16 @@ html {
     gap: 8px;
     padding: 10px;
     width: 100%;
-    max-width: 100%;
+    max-width: 70%;
     overflow: hidden;
   }
 
   .letras button {
-    padding: 6px;
     font-size: 0.9em;
-    min-height: 35px;
-    min-width: 35px;
-    font-weight: 800;
+    min-height: 40px;
+    min-width: auto;
+    max-height: 45px;
+    max-width: 45px;
   }
   .boton-volver-ahorcado {
     order: 3; /* Aparece tercero */
@@ -791,6 +804,7 @@ html {
     grid-template-columns: repeat(7, 1fr);
     gap: 5px;
     padding: 8px;
+    max-width: 100%;
   }
 
   .titulo-ahorcado {
@@ -815,11 +829,9 @@ html {
     margin-top: 10px;
   }
   .letras button {
+    font-size: 0.7em;
     min-height: 30px;
-    min-width: 30px;
-    font-size: 0.8em;
-    padding: 5px;
-    margin: 1px;
+    min-width: auto;
   }
 
   .palabra {
@@ -878,9 +890,8 @@ html {
 
   .letras button {
     min-height: 30px;
-    min-width: 30px;
+    min-width: auto;
     font-size: 0.8em;
-    padding: 4px;
   }
 }
 
