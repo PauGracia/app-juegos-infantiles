@@ -647,6 +647,28 @@ html {
   font-weight: 600;
 }
 
+.letras .btn-ayuda {
+  background: linear-gradient(145deg, #f6ad55, #ed8936);
+  color: #1a202c;
+  font-weight: 800;
+  font-size: 1em;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(237, 137, 54, 0.6);
+}
+
+.letras .btn-ayuda:disabled {
+  background: linear-gradient(145deg, #e2e8f0, #cbd5e0);
+  color: #718096;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+.letras .btn-ayuda:active,
+.letras .btn-ayuda:focus,
+.letras .btn-ayuda:focus-visible {
+  background: linear-gradient(145deg, #f6ad55, #ed8936) !important;
+  color: #1a202c;
+}
+
 /* Animaciones */
 @keyframes fadeIn {
   from {
@@ -915,10 +937,18 @@ html {
 @media (hover: none) and (pointer: coarse) {
   .letras button:hover {
     transform: none !important;
-    background: linear-gradient(145deg, #4a90e2, #357abd) !important;
+    background: linear-gradient(145deg, #e2e8f0, #cbd5e0) !important;
   }
 
   .letras button:hover::before {
+    display: none !important;
+  }
+  .letras button:not(.btn-ayuda):hover {
+    transform: none !important;
+    background: linear-gradient(145deg, #e2e8f0, #cbd5e0) !important;
+  }
+
+  .letras button:not(.btn-ayuda):hover::before {
     display: none !important;
   }
 }

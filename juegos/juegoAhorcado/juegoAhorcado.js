@@ -57,6 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Variables de estado
+    let ah_ayudas = 2;
+    let ah_palabrasAcertadas = 0;
     let ah_palabraSecreta;
     let ah_progreso;
     let ah_errores = 0;
@@ -257,6 +259,8 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
 
     // Iniciar juego
     window.iniciarAhorcado = function () {
+      ah_ayudas = 2;
+      ah_palabrasAcertadas = 0;
       // DESBLOQUEAR AUDIO EN MÓVIL
       desbloquearAudioMovil();
       const selectIdiomaJuego = document.getElementById("idioma-juego");
@@ -332,66 +336,90 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
 
     function ah_crearBotones() {
       const abecedario = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
-
-      // Vaciar contenedor
       letrasEl.innerHTML = "";
 
-      // Detectar si es dispositivo táctil
       const isTouchDevice =
         "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
+      // === BOTONES DE LETRAS ===
       abecedario.forEach((letra) => {
         const btn = document.createElement("button");
         btn.textContent = letra;
         btn.type = "button";
 
-        // Para dispositivos táctiles (móviles)
         if (isTouchDevice) {
-          // Evento touchstart (al presionar)
-          btn.addEventListener(
-            "touchstart",
-            function (e) {
-              e.preventDefault();
-              this.style.opacity = "0.8";
-              this.style.transform = "scale(0.95)";
-            },
-            { passive: false },
-          );
-
-          // Evento touchend (al soltar)
           btn.addEventListener(
             "touchend",
-            function (e) {
+            (e) => {
               e.preventDefault();
-              this.style.opacity = "1";
-              this.style.transform = "scale(1)";
-
-              // Llamar a la función que maneja la letra
-              ah_manejarLetra(this, letra);
+              ah_manejarLetra(btn, letra);
             },
             { passive: false },
           );
-
-          // Evento touchcancel (si se cancela el touch)
-          btn.addEventListener("touchcancel", function () {
-            this.style.opacity = "1";
-            this.style.transform = "scale(1)";
-          });
         }
 
-        // Para ordenadores (mantener el click normal)
         btn.addEventListener("click", (e) => {
-          // En móviles, prevenir doble llamada
-          if (isTouchDevice) {
-            e.preventDefault();
-            return;
-          }
+          if (isTouchDevice) return;
           ah_manejarLetra(btn, letra);
         });
 
-        // Añadir al contenedor
         letrasEl.appendChild(btn);
       });
+
+      // === BOTÓN AYUDA (UNO SOLO) ===
+      const btnAyuda = document.createElement("button");
+      btnAyuda.className = "btn-ayuda";
+      btnAyuda.textContent = `💡 ${ah_ayudas}`;
+      btnAyuda.type = "button";
+
+      if (ah_ayudas <= 0) btnAyuda.disabled = true;
+
+      btnAyuda.addEventListener("click", () => usarAyuda(btnAyuda));
+
+      letrasEl.appendChild(btnAyuda);
+    }
+
+    function usarAyuda(btn) {
+      if (ah_ayudas <= 0) return;
+
+      // Buscar letras ocultas
+      const indicesOcultos = [];
+      for (let i = 0; i < ah_progreso.length; i++) {
+        if (ah_progreso[i] === "_") indicesOcultos.push(i);
+      }
+
+      if (indicesOcultos.length === 0) return;
+
+      // Elegir una posición aleatoria
+      const index =
+        indicesOcultos[Math.floor(Math.random() * indicesOcultos.length)];
+      const letra = ah_palabraSecreta[index];
+
+      // Revelar TODAS las ocurrencias de esa letra
+      for (let i = 0; i < ah_palabraSecreta.length; i++) {
+        if (ah_palabraSecreta[i] === letra) {
+          ah_progreso[i] = letra;
+        }
+      }
+
+      ah_mostrarPalabra();
+      reproducirSonido(sonidos.bien);
+
+      ah_ayudas--;
+      btn.textContent = `💡 ${ah_ayudas}`;
+      if (ah_ayudas <= 0) btn.disabled = true;
+
+      // ¿Palabra completada?
+      if (!ah_progreso.includes("_")) {
+        ah_puntos++;
+        ah_palabrasAcertadas++;
+        if (ah_palabrasAcertadas % 10 === 0) {
+          ah_ayudas++;
+          mostrarMensajeTemporal("💡 ¡Has ganado una ayuda extra!", 2000);
+        }
+        ah_actualizarMarcador();
+        setTimeout(ah_nuevaPalabra, 1200);
+      }
     }
 
     function guardarPuntuacionLocal() {
