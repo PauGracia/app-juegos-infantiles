@@ -99,6 +99,11 @@ html {
 }
 
 .palabra {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
   font-size: 2em;
   letter-spacing: 12px;
   font-weight: 700;
@@ -112,12 +117,935 @@ html {
   overflow: hidden;
 }
 
-#palabra {
+.letras {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f7fafc, #edf2f7);
+  border-radius: 15px;
+  border: 3px solid #cbd5e0;
+}
+
+.letras button {
+  font-size: 1.2em;
+  font-weight: bold;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(145deg, #4a90e2, #357abd);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  /**/
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  padding: 0; /* IMPORTANTE */
+
+  user-select: none;
+  /**/
+  min-height: 55px;
+  min-width: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.letras button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.letras button:hover:not(:disabled) {
+  background: linear-gradient(145deg, #357abd, #2c6cb0);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.letras button:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.letras button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.letras button:disabled {
+  cursor: not-allowed;
+  color: white;
+  opacity: 0.7;
+  transform: scale(0.95);
+}
+
+.letras button[style*="green"] {
+  background: linear-gradient(145deg, #48bb78, #38a169) !important;
+  box-shadow: 0 0 15px rgba(72, 187, 120, 0.4);
+}
+
+.letras button[style*="red"] {
+  background: linear-gradient(145deg, #f56565, #e53e3e) !important;
+  box-shadow: 0 0 15px rgba(245, 101, 101, 0.4);
+}
+
+/* -------- MODALES -------- */
+
+/* === BOTONES DEL MODAL INICIAL === */
+#modal-contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Contenedor lógico de los botones */
+#modal-contenido button {
+  width: 100%;
+  max-width: 260px; /* mismo ancho para todos */
+  height: 52px; /* misma altura */
+  margin: 8px 0;
+}
+
+#modal-inicio,
+#modal-final,
+#modal-info {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+#modal-contenido,
+#modal-final-contenido,
+.modal-ranking-contenido {
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  padding: 40px;
+  border-radius: 24px;
+  text-align: center;
+  width: 420px;
+  max-width: 90vw;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+#modal-contenido::before,
+#modal-final-contenido::before,
+.modal-ranking-contenido::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+#modal-contenido h2,
+#modal-final-contenido h2,
+.modal-ranking-contenido h3 {
+  color: #2d3748;
+  margin-bottom: 18px;
+  font-size: 1.8em;
+  font-weight: 700;
+}
+
+#modal-contenido label {
+  display: block;
+  margin-bottom: 8px;
+  color: #4a5568;
+  font-weight: 600;
+  text-align: left;
+}
+
+#modal-contenido input,
+#modal-contenido select {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 1.1em;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: white;
+  transition: all 0.3s;
+  margin-bottom: 15px;
+}
+
+#modal-contenido input:focus,
+#modal-contenido select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+#modal-contenido button,
+#modal-final-contenido button,
+#btnModalInfoAceptar {
+  padding: 14px 28px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  color: white;
+  margin: 8px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 160px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(45deg, #48bb78, #38a169) !important;
+
+  border: 2px solid white !important;
+
+  margin: 10px auto !important;
+}
+
+#modal-final-contenido button:last-child {
+  background: linear-gradient(45deg, #667eea, #764ba2) !important;
+}
+
+/* Botones de las acciones del modal final */
+.modal-final-acciones button {
+  background: linear-gradient(45deg, #4299e1, #3182ce) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  border: 2px solid white !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+  margin: 8px auto !important;
+  display: block !important;
+  width: 90% !important;
+  max-width: 280px !important;
+}
+
+/* Botón específico de "Guardar récord local" */
+.modal-final-acciones button:nth-child(1) {
+  background: linear-gradient(45deg, #48bb78, #38a169) !important;
+}
+
+#modal-contenido button::before,
+#modal-final-contenido button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+#modal-contenido button:hover::before,
+#modal-final-contenido button:hover::before {
+  left: 100%;
+}
+
+#btnEmpezar {
+  background: linear-gradient(45deg, #48bb78, #38a169);
+}
+
+#btnInstrucciones {
+  background: linear-gradient(45deg, #4299e1, #3182ce);
+}
+
+#btnVerRanking {
+  background: linear-gradient(45deg, #ed8936, #dd6b20);
+}
+
+#btnSalir-modal,
+#modal-final-contenido button:last-child {
+  background: linear-gradient(45deg, #a0aec0, #718096);
+}
+
+#btnModalInfoAceptar {
+  background: linear-gradient(45deg, #48bb78, #38a169);
+}
+
+#modal-contenido button:hover,
+#modal-final-contenido button:hover,
+#btnModalInfoAceptar:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+#modal-contenido button:active,
+#modal-final-contenido button:active,
+#btnModalInfoAceptar:active {
+  transform: translateY(0);
+}
+
+.modal-final-acciones {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+}
+
+/* Estilos para el ahorcado SVG */
+#ahorcadoSVG {
+  width: 320px;
+  height: 320px;
+
+  border-radius: 8px;
+  background-color: transparent;
+  padding: 10px;
+  filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.2));
+}
+
+.parte {
+  stroke: #4a5568;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: opacity 0.3s ease;
+}
+
+/* Hacer que las letras sean más visibles */
+.ah-letra-no {
+  color: #e53e3e;
+  font-weight: 800;
+  font-size: 1.4em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.ah-letra-no::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #e53e3e;
+  transform: scaleX(0.8);
+}
+
+.ah-letra-si {
+  color: #38a169;
+  font-weight: 800;
+  font-size: 1.4em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.ah-letra-si::before {
+  content: "✓";
+  position: absolute;
+  top: -15px;
+  right: -8px;
+  font-size: 0.8em;
+  color: #38a169;
+}
+
+/* ---- BOTÓN SALIR ---- */
+.boton-volver-ahorcado {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 30px;
+}
+
+.boton-volver-ahorcado button {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 18px 50px;
+  font-size: 1.3em;
+  font-weight: bold;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.boton-volver-ahorcado button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.boton-volver-ahorcado button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.boton-volver-ahorcado button:hover::before {
+  left: 100%;
+}
+
+.boton-volver-ahorcado button:active {
+  transform: translateY(0);
+}
+
+/* Modal ranking */
+.modal-ranking {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(8px);
+}
+
+.modal-ranking-contenido {
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/*Estilos del selector de idioma */
+#modal-inicio select#idioma {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: white;
+  border: 2px solid #cbd5e0;
+  border-radius: 12px;
+  padding: 14px 20px;
+  font-size: 1.1em;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2d3748;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 20px;
+  padding-right: 50px;
+}
+
+#modal-inicio select#idioma:hover {
+  border-color: #4a90e2;
+}
+
+#modal-inicio select#idioma:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+/* Mejoras para el modal de instrucciones */
+#modal-info .modal-ranking-contenido {
+  max-width: 600px;
+  max-height: 70vh;
+  overflow-y: auto;
+  text-align: left;
+}
+
+#modal-info-texto {
+  line-height: 1.8;
+  white-space: pre-line;
+  font-size: 1.1em;
+  color: #2d3748;
+  margin: 20px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #f7fafc, #edf2f7);
+  border-radius: 12px;
+  border-left: 6px solid #4299e1;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+#modal-info-texto br {
+  margin-bottom: 12px;
+  display: block;
+}
+
+#modal-info-texto strong {
+  color: #2d3748;
+  font-weight: 700;
+  background: linear-gradient(45deg, #4299e1, #667eea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+#modal-info-texto em {
+  color: #38a169;
+  font-style: italic;
+  font-weight: 600;
+}
+
+#btnModalInfoAceptar {
+  background: linear-gradient(45deg, #48bb78, #38a169);
+  color: white;
+  border: none;
+  padding: 14px 40px;
+  font-size: 1.1em;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+#btnModalInfoAceptar:hover {
+  background: linear-gradient(45deg, #38a169, #2f855a);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Resultado final */
+#resultado {
+  font-size: 1.3em;
+  color: #2d3748;
+  margin: 20px 0;
+  padding: 15px;
+  background: linear-gradient(135deg, #ebf8ff, #bee3f8);
+  border-radius: 12px;
+  border-left: 6px solid #4299e1;
+  font-weight: 600;
+}
+
+.letras .btn-ayuda {
+  background: linear-gradient(145deg, #f6ad55, #ed8936);
+  color: #1a202c;
+  font-weight: 800;
+  font-size: 1em;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(237, 137, 54, 0.6);
+}
+
+.letras .btn-ayuda:disabled {
+  background: linear-gradient(145deg, #e2e8f0, #cbd5e0);
+  color: #718096;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+.letras .btn-ayuda:active,
+.letras .btn-ayuda:focus,
+.letras .btn-ayuda:focus-visible {
+  background: linear-gradient(145deg, #f6ad55, #ed8936) !important;
+  color: #1a202c;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#modal-contenido,
+#modal-final-contenido,
+.modal-ranking-contenido {
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#marcador-ahorcado {
+  animation: pulse 0.5s ease;
+}
+
+/* Animaciones adicionales */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 845px) {
+  .letras button {
+    min-height: 40px;
+    min-width: auto;
+    font-size: 0.9em;
+  }
+}
+
+/* Responsive */
+@media (max-width: 780px) {
+  .body-ahorcado {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  .contenedor-juego {
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    margin: 3px;
+    width: 95%;
+    max-width: 95%;
+    overflow: hidden;
+  }
+
+  #marcador-ahorcado {
+    top: 10px;
+    right: 15px;
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-size: 1.1em;
+    min-width: 30px;
+  }
+
+  .boton-volver-ahorcado {
+    padding: 15px 0;
+    margin-top: 20px;
+  }
+
+  .boton-volver-ahorcado button {
+    padding: 12px 30px;
+    font-size: 1em;
+  }
+
+  .imagen-ahorcado {
+    margin-top: 0;
+    width: 200px;
+    height: 200px;
+  }
+
+  .titulo-ahorcado {
+    font-size: 1.8em;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .palabra {
+    font-size: 1.8em;
+    letter-spacing: 6px;
+    padding: 8px 12px;
+    min-height: 50px;
+
+    overflow: hidden;
+  }
+
+  .palabra-contenedor {
+    gap: 15px;
+    width: 100%;
+    order: 2;
+  }
+
+  .letras {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    padding: 10px;
+    width: 100%;
+    max-width: 70%;
+    overflow: hidden;
+  }
+
+  .letras button {
+    font-size: 0.9em;
+    min-height: 40px;
+    min-width: auto;
+    max-height: 45px;
+    max-width: 45px;
+  }
+  .boton-volver-ahorcado {
+    order: 3; /* Aparece tercero */
+    margin-top: 15px;
+    padding-bottom: 10px;
+    width: 100%;
+  }
+
+  #modal-contenido,
+  #modal-final-contenido,
+  .modal-ranking-contenido {
+    padding: 20px;
+    margin: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .letras {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    padding: 8px;
+    max-width: 100%;
+  }
+
+  .titulo-ahorcado {
+    font-size: 1.5em;
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+
+  .imagen-ahorcado {
+    width: 220px;
+    height: 220px;
+  }
+
+  #marcador-ahorcado {
+    font-size: 1.1em;
+    padding: 6px 10px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .boton-volver-ahorcado {
+    margin-top: 10px;
+  }
+  .letras button {
+    font-size: 0.7em;
+    min-height: 30px;
+    min-width: auto;
+  }
+
+  .palabra {
+    font-size: 1.4em;
+    letter-spacing: 6px;
+  }
+
+  /* Prevenir scroll horizontal */
+  .contenedor-juego {
+    overflow-x: hidden;
+  }
+
+  /* Asegurar que todo quepa */
+  .letras {
+    max-width: 100%;
+    gap: 6px;
+  }
+  .letras .btn-ayuda {
+    font-size: 0.5em;
+  }
+}
+
+/* Deshabilitar selección de texto en botones */
+.letras button {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Feedback visual mejorado para touch */
+.letras button:active {
+  opacity: 0.8;
+  transition: opacity 0.1s;
+}
+
+/* Asegurar z-index para evitar superposiciones */
+.contenedor-juego {
+  position: relative;
+  z-index: 1;
+}
+
+.letras {
+  position: relative;
+  z-index: 2;
+}
+
+/* Garantizar que los botones sean clicables en iOS */
+.letras button {
+  cursor: pointer;
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 360px) {
+  .letras {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  .letras button {
+    min-height: 30px;
+    min-width: auto;
+    font-size: 0.8em;
+  }
+}
+
+/* Estado activo para touch */
+.letras button.active {
+  opacity: 0.7 !important;
+  transform: scale(0.95) !important;
+}
+
+.imagen-ahorcado {
+  width: 220px;
+  height: 220px;
+}
+
+.palabra {
+  font-size: 1.2em;
+  letter-spacing: 4px;
+}
+
+/* Deshabilitar efectos hover en móvil */
+/* === ESTILOS ESPECÍFICOS: JUEGO DEL AHORCADO === */
+* {
+  box-sizing: border-box;
+}
+
+button,
+select,
+input {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+body,
+html {
+  min-height: 100dvh;
+  margin: 0;
+}
+
+.body-ahorcado {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100dvh;
+  margin: 0;
+  padding: 10px;
+  color: #333;
+  overflow: hidden;
+}
+
+.titulo-ahorcado {
+  font-size: 3.5em;
+  margin-bottom: 30px;
+  color: white;
+  margin-top: 80px;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+#marcador-ahorcado {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 12px;
+  font-size: 1.8em;
+  font-weight: bold;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  min-width: 70px;
+  text-align: center;
+}
+
+.contenedor-juego {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  margin-top: 20px;
   flex-wrap: wrap;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  margin: 20px auto;
+  max-width: 1200px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.imagen-ahorcado {
+  width: 320px;
+  height: 320px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #f0f0f0, #ffffff);
+  border: 4px solid #5d5fef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow:
+    8px 8px 20px rgba(0, 0, 0, 0.15),
+    -4px -4px 15px rgba(255, 255, 255, 0.7);
+}
+
+.imagen-ahorcado img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.palabra-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.palabra {
+  font-size: 2em;
+  letter-spacing: 12px;
+  font-weight: 700;
+  color: #2d3748;
+  min-height: 60px;
+  padding: 15px 25px;
+  /*background: linear-gradient(135deg, #e9ecef, #f8f9fa);*/
+  border-radius: 15px;
+  /*border: 3px solid #4a90e2;*/
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
 }
 
 .letras {
@@ -940,7 +1868,7 @@ html {
 @media (hover: none) and (pointer: coarse) {
   .letras button:hover {
     transform: none !important;
-    background: linear-gradient(145deg, #e2e8f0, #cbd5e0) !important;
+    /*background: linear-gradient(145deg, #e2e8f0, #cbd5e0)*/
   }
 
   .letras button:hover::before {
@@ -948,12 +1876,23 @@ html {
   }
   .letras button:not(.btn-ayuda):hover {
     transform: none !important;
-    background: linear-gradient(145deg, #e2e8f0, #cbd5e0) !important;
+    /*background: linear-gradient(145deg, #e2e8f0, #cbd5e0)*/
   }
 
   .letras button:not(.btn-ayuda):hover::before {
     display: none !important;
   }
+}
+
+/* Garantizar que sea táctil */
+.letras button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Quitar cualquier pseudo-elemento que interfiera */
+.letras button::before {
+  pointer-events: none;
 }
 
 /* Garantizar que sea táctil */
