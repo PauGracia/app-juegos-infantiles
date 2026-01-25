@@ -24,7 +24,8 @@ html {
   margin: 0;
   padding: 10px;
   color: #333;
-  overflow: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .titulo-ahorcado {
@@ -94,7 +95,7 @@ html {
 .palabra-contenedor {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 30px;
 }
 
@@ -102,31 +103,135 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
-  flex-wrap: wrap;
-  font-size: 1.4em;
-  letter-spacing: normal !important;
+  gap: 12px;
+  flex-wrap: nowrap;
+  font-family: monospace;
+  font-size: 1.8em;
   text-align: center;
   font-weight: 700;
   color: #2d3748;
-  min-height: 60px;
-  padding: 15px 25px;
-  /*background: linear-gradient(135deg, #e9ecef, #f8f9fa);*/
+  min-height: 80px;
+  padding: 20px 30px;
+  background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
   border-radius: 15px;
-  /*border: 3px solid #4a90e2;*/
-  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.4);
+  border: 3px solid #4a90e2;
+  box-shadow:
+    inset 0 4px 10px rgba(0, 0, 0, 0.1),
+    0 6px 20px rgba(74, 144, 226, 0.2);
   overflow: hidden;
+  letter-spacing: 0;
 }
 
-.palabra > * {
-  display: inline-block;
-  min-width: 30px;
+/* Cada letra/guion debe tener tamaño fijo */
+.palabra > span {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 40px;
+  height: 50px;
   text-align: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Guiones bajos (letras no adivinadas) */
+.palabra > span.ah-guion {
+  color: #718096;
+  font-size: 1.6em;
+  font-weight: 900;
+  position: relative;
+}
+
+/* Letras adivinadas */
+.palabra > span.ah-letra {
+  color: #2d3748;
+  font-size: 1.8em;
+  font-weight: 900;
+  animation: revealLetter 0.5s ease-out;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Letras incorrectas al final del juego */
+.palabra > span.ah-letra-no {
+  color: #e53e3e;
+  font-size: 2.2em;
+  font-weight: 900;
+  animation: shake 0.5s ease;
+  position: relative;
+}
+
+.palabra > span.ah-letra-no::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #e53e3e;
+  transform: scaleX(0.9);
+  opacity: 0.7;
+}
+
+/* Letras correctas al final del juego */
+.palabra > span.ah-letra-si {
+  color: #38a169;
+  font-size: 2.2em;
+  font-weight: 900;
+  animation: bounce 0.5s ease;
+  position: relative;
+}
+
+.palabra > span.ah-letra-si::before {
+  content: "✓";
+  position: absolute;
+  top: -15px;
+  right: -5px;
+  font-size: 0.6em;
+  color: #38a169;
+  opacity: 0.8;
+}
+
+/* Animaciones */
+@keyframes revealLetter {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .letras {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 12px;
   justify-content: center;
   margin-top: 20px;
@@ -134,6 +239,10 @@ html {
   background: linear-gradient(135deg, #f7fafc, #edf2f7);
   border-radius: 15px;
   border: 3px solid #cbd5e0;
+  position: relative;
+  z-index: 1000;
+  pointer-events: auto;
+  width: 100%;
 }
 
 .letras button {
@@ -148,18 +257,20 @@ html {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
   overflow: hidden;
-  /**/
   aspect-ratio: 1 / 1;
   width: 100%;
-  padding: 0; /* IMPORTANTE */
-
-  user-select: none;
-  /**/
+  padding: 0;
   min-height: 55px;
   min-width: auto;
   touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
+  -webkit-user-drag: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .letras button::before {
   content: "";
   position: absolute;
@@ -206,6 +317,31 @@ html {
 .letras button[style*="red"] {
   background: linear-gradient(145deg, #f56565, #e53e3e) !important;
   box-shadow: 0 0 15px rgba(245, 101, 101, 0.4);
+}
+
+/* Estado específico para móviles */
+@media (hover: none) and (pointer: coarse) {
+}
+
+/* Fix para iOS */
+@supports (-webkit-touch-callout: none) {
+  .body-ahorcado {
+    height: -webkit-fill-available;
+  }
+
+  .letras button {
+    cursor: pointer;
+  }
+
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Prevenir cualquier interferencia de elementos padres */
+.contenedor-juego {
+  pointer-events: auto;
+  position: relative;
 }
 
 /* -------- MODALES -------- */
@@ -321,9 +457,7 @@ html {
   position: relative;
   overflow: hidden;
   background: linear-gradient(45deg, #48bb78, #38a169) !important;
-
   border: 2px solid white !important;
-
   margin: 10px auto !important;
 }
 
@@ -418,7 +552,6 @@ html {
 #ahorcadoSVG {
   width: 320px;
   height: 320px;
-
   border-radius: 8px;
   background-color: transparent;
   padding: 10px;
@@ -431,42 +564,6 @@ html {
   stroke-linecap: round;
   stroke-linejoin: round;
   transition: opacity 0.3s ease;
-}
-
-.ah-letra-no {
-  color: #e53e3e;
-  font-weight: 800;
-  font-size: 1em;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-  position: relative;
-}
-
-.ah-letra-no::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: #e53e3e;
-  transform: scaleX(0.8);
-}
-
-.ah-letra-si {
-  color: #38a169;
-  font-weight: 800;
-  font-size: 1em;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-  position: relative;
-}
-
-.ah-letra-si::before {
-  content: "✓";
-  position: absolute;
-  top: -15px;
-  right: -8px;
-  font-size: 0.5em;
-  color: #38a169;
 }
 
 /* ---- BOTÓN SALIR ---- */
@@ -522,132 +619,11 @@ html {
   transform: translateY(0);
 }
 
-/* Modal ranking */
-.modal-ranking {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+.letras .btn-ayuda {
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 9999;
-  backdrop-filter: blur(8px);
-}
-
-.modal-ranking-contenido {
-  background: linear-gradient(135deg, #ffffff, #f8fafc);
-  padding: 30px;
-  border-radius: 20px;
-  max-width: 90%;
-  text-align: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-/*Estilos del selector de idioma */
-#modal-inicio select#idioma {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background: white;
-  border: 2px solid #cbd5e0;
-  border-radius: 12px;
-  padding: 14px 20px;
-  font-size: 1.1em;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #2d3748;
-  cursor: pointer;
-  transition: all 0.3s;
-  width: 100%;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 15px center;
-  background-size: 20px;
-  padding-right: 50px;
-}
-
-#modal-inicio select#idioma:hover {
-  border-color: #4a90e2;
-}
-
-#modal-inicio select#idioma:focus {
-  outline: none;
-  border-color: #4a90e2;
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
-}
-
-/* Mejoras para el modal de instrucciones */
-#modal-info .modal-ranking-contenido {
-  max-width: 600px;
-  max-height: 70vh;
-  overflow-y: auto;
-  text-align: left;
-}
-
-#modal-info-texto {
-  line-height: 1.8;
-  white-space: pre-line;
-  font-size: 1.1em;
-  color: #2d3748;
-  margin: 20px 0;
-  padding: 20px;
-  background: linear-gradient(135deg, #f7fafc, #edf2f7);
-  border-radius: 12px;
-  border-left: 6px solid #4299e1;
-  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-#modal-info-texto br {
-  margin-bottom: 12px;
-  display: block;
-}
-
-#modal-info-texto strong {
-  color: #2d3748;
-  font-weight: 700;
-  background: linear-gradient(45deg, #4299e1, #667eea);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-#modal-info-texto em {
-  color: #38a169;
-  font-style: italic;
-  font-weight: 600;
-}
-
-#btnModalInfoAceptar {
-  background: linear-gradient(45deg, #48bb78, #38a169);
-  color: white;
-  border: none;
-  padding: 14px 40px;
-  font-size: 1.1em;
-  border-radius: 12px;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: all 0.3s;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-}
-
-#btnModalInfoAceptar:hover {
-  background: linear-gradient(45deg, #38a169, #2f855a);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-/* Resultado final */
-#resultado {
-  font-size: 1.3em;
-  color: #2d3748;
-  margin: 20px 0;
-  padding: 15px;
-  background: linear-gradient(135deg, #ebf8ff, #bee3f8);
-  border-radius: 12px;
-  border-left: 6px solid #4299e1;
-  font-weight: 600;
+  justify-content: center;
+  white-space: nowrap;
 }
 
 .letras .btn-ayuda {
@@ -706,32 +682,38 @@ html {
   animation: pulse 0.5s ease;
 }
 
-/* Animaciones adicionales */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@media (max-width: 845px) {
-  .letras button {
-    min-height: 40px;
-    min-width: auto;
-    font-size: 0.9em;
-  }
-}
-
-/* Responsive */
+/* === MEDIA QUERIES MEJORADAS PARA MÓVILES === */
 @media (max-width: 780px) {
   .body-ahorcado {
     display: flex;
     flex-direction: column;
+    min-height: 100dvh;
     overflow-x: hidden;
+    padding: 5px;
+    justify-content: space-between;
+  }
+
+  .mobile-title {
+    padding: 0 10px !important;
+    word-break: break-word;
+    line-height: 1.2 !important;
+  }
+
+  .mobile-score {
+    position: fixed !important;
+    top: 5px !important;
+    right: 5px !important;
+    z-index: 1000 !important;
+  }
+
+  .mobile-container {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .mobile-footer {
+    padding: 5px 0 !important;
+    margin-top: 0 !important;
   }
 
   .contenedor-juego {
@@ -739,197 +721,195 @@ html {
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    padding: 15px;
-    margin: 3px;
-    width: 95%;
-    max-width: 95%;
-    overflow: hidden;
-  }
-
-  #marcador-ahorcado {
-    top: 10px;
-    right: 15px;
-    padding: 8px 15px;
-    border-radius: 10px;
-    font-size: 1.1em;
-    min-width: 30px;
-  }
-
-  .boton-volver-ahorcado {
-    padding: 15px 0;
-    margin-top: 20px;
-  }
-
-  .boton-volver-ahorcado button {
-    padding: 12px 30px;
-    font-size: 1em;
-  }
-
-  .imagen-ahorcado {
-    margin-top: 0;
-    width: 200px;
-    height: 200px;
+    padding: 10px;
+    margin: 5px auto;
+    width: 98%;
+    max-width: 98%;
+    min-height: auto;
+    overflow: visible;
+    justify-content: flex-start;
   }
 
   .titulo-ahorcado {
     font-size: 1.8em;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  }
-
-  .palabra {
-    font-size: 1.2em;
-    letter-spacing: 4px;
-    padding: 8px 12px;
-    min-height: 50px;
-
-    overflow: hidden;
-  }
-
-  .palabra-contenedor {
-    gap: 15px;
-    width: 100%;
-    order: 2;
-  }
-
-  .letras {
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
-    padding: 10px;
-    width: 100%;
-    max-width: 70%;
-    overflow: hidden;
-  }
-
-  .letras button {
-    font-size: 0.9em;
-    min-height: 40px;
-    min-width: auto;
-    max-height: 45px;
-    max-width: 45px;
-  }
-  .boton-volver-ahorcado {
-    order: 3; /* Aparece tercero */
     margin-top: 15px;
-    padding-bottom: 10px;
-    width: 100%;
-  }
-
-  #modal-contenido,
-  #modal-final-contenido,
-  .modal-ranking-contenido {
-    padding: 20px;
-    margin: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .letras {
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    padding: 8px;
-    max-width: 100%;
-  }
-
-  .titulo-ahorcado {
-    font-size: 1.5em;
-    margin-top: 12px;
-    margin-bottom: 12px;
-  }
-
-  .imagen-ahorcado {
-    width: 220px;
-    height: 220px;
+    margin-bottom: 10px;
+    padding: 0 10px;
+    line-height: 1.2;
   }
 
   #marcador-ahorcado {
-    font-size: 1.1em;
-    padding: 6px 10px;
-    top: 10px;
-    right: 10px;
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    padding: 6px 12px;
+    font-size: 1em;
+    min-width: 25px;
+    z-index: 1000;
+  }
+
+  .imagen-ahorcado {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto;
+  }
+
+  .palabra-contenedor {
+    width: 100%;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .palabra {
+    width: 100%;
+    gap: 5px;
+    font-size: 1.4em;
+    min-height: 35px;
+    padding: 10px 15px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .palabra > span {
+    min-width: 22px;
+    height: 30px;
+    font-size: 1.2em;
+  }
+
+  /* === TECLADO COMPACTO PARA MÓVILES === */
+
+  .letras {
+    padding: 10px; /* Reducir padding */
+    gap: 8px; /* Reducir espacio entre botones */
+    max-width: 85%;
+    margin: 0 auto;
+  }
+
+  .letras button {
+    width: 100%;
+    min-height: 45px;
+
+    font-size: 1em;
+    aspect-ratio: 1 / 1;
+    padding: 0;
+  }
+
+  .letras .btn-ayuda {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
   }
 
   .boton-volver-ahorcado {
     margin-top: 10px;
+    padding: 10px 0;
+    width: 100%;
   }
-  .letras button {
-    font-size: 0.7em;
-    min-height: 30px;
-    min-width: auto;
+
+  .boton-volver-ahorcado button {
+    padding: 12px 25px;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .body-ahorcado {
+    padding: 0;
+  }
+
+  .contenedor-juego {
+    padding: 8px;
+    margin: 2px auto;
+    gap: 10px;
+  }
+
+  .titulo-ahorcado {
+    font-size: 1.5em;
+    margin-top: 10px;
+    margin-bottom: 8px;
+    padding: 0 5px;
+  }
+
+  #marcador-ahorcado {
+    top: 2px;
+    right: 2px;
+    padding: 4px 8px;
+    font-size: 0.9em;
+  }
+
+  .imagen-ahorcado {
+    width: 150px;
+    height: 150px;
   }
 
   .palabra {
-    font-size: 1.2em;
-    letter-spacing: 4px;
-  }
-
-  /* Prevenir scroll horizontal */
-  .contenedor-juego {
-    overflow-x: hidden;
-  }
-
-  /* Asegurar que todo quepa */
-  .letras {
-    max-width: 100%;
-    gap: 6px;
-  }
-  .letras .btn-ayuda {
-    font-size: 0.5em;
-  }
-}
-
-/* Deshabilitar selección de texto en botones */
-.letras button {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/* Feedback visual mejorado para touch */
-.letras button:active {
-  opacity: 0.8;
-  transition: opacity 0.1s;
-}
-
-/* Asegurar z-index para evitar superposiciones */
-.contenedor-juego {
-  position: relative;
-  z-index: 1;
-}
-
-.letras {
-  position: relative;
-  z-index: 2;
-}
-
-/* Garantizar que los botones sean clicables en iOS */
-.letras button {
-  cursor: pointer;
-}
-
-/* Para pantallas muy pequeñas */
-@media (max-width: 360px) {
-  .letras {
-    grid-template-columns: repeat(7, 1fr);
     gap: 4px;
+    font-size: 1.2em;
+    min-height: 30px;
+    padding: 8px 10px;
+  }
+
+  .palabra > span {
+    min-width: 18px;
+    height: 25px;
+    font-size: 1em;
+  }
+
+  /* TECLADO MÁS COMPACTO */
+  .letras {
+    gap: 4px;
+    padding: 8px;
   }
 
   .letras button {
-    min-height: 30px;
-    min-width: auto;
+    min-height: 40px; /* Más pequeño que en tablet */
+    font-size: 0.9em;
+  }
+
+  .letras .btn-ayuda {
+    font-size: 0.9em;
+  }
+
+  /* Para palabras largas */
+  .palabra.larga {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 8px;
+  }
+
+  .palabra.larga > span {
+    flex-shrink: 0;
+    margin: 0 2px;
+  }
+}
+
+@media (max-width: 360px) {
+  .letras {
+    gap: 3px;
+    padding: 6px;
+  }
+
+  .letras button {
+    min-height: 35px;
+    font-size: 0.85em;
+  }
+
+  .letras .btn-ayuda {
     font-size: 0.8em;
   }
 }
 
-/* Estado activo para touch */
-.letras button.active {
-  opacity: 0.7 !important;
-  transform: scale(0.95) !important;
-}
+/* === AJUSTES PARA ORIENTACIÓN HORIZONTAL EN MÓVILES === */
+@media (max-width: 780px) and (orientation: landscape) {
+  .contenedor-juego {
+    flex-direction: row;
+    align-items: center;
+  }
 
-.imagen-ahorcado {
-  width: 220px;
-  height: 220px;
+  .imagen-ahorcado {
+    flex-shrink: 0;
+  }
 }

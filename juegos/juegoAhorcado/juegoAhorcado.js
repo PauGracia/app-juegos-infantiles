@@ -1,5 +1,5 @@
 /* =========================
-   JUEGO AHORCADO
+   JUEGO AHORCADO - FIX PARA MÓVILES
    ========================= */
 document.addEventListener("DOMContentLoaded", () => {
   (function () {
@@ -9,9 +9,63 @@ document.addEventListener("DOMContentLoaded", () => {
     const marcadorEl = document.getElementById("marcador-ahorcado");
 
     // ================================
+    // FUNCIÓN PARA AJUSTAR LAYOUT EN MÓVILES
+    // ================================
+    function ajustarLayoutMovil() {
+      if (!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        return; // Solo en móviles
+      }
+
+      const alturaVentana = window.innerHeight;
+      const alturaDisponible = alturaVentana - 200; // Reservar espacio para título y botones
+
+      // Ajustar contenedor principal
+      const contenedor = document.querySelector(".contenedor-juego");
+      if (contenedor) {
+        contenedor.style.maxHeight = `${alturaDisponible}px`;
+        contenedor.style.overflowY = "auto";
+      }
+
+      // Ajustar teclado según altura disponible
+      const letrasContainer = document.getElementById("letras");
+      if (letrasContainer && alturaVentana < 700) {
+        // Pantallas muy cortas
+        letrasContainer.style.gap = "2px";
+        letrasContainer.style.padding = "3px";
+
+        const botones = letrasContainer.querySelectorAll(
+          "button:not(.btn-ayuda)",
+        );
+        botones.forEach((btn) => {});
+      }
+
+      // Forzar reflow para evitar problemas de renderizado
+      requestAnimationFrame(() => {
+        if (contenedor) contenedor.style.display = "none";
+        setTimeout(() => {
+          if (contenedor) contenedor.style.display = "flex";
+        }, 50);
+      });
+    }
+
+    // Ejecutar al cargar y al redimensionar
+    window.addEventListener("load", ajustarLayoutMovil);
+    window.addEventListener("resize", ajustarLayoutMovil);
+    setTimeout(ajustarLayoutMovil, 500);
+
+    // ================================
+    // DETECCIÓN DE DISPOSITIVO
+    // ================================
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent,
+      );
+    const isTouchDevice =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+    // ================================
     // SONIDOS DEL JUEGO
     // ================================
-
     const sonidos = {
       bien: new Audio("sounds/letra-bien.mp3"),
       mal: new Audio("sounds/letra-mal.mp3"),
@@ -19,25 +73,131 @@ document.addEventListener("DOMContentLoaded", () => {
       fin: new Audio("sounds/fin.mp3"),
     };
 
-    // Configuración recomendada
     Object.values(sonidos).forEach((audio) => {
       audio.preload = "auto";
       audio.volume = 0.6;
     });
 
-    // Función segura para reproducir sonido
-    function reproducirSonido(audio) {
-      if (!audio) return;
-      audio.currentTime = 0;
-      audio.play().catch(() => {
-        // Evita errores de autoplay en móviles
-      });
+    // ================================
+    // MANEJADOR DE EVENTOS MEJORADO
+    // ================================
+    class ButtonHandler {
+      constructor() {
+        this.activeButton = null;
+        this.lastTouchTime = 0;
+        this.touchMoveThreshold = 10;
+        this.startX = 0;
+        this.startY = 0;
+      }
+
+      setupButton(btn, letra, handler) {
+        if (isTouchDevice) {
+          // Para móviles: usar solo touch events
+          btn.addEventListener(
+            "touchstart",
+            (e) => this.handleTouchStart(e, btn, letra, handler),
+            { passive: false },
+          );
+          btn.addEventListener(
+            "touchend",
+            (e) => this.handleTouchEnd(e, btn, letra, handler),
+            { passive: false },
+          );
+          btn.addEventListener("touchmove", (e) => this.handleTouchMove(e), {
+            passive: false,
+          });
+          btn.addEventListener("touchcancel", () => this.cancelTouch(btn));
+
+          // Remover click listener para evitar conflictos
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          });
+        } else {
+          // Para desktop: usar solo click
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            handler(btn, letra);
+          });
+        }
+
+        // Añadir estilo visual para feedback táctil
+        if (isTouchDevice) {
+          btn.style.touchAction = "manipulation";
+          btn.style.msTouchAction = "manipulation";
+        }
+      }
+
+      handleTouchStart(e, btn, letra, handler) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Evitar múltiples toques rápidos
+        const now = Date.now();
+        if (now - this.lastTouchTime < 300) return;
+
+        this.activeButton = btn;
+        const touch = e.touches[0];
+        this.startX = touch.clientX;
+        this.startY = touch.clientY;
+
+        // Feedback visual
+        btn.style.opacity = "0.8";
+        btn.style.transform = "scale(0.95)";
+      }
+
+      handleTouchMove(e) {
+        if (!this.activeButton) return;
+
+        const touch = e.touches[0];
+        const deltaX = Math.abs(touch.clientX - this.startX);
+        const deltaY = Math.abs(touch.clientY - this.startY);
+
+        // Cancelar si el usuario se mueve demasiado
+        if (
+          deltaX > this.touchMoveThreshold ||
+          deltaY > this.touchMoveThreshold
+        ) {
+          this.cancelTouch(this.activeButton);
+        }
+      }
+
+      handleTouchEnd(e, btn, letra, handler) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (this.activeButton !== btn) return;
+        if (btn.disabled) return;
+
+        // Restaurar estilo
+        btn.style.opacity = "";
+        btn.style.transform = "";
+
+        // Registrar tiempo
+        this.lastTouchTime = Date.now();
+
+        // Ejecutar handler
+        setTimeout(() => {
+          handler(btn, letra);
+        }, 50);
+
+        this.activeButton = null;
+      }
+
+      cancelTouch(btn) {
+        if (btn) {
+          btn.style.opacity = "";
+          btn.style.transform = "";
+        }
+        this.activeButton = null;
+      }
     }
+
+    const buttonHandler = new ButtonHandler();
 
     // ================================
     // DESBLOQUEO AUDIO EN MÓVIL
     // ================================
-
     let audioDesbloqueado = false;
 
     function desbloquearAudioMovil() {
@@ -64,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let ah_errores = 0;
     let ah_usuario = "";
     let ah_puntos = 0;
-    let ah_idiomaJuego = "es"; // Idioma para las palabras del juego
+    let ah_idiomaJuego = "es";
 
     const ah_partesSVG = [
       "poste",
@@ -81,99 +241,48 @@ document.addEventListener("DOMContentLoaded", () => {
     const ah_maxErrores = ah_partesSVG.length;
 
     // ================================
-    // FUNCIONES DEL JUEGO
+    // FUNCIONES PRINCIPALES
     // ================================
-
-    // Función para mostrar instrucciones
-    function mostrarInstrucciones() {
-      const currentTranslations = window.translations || {};
-      const gameLanguage =
-        currentTranslations["language." + ah_idiomaJuego] || ah_idiomaJuego;
-
-      const instrucciones = `
-${getTranslation("ahorcado.howToPlay", "Cómo jugar al Ahorcado")}
-
-${getTranslation("ahorcado.instructions.objective", "OBJETIVO:")}
-${getTranslation("ahorcado.instructions.objectiveText", "Adivinar la palabra secreta antes de que se complete el dibujo del ahorcado.")}
-
-${getTranslation("ahorcado.instructions.gameplay", "CÓMO JUGAR:")}
-• ${getTranslation("ahorcado.instructions.letters", "Haz clic en las letras para adivinar la palabra.")}
-• ${getTranslation("ahorcado.instructions.correct", "Si la letra es correcta, aparecerá en la palabra.")}
-• ${getTranslation("ahorcado.instructions.wrong", "Si la letra es incorrecta, se añadirá una parte al dibujo del ahorcado.")}
-• ${getTranslation("ahorcado.instructions.maxErrors", "Si completas el dibujo (10 errores), pierdes la palabra.")}
-
-${getTranslation("ahorcado.instructions.scoring", "PUNTUACIÓN:")}
-• ${getTranslation("ahorcado.instructions.pointsPerWord", "Cada palabra acertada suma 1 punto al marcador.")}
-• ${getTranslation("ahorcado.instructions.scoreKeeps", "La puntuación se acumula durante toda la partida.")}
-• ${getTranslation("ahorcado.instructions.saveRecord", "Al finalizar puedes guardar tu récord en el ranking local.")}
-
-${getTranslation("ahorcado.instructions.ranking", "RANKING:")}
-• ${getTranslation("ahorcado.instructions.saveButton", "Puedes guardar tu puntuación desde el menú final.")}
-• ${getTranslation("ahorcado.instructions.viewRanking", "Puedes ver el ranking desde el menú inicial o final.")}
-• ${getTranslation("ahorcado.instructions.exportRanking", "También puedes exportar el ranking en formato JSON.")}
-
-${getTranslation("ahorcado.instructions.language", "IDIOMA:")}
-• ${getTranslation("ahorcado.instructions.interfaceLanguage", "Puedes jugar a este juego en diferentes idiomas para practicar.")}
-
-
-${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
-      `;
-
-      // Usar la función global mostrarModalInfo
-      window.mostrarModalInfo(
-        getTranslation("common.instructions", "Instrucciones"),
-        instrucciones,
-      );
-    }
-
-    // ================================
-    // EFECTOS VISUALES MEJORADOS
-    // ================================
-
-    // Efecto de animación en el marcador
-    function animarMarcador() {
-      if (marcadorEl) {
-        marcadorEl.style.animation = "none";
-        setTimeout(() => {
-          marcadorEl.style.animation = "pulse 0.5s ease";
-        }, 10);
+    function reproducirSonido(audio) {
+      if (!audio) return;
+      try {
+        audio.currentTime = 0;
+        audio.play().catch((e) => console.log("Audio error:", e));
+      } catch (e) {
+        console.log("Audio play failed:", e);
       }
     }
 
-    // Efecto de revelación de letra
-    function efectoLetraRevelada(letraElemento) {
-      letraElemento.style.animation = "none";
-      setTimeout(() => {
-        letraElemento.style.animation = "fadeIn 0.3s ease";
-      }, 10);
+    function normalizarLetra(letra) {
+      return letra
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toUpperCase();
     }
 
     function ah_manejarLetra(btn, letra) {
       if (btn.disabled) return;
-
-      btn.style.transform = "scale(0.95)";
 
       btn.disabled = true;
       const letraNormalizada = normalizarLetra(letra);
 
       if (normalizarLetra(ah_palabraSecreta).includes(letraNormalizada)) {
         reproducirSonido(sonidos.bien);
-
         btn.style.background = "green";
+
         for (let i = 0; i < ah_palabraSecreta.length; i++) {
           if (normalizarLetra(ah_palabraSecreta[i]) === letraNormalizada) {
             ah_progreso[i] = ah_palabraSecreta[i];
-            if (palabraEl.children[i]) {
-              efectoLetraRevelada(palabraEl.children[i]);
-            }
           }
         }
 
         ah_mostrarPalabra();
+
         if (!ah_progreso.includes("_")) {
           ah_puntos++;
           animarMarcador();
           ah_actualizarMarcador();
+
           const winMessage = getTranslation(
             "ahorcado.winMessage",
             "¡Palabra acertada!",
@@ -182,6 +291,7 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
             "ahorcado.nextWord",
             "¡Siguiente palabra!",
           );
+
           setTimeout(() => {
             reproducirSonido(sonidos.nuevaPalabra);
             mostrarMensajeTemporal(`${winMessage} ${nextWord}`, 2200);
@@ -197,48 +307,49 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
         ah_errores++;
         ah_actualizarAhorcado();
       }
-
-      setTimeout(() => {
-        btn.style.transform = "";
-      }, 150);
     }
 
-    // Mejorar función mostrarMensajeTemporal
+    function animarMarcador() {
+      if (marcadorEl) {
+        marcadorEl.style.animation = "none";
+        setTimeout(() => {
+          marcadorEl.style.animation = "pulse 0.5s ease";
+        }, 10);
+      }
+    }
+
     function mostrarMensajeTemporal(mensaje, duracion = 2200) {
       const mensajeEl = document.createElement("div");
       mensajeEl.textContent = mensaje;
-
       mensajeEl.style.cssText = `
-    position: fixed;
-    top: 18%;
-    left: 50%;
-    transform: translate(-50%, -10px);
-    background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(50,50,50,0.95));
-    color: white;
-    padding: 18px 32px;
-    border-radius: 14px;
-    z-index: 9999;
-    font-size: 1.25em;
-    text-align: center;
-    min-width: 280px;
-    max-width: 85%;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
-    backdrop-filter: blur(8px);
-    opacity: 0;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    pointer-events: none;
-    font-weight: 600;
-  `;
+        position: fixed;
+        top: 18%;
+        left: 50%;
+        transform: translate(-50%, -10px);
+        background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(50,50,50,0.95));
+        color: white;
+        padding: 18px 32px;
+        border-radius: 14px;
+        z-index: 10000;
+        font-size: 1.25em;
+        text-align: center;
+        min-width: 280px;
+        max-width: 85%;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+        backdrop-filter: blur(8px);
+        opacity: 0;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        pointer-events: none;
+        font-weight: 600;
+      `;
 
       document.body.appendChild(mensajeEl);
 
-      // Fade IN
       requestAnimationFrame(() => {
         mensajeEl.style.opacity = "1";
         mensajeEl.style.transform = "translate(-50%, 0)";
       });
 
-      // Fade OUT
       setTimeout(() => {
         mensajeEl.style.opacity = "0";
         mensajeEl.style.transform = "translate(-50%, -10px)";
@@ -250,19 +361,11 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       }, duracion);
     }
 
-    function normalizarLetra(letra) {
-      return letra
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toUpperCase();
-    }
-
-    // Iniciar juego
     window.iniciarAhorcado = function () {
       ah_ayudas = 2;
       ah_palabrasAcertadas = 0;
-      // DESBLOQUEAR AUDIO EN MÓVIL
       desbloquearAudioMovil();
+
       const selectIdiomaJuego = document.getElementById("idioma-juego");
       ah_idiomaJuego = selectIdiomaJuego ? selectIdiomaJuego.value : "es";
 
@@ -309,7 +412,7 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
     }
 
     function ah_nuevaPalabra() {
-      // Reactivar botón Guardar récord
+      const btnGuardarRecord = document.getElementById("btnGuardarRecord");
       if (btnGuardarRecord) {
         btnGuardarRecord.disabled = false;
         btnGuardarRecord.textContent = getTranslation(
@@ -317,7 +420,7 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
           "Guardar récord local",
         );
       }
-      // Usar el idioma seleccionado para las palabras del juego
+
       const lista = palabras[ah_idiomaJuego] || palabras.es;
       ah_palabraSecreta =
         lista[Math.floor(Math.random() * lista.length)].toUpperCase();
@@ -331,42 +434,40 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
     }
 
     function ah_mostrarPalabra() {
-      palabraEl.innerHTML = ah_progreso.join(" ");
+      palabraEl.innerHTML = "";
+
+      if (window.innerWidth <= 480 && ah_palabraSecreta.length > 10) {
+        palabraEl.classList.add("larga");
+      } else {
+        palabraEl.classList.remove("larga");
+      }
+
+      for (let i = 0; i < ah_palabraSecreta.length; i++) {
+        const span = document.createElement("span");
+        span.textContent = ah_progreso[i] === "_" ? "_" : ah_progreso[i];
+        span.className = ah_progreso[i] === "_" ? "ah-guion" : "ah-letra";
+        palabraEl.appendChild(span);
+      }
     }
 
     function ah_crearBotones() {
       const abecedario = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
       letrasEl.innerHTML = "";
 
-      const isTouchDevice =
-        "ontouchstart" in window || navigator.maxTouchPoints > 0;
-
       // === BOTONES DE LETRAS ===
       abecedario.forEach((letra) => {
         const btn = document.createElement("button");
         btn.textContent = letra;
         btn.type = "button";
+        btn.className = "letra-btn";
 
-        if (isTouchDevice) {
-          btn.addEventListener(
-            "touchend",
-            (e) => {
-              e.preventDefault();
-              ah_manejarLetra(btn, letra);
-            },
-            { passive: false },
-          );
-        }
-
-        btn.addEventListener("click", (e) => {
-          if (isTouchDevice) return;
-          ah_manejarLetra(btn, letra);
-        });
+        // Usar el manejador mejorado
+        buttonHandler.setupButton(btn, letra, ah_manejarLetra);
 
         letrasEl.appendChild(btn);
       });
 
-      // === BOTÓN AYUDA (UNO SOLO) ===
+      // === BOTÓN AYUDA ===
       const btnAyuda = document.createElement("button");
       btnAyuda.className = "btn-ayuda";
       btnAyuda.textContent = `💡 ${ah_ayudas}`;
@@ -374,7 +475,33 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
 
       if (ah_ayudas <= 0) btnAyuda.disabled = true;
 
-      btnAyuda.addEventListener("click", () => usarAyuda(btnAyuda));
+      // Configurar eventos para el botón ayuda
+      if (isTouchDevice) {
+        btnAyuda.addEventListener(
+          "touchstart",
+          (e) => {
+            e.preventDefault();
+            if (!btnAyuda.disabled) {
+              btnAyuda.style.opacity = "0.8";
+            }
+          },
+          { passive: false },
+        );
+
+        btnAyuda.addEventListener(
+          "touchend",
+          (e) => {
+            e.preventDefault();
+            btnAyuda.style.opacity = "";
+            if (!btnAyuda.disabled) {
+              usarAyuda(btnAyuda);
+            }
+          },
+          { passive: false },
+        );
+      } else {
+        btnAyuda.addEventListener("click", () => usarAyuda(btnAyuda));
+      }
 
       letrasEl.appendChild(btnAyuda);
     }
@@ -382,7 +509,6 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
     function usarAyuda(btn) {
       if (ah_ayudas <= 0) return;
 
-      // Buscar letras ocultas
       const indicesOcultos = [];
       for (let i = 0; i < ah_progreso.length; i++) {
         if (ah_progreso[i] === "_") indicesOcultos.push(i);
@@ -390,12 +516,10 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
 
       if (indicesOcultos.length === 0) return;
 
-      // Elegir una posición aleatoria
       const index =
         indicesOcultos[Math.floor(Math.random() * indicesOcultos.length)];
       const letra = ah_palabraSecreta[index];
 
-      // Revelar TODAS las ocurrencias de esa letra
       for (let i = 0; i < ah_palabraSecreta.length; i++) {
         if (ah_palabraSecreta[i] === letra) {
           ah_progreso[i] = letra;
@@ -409,7 +533,6 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       btn.textContent = `💡 ${ah_ayudas}`;
       if (ah_ayudas <= 0) btn.disabled = true;
 
-      // ¿Palabra completada?
       if (!ah_progreso.includes("_")) {
         ah_puntos++;
         ah_palabrasAcertadas++;
@@ -420,35 +543,6 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
         ah_actualizarMarcador();
         setTimeout(ah_nuevaPalabra, 1200);
       }
-    }
-
-    function guardarPuntuacionLocal() {
-      const registro = {
-        usuario: ah_usuario,
-        puntos: ah_puntos,
-        juego: "Ahorcado",
-        fecha: new Date().toISOString(),
-        idioma: ah_idiomaJuego,
-      };
-
-      const ranking = JSON.parse(localStorage.getItem("rankingAhorcado")) || [];
-
-      ranking.push(registro);
-      ranking.sort((a, b) => b.puntos - a.puntos);
-
-      localStorage.setItem("rankingAhorcado", JSON.stringify(ranking));
-      // Desactivar botón
-      if (btnGuardarRecord) {
-        btnGuardarRecord.disabled = true;
-        btnGuardarRecord.textContent = getTranslation(
-          "ahorcado.recordSaved",
-          "Récord guardado",
-        );
-      }
-      mostrarMensajeTemporal(
-        getTranslation("ahorcado.recordSaved", "Récord guardado correctamente"),
-        1500,
-      );
     }
 
     function ah_actualizarAhorcado() {
@@ -465,17 +559,15 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
     }
 
     function ah_revelarPalabra() {
-      let palabraMostrada = "";
-      for (let i = 0; i < ah_palabraSecreta.length; i++) {
-        if (ah_progreso[i] === "_") {
-          palabraMostrada += `<span class="ah-letra-no">${ah_palabraSecreta[i]}</span> `;
-        } else {
-          palabraMostrada += `<span class="ah-letra-si">${ah_progreso[i]}</span> `;
-        }
-      }
-      palabraEl.innerHTML = palabraMostrada.trim();
+      palabraEl.innerHTML = "";
 
-      // Mostrar mensaje de palabra perdida
+      for (let i = 0; i < ah_palabraSecreta.length; i++) {
+        const span = document.createElement("span");
+        span.textContent = ah_palabraSecreta[i];
+        span.className = ah_progreso[i] === "_" ? "ah-letra-no" : "ah-letra-si";
+        palabraEl.appendChild(span);
+      }
+
       const loseMessage = getTranslation(
         "ahorcado.loseMessage",
         "La palabra era:",
@@ -497,11 +589,132 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
 
       const resultado = document.getElementById("resultado");
       if (resultado) {
-        // Usar traducción para el mensaje final
         const scoreText = getTranslation("ahorcado.score", "Puntuación");
         const pointsText = getTranslation("ahorcado.points", "puntos");
         resultado.textContent = `${ah_usuario}, ${scoreText}: ${ah_puntos} ${pointsText}`;
       }
+    }
+
+    function getTranslation(key, fallback = "") {
+      return window.translations?.[key] || fallback || key;
+    }
+
+    // ================================
+    // CONFIGURACIÓN DE EVENTOS
+    // ================================
+    const btnEmpezar = document.getElementById("btnEmpezar");
+    if (btnEmpezar) {
+      if (isTouchDevice) {
+        btnEmpezar.addEventListener(
+          "touchend",
+          (e) => {
+            e.preventDefault();
+            iniciarAhorcado();
+          },
+          { passive: false },
+        );
+      } else {
+        btnEmpezar.addEventListener("click", iniciarAhorcado);
+      }
+    }
+
+    const btnInstrucciones = document.getElementById("btnInstrucciones");
+    if (btnInstrucciones) {
+      btnInstrucciones.addEventListener("click", () => {
+        const currentTranslations = window.translations || {};
+        const gameLanguage =
+          currentTranslations["language." + ah_idiomaJuego] || ah_idiomaJuego;
+
+        const instrucciones = `
+${getTranslation("ahorcado.howToPlay", "Cómo jugar al Ahorcado")}
+
+${getTranslation("ahorcado.instructions.objective", "OBJETIVO:")}
+${getTranslation("ahorcado.instructions.objectiveText", "Adivinar la palabra secreta antes de que se complete el dibujo del ahorcado.")}
+
+${getTranslation("ahorcado.instructions.gameplay", "CÓMO JUGAR:")}
+• ${getTranslation("ahorcado.instructions.letters", "Haz clic en las letras para adivinar la palabra.")}
+• ${getTranslation("ahorcado.instructions.correct", "Si la letra es correcta, aparecerá en la palabra.")}
+• ${getTranslation("ahorcado.instructions.wrong", "Si la letra es incorrecta, se añadirá una parte al dibujo del ahorcado.")}
+• ${getTranslation("ahorcado.instructions.maxErrors", "Si completas el dibujo (10 errores), pierdes la palabra.")}
+
+${getTranslation("ahorcado.instructions.scoring", "PUNTUACIÓN:")}
+• ${getTranslation("ahorcado.instructions.pointsPerWord", "Cada palabra acertada suma 1 punto al marcador.")}
+• ${getTranslation("ahorcado.instructions.scoreKeeps", "La puntuación se acumula durante toda la partida.")}
+• ${getTranslation("ahorcado.instructions.saveRecord", "Al finalizar puedes guardar tu récord en el ranking local.")}
+
+${getTranslation("ahorcado.instructions.ranking", "RANKING:")}
+• ${getTranslation("ahorcado.instructions.saveButton", "Puedes guardar tu puntuación desde el menú final.")}
+• ${getTranslation("ahorcado.instructions.viewRanking", "Puedes ver el ranking desde el menú inicial o final.")}
+• ${getTranslation("ahorcado.instructions.exportRanking", "También puedes exportar el ranking en formato JSON.")}
+
+${getTranslation("ahorcado.instructions.language", "IDIOMA:")}
+• ${getTranslation("ahorcado.instructions.interfaceLanguage", "Puedes jugar a este juego en diferentes idiomas para practicar.")}
+
+
+${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
+        `;
+
+        window.mostrarModalInfo(
+          getTranslation("common.instructions", "Instrucciones"),
+          instrucciones,
+        );
+      });
+    }
+
+    const btnVerRanking = document.getElementById("btnVerRanking");
+    if (btnVerRanking) {
+      btnVerRanking.addEventListener("click", () => {
+        window.location.href = "../ranking/rankingLocal.html";
+      });
+    }
+
+    const btnSalirModal = document.getElementById("btnSalir-modal");
+    if (btnSalirModal) {
+      btnSalirModal.addEventListener("click", () => {
+        window.location.href = "../../index.html";
+      });
+    }
+
+    const btnSalir = document.getElementById("btnSalir");
+    if (btnSalir) {
+      btnSalir.addEventListener("click", () => {
+        ah_resetearJuegoCompleto();
+      });
+    }
+
+    const btnGuardarRecord = document.getElementById("btnGuardarRecord");
+    if (btnGuardarRecord) {
+      btnGuardarRecord.addEventListener("click", () => {
+        const registro = {
+          usuario: ah_usuario,
+          puntos: ah_puntos,
+          juego: "Ahorcado",
+          fecha: new Date().toISOString(),
+          idioma: ah_idiomaJuego,
+        };
+
+        const ranking =
+          JSON.parse(localStorage.getItem("rankingAhorcado")) || [];
+
+        ranking.push(registro);
+        ranking.sort((a, b) => b.puntos - a.puntos);
+
+        localStorage.setItem("rankingAhorcado", JSON.stringify(ranking));
+
+        btnGuardarRecord.disabled = true;
+        btnGuardarRecord.textContent = getTranslation(
+          "ahorcado.recordSaved",
+          "Récord guardado",
+        );
+
+        mostrarMensajeTemporal(
+          getTranslation(
+            "ahorcado.recordSaved",
+            "Récord guardado correctamente",
+          ),
+          1500,
+        );
+      });
     }
 
     function ah_resetearJuegoCompleto() {
@@ -544,47 +757,55 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       window.ah_reiniciarCompleto();
     };
 
-    // Función auxiliar para obtener traducciones
-    function getTranslation(key, fallback = "") {
-      return window.translations?.[key] || fallback || key;
-    }
+    window.exportarRanking = function () {
+      const ranking = JSON.parse(localStorage.getItem("rankingAhorcado")) || [];
+      const dataStr = JSON.stringify(ranking, null, 2);
+      const dataUri =
+        "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
 
-    // Configurar eventos de botones
-    const btnEmpezar = document.getElementById("btnEmpezar");
-    if (btnEmpezar) btnEmpezar.addEventListener("click", iniciarAhorcado);
+      const exportFileDefaultName = `ranking_ahorcado_${new Date().toISOString().split("T")[0]}.json`;
 
-    const btnInstrucciones = document.getElementById("btnInstrucciones");
-    if (btnInstrucciones) {
-      btnInstrucciones.addEventListener("click", mostrarInstrucciones);
-    }
+      const linkElement = document.createElement("a");
+      linkElement.setAttribute("href", dataUri);
+      linkElement.setAttribute("download", exportFileDefaultName);
+      linkElement.click();
+    };
 
-    const btnVerRanking = document.getElementById("btnVerRanking");
-    if (btnVerRanking) {
-      btnVerRanking.addEventListener("click", () => {
-        window.location.href = "../ranking/rankingLocal.html";
-      });
-    }
+    // ================================
+    // FIX PARA MÓVILES - PREVENIR COMPORTAMIENTOS NO DESEADOS
+    // ================================
 
-    const btnSalirModal = document.getElementById("btnSalir-modal");
-    if (btnSalirModal) {
-      btnSalirModal.addEventListener("click", () => {
-        window.location.href = "../../index.html";
-      });
-    }
+    // Prevenir scroll cuando se tocan botones
+    document.addEventListener(
+      "touchmove",
+      function (e) {
+        if (e.target.closest(".letras button, .letras .btn-ayuda")) {
+          e.preventDefault();
+        }
+      },
+      { passive: false },
+    );
 
-    const btnSalir = document.getElementById("btnSalir");
-    if (btnSalir) {
-      btnSalir.addEventListener("click", () => {
-        ah_resetearJuegoCompleto();
-      });
-    }
+    // Prevenir zoom con doble toque
+    let lastTouchEnd = 0;
+    document.addEventListener(
+      "touchend",
+      function (e) {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 300) {
+          e.preventDefault();
+        }
+        lastTouchEnd = now;
+      },
+      { passive: false },
+    );
 
-    const btnGuardarRecord = document.getElementById("btnGuardarRecord");
-    if (btnGuardarRecord) {
-      btnGuardarRecord.addEventListener("click", guardarPuntuacionLocal);
-    }
-
-    applyTranslations();
+    // Prevenir menú contextual en botones
+    document.addEventListener("contextmenu", function (e) {
+      if (e.target.closest(".letras button, .letras .btn-ayuda")) {
+        e.preventDefault();
+      }
+    });
   })();
 
   // Funciones modal globales
@@ -607,46 +828,9 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
     if (modal) modal.style.display = "none";
   };
 
-  // Configurar evento del botón Aceptar DESPUÉS de definir la función
+  // Configurar evento del botón Aceptar
   const btnModalInfoAceptar = document.getElementById("btnModalInfoAceptar");
   if (btnModalInfoAceptar) {
     btnModalInfoAceptar.addEventListener("click", window.cerrarModalInfo);
   }
-  document.addEventListener(
-    "touchmove",
-    function (e) {
-      if (e.target.closest(".letras button")) {
-        e.preventDefault();
-      }
-    },
-    { passive: false },
-  );
-
-  // Prevenir zoom en iOS cuando se tocan los botones
-  document.addEventListener("gesturestart", function (e) {
-    if (e.target.closest(".letras button")) {
-      e.preventDefault();
-    }
-  });
-  // DEBUG: Ver eventos de touch
-  console.log("UserAgent:", navigator.userAgent);
-  console.log("Touch events:", "ontouchstart" in window);
-
-  // Verificar clicks
-  document.addEventListener(
-    "click",
-    function (e) {
-      console.log("CLICK:", e.target.tagName, e.target.textContent);
-    },
-    true,
-  );
-
-  // Verificar touches
-  document.addEventListener(
-    "touchstart",
-    function (e) {
-      console.log("TOUCH:", e.target.tagName, e.target.textContent);
-    },
-    true,
-  );
 });

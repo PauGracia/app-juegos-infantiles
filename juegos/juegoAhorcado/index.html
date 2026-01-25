@@ -12,8 +12,10 @@
   </head>
 
   <body class="body-ahorcado">
-    <h1 class="titulo-ahorcado" data-i18n="menu.ahorcado">El Ahorcado</h1>
-    <div id="marcador-ahorcado">0</div>
+    <h1 class="titulo-ahorcado mobile-title" data-i18n="menu.ahorcado">
+      El Ahorcado
+    </h1>
+    <div id="marcador-ahorcado" class="mobile-score">0</div>
 
     <!-- Modal de inicio -->
     <div id="modal-inicio">
@@ -51,7 +53,7 @@
         <button id="btnSalir-modal" data-i18n="common.exitMenu">Salir</button>
       </div>
     </div>
-    <div class="contenedor-juego">
+    <div class="contenedor-juego mobile-container">
       <div class="imagen-ahorcado">
         <svg id="ahorcadoSVG" width="225" height="225" viewBox="0 0 300 300">
           <!-- Poste -->
@@ -103,7 +105,7 @@
         <div class="letras" id="letras"></div>
       </div>
     </div>
-    <div class="boton-volver-ahorcado">
+    <div class="boton-volver-ahorcado mobile-footer">
       <button id="btnSalir" data-i18n="common.exit">Salir</button>
     </div>
 
