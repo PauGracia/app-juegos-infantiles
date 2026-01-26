@@ -225,6 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let ah_usuario = "";
     let ah_puntos = 0;
     let ah_idiomaJuego = "es";
+    let ah_bloqueado = false;
 
     const ah_partesSVG = [
       "poste",
@@ -254,13 +255,48 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function normalizarLetra(letra) {
-      return letra
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toUpperCase();
+      letra = letra.toUpperCase();
+
+      if (letra === "Ñ") return "Ñ";
+
+      const mapaVocales = {
+        Á: "A",
+        À: "A",
+        Ä: "A",
+        Â: "A",
+        É: "E",
+        È: "E",
+        Ë: "E",
+        Ê: "E",
+        Í: "I",
+        Ì: "I",
+        Ï: "I",
+        Î: "I",
+        Ó: "O",
+        Ò: "O",
+        Ö: "O",
+        Ô: "O",
+        Ú: "U",
+        Ù: "U",
+        Ü: "U",
+        Û: "U",
+      };
+
+      return mapaVocales[letra] || letra;
+    }
+
+    function deshabilitarTeclado() {
+      const botones = letrasEl.querySelectorAll("button");
+      botones.forEach((btn) => (btn.disabled = true));
+    }
+
+    function habilitarTeclado() {
+      const botones = letrasEl.querySelectorAll("button");
+      botones.forEach((btn) => (btn.disabled = false));
     }
 
     function ah_manejarLetra(btn, letra) {
+      if (ah_bloqueado) return;
       if (btn.disabled) return;
 
       btn.disabled = true;
@@ -279,6 +315,9 @@ document.addEventListener("DOMContentLoaded", () => {
         ah_mostrarPalabra();
 
         if (!ah_progreso.includes("_")) {
+          ah_bloqueado = true;
+          deshabilitarTeclado();
+
           ah_puntos++;
           animarMarcador();
           ah_actualizarMarcador();
@@ -298,6 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }, 500);
 
           setTimeout(() => {
+            ah_bloqueado = false;
             ah_nuevaPalabra();
           }, 2800);
         }
@@ -362,6 +402,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     window.iniciarAhorcado = function () {
+      ah_bloqueado = false;
+
       ah_ayudas = 2;
       ah_palabrasAcertadas = 0;
       desbloquearAudioMovil();
@@ -412,6 +454,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function ah_nuevaPalabra() {
+      ah_bloqueado = false;
       const btnGuardarRecord = document.getElementById("btnGuardarRecord");
       if (btnGuardarRecord) {
         btnGuardarRecord.disabled = false;
@@ -508,6 +551,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function usarAyuda(btn) {
       if (ah_ayudas <= 0) return;
+      if (ah_bloqueado) return;
 
       const indicesOcultos = [];
       for (let i = 0; i < ah_progreso.length; i++) {
@@ -519,12 +563,22 @@ document.addEventListener("DOMContentLoaded", () => {
       const index =
         indicesOcultos[Math.floor(Math.random() * indicesOcultos.length)];
       const letra = ah_palabraSecreta[index];
+      const letraNormalizada = normalizarLetra(letra);
 
       for (let i = 0; i < ah_palabraSecreta.length; i++) {
         if (ah_palabraSecreta[i] === letra) {
           ah_progreso[i] = letra;
         }
       }
+      // Marcar botón como acertado
+      const botones = letrasEl.querySelectorAll(".letra-btn");
+
+      botones.forEach((btnLetra) => {
+        if (normalizarLetra(btnLetra.textContent) === letraNormalizada) {
+          btnLetra.disabled = true;
+          btnLetra.style.background = "green";
+        }
+      });
 
       ah_mostrarPalabra();
       reproducirSonido(sonidos.bien);
@@ -553,6 +607,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (ah_errores >= ah_maxErrores) {
+        ah_bloqueado = true;
+        deshabilitarTeclado();
         ah_revelarPalabra();
         setTimeout(() => ah_mostrarFinal(), 3200);
       }
@@ -719,6 +775,8 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
 
     function ah_resetearJuegoCompleto() {
       // Reset variables
+      ah_bloqueado = false;
+
       ah_palabraSecreta = "";
       ah_progreso = [];
       ah_errores = 0;

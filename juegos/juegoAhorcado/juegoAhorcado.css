@@ -160,7 +160,7 @@ html {
   position: relative;
 }
 
-.palabra > span.ah-letra-no::after {
+/*.palabra > span.ah-letra-no::after {
   content: "";
   position: absolute;
   bottom: 5px;
@@ -170,7 +170,7 @@ html {
   background: #e53e3e;
   transform: scaleX(0.9);
   opacity: 0.7;
-}
+}*/
 
 /* Letras correctas al final del juego */
 .palabra > span.ah-letra-si {
@@ -572,16 +572,18 @@ html {
 .boton-volver-ahorcado button {
   background: linear-gradient(45deg, #667eea, #764ba2);
   color: white;
-  border: none;
+  border: 2px solid rgba(255, 255, 255, 0.85);
   padding: 18px 50px;
   font-size: 1.3em;
-  font-weight: bold;
-  border-radius: 16px;
+  font-weight: 800;
+  border-radius: 18px;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
+
+  box-shadow:
+    0 0 0 4px rgba(255, 255, 255, 0.25),
+    0 12px 30px rgba(0, 0, 0, 0.45);
 }
 
 .boton-volver-ahorcado button::before {
