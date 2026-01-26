@@ -226,6 +226,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let ah_puntos = 0;
     let ah_idiomaJuego = "es";
     let ah_bloqueado = false;
+    const AH_MAX_LETRAS = 15;
+    let ah_palabrasUsadas = new Set(); // solo dura la partida
 
     const ah_partesSVG = [
       "poste",
@@ -407,6 +409,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ah_ayudas = 2;
       ah_palabrasAcertadas = 0;
       desbloquearAudioMovil();
+      ah_palabrasUsadas.clear();
 
       const selectIdiomaJuego = document.getElementById("idioma-juego");
       ah_idiomaJuego = selectIdiomaJuego ? selectIdiomaJuego.value : "es";
@@ -465,8 +468,36 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const lista = palabras[ah_idiomaJuego] || palabras.es;
-      ah_palabraSecreta =
-        lista[Math.floor(Math.random() * lista.length)].toUpperCase();
+
+      // Filtrar palabras válidas (≤15 letras y no usadas)
+      const palabrasDisponibles = lista.filter(
+        (p) =>
+          p.length <= AH_MAX_LETRAS &&
+          !ah_palabrasUsadas.has(normalizarLetra(p.toUpperCase())),
+      );
+
+      // Si no quedan palabras final del juego
+      if (palabrasDisponibles.length === 0) {
+        mostrarMensajeTemporal("🏆 ¡Has completado TODAS las palabras!", 2500);
+
+        setTimeout(() => {
+          ah_mostrarFinal("completado");
+        }, 2600);
+
+        return;
+      }
+
+      // Elegir palabra aleatoria válida
+      const palabra =
+        palabrasDisponibles[
+          Math.floor(Math.random() * palabrasDisponibles.length)
+        ].toUpperCase();
+
+      // Marcar como usada
+      ah_palabrasUsadas.add(palabra);
+
+      ah_palabraSecreta = palabra;
+
       ah_progreso = Array(ah_palabraSecreta.length).fill("_");
       ah_errores = 0;
 
@@ -479,10 +510,14 @@ document.addEventListener("DOMContentLoaded", () => {
     function ah_mostrarPalabra() {
       palabraEl.innerHTML = "";
 
-      if (window.innerWidth <= 480 && ah_palabraSecreta.length > 10) {
-        palabraEl.classList.add("larga");
-      } else {
-        palabraEl.classList.remove("larga");
+      palabraEl.classList.remove("larga", "extra-larga");
+
+      if (window.innerWidth <= 480) {
+        if (ah_palabraSecreta.length >= 12) {
+          palabraEl.classList.add("extra-larga");
+        } else if (ah_palabraSecreta.length >= 11) {
+          palabraEl.classList.add("larga");
+        }
       }
 
       for (let i = 0; i < ah_palabraSecreta.length; i++) {
@@ -504,7 +539,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.type = "button";
         btn.className = "letra-btn";
 
-        // Usar el manejador mejorado
         buttonHandler.setupButton(btn, letra, ah_manejarLetra);
 
         letrasEl.appendChild(btn);
@@ -639,16 +673,26 @@ document.addEventListener("DOMContentLoaded", () => {
       marcadorEl.textContent = ah_puntos;
     }
 
-    function ah_mostrarFinal() {
+    function ah_mostrarFinal(motivo = "derrota") {
       const modalFinal = document.getElementById("modal-final");
       if (modalFinal) modalFinal.style.display = "flex";
 
       const resultado = document.getElementById("resultado");
       if (resultado) {
-        const scoreText = getTranslation("ahorcado.score", "Puntuación");
-        const pointsText = getTranslation("ahorcado.points", "puntos");
-        resultado.textContent = `${ah_usuario}, ${scoreText}: ${ah_puntos} ${pointsText}`;
+        let mensajeFinal = "";
+
+        if (motivo === "completado") {
+          mensajeFinal = `🔥 ${ah_usuario}, eres una pasada… ¡te las sabes todas!`;
+        } else {
+          const scoreText = getTranslation("ahorcado.score", "Puntuación");
+          const pointsText = getTranslation("ahorcado.points", "puntos");
+          mensajeFinal = `${ah_usuario}, ${scoreText}: ${ah_puntos} ${pointsText}`;
+        }
+
+        resultado.textContent = mensajeFinal;
       }
+
+      reproducirSonido(sonidos.fin);
     }
 
     function getTranslation(key, fallback = "") {
@@ -830,7 +874,7 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
     };
 
     // ================================
-    // FIX PARA MÓVILES - PREVENIR COMPORTAMIENTOS NO DESEADOS
+    // FIX PARA MÓVILES
     // ================================
 
     // Prevenir scroll cuando se tocan botones

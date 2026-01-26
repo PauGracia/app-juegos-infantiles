@@ -350,8 +350,8 @@ html {
 /* Contenedor lógico de los botones */
 #modal-contenido button {
   width: 100%;
-  max-width: 260px; /* mismo ancho para todos */
-  height: 52px; /* misma altura */
+  max-width: 260px;
+  height: 52px;
   margin: 8px 0;
 }
 
@@ -418,7 +418,7 @@ html {
 #modal-contenido input,
 #modal-contenido select {
   width: 100%;
-  padding: 14px 20px;
+  padding: 16px 20px;
   font-size: 1.1em;
   border: 2px solid #e2e8f0;
   border-radius: 12px;
@@ -858,6 +858,18 @@ html {
     font-size: 1em;
   }
 
+  .palabra.extra-larga {
+    justify-content: center;
+    gap: 2px;
+    padding: 6px;
+  }
+
+  .palabra.extra-larga > span {
+    min-width: 16px;
+    height: 22px;
+    font-size: 0.8em;
+  }
+
   /* TECLADO MÁS COMPACTO */
   .letras {
     gap: 4px;
@@ -877,7 +889,7 @@ html {
   /* Para palabras largas */
   .palabra.larga {
     overflow-x: auto;
-    justify-content: flex-start;
+    justify-content: center;
     padding: 8px;
   }
 
