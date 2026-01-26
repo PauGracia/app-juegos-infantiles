@@ -103,7 +103,7 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: nowrap;
   font-family: monospace;
   font-size: 1.8em;
@@ -127,7 +127,7 @@ html {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  min-width: 40px;
+  min-width: 35px;
   height: 50px;
   text-align: center;
   position: relative;
@@ -154,7 +154,7 @@ html {
 /* Letras incorrectas al final del juego */
 .palabra > span.ah-letra-no {
   color: #e53e3e;
-  font-size: 2.2em;
+  font-size: 1.8em;
   font-weight: 900;
   animation: shake 0.5s ease;
   position: relative;
@@ -175,7 +175,7 @@ html {
 /* Letras correctas al final del juego */
 .palabra > span.ah-letra-si {
   color: #38a169;
-  font-size: 2.2em;
+  font-size: 1.8em;
   font-weight: 900;
   animation: bounce 0.5s ease;
   position: relative;
@@ -285,12 +285,6 @@ html {
     transparent
   );
   transition: 0.5s;
-}
-
-.letras button:hover:not(:disabled) {
-  background: linear-gradient(145deg, #357abd, #2c6cb0);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 .letras button:hover:not(:disabled)::before {
@@ -430,7 +424,7 @@ html {
   border-radius: 12px;
   background: white;
   transition: all 0.3s;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 #modal-contenido input:focus,
@@ -697,11 +691,12 @@ html {
     padding: 0 10px !important;
     word-break: break-word;
     line-height: 1.2 !important;
+    margin-top: 50px;
   }
 
   .mobile-score {
     position: fixed !important;
-    top: 5px !important;
+    top: 8px !important;
     right: 5px !important;
     z-index: 1000 !important;
   }
@@ -714,6 +709,7 @@ html {
   .mobile-footer {
     padding: 5px 0 !important;
     margin-top: 0 !important;
+    margin-bottom: 20px;
   }
 
   .contenedor-juego {
@@ -749,8 +745,8 @@ html {
   }
 
   .imagen-ahorcado {
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
     margin: 0 auto;
   }
 
@@ -763,6 +759,7 @@ html {
 
   .palabra {
     width: 100%;
+    max-width: 85%;
     gap: 5px;
     font-size: 1.4em;
     min-height: 35px;
@@ -780,8 +777,8 @@ html {
   /* === TECLADO COMPACTO PARA MÓVILES === */
 
   .letras {
-    padding: 10px; /* Reducir padding */
-    gap: 8px; /* Reducir espacio entre botones */
+    padding: 10px;
+    gap: 8px;
     max-width: 85%;
     margin: 0 auto;
   }
@@ -795,7 +792,7 @@ html {
     padding: 0;
   }
 
-  .letras .btn-ayuda {
+  .lolo.letras .btn-ayuda {
     aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
@@ -827,29 +824,30 @@ html {
   }
 
   .titulo-ahorcado {
-    font-size: 1.5em;
-    margin-top: 10px;
+    font-size: 1.8em;
+    margin-top: 20px;
     margin-bottom: 8px;
     padding: 0 5px;
   }
 
   #marcador-ahorcado {
-    top: 2px;
+    top: 4px;
     right: 2px;
     padding: 4px 8px;
-    font-size: 0.9em;
+    font-size: 1em;
   }
 
   .imagen-ahorcado {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
   }
 
   .palabra {
     gap: 4px;
-    font-size: 1.2em;
-    min-height: 30px;
+    font-size: 1em;
+    min-height: 35px;
     padding: 8px 10px;
+    max-width: 95%;
   }
 
   .palabra > span {
@@ -862,10 +860,11 @@ html {
   .letras {
     gap: 4px;
     padding: 8px;
+    max-width: 95%;
   }
 
   .letras button {
-    min-height: 40px; /* Más pequeño que en tablet */
+    min-height: 40px;
     font-size: 0.9em;
   }
 
