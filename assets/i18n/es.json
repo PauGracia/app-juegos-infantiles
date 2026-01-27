@@ -113,7 +113,7 @@
   "memori.instructionsNormal": "Modo Normal: Encuentra todas las parejas. Cada acierto suma puntos y cada error resta.",
   "memori.instructionsChallenge": "Modo Desafío: Completa niveles en tiempo limitado.",
   "memori.instructionsEnd": "¡Diviértete y desafía tu memoria!",
-
+  "ranking.sort.language": "Ordenar por idioma",
   "memori.congrats": "¡Enhorabuena!",
   "memori.finalScore": "Puntuación final:",
   "memori.askSaveRecord": "¿Quieres guardar tu récord?",
@@ -206,7 +206,7 @@
   "footer.copyright": "© 2025 Juegos Educativos Infantiles",
   "footer.about": "Sobre el Proyecto",
   "footer.terms": "Términos",
-  "footer.educational": "Aplicación Educativa | v1.0.0",
+  "footer.educational": "Aplicación Educativa | v2.0.0",
   "damas.config.title": "Configuración de partida",
   "damas.config.shuffleColors": "🎲 Sortear piezas",
   "damas.config.enableHints": "Activar sugerencia de movimientos",

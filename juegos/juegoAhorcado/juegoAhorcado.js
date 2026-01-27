@@ -1,8 +1,56 @@
 /* =========================
-   JUEGO AHORCADO - FIX PARA MÓVILES
+   JUEGO AHORCADO 
    ========================= */
 document.addEventListener("DOMContentLoaded", () => {
   (function () {
+    // ================================
+    // INICIALIZAR IDIOMA DEL SELECT (VERSIÓN SIMPLIFICADA)
+    // ================================
+    function inicializarSelectIdioma() {
+      const savedLang = localStorage.getItem("uiLang") || "es";
+      const idiomaJuegoSelect = document.getElementById("idioma-juego");
+
+      if (idiomaJuegoSelect) {
+        // Establecer el valor por defecto
+        idiomaJuegoSelect.value = savedLang;
+
+        // Si ya tenemos traducciones, actualizar las etiquetas
+        if (window.translations) {
+          actualizarEtiquetasSelect(idiomaJuegoSelect);
+        }
+        // Si no, intentar de nuevo después de un tiempo
+        else {
+          setTimeout(() => {
+            if (window.translations) {
+              actualizarEtiquetasSelect(idiomaJuegoSelect);
+            } else {
+              // Último intento
+              setTimeout(() => {
+                if (window.translations) {
+                  actualizarEtiquetasSelect(idiomaJuegoSelect);
+                }
+              }, 500);
+            }
+          }, 300);
+        }
+      }
+    }
+
+    function actualizarEtiquetasSelect(selectElement) {
+      if (!selectElement || !window.translations) return;
+
+      const options = selectElement.querySelectorAll("option");
+      options.forEach((option) => {
+        const langCode = option.value;
+        const translationKey = `language.${langCode}`;
+        if (window.translations[translationKey]) {
+          option.textContent = window.translations[translationKey];
+        }
+      });
+    }
+
+    // Llamar a la inicialización después de un breve delay
+    setTimeout(inicializarSelectIdioma, 100);
     // Elementos del DOM
     const palabraEl = document.getElementById("palabra");
     const letrasEl = document.getElementById("letras");
@@ -846,6 +894,9 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       // Limpiar input usuario
       const inputUsuario = document.getElementById("usuario");
       if (inputUsuario) inputUsuario.value = "";
+
+      // Re-inicializar el select del idioma
+      inicializarSelectIdioma();
     }
 
     window.ah_reiniciarCompleto = function () {

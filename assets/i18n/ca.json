@@ -135,7 +135,7 @@
   "ranking.title": "Ranking",
   "memori.levelModalTitle": "Nivell {{level}}",
   "memori.levelModalInfo": "{{pairs}} parelles - {{time}} minuts",
-
+  "ranking.sort.language": "Ordenar per idioma",
   "memori.playerNamePlaceholder": "El teu nom",
   "memori.register": "Registrar",
   "ranking.loading": "Carregant ranking…",
@@ -202,7 +202,7 @@
   "footer.copyright": "© 2025 Jocs Educatius Infantils",
   "footer.about": "Sobre el Projecte",
   "footer.terms": "Termes",
-  "footer.educational": "Aplicació Educativa | v1.0.0",
+  "footer.educational": "Aplicació Educativa | v2.0.0",
   "damas.config.title": "Configuració de la partida",
   "damas.config.shuffleColors": "🎲 Sorteig de peces",
   "damas.config.enableHints": "Activar suggeriments de moviments",

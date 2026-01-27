@@ -135,7 +135,7 @@
   "ranking.title": "Ranking",
   "memori.levelModalTitle": "Level {{level}}",
   "memori.levelModalInfo": "{{pairs}} pairs - {{time}} minutes",
-
+  "ranking.sort.language": "Sort by language",
   "memori.playerNamePlaceholder": "Your name",
   "memori.register": "Register",
   "ranking.loading": "Loading ranking…",
@@ -203,7 +203,7 @@
   "footer.copyright": "© 2025 Educational Children's Games",
   "footer.about": "About the Project",
   "footer.terms": "Terms",
-  "footer.educational": "Educational App | v1.0.0",
+  "footer.educational": "Educational App | v2.0.0",
   "damas.config.title": "Game Configuration",
   "damas.config.shuffleColors": "🎲 Piece draw",
   "damas.config.enableHints": "Enable Move Hints",

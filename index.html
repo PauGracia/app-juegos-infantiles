@@ -102,45 +102,53 @@
         </li>
       </ul>
     </div>
-    <footer>
-      <div class="footer-copyright">
-        <p>
-          <span data-i18n="footer.copyright"
-            >© 2025 Juegos Educativos Infantiles</span
-          >
-          <span data-i18n="footer.rights">
-            - Todos los derechos reservados.</span
-          >
-        </p>
-        <div class="educational-symbols">
-          <span class="math-symbol">+</span>
-          <span class="math-symbol">−</span>
-          <span class="math-symbol">×</span>
-          <span class="math-symbol">÷</span>
-          <span class="letter-symbol">A</span>
-          <span class="letter-symbol">B</span>
-          <span class="letter-symbol">C</span>
+    <footer id="main-footer">
+      <div class="footer-content">
+        <!-- Parte visible inicialmente -->
+        <div class="footer-top">
+          <p>
+            <span data-i18n="footer.copyright"
+              >© 2025 Juegos Educativos Infantiles</span
+            >
+            <span data-i18n="footer.rights">
+              - Todos los derechos reservados.</span
+            >
+          </p>
         </div>
 
-        <div class="footer-links">
-          <a
-            href="#"
-            onclick="
-              document.getElementById('modal-objective').style.display = 'flex'
-            "
-            data-i18n="footer.about"
-          >
-            Sobre el Proyecto
-          </a>
-          <span>•</span>
-          <a href="#" data-i18n="footer.privacy"> Privacidad </a>
-          <span>•</span>
-          <a href="#" data-i18n="footer.terms"> Términos </a>
-        </div>
+        <!-- Parte que se muestra al hacer scroll -->
+        <div class="footer-bottom">
+          <div class="educational-symbols">
+            <span class="math-symbol">+</span>
+            <span class="math-symbol">−</span>
+            <span class="math-symbol">×</span>
+            <span class="math-symbol">÷</span>
+            <span class="letter-symbol">A</span>
+            <span class="letter-symbol">B</span>
+            <span class="letter-symbol">C</span>
+          </div>
 
-        <p class="footer-version" data-i18n="footer.educational">
-          Aplicación Educativa | v1.0.0
-        </p>
+          <div class="footer-links">
+            <a
+              href="#"
+              onclick="
+                document.getElementById('modal-objective').style.display =
+                  'flex'
+              "
+              data-i18n="footer.about"
+            >
+              Sobre el Proyecto
+            </a>
+            <span>•</span>
+            <a href="#" data-i18n="footer.privacy">Privacidad</a>
+            <span>•</span>
+            <a href="#" data-i18n="footer.terms">Términos</a>
+          </div>
+
+          <p class="footer-version" data-i18n="footer.educational">
+            Aplicación Educativa | v2.0.0
+          </p>
+        </div>
       </div>
     </footer>
 
