@@ -437,7 +437,10 @@ footer {
   background: linear-gradient(135deg, var(--color-secondary), #1c2833);
   color: var(--color-light);
   overflow: hidden;
-  transition: height 0.4s ease;
+  transition:
+    height 1s ease,
+    transform 1s ease,
+    opacity 1s ease;
 }
 
 /* Contenedor interno */
@@ -474,6 +477,14 @@ footer {
 footer.expanded {
   height: auto; /* Se adapta al contenido completo */
   min-height: 70px;
+}
+
+.footer-bottom {
+  opacity: 0;
+  transform: translateY(-50px);
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
 }
 
 footer.expanded .footer-bottom {

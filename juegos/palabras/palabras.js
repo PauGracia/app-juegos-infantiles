@@ -15,6 +15,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let idiomaPalabrasSeleccionado = parseInt(selectPalabrasIdioma.value);
 
+  // -----------------------------
+  // SINCRONIZAR IDIOMA DE PALABRAS CON IDIOMA DE INTERFAZ
+  // -----------------------------
+  const idiomaInterfaz = (localStorage.getItem("uiLang") || "es").split("-")[0];
+
+  const mapaIdiomaPalabras = {
+    es: 0,
+    ca: 1,
+    en: 2,
+    fr: 3,
+    it: 4,
+    pt: 5,
+  };
+
+  if (mapaIdiomaPalabras[idiomaInterfaz] !== undefined) {
+    selectPalabrasIdioma.value = mapaIdiomaPalabras[idiomaInterfaz];
+    idiomaPalabrasSeleccionado = mapaIdiomaPalabras[idiomaInterfaz];
+  }
+
   selectPalabrasIdioma.addEventListener("change", () => {
     idiomaPalabrasSeleccionado = parseInt(selectPalabrasIdioma.value);
   });
@@ -89,12 +108,16 @@ document.addEventListener("DOMContentLoaded", () => {
     errores = 0;
     actual = 0;
 
-    // Usar el selector específico para palabras
     idiomaPalabrasSeleccionado = parseInt(selectPalabrasIdioma.value);
-
     const cantidad = parseInt(document.getElementById("cantidad").value);
 
-    seleccionados = [...elementos]
+    // Filtrar palabras demasiado largas (>15)
+    const elementosFiltrados = elementos.filter((el) => {
+      const palabra = normalizar(el.palabras[idiomaPalabrasSeleccionado]);
+      return palabra.length <= 15;
+    });
+
+    seleccionados = [...elementosFiltrados]
       .sort(() => Math.random() - 0.5)
       .slice(0, cantidad);
 
@@ -119,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Usar el idioma seleccionado para las PALABRAS
     palabraObjetivo = normalizar(
-      objetoActual.palabras[idiomaPalabrasSeleccionado].trim()
+      objetoActual.palabras[idiomaPalabrasSeleccionado].trim(),
     );
 
     document.getElementById("imagen").src = objetoActual.imagen;
@@ -129,6 +152,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const inputsDiv = document.getElementById("inputs");
     inputsDiv.innerHTML = "";
+
+    inputsDiv.classList.remove("palabra-larga");
+
+    // Si la palabra es larga (más de 12 letras)
+    if (palabraObjetivo.length > 12) {
+      inputsDiv.classList.add("palabra-larga");
+    }
 
     for (let i = 0; i < palabraObjetivo.length; i++) {
       const input = document.createElement("input");
