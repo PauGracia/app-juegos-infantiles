@@ -68,7 +68,7 @@
   "operaciones.multiplications": "Moltiplicazioni",
   "operaciones.divisions": "Divisioni",
   "operaciones.allowNegative": "Permetti risultato negativo",
-  "operaciones.timeRemaining": "Tempo:",
+  "operaciones.timeRemaining": "",
   "operaciones.gameFinished": "Gioco terminato",
   "operaciones.correctOperations": "Operazioni corrette",
   "operaciones.incorrectOperations": "Operazioni errate",
