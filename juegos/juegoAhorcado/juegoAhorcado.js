@@ -465,7 +465,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const inputUsuario = document.getElementById("usuario");
       if (!inputUsuario) {
         window.mostrarModalInfo(
-          getTranslation("common.info"),
+          getTranslation("common.info.No.U"),
           "Error: No se encontró el campo usuario.",
         );
         return;
@@ -474,7 +474,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ah_usuario = inputUsuario.value.trim();
       if (ah_usuario.length < 3 || ah_usuario.length > 12) {
         window.mostrarModalInfo(
-          getTranslation("common.info"),
+          getTranslation("common.info.3.12"),
           "El nombre debe tener entre 3 y 12 caracteres.",
         );
         return;
@@ -482,7 +482,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!ah_usuario) {
         window.mostrarModalInfo(
-          getTranslation("common.info"),
+          getTranslation("common.info.ingresa"),
           "Por favor ingresa un nombre de usuario",
         );
         return;
@@ -526,7 +526,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Si no quedan palabras final del juego
       if (palabrasDisponibles.length === 0) {
-        mostrarMensajeTemporal("🏆 ¡Has completado TODAS las palabras!", 2500);
+        mostrarMensajeTemporal(
+          getTranslation(
+            "ahorcado.allWordsCompleted",
+            "🏆 ¡Has completado TODAS las palabras!",
+          ),
+          2500,
+        );
 
         setTimeout(() => {
           ah_mostrarFinal("completado");
@@ -672,10 +678,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!ah_progreso.includes("_")) {
         ah_puntos++;
         ah_palabrasAcertadas++;
+
         if (ah_palabrasAcertadas % 10 === 0) {
           ah_ayudas++;
-          mostrarMensajeTemporal("💡 ¡Has ganado una ayuda extra!", 2000);
+          mostrarMensajeTemporal(
+            getTranslation(
+              "ahorcado.extraHelpMessage",
+              "💡 ¡Has ganado una ayuda extra!",
+            ),
+            2000,
+          );
         }
+
         ah_actualizarMarcador();
         setTimeout(ah_nuevaPalabra, 1200);
       }

@@ -40,9 +40,7 @@
           <p data-i18n="operaciones.instructions.challenge"></p>
         </div>
 
-        <button onclick="cerrarModalInstrucciones()" data-i18n="common.close">
-          Cerrar
-        </button>
+        <button data-i18n="common.close">Cerrar</button>
       </div>
     </div>
 
@@ -137,7 +135,7 @@
           />
         </div>
 
-        <button onclick="iniciar()" data-i18n="common.start">Iniciar</button>
+        <button data-i18n="common.start">Iniciar</button>
       </div>
     </div>
 
@@ -155,9 +153,7 @@
 
     <div class="botones-operaciones">
       <button id="btn-comprobar" data-i18n="common.check">Comprobar</button>
-      <button onclick="location.reload()" data-i18n="common.restart">
-        Reiniciar
-      </button>
+      <button data-i18n="common.restart">Reiniciar</button>
     </div>
 
     <div id="boton-salir-operaciones">
@@ -203,9 +199,7 @@
           </details>
         </div>
 
-        <button onclick="location.reload()" data-i18n="common.restart">
-          Reiniciar
-        </button>
+        <button data-i18n="common.restart">Reiniciar</button>
         <button class="btn-exit" data-i18n="common.exitMenu"></button>
       </div>
     </div>
@@ -226,9 +220,7 @@
           Eres una auténtica leyenda matemática
         </p>
 
-        <button onclick="cerrarGranVictoria()" data-i18n="common.accept">
-          Aceptar
-        </button>
+        <button data-i18n="common.accept">Aceptar</button>
       </div>
     </div>
 
@@ -236,14 +228,14 @@
     <div class="modal-aviso oculto" id="modal-aviso">
       <div class="modal-aviso-content">
         <p id="mensaje-aviso">Este es un mensaje de prueba</p>
-        <button onclick="cerrarModalAviso()" data-i18n="common.accept">
-          Aceptar
-        </button>
+        <button data-i18n="common.accept">Aceptar</button>
       </div>
     </div>
+    <script
+      src="../../assets/js/i18n.js"
+      data-i18n-path="../../assets/i18n/"
+    ></script>
 
-    <!-- Importar i18n primero -->
-    <script src="../../assets/js/i18n.js"></script>
     <script src="operaciones.js"></script>
   </body>
 </html>

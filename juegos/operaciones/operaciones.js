@@ -9,21 +9,29 @@ const MAX_OPERANDO = 1000;
 
 // Función auxiliar para obtener traducciones
 function t(key) {
-  if (!window.translations) {
-    return key; // Simple fallback
-  }
-
-  const translation = window.translations[key];
-  return translation || key;
+  if (!window.translations) return key;
+  return window.translations[key] || key;
 }
 
-// Función simplificada para actualizar textos dinámicos
+document.addEventListener("languageChanged", () => {
+  applyStaticTranslations();
+  updateDynamicTexts();
+});
+
+function applyStaticTranslations() {
+  if (!window.translations) return;
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.dataset.i18n;
+    if (window.translations[key]) {
+      el.textContent = window.translations[key];
+    }
+  });
+}
+
 function updateDynamicTexts() {
   if (!window.translations) return;
 
-  console.log("Actualizando textos dinámicos...");
-
-  // Actualizar placeholders
+  // Placeholders
   const elements = [
     { id: "input-operaciones", key: "operaciones.numOperationsPlaceholder" },
     { id: "input-maximo", key: "operaciones.maxOperatorPlaceholder" },
@@ -38,12 +46,11 @@ function updateDynamicTexts() {
     }
   });
 
-  // Actualizar opciones del select
+  // Select opciones
   const nivelSelectElement = document.getElementById("nivel");
-  if (nivelSelectElement && window.translations) {
+  if (nivelSelectElement) {
     const option1 = nivelSelectElement.options[0];
     const option2 = nivelSelectElement.options[1];
-
     if (option1 && window.translations["operaciones.level1"]) {
       option1.text = window.translations["operaciones.level1"];
     }
@@ -52,7 +59,7 @@ function updateDynamicTexts() {
     }
   }
 
-  // Actualizar etiquetas de checkboxes
+  // Labels checkboxes
   const labels = [
     { selector: 'label[for="op-suma"] span', key: "operaciones.additions" },
     { selector: 'label[for="op-resta"] span', key: "operaciones.subtractions" },
@@ -75,76 +82,9 @@ function updateDynamicTexts() {
   });
 }
 
-// =============================
-// INICIALIZAR CUANDO TODO ESTÉ LISTO
-// =============================
-
-// Esperar a que la página esté completamente cargada
-window.addEventListener("load", function () {
-  console.log("Página cargada, verificando traducciones...");
-
-  // Verificar si las traducciones ya están cargadas
-  if (window.translations) {
-    console.log(
-      "Traducciones ya cargadas:",
-      Object.keys(window.translations).length,
-      "claves",
-    );
-    updateDynamicTexts();
-  } else {
-    // Si no, intentar cargar desde localStorage
-    const savedLang = localStorage.getItem("uiLang") || "es";
-    console.log("Intentando cargar idioma:", savedLang);
-
-    // Intentar cargar el archivo
-    fetch(`../../assets/i18n/${savedLang}.json`)
-      .then((response) => {
-        if (!response.ok) throw new Error("No se pudo cargar el archivo");
-        return response.json();
-      })
-      .then((data) => {
-        window.translations = data;
-        console.log("Traducciones cargadas exitosamente");
-
-        // Aplicar traducciones a elementos con data-i18n
-        document.querySelectorAll("[data-i18n]").forEach((el) => {
-          const key = el.dataset.i18n;
-          if (data[key]) {
-            // MANEJO ESPECIAL PARA INSTRUCCIONES
-            if (
-              key === "operaciones.instructions.normal" ||
-              key === "operaciones.instructions.challenge"
-            ) {
-              // Reemplazar \n por <br> para HTML
-              el.innerHTML = data[key].replace(/\n/g, "<br>");
-            } else {
-              el.textContent = data[key];
-            }
-          }
-        });
-
-        updateDynamicTexts();
-      })
-      .catch((error) => {
-        console.error("Error cargando traducciones:", error);
-        // Cargar español por defecto
-        fetch(`../../assets/i18n/es.json`)
-          .then((r) => r.json())
-          .then((data) => {
-            window.translations = data;
-
-            // Aplicar traducciones a elementos con data-i18n
-            document.querySelectorAll("[data-i18n]").forEach((el) => {
-              const key = el.dataset.i18n;
-              if (data[key]) {
-                el.textContent = data[key];
-              }
-            });
-
-            updateDynamicTexts();
-          });
-      });
-  }
+document.addEventListener("languageChanged", () => {
+  applyStaticTranslations();
+  updateDynamicTexts();
 });
 
 // Obtener elementos del DOM para configuración
@@ -1006,6 +946,12 @@ function resetearTodo() {
   modal
     .querySelectorAll("input[type='radio'], input[type='checkbox']")
     .forEach((input) => (input.checked = false));
+  // Checkboxes por defecto
+  document.getElementById("op-suma").checked = true;
+  document.getElementById("op-resta").checked = true;
+  document.getElementById("op-multi").checked = true;
+  document.getElementById("op-div").checked = true;
+  document.getElementById("resta-negativa").checked = true;
 
   // Selects
   modal
@@ -1021,6 +967,29 @@ function resetearTodo() {
   modal
     .querySelectorAll(".activo, .seleccionado")
     .forEach((el) => el.classList.remove("activo", "seleccionado"));
+}
+
+// BOTONES MODAL INICIAL
+const btnModoNormal = document.getElementById("btn-modo-normal");
+const btnModoDesafio = document.getElementById("btn-modo-desafio");
+const btnInstrucciones = document.getElementById("btn-instrucciones");
+
+if (btnModoNormal) {
+  btnModoNormal.addEventListener("click", () => {
+    modoNormal(); // abre modal de configuración
+  });
+}
+
+if (btnModoDesafio) {
+  btnModoDesafio.addEventListener("click", () => {
+    modoDesafio(); // inicia modo desafío directamente
+  });
+}
+
+if (btnInstrucciones) {
+  btnInstrucciones.addEventListener("click", () => {
+    abrirModalInstrucciones(); // abre modal instrucciones
+  });
 }
 
 // ─────────────────────────────
@@ -1050,29 +1019,50 @@ function confirmarSalida() {
 }
 
 // =============================
-// EVENTOS DE BOTONES
+// BOTONES SALIR
 // =============================
 
-// Modal selección de modo
-const btnModoNormal = document.getElementById("btn-modo-normal");
-const btnModoDesafio = document.getElementById("btn-modo-desafio");
-const btnInstrucciones = document.getElementById("btn-instrucciones");
-
-if (btnModoNormal) {
-  btnModoNormal.addEventListener("click", modoNormal);
+// Cerrar instrucciones
+const btnCerrarInstrucciones = document.querySelector(
+  "#modal-instrucciones button[data-i18n='common.close']",
+);
+if (btnCerrarInstrucciones) {
+  btnCerrarInstrucciones.addEventListener("click", cerrarModalInstrucciones);
 }
 
-if (btnModoDesafio) {
-  btnModoDesafio.addEventListener("click", modoDesafio);
+// Iniciar juego
+const btnIniciar = document.querySelector(
+  "#modal-operaciones button[data-i18n='common.start']",
+);
+if (btnIniciar) {
+  btnIniciar.addEventListener("click", iniciar);
 }
 
-if (btnInstrucciones) {
-  btnInstrucciones.addEventListener("click", abrirModalInstrucciones);
+// Reiniciar (modal final y botones)
+document
+  .querySelectorAll("button[data-i18n='common.restart']")
+  .forEach((btn) => {
+    btn.addEventListener("click", () => {
+      resetearTodo();
+      document.getElementById("modal-modo").style.display = "flex";
+    });
+  });
+
+// Cerrar gran victoria
+const btnCerrarGranVictoria = document.querySelector(
+  "#modal-gran-victoria button[data-i18n='common.accept']",
+);
+if (btnCerrarGranVictoria) {
+  btnCerrarGranVictoria.addEventListener("click", cerrarGranVictoria);
 }
 
-// =============================
-// BOTONES SALIR (SIN ONCLICK)
-// =============================
+// Cerrar modal aviso
+const btnCerrarAviso = document.querySelector(
+  "#modal-aviso button[data-i18n='common.accept']",
+);
+if (btnCerrarAviso) {
+  btnCerrarAviso.addEventListener("click", cerrarModalAviso);
+}
 
 const modalConfirmar = document.getElementById("modal-confirmar-salir");
 if (modalConfirmar) {
