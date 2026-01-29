@@ -110,15 +110,10 @@
 
       <div class="letras-palabras" id="inputs"></div>
       <div class="botones-palabras">
-        <button onclick="comprobar()" data-i18n="palabras.buttons.check">
+        <button id="btnComprobar" data-i18n="palabras.buttons.check">
           Comprobar
         </button>
-        <button
-          id="btnSiguiente"
-          onclick="siguiente()"
-          disabled
-          data-i18n="palabras.buttons.next"
-        >
+        <button id="btnSiguiente" disabled data-i18n="palabras.buttons.next">
           Siguiente
         </button>
         <button
@@ -147,15 +142,15 @@
         <ul id="lista-resultados"></ul>
         <br />
         <button
+          id="btnReiniciar"
           class="btn-final"
-          onclick="reiniciarJuego()"
           data-i18n="palabras.buttons.restart"
         >
           Reiniciar
         </button>
         <button
+          id="btnSalirFinal"
           class="btn-final"
-          onclick="salirJuego()"
           data-i18n="palabras.buttons.exit"
         >
           Salir

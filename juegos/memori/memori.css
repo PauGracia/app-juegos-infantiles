@@ -293,6 +293,48 @@ body {
   letter-spacing: 0.5px;
 }
 
+/* Contenedor de los 3 botones */
+.modal-contentMemori .botones {
+  display: flex; /* alineación horizontal */
+  gap: 12px; /* espacio entre ellos */
+  justify-content: center; /* centrados en el modal */
+  width: 100%; /* ocupan todo el ancho posible */
+}
+
+/* Estilos base para los botones principales */
+.modal-contentMemori .botones button {
+  flex: 1; /* todos ocupan el mismo ancho */
+  min-height: 50px; /* altura uniforme */
+  padding: 12px 0; /* padding vertical igual */
+  font-size: 16px; /* tamaño de texto igual */
+  font-weight: 700;
+  border-radius: 10px;
+  box-sizing: border-box; /* que padding no rompa el tamaño */
+  text-align: center;
+}
+
+/* Estilos individuales por color */
+.salir-btn {
+  background: linear-gradient(135deg, #f56565, #e53e3e);
+  color: #fff;
+}
+
+.reiniciar-btn {
+  background: linear-gradient(135deg, #ed8936, #dd6b20);
+  color: #fff;
+}
+
+.ranking-btn {
+  background: linear-gradient(135deg, #9f7aea, #805ad5);
+  color: #fff;
+}
+
+/* Hover uniforme */
+.botones button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
 .modal-contentMemori button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
@@ -614,22 +656,6 @@ body {
   box-shadow: 0 6px 12px rgba(66, 153, 225, 0.3);
 }
 
-.salir-btn {
-  margin-top: 12px;
-  background: linear-gradient(135deg, #f56565, #e53e3e);
-  color: #fff;
-  border-radius: 10px;
-  padding: 14px;
-  font-size: 17px;
-  border: none;
-  font-weight: 700;
-}
-
-.salir-btn:hover {
-  background: linear-gradient(135deg, #e53e3e, #c53030);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(229, 62, 62, 0.3);
-}
 /* Pantallas raras */
 @media (max-width: 1380px) {
   #titulo-memori {

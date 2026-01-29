@@ -115,14 +115,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const instruccionesBtn = document.getElementById("instruccionesBtn");
     const cerrarInstruccionesBtn = document.getElementById(
-      "cerrarInstrucciones"
+      "cerrarInstrucciones",
     );
 
     // ---------- BOTÓN SALIR ----------
-
-    document.getElementById("salirInicio").addEventListener("click", () => {
-      window.location.href = "../../index.html";
-    });
 
     // Mostrar modal de inicio al cargar
     modalInicio.classList.add("mostrar");
@@ -148,9 +144,26 @@ document.addEventListener("DOMContentLoaded", () => {
       iniciarJuegoDesafio();
     });
 
-    // Cambiar funcionalidad de los botones dentro del juego
-    salirJuegoBtn.addEventListener("click", volverAlModalInicial);
-    salirBtn.addEventListener("click", volverAlModalInicial); // solo si es botón dentro del juego
+    // Botón salir del modal de victoria o modal principal
+    salirBtn.addEventListener("click", () => {
+      confirmarSalida(() => {
+        volverAlModalInicial();
+      });
+    });
+
+    // Botón salir durante el juego (reinicia)
+    salirJuegoBtn.addEventListener("click", () => {
+      confirmarSalida(() => {
+        volverAlModalInicial();
+      });
+    });
+
+    // Botón salir del modal inicial
+    document.getElementById("salirInicio").addEventListener("click", () => {
+      confirmarSalida(() => {
+        window.location.href = "../../index.html";
+      });
+    });
 
     // Variables generales
     let puntuacion = 0;
@@ -169,8 +182,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // ------------------ NIVELES DESAFÍO ------------------
     const niveles = [
       //{ nivel: 1, parejas: 4, columnas: 4, tiempo: 300 },
-      { nivel: 1, parejas: 4, columnas: 4, tiempo: 30 },
-      { nivel: 2, parejas: 6, columnas: 4, tiempo: 330 },
+      { nivel: 1, parejas: 4, columnas: 4, tiempo: 20 },
+      /* { nivel: 2, parejas: 6, columnas: 4, tiempo: 330 },
       { nivel: 3, parejas: 8, columnas: 4, tiempo: 360 },
       { nivel: 4, parejas: 10, columnas: 5, tiempo: 390 },
       { nivel: 5, parejas: 12, columnas: 6, tiempo: 420 },
@@ -180,10 +193,49 @@ document.addEventListener("DOMContentLoaded", () => {
       { nivel: 9, parejas: 24, columnas: 8, tiempo: 540 },
       { nivel: 10, parejas: 30, columnas: 10, tiempo: 570 },
       { nivel: 11, parejas: 36, columnas: 9, tiempo: 585 },
-      { nivel: 12, parejas: 40, columnas: 10, tiempo: 600 }, // MODO NORMAL
+      { nivel: 12, parejas: 40, columnas: 10, tiempo: 600 },*/ // MODO NORMAL
     ];
 
     // ------------------ FUNCIONES COMUNES ------------------
+
+    // Función para mostrar modal de confirmación de salida
+    function confirmarSalida(callbackYes) {
+      // Crear modal confirmación de salida UNA SOLA VEZ
+      let modalConfirm = document.getElementById("modal-confirm-exit");
+
+      if (!modalConfirm) {
+        modalConfirm = document.createElement("div");
+        modalConfirm.id = "modal-confirm-exit";
+        modalConfirm.classList.add("modal-memori");
+        modalConfirm.innerHTML = `
+    <div class="modal-contentMemori">
+      <h2>${t("common.confirmExit")}</h2>
+      <div class="botones">
+        <button id="btnConfirmYes">${t("common.confirmYes")}</button>
+        <button id="btnConfirmNo">${t("common.confirmNo")}</button>
+      </div>
+    </div>
+  `;
+        document.body.appendChild(modalConfirm);
+
+        const btnYes = modalConfirm.querySelector("#btnConfirmYes");
+        const btnNo = modalConfirm.querySelector("#btnConfirmNo");
+
+        btnYes.addEventListener("click", () => {
+          modalConfirm.classList.remove("mostrar");
+          if (typeof modalConfirm.callback === "function") {
+            modalConfirm.callback();
+          }
+        });
+
+        btnNo.addEventListener("click", () => {
+          modalConfirm.classList.remove("mostrar");
+        });
+      }
+
+      modalConfirm.callback = callbackYes;
+      modalConfirm.classList.add("mostrar");
+    }
 
     function ajustarGrid(totalCartas) {
       let columnas;
@@ -261,7 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
               ? `<li>${r.nombre}: ${r.puntuacion}</li>`
               : `<li>${r.nombre} - ${t("operaciones.levelCompleted")} ${
                   r.nivel
-                }</li>`
+                }</li>`,
           )
           .join("") +
         "</ol>";
@@ -399,7 +451,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       nivelElement.textContent = `${t(
-        "memori.levelReached"
+        "memori.levelReached",
       )} ${nivelMaximoAlcanzado}`;
 
       // Ocultar registro por si estaba abierto
@@ -444,7 +496,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const titulo = t("memori.levelModalTitle").replace(
           "{{level}}",
-          nivel.nivel
+          nivel.nivel,
         );
         const info = t("memori.levelModalInfo")
           .replace("{{pairs}}", nivel.parejas)
@@ -516,7 +568,7 @@ document.addEventListener("DOMContentLoaded", () => {
       intervaloTiempo = setInterval(() => {
         tiempoRestante--;
         marcador.textContent = `${Math.floor(tiempoRestante / 60)}:${String(
-          tiempoRestante % 60
+          tiempoRestante % 60,
         ).padStart(2, "0")}`;
         if (tiempoRestante <= 0) {
           clearInterval(intervaloTiempo);
@@ -570,7 +622,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
               nivelMaximoAlcanzado = Math.max(
                 nivelMaximoAlcanzado,
-                nivelActual
+                nivelActual,
               );
 
               if (nivelActual < niveles.length) {

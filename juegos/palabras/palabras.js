@@ -364,6 +364,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }, RETRASO_FEEDBACK + 100);
   }
 
+  const btnComprobar = document.getElementById("btnComprobar");
+  const btnReiniciar = document.getElementById("btnReiniciar");
+  const btnSalirFinal = document.getElementById("btnSalirFinal");
+  const btnSiguiente = document.getElementById("btnSiguiente");
+
+  // Enlazar funciones
+  btnComprobar.addEventListener("click", comprobar);
+  btnSiguiente.addEventListener("click", siguiente);
+  btnReiniciar.addEventListener("click", () => location.reload());
+  btnSalirFinal.addEventListener(
+    "click",
+    () => (location.href = "../../index.html"),
+  );
+
   const btnInstrucciones = document.getElementById("btn-instrucciones");
   const modalInstrucciones = document.getElementById("modal-instrucciones");
   const btnCerrarInstrucciones = document.getElementById(
