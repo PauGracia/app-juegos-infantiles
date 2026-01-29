@@ -5,6 +5,7 @@ window.translationsIT = {
   "menu.memori": "A Coppie",
   "menu.ahorcado": "Gioco dell'Impiccato",
   "menu.damas": "Gioco della Dama",
+  "operations.confirmExit": "Sei sicuro di voler uscire dal gioco?",
 
   "footer.rights": "Tutti i diritti riservati.",
   "damas.yourPieces": "Le tue pedine:",

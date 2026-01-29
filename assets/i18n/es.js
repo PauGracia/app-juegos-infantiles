@@ -5,6 +5,7 @@ window.translationsES = {
   "menu.memori": "En Pareja",
   "menu.ahorcado": "Juego Ahorcado",
   "menu.damas": "Juego de Damas",
+  "operaciones.confirmExit": "¿Seguro que quieres salir del juego?",
 
   "footer.rights": "Todos los derechos reservados.",
   "damas.yourPieces": "Tus piezas:",

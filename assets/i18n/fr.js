@@ -10,6 +10,8 @@ window.translationsFR = {
   "damas.yourPieces": "Tes pièces:",
   "damas.yourSide": "Tour:",
   "damas.turn": "Tour:",
+  "operations.confirmExit": "Êtes-vous sûr de vouloir quitter le jeu ?",
+
   "damas.winner": "Gagnant:",
   "damas.forcedCaptures": "Captures obligatoires:",
   "damas.yourCaptures": "Captures TOI:",

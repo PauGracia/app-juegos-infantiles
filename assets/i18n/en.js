@@ -63,6 +63,8 @@ window.translationsEN = {
   "language.fr": "french",
   "language.pt": "Portuguese",
   "language.it": "Italian",
+  "operations.confirmExit": "Are you sure you want to exit the game?",
+
   "operaciones.title": "Operations",
   "operaciones.selectMode": "Select game mode",
   "operaciones.normalMode": "Normal mode",

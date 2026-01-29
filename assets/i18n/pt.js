@@ -11,6 +11,8 @@ window.translationsPT = {
   "damas.yourPieces": "Suas peças:",
   "damas.yourSide": "Turno:",
   "damas.turn": "Turno:",
+  "operations.confirmExit": "Tem certeza de que deseja sair do jogo?",
+
   "damas.winner": "Vencedor:",
   "damas.forcedCaptures": "Capturas obrigatórias:",
   "damas.yourCaptures": "Suas capturas:",
