@@ -30,6 +30,10 @@ body {
   background-size: cover;
 }
 
+[data-i18n] {
+  white-space: pre-line;
+}
+
 /* Título mejorado */
 .titulo-operaciones {
   color: #ffffff;

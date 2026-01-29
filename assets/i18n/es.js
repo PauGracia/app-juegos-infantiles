@@ -83,9 +83,9 @@ window.translationsES = {
   "operaciones.allLevelsCompleted": "Has completado todos los niveles.",
   "operaciones.mathLegend": "Eres una auténtica leyenda matemática",
   "operaciones.instructions.normal":
-    '- Selecciona el nivel de dificultad.<br />- Indica el número de operaciones que quieres resolver.<br />- Introduce tus respuestas y pulsa "Comprobar".<br />- Al finalizar verás un resumen de aciertos y errores.',
+    '- Selecciona el nivel de dificultad.\n- Indica el número de operaciones que quieres resolver.\n- Introduce tus respuestas y pulsa "Comprobar".\n- Al finalizar verás un resumen de aciertos y errores.',
   "operaciones.instructions.challenge":
-    "- Se resolverán niveles consecutivos con tiempo límite.<br />- Cada nivel tiene un número de operaciones distinto y operadores variados.<br />- Si completas todas las operaciones antes del tiempo, pasarás al siguiente nivel.<br />- Si se acaba el tiempo, deberás reiniciar el desafío.",
+    "- Se resolverán niveles consecutivos con tiempo límite.\n- Cada nivel tiene un número de operaciones distinto y operadores variados.\n- Si completas todas las operaciones antes del tiempo, pasarás al siguiente nivel.\n- Si se acaba el tiempo, deberás reiniciar el desafío.",
   "operaciones.numOperationsPlaceholder": "Número de operaciones (máx 50)",
   "operaciones.maxOperatorPlaceholder": "Número Operador (solo nivel 1)",
   "operaciones.timeOptionalPlaceholder": "Deja en blanco para sin límite",
@@ -247,6 +247,13 @@ window.translationsES = {
 
   "damas.config.result.white": "Tú juegas con BLANCAS",
   "damas.config.result.black": "Tú juegas con NEGRAS",
+  "palabras.instructions.title": "Cómo jugar",
+  "palabras.instructions.text":
+    "- Observa la imagen.\n- Escribe la palabra correcta letra a letra.\n- Pulsa Comprobar.\n- Si fallas 3 veces, se mostrará la palabra.",
+  "palabras.config.instructions": "Cómo jugar",
+  "common.confirmExit": "¿Seguro que quieres salir?",
+  "common.confirmYes": "Sí",
+  "common.confirmNo": "No",
 
   "damas.warning.title": "Aviso",
   "damas.warning.mustShuffle": "Debes realizar el sorteo antes de jugar",

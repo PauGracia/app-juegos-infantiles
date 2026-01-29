@@ -38,6 +38,14 @@
         <br /><br />
 
         <div class="botones-configuracion">
+          <button
+            id="btn-instrucciones"
+            class="btn-instrucciones"
+            data-i18n="palabras.config.instructions"
+          >
+            Cómo jugar
+          </button>
+
           <button id="btn-iniciar" data-i18n="palabras.config.start">
             Iniciar
           </button>
@@ -51,6 +59,47 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal instrucciones-->
+    <div class="modal-palabras" id="modal-instrucciones" style="display: none">
+      <div class="modal-contentPalabras">
+        <h2 data-i18n="palabras.instructions.title">Cómo jugar</h2>
+
+        <p data-i18n="palabras.instructions.text"></p>
+
+        <button
+          class="btn-final"
+          id="btn-cerrar-instrucciones"
+          data-i18n="common.close"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal de confirmación de salida -->
+    <div class="modal-palabras" id="modal-confirm-exit" style="display: none">
+      <div class="modal-contentPalabras">
+        <h2 data-i18n="common.confirmExit">¿Seguro que quieres salir?</h2>
+        <div class="botones-configuracion">
+          <button
+            id="btn-confirm-yes"
+            class="btn-instrucciones"
+            data-i18n="common.confirmYes"
+          >
+            Sí
+          </button>
+          <button
+            id="btn-confirm-no"
+            class="btn-salir"
+            data-i18n="common.confirmNo"
+          >
+            No
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Estructura de la pantalla -->
     <div class="contenedor-imagenPalabra" id="juego" style="display: none">
       <h1 class="titulo-operaciones" data-i18n="palabras.title">Palabras</h1>

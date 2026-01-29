@@ -43,14 +43,68 @@ document.addEventListener("DOMContentLoaded", () => {
     iniciarJuego();
   });
 
-  // Botón de salir en configuración
+  // Modal de confirmación
+  const modalConfirmExit = document.getElementById("modal-confirm-exit");
+  const btnConfirmYes = document.getElementById("btn-confirm-yes");
+  const btnConfirmNo = document.getElementById("btn-confirm-no");
+
+  // Función para abrir modal de confirmación
+  function abrirConfirmExit(callbackYes) {
+    modalConfirmExit.style.display = "flex";
+
+    function limpiar() {
+      btnConfirmYes.removeEventListener("click", yesHandler);
+      btnConfirmNo.removeEventListener("click", noHandler);
+      modalConfirmExit.style.display = "none";
+    }
+
+    const yesHandler = () => {
+      limpiar();
+      callbackYes();
+    };
+
+    const noHandler = () => {
+      limpiar();
+    };
+
+    btnConfirmYes.addEventListener("click", yesHandler);
+    btnConfirmNo.addEventListener("click", noHandler);
+  }
+
+  // Salir en configuración
   btnSalirConfig.addEventListener("click", () => {
-    location.href = "../../index.html";
+    abrirConfirmExit(() => {
+      location.href = "../../index.html";
+    });
   });
 
-  // Botón de salir durante el juego
+  // Salir durante el juego (ahora reinicia el juego)
   salirBtnJuego.addEventListener("click", () => {
-    location.href = "../../index.html";
+    abrirConfirmExit(() => {
+      // Reset visual y variables
+      document.getElementById("juego").style.display = "none";
+      document.getElementById("panel-info").style.display = "block";
+      document.getElementById("modal").style.display = "flex";
+
+      // Reset variables del juego
+      seleccionados = [];
+      resumen = [];
+      aciertos = 0;
+      errores = 0;
+      actual = 0;
+
+      // Reset modal de configuración a valores por defecto
+
+      const idiomaInterfaz = (localStorage.getItem("uiLang") || "es").split(
+        "-",
+      )[0];
+      if (mapaIdiomaPalabras[idiomaInterfaz] !== undefined) {
+        selectPalabrasIdioma.value = mapaIdiomaPalabras[idiomaInterfaz];
+        idiomaPalabrasSeleccionado = mapaIdiomaPalabras[idiomaInterfaz];
+      }
+
+      document.getElementById("cantidad").value = 3;
+    });
   });
 
   // -----------------------------
@@ -309,6 +363,20 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("modal-final").style.display = "flex";
     }, RETRASO_FEEDBACK + 100);
   }
+
+  const btnInstrucciones = document.getElementById("btn-instrucciones");
+  const modalInstrucciones = document.getElementById("modal-instrucciones");
+  const btnCerrarInstrucciones = document.getElementById(
+    "btn-cerrar-instrucciones",
+  );
+
+  btnInstrucciones.addEventListener("click", () => {
+    modalInstrucciones.style.display = "flex";
+  });
+
+  btnCerrarInstrucciones.addEventListener("click", () => {
+    modalInstrucciones.style.display = "none";
+  });
 
   // -----------------------------
   // EXPORTAR FUNCIONES

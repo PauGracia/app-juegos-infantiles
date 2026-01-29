@@ -78,9 +78,9 @@ window.translationsIT = {
   "operaciones.allLevelsCompleted": "Hai completato tutti i livelli.",
   "operaciones.mathLegend": "Sei una leggenda della matematica",
   "operaciones.instructions.normal":
-    '- Seleziona il livello di difficoltà.<br />- Indica il numero di operazioni da risolvere.<br />- Inserisci le risposte e premi "Controlla".<br />- Alla fine vedrai un riepilogo di corrette e errori.',
+    '- Seleziona il livello di difficoltà.\n- Indica il numero di operazioni da risolvere.\n- Inserisci le risposte e premi "Controlla".\n- Alla fine vedrai un riepilogo di corrette e errori.',
   "operaciones.instructions.challenge":
-    "- Si risolveranno livelli consecutivi con tempo limite.<br />- Ogni livello ha un numero diverso di operazioni e operatori vari.<br />- Se completi tutte le operazioni prima del tempo, passerai al livello successivo.<br />- Se il tempo scade, dovrai ricominciare la sfida.",
+    "- Si risolveranno livelli consecutivi con tempo limite.\n- Ogni livello ha un numero diverso di operazioni e operatori vari.\n- Se completi tutte le operazioni prima del tempo, passerai al livello successivo.\n- Se il tempo scade, dovrai ricominciare la sfida.",
   "operaciones.numOperationsPlaceholder": "Numero di operazioni (max 50)",
   "operaciones.maxOperatorPlaceholder": "Numero operatore (solo livello 1)",
   "operaciones.timeOptionalPlaceholder": "Lascia vuoto per senza limite",
@@ -246,4 +246,11 @@ window.translationsIT = {
   "ahorcado.allWordsCompleted": "🏆 Hai completato TUTTE le parole!",
   "ahorcado.extraHelpMessage": "💡 Hai guadagnato un aiuto extra!",
   "damas.warning.mustShuffle": "Devi effettuare il sorteggio prima di giocare",
+  "palabras.instructions.title": "Come giocare",
+  "palabras.instructions.text":
+    "- Osserva l'immagine.\n- Scrivi la parola corretta lettera per lettera.\n- Premi Verifica.\n- Se sbagli 3 volte, la parola verrà mostrata.",
+  "palabras.config.instructions": "Come giocare",
+  "common.confirmExit": "Sei sicuro di voler uscire?",
+  "common.confirmYes": "Sì",
+  "common.confirmNo": "No",
 };

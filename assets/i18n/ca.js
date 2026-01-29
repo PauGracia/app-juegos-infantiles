@@ -89,9 +89,9 @@ window.translationsCA = {
   "operaciones.allLevelsCompleted": "Has completat tots els nivells.",
   "operaciones.mathLegend": "Ets una autèntica llegenda matemàtica",
   "operaciones.instructions.normal":
-    "- Selecciona el nivell de dificultat.<br />- Indica el nombre d'operacions que vols resoldre.<br />- Introdueix les teves respostes i prem \"Comprovar\".<br />- Al finalitzar veuràs un resum d'encerts i errors.",
+    "- Selecciona el nivell de dificultat.\n- Indica el nombre d'operacions que vols resoldre.\n- Introdueix les teves respostes i prem \"Comprovar\".\n- Al finalitzar veuràs un resum d'encerts i errors.",
   "operaciones.instructions.challenge":
-    "- Es resoldran nivells consecutius amb temps límit.<br />- Cada nivell té un nombre d'operacions diferent i operadors variats.<br />- Si completes totes les operacions abans del temps, passaràs al següent nivell.<br />- Si s'acaba el temps, hauràs de reiniciar el desafiament.",
+    "- Es resoldran nivells consecutius amb temps límit.\n- Cada nivell té un nombre d'operacions diferent i operadors variats.\n- Si completes totes les operacions abans del temps, passaràs al següent nivell.\n- Si s'acaba el temps, hauràs de reiniciar el desafiament.",
   "operaciones.numOperationsPlaceholder": "Nombre d'operacions (màx 50)",
   "operaciones.maxOperatorPlaceholder": "Número Operador (només nivell 1)",
   "operaciones.timeOptionalPlaceholder": "Deixa en blanc per sense límit",
@@ -241,10 +241,16 @@ window.translationsCA = {
   "damas.config.enableHints": "Activar suggeriments de moviments",
   "damas.config.play": "Jugar",
   "damas.config.exit": "Sortir",
+  "palabras.config.instructions": "Com jugar",
 
   "damas.config.result.white": "Jugues amb BLANQUES",
   "damas.config.result.black": "Jugues amb NEGRES",
-
+  "palabras.instructions.title": "Com jugar",
+  "palabras.instructions.text":
+    "- Observa la imatge.\n- Escriu la paraula lletra a lletra.\n- Prem Comprovar.\n- Si falles 3 vegades, es mostrarà la paraula.",
+  "common.confirmYes": "Sí",
+  "common.confirmNo": "No",
+  "common.confirmExit": "Segur que vols sortir?",
   "damas.warning.title": "Avís",
   "damas.warning.mustShuffle": "Has de barrejar els colors abans de jugar",
 };

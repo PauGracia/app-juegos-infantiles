@@ -89,9 +89,9 @@ window.translationsPT = {
   "operaciones.allLevelsCompleted": "Você completou todos os níveis.",
   "operaciones.mathLegend": "Você é uma verdadeira lenda da matemática",
   "operaciones.instructions.normal":
-    '- Selecione o nível de dificuldade.<br />- Indique o número de operações que deseja resolver.<br />- Insira suas respostas e clique em "Verificar".<br />- Ao final, você verá um resumo de acertos e erros.',
+    '- Selecione o nível de dificuldade.\n- Indique o número de operações que deseja resolver.\n- Insira suas respostas e clique em "Verificar".\n- Ao final, você verá um resumo de acertos e erros.',
   "operaciones.instructions.challenge":
-    "- Serão resolvidos níveis consecutivos com tempo limite.<br />- Cada nível tem número diferente de operações e operadores variados.<br />- Se completar todas as operações antes do tempo, você passará para o próximo nível.<br />- Se o tempo acabar, deverá reiniciar o desafio.",
+    "- Serão resolvidos níveis consecutivos com tempo limite.\n- Cada nível tem número diferente de operações e operadores variados.\n- Se completar todas as operações antes do tempo, você passará para o próximo nível.\n- Se o tempo acabar, deverá reiniciar o desafio.",
   "operaciones.numOperationsPlaceholder": "Número de operações (máx 50)",
   "operaciones.maxOperatorPlaceholder": "Número do operador (somente nível 1)",
   "operaciones.timeOptionalPlaceholder": "Deixe em branco para sem limite",
@@ -243,4 +243,11 @@ window.translationsPT = {
   "damas.config.result.black": "Você joga com as PRETAS",
   "damas.warning.title": "Aviso",
   "damas.warning.mustShuffle": "Você deve embaralhar antes de jogar",
+  "palabras.instructions.title": "Como jogar",
+  "palabras.instructions.text":
+    "- Observe a imagem.\n- Escreva a palavra correta letra por letra.\n- Clique em Verificar.\n- Se errar 3 vezes, a palavra será mostrada.",
+  "palabras.config.instructions": "Como jogar",
+  "common.confirmExit": "Tem certeza de que deseja sair?",
+  "common.confirmYes": "Sim",
+  "common.confirmNo": "Não",
 };

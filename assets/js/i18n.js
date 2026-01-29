@@ -26,7 +26,7 @@ function loadLanguage(lang) {
 function applyTranslations() {
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const key = el.dataset.i18n;
-    el.innerText = translations[key] || key;
+    el.innerHTML = translations[key] || key;
   });
 }
 

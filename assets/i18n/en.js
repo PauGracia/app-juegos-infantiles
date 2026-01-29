@@ -89,9 +89,9 @@ window.translationsEN = {
   "operaciones.allLevelsCompleted": "You have completed all levels.",
   "operaciones.mathLegend": "You are a true math legend",
   "operaciones.instructions.normal":
-    '- Select difficulty level.<br />- Indicate number of operations to solve.<br />- Enter your answers and press "Check".<br />- At the end you\'ll see a summary of correct and incorrect answers.',
+    '- Select difficulty level.\n- Indicate number of operations to solve.\n- Enter your answers and press "Check".\n- At the end you\'ll see a summary of correct and incorrect answers.',
   "operaciones.instructions.challenge":
-    "- Consecutive levels with time limit will be solved.<br />- Each level has different number of operations and varied operators.<br />- If you complete all operations before time, you'll advance to next level.<br />- If time runs out, you must restart the challenge.",
+    "- Consecutive levels with time limit will be solved.\n- Each level has different number of operations and varied operators.\n- If you complete all operations before time, you'll advance to next level.\n- If time runs out, you must restart the challenge.",
   "operaciones.numOperationsPlaceholder": "Number of operations (max 50)",
   "operaciones.maxOperatorPlaceholder": "Maximum operand (level 1 only)",
   "operaciones.timeOptionalPlaceholder": "Leave blank for no limit",
@@ -243,6 +243,13 @@ window.translationsEN = {
 
   "damas.config.result.white": "You play with WHITE",
   "damas.config.result.black": "You play with BLACK",
+  "palabras.instructions.title": "How to play",
+  "palabras.instructions.text":
+    "- Look at the image.\n- Type the word letter by letter.\n- Press Check.\n- After 3 mistakes, the word is revealed.",
+  "common.confirmYes": "Yes",
+  "common.confirmNo": "No",
+
+  "common.confirmExit": "Are you sure you want to exit?",
 
   "damas.warning.title": "Warning",
   "damas.warning.mustShuffle": "You must shuffle colors before playing",

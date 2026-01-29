@@ -90,9 +90,9 @@ window.translationsFR = {
   "operaciones.allLevelsCompleted": "Tu as complété tous les niveaux.",
   "operaciones.mathLegend": "Tu es une véritable légende mathématique",
   "operaciones.instructions.normal":
-    '- Sélectionne le niveau de difficulté.<br />- Indique le nombre d\'opérations à résoudre.<br />- Entre tes réponses et appuie sur "Vérifier".<br />- À la fin tu verras un résumé des bonnes et mauvaises réponses.',
+    '- Sélectionne le niveau de difficulté.\n- Indique le nombre d\'opérations à résoudre.\n- Entre tes réponses et appuie sur "Vérifier".\n- À la fin tu verras un résumé des bonnes et mauvaises réponses.',
   "operaciones.instructions.challenge":
-    "- Des niveaux consécutifs avec temps limite seront résolus.<br />- Chaque niveau a un nombre d'opérations différent et des opérateurs variés.<br />- Si tu complètes toutes les opérations avant le temps, tu passeras au niveau suivant.<br />- Si le temps s'écoule, tu devras recommencer le défi.",
+    "- Des niveaux consécutifs avec temps limite seront résolus.\n- Chaque niveau a un nombre d'opérations différent et des opérateurs variés.\n- Si tu complètes toutes les opérations avant le temps, tu passeras au niveau suivant.\n- Si le temps s'écoule, tu devras recommencer le défi.",
   "operaciones.numOperationsPlaceholder": "Nombre d'opérations (max 50)",
   "operaciones.maxOperatorPlaceholder":
     "Nombre maximum opérande (niveau 1 seulement)",
@@ -254,4 +254,11 @@ window.translationsFR = {
   "damas.warning.title": "Avertissement",
   "damas.warning.mustShuffle":
     "Vous devez mélanger les couleurs avant de jouer",
+  "palabras.instructions.title": "Comment jouer",
+  "palabras.instructions.text":
+    "- Observe l'image.\n- Écris le mot correct lettre par lettre.\n- Clique sur Vérifier.\n- Après 3 erreurs, le mot sera affiché.",
+  "palabras.config.instructions": "Comment jouer",
+  "common.confirmExit": "Êtes-vous sûr de vouloir quitter ?",
+  "common.confirmYes": "Oui",
+  "common.confirmNo": "Non",
 };
