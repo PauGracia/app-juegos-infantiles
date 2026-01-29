@@ -159,6 +159,7 @@ let modoActual = "normal";
 let comprobacionBloqueada = false;
 let inicioTiempo = null;
 let tiempoLimiteModoNormal = null;
+let contextoSalida = null; // "juego" | "menu"
 
 // ───── SONIDOS ─────
 const sonidoComprobar = new Audio("sounds/ping.mp3");
@@ -972,6 +973,82 @@ if ("ontouchstart" in window) {
   document.body.classList.add("touch-device");
 }
 
+function salirAlMenu() {
+  cerrarConfirmacionSalir();
+  resetearTodo();
+
+  // Mostrar modal inicial LIMPIO
+  document.getElementById("modal-operaciones").style.display = "flex";
+}
+
+function resetearTodo() {
+  // ─── Estado del juego ───
+  clearInterval(intervaloCrono);
+  intervaloCrono = null;
+
+  modoActual = "normal";
+  comprobacionBloqueada = false;
+  numeroComprobaciones = 0;
+  tiempoRestante = 0;
+
+  // ─── UI del juego ───
+  document.getElementById("pizarra").innerHTML = "";
+  document.getElementById("cronometro").classList.add("oculto");
+
+  // ─── Cerrar modales finales ───
+  document.getElementById("modal-final").classList.add("oculto");
+  document.getElementById("modal-gran-victoria").classList.add("oculto");
+
+  // ─── RESET MODAL CONFIGURACIÓN ───
+  const modal = document.getElementById("modal-operaciones");
+
+  // Radios / checkboxes
+  modal
+    .querySelectorAll("input[type='radio'], input[type='checkbox']")
+    .forEach((input) => (input.checked = false));
+
+  // Selects
+  modal
+    .querySelectorAll("select")
+    .forEach((select) => (select.selectedIndex = 0));
+
+  // Inputs texto / número
+  modal
+    .querySelectorAll("input[type='number'], input[type='text']")
+    .forEach((input) => (input.value = ""));
+
+  // Clases visuales de modo (si usas botones)
+  modal
+    .querySelectorAll(".activo, .seleccionado")
+    .forEach((el) => el.classList.remove("activo", "seleccionado"));
+}
+
+// ─────────────────────────────
+// CONFIRMACIÓN SALIR DEL JUEGO
+// ─────────────────────────────
+
+function abrirConfirmacionSalir() {
+  document.getElementById("modal-confirmar-salir").classList.remove("oculto");
+}
+
+function cerrarConfirmacionSalir() {
+  document.getElementById("modal-confirmar-salir").classList.add("oculto");
+}
+function confirmarSalida() {
+  cerrarConfirmacionSalir();
+
+  if (contextoSalida === "menu") {
+    window.location.href = "../../index.html";
+    return;
+  }
+
+  // Salida desde el juego → reset TOTAL
+  resetearTodo();
+
+  // Volver al selector de modo
+  document.getElementById("modal-modo").style.display = "flex";
+}
+
 // =============================
 // EVENTOS DE BOTONES
 // =============================
@@ -991,4 +1068,39 @@ if (btnModoDesafio) {
 
 if (btnInstrucciones) {
   btnInstrucciones.addEventListener("click", abrirModalInstrucciones);
+}
+
+// =============================
+// BOTONES SALIR (SIN ONCLICK)
+// =============================
+
+const modalConfirmar = document.getElementById("modal-confirmar-salir");
+if (modalConfirmar) {
+  const botones = modalConfirmar.querySelectorAll("button");
+
+  const btnSi = botones[0];
+  const btnNo = botones[1];
+
+  btnSi.addEventListener("click", confirmarSalida);
+  btnNo.addEventListener("click", cerrarConfirmacionSalir);
+}
+
+// Salir DESDE el juego
+const btnSalirJuego = document.querySelector("#boton-salir-operaciones button");
+if (btnSalirJuego) {
+  btnSalirJuego.addEventListener("click", () => {
+    contextoSalida = "juego";
+    abrirConfirmacionSalir();
+  });
+}
+
+// Salir DESDE el menú inicial
+const btnSalirMenu = document.querySelector("#modal-modo .btn-exit");
+
+if (btnSalirMenu) {
+  btnSalirMenu.addEventListener("click", (e) => {
+    e.preventDefault();
+    contextoSalida = "menu";
+    abrirConfirmacionSalir();
+  });
 }

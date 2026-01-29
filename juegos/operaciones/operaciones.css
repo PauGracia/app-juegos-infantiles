@@ -7,7 +7,7 @@ body {
 
 html,
 body {
-  min-height: 100svh;
+  min-height: 100dvh;
   background:
     radial-gradient(
       circle at 20% 20%,
@@ -892,6 +892,17 @@ body {
   margin: 20px 0;
   color: #d4a017;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.confirmacion-botones {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.confirmacion-botones button {
+  width: 120px;
 }
 
 /* ============================= */
