@@ -5,9 +5,8 @@ body {
   padding: 0;
 }
 
-html,
-body {
-  min-height: 100dvh;
+.body-operaciones {
+  min-height: 100svh;
   background:
     radial-gradient(
       circle at 20% 20%,
@@ -20,11 +19,6 @@ body {
       transparent 45%
     ),
     linear-gradient(180deg, #2e7d5b 0%, #1f5f45 100%);
-  background-attachment: fixed;
-}
-
-.body-operaciones {
-  min-height: 100vh;
   margin: 0;
   padding-top: 50px;
   padding-bottom: 50px;
@@ -32,6 +26,8 @@ body {
   flex-direction: column;
   align-items: center;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* Título mejorado */
@@ -903,6 +899,12 @@ body {
 
 .confirmacion-botones button {
   width: 120px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .body-operaciones {
+    background-attachment: fixed;
+  }
 }
 
 /* ============================= */
