@@ -1,11 +1,11 @@
-{
+window.translationsEN = {
   "menu.title": "Educational Games for Kids",
   "menu.operaciones": "Basic Operations",
   "menu.palabras": "Write the Words",
   "menu.memori": "Matching Pairs",
   "menu.ahorcado": "Hangman Game",
   "menu.damas": "Checkers Game",
-
+  "ahorcado.winMessage": "Correct word!",
   "footer.rights": "All rights reserved.",
   "damas.yourPieces": "Your pieces:",
   "damas.yourSide": "Turn :",
@@ -17,8 +17,18 @@
   "damas.shuffle": "Draw sides",
   "damas.instructions": "Instructions",
   "damas.howToPlay": "How to play checkers",
-
-  "damas.instructionsText": "• The goal is to capture all opponent's pieces.\n\n• Pieces move diagonally forward.\n\n• Captures are mandatory if available.\n\n• If a piece reaches the opposite end, it becomes a king.\n\n• Kings can move in all diagonal directions.",
+  "common.yes": "Yes",
+  "common.no": "No",
+  "ahorcado.loseMessage": "The word was:",
+  "ahorcado.nextWord": "Next word!",
+  "common.info.No.U": "Error: User field not found.",
+  "common.info.3.12": "Name must be between 3 and 12 characters.",
+  "common.info.ingresa": "Please enter a username.",
+  "ahorcado.saveRecord": "Save local record",
+  "ahorcado.allWordsCompleted": "🏆 You have completed ALL the words!",
+  "ahorcado.extraHelpMessage": "💡 You earned an extra hint!",
+  "damas.instructionsText":
+    "• The goal is to capture all opponent's pieces.\n\n• Pieces move diagonally forward.\n\n• Captures are mandatory if available.\n\n• If a piece reaches the opposite end, it becomes a king.\n\n• Kings can move in all diagonal directions.",
 
   "damas.you": "YOU",
   "damas.ai": "COMPUTER",
@@ -76,14 +86,18 @@
   "operaciones.challengeCompleted": "Challenge Mode Completed!",
   "operaciones.allLevelsCompleted": "You have completed all levels.",
   "operaciones.mathLegend": "You are a true math legend",
-  "operaciones.instructions.normal": "- Select difficulty level.<br />- Indicate number of operations to solve.<br />- Enter your answers and press \"Check\".<br />- At the end you'll see a summary of correct and incorrect answers.",
-  "operaciones.instructions.challenge": "- Consecutive levels with time limit will be solved.<br />- Each level has different number of operations and varied operators.<br />- If you complete all operations before time, you'll advance to next level.<br />- If time runs out, you must restart the challenge.",
+  "operaciones.instructions.normal":
+    '- Select difficulty level.<br />- Indicate number of operations to solve.<br />- Enter your answers and press "Check".<br />- At the end you\'ll see a summary of correct and incorrect answers.',
+  "operaciones.instructions.challenge":
+    "- Consecutive levels with time limit will be solved.<br />- Each level has different number of operations and varied operators.<br />- If you complete all operations before time, you'll advance to next level.<br />- If time runs out, you must restart the challenge.",
   "operaciones.numOperationsPlaceholder": "Number of operations (max 50)",
   "operaciones.maxOperatorPlaceholder": "Maximum operand (level 1 only)",
   "operaciones.timeOptionalPlaceholder": "Leave blank for no limit",
   "operaciones.maxCoefficientPlaceholder": "Maximum coefficient",
-  "operaciones.invalidNumOperations": "Enter a valid number of operations (1-50).",
-  "operaciones.invalidMaxOperator": "Enter a valid number for maximum operand (0-1000).",
+  "operaciones.invalidNumOperations":
+    "Enter a valid number of operations (1-50).",
+  "operaciones.invalidMaxOperator":
+    "Enter a valid number for maximum operand (0-1000).",
   "operaciones.selectAtLeastOne": "Select at least one operation in level 2.",
   "operaciones.timeUp": "⏰ Time's up. Try again!",
   "operaciones.levelCompleted": "Level",
@@ -109,9 +123,12 @@
   "memori.ranking": "Ranking",
   "memori.instructions": "Instructions",
   "memori.instructionsTitle": "Instructions",
-  "memori.instructionsIntro": "Welcome to Matching Pairs game. There are two modes:",
-  "memori.instructionsNormal": "Normal Mode: Find all pairs. Each match adds points and each mistake subtracts.",
-  "memori.instructionsChallenge": "Challenge Mode: Complete levels with time limit.",
+  "memori.instructionsIntro":
+    "Welcome to Matching Pairs game. There are two modes:",
+  "memori.instructionsNormal":
+    "Normal Mode: Find all pairs. Each match adds points and each mistake subtracts.",
+  "memori.instructionsChallenge":
+    "Challenge Mode: Complete levels with time limit.",
   "memori.instructionsEnd": "Have fun and challenge your memory!",
 
   "memori.congrats": "Congratulations!",
@@ -166,22 +183,33 @@
   "common.instructions": "Instructions",
   "ahorcado.howToPlay": "How to play Hangman",
   "ahorcado.instructions.objective": "OBJECTIVE:",
-  "ahorcado.instructions.objectiveText": "Guess the secret word before the hangman drawing is completed.",
+  "ahorcado.instructions.objectiveText":
+    "Guess the secret word before the hangman drawing is completed.",
   "ahorcado.instructions.gameplay": "HOW TO PLAY:",
   "ahorcado.instructions.letters": "Click on letters to guess the word.",
-  "ahorcado.instructions.correct": "If the letter is correct, it will appear in the word.",
-  "ahorcado.instructions.wrong": "If the letter is wrong, a part will be added to the hangman drawing.",
-  "ahorcado.instructions.maxErrors": "If you complete the drawing (10 errors), you lose the word.",
+  "ahorcado.instructions.correct":
+    "If the letter is correct, it will appear in the word.",
+  "ahorcado.instructions.wrong":
+    "If the letter is wrong, a part will be added to the hangman drawing.",
+  "ahorcado.instructions.maxErrors":
+    "If you complete the drawing (10 errors), you lose the word.",
   "ahorcado.instructions.scoring": "SCORING:",
-  "ahorcado.instructions.pointsPerWord": "Each correct word adds 1 point to the score.",
-  "ahorcado.instructions.scoreKeeps": "The score accumulates throughout the game.",
-  "ahorcado.instructions.saveRecord": "At the end you can save your record in the local ranking.",
+  "ahorcado.instructions.pointsPerWord":
+    "Each correct word adds 1 point to the score.",
+  "ahorcado.instructions.scoreKeeps":
+    "The score accumulates throughout the game.",
+  "ahorcado.instructions.saveRecord":
+    "At the end you can save your record in the local ranking.",
   "ahorcado.instructions.ranking": "RANKING:",
-  "ahorcado.instructions.saveButton": "You can save your score from the final menu.",
-  "ahorcado.instructions.viewRanking": "You can view the ranking from the start or final menu.",
-  "ahorcado.instructions.exportRanking": "You can also export the ranking in JSON format.",
+  "ahorcado.instructions.saveButton":
+    "You can save your score from the final menu.",
+  "ahorcado.instructions.viewRanking":
+    "You can view the ranking from the start or final menu.",
+  "ahorcado.instructions.exportRanking":
+    "You can also export the ranking in JSON format.",
   "ahorcado.instructions.language": "LANGUAGE:",
-  "ahorcado.instructions.interfaceLanguage": "You can play this game in different languages to practice.",
+  "ahorcado.instructions.interfaceLanguage":
+    "You can play this game in different languages to practice.",
   "ahorcado.instructions.goodLuck": "Good luck!",
   "ranking.sort.points": "Sort by points",
   "ranking.sort.date": "Sort by date",
@@ -196,7 +224,8 @@
   "menu.settings.objective": "Objective",
   "menu.language.title": "Select language",
   "menu.objective.title": "Project objective",
-  "menu.objective.text": "This project is a collection of educational games designed for children and young people from the age of 7. Its goal is to encourage learning through fun activities, covering areas such as mathematics, language, memory and logic. Each game includes simple and clear instructions so anyone can start playing easily.",
+  "menu.objective.text":
+    "This project is a collection of educational games designed for children and young people from the age of 7. Its goal is to encourage learning through fun activities, covering areas such as mathematics, language, memory and logic. Each game includes simple and clear instructions so anyone can start playing easily.",
 
   "footer.contact": "Contact",
   "footer.privacy": "Privacy Policy",
@@ -214,5 +243,5 @@
   "damas.config.result.black": "You play with BLACK",
 
   "damas.warning.title": "Warning",
-  "damas.warning.mustShuffle": "You must shuffle colors before playing"
-}
+  "damas.warning.mustShuffle": "You must shuffle colors before playing",
+};

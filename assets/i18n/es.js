@@ -1,4 +1,4 @@
-{
+window.translationsES = {
   "menu.title": "Juegos Educativos Infantiles",
   "menu.operaciones": "Operaciones Básicas",
   "menu.palabras": "Escribe las Palabras",
@@ -17,8 +17,13 @@
   "damas.shuffle": "Sortear",
   "damas.instructions": "Instrucciones",
   "damas.howToPlay": "Cómo jugar a las damas",
-
-  "damas.instructionsText": "• El objetivo es capturar todas las fichas del rival.\n\n• Las fichas se mueven en diagonal hacia adelante.\n\n• Las capturas son obligatorias si existen.\n\n• Si una ficha llega al extremo contrario, se convierte en reina.\n\n• Las reinas pueden moverse en todas las diagonales.",
+  "ahorcado.nextWord": "¡Siguiente palabra!",
+  "common.yes": "Si",
+  "common.no": "No",
+  "ahorcado.loseMessage": "La palabra era:",
+  "ahorcado.winMessage": "¡Palabra acertada!",
+  "damas.instructionsText":
+    "• El objetivo es capturar todas las fichas del rival.\n\n• Las fichas se mueven en diagonal hacia adelante.\n\n• Las capturas son obligatorias si existen.\n\n• Si una ficha llega al extremo contrario, se convierte en reina.\n\n• Las reinas pueden moverse en todas las diagonales.",
 
   "damas.you": "TÚ",
   "damas.ai": "MÁQUINA",
@@ -76,15 +81,20 @@
   "operaciones.challengeCompleted": "¡Modo Desafío Superado!",
   "operaciones.allLevelsCompleted": "Has completado todos los niveles.",
   "operaciones.mathLegend": "Eres una auténtica leyenda matemática",
-  "operaciones.instructions.normal": "- Selecciona el nivel de dificultad.<br />- Indica el número de operaciones que quieres resolver.<br />- Introduce tus respuestas y pulsa \"Comprobar\".<br />- Al finalizar verás un resumen de aciertos y errores.",
-  "operaciones.instructions.challenge": "- Se resolverán niveles consecutivos con tiempo límite.<br />- Cada nivel tiene un número de operaciones distinto y operadores variados.<br />- Si completas todas las operaciones antes del tiempo, pasarás al siguiente nivel.<br />- Si se acaba el tiempo, deberás reiniciar el desafío.",
+  "operaciones.instructions.normal":
+    '- Selecciona el nivel de dificultad.<br />- Indica el número de operaciones que quieres resolver.<br />- Introduce tus respuestas y pulsa "Comprobar".<br />- Al finalizar verás un resumen de aciertos y errores.',
+  "operaciones.instructions.challenge":
+    "- Se resolverán niveles consecutivos con tiempo límite.<br />- Cada nivel tiene un número de operaciones distinto y operadores variados.<br />- Si completas todas las operaciones antes del tiempo, pasarás al siguiente nivel.<br />- Si se acaba el tiempo, deberás reiniciar el desafío.",
   "operaciones.numOperationsPlaceholder": "Número de operaciones (máx 50)",
   "operaciones.maxOperatorPlaceholder": "Número Operador (solo nivel 1)",
   "operaciones.timeOptionalPlaceholder": "Deja en blanco para sin límite",
   "operaciones.maxCoefficientPlaceholder": "Número máximo coeficiente",
-  "operaciones.invalidNumOperations": "Introduce un número válido de operaciones (1-50).",
-  "operaciones.invalidMaxOperator": "Introduce un número válido para el máximo operando (0-1000).",
-  "operaciones.selectAtLeastOne": "Selecciona al menos una operación en nivel 2.",
+  "operaciones.invalidNumOperations":
+    "Introduce un número válido de operaciones (1-50).",
+  "operaciones.invalidMaxOperator":
+    "Introduce un número válido para el máximo operando (0-1000).",
+  "operaciones.selectAtLeastOne":
+    "Selecciona al menos una operación en nivel 2.",
   "operaciones.timeUp": "⏰ Se acabó el tiempo. ¡Inténtalo de nuevo!",
   "operaciones.levelCompleted": "Nivel",
 
@@ -109,9 +119,12 @@
   "memori.ranking": "Ranking",
   "memori.instructions": "Instrucciones",
   "memori.instructionsTitle": "Instrucciones",
-  "memori.instructionsIntro": "Bienvenido al juego En Pareja. Existen dos modos:",
-  "memori.instructionsNormal": "Modo Normal: Encuentra todas las parejas. Cada acierto suma puntos y cada error resta.",
-  "memori.instructionsChallenge": "Modo Desafío: Completa niveles en tiempo limitado.",
+  "memori.instructionsIntro":
+    "Bienvenido al juego En Pareja. Existen dos modos:",
+  "memori.instructionsNormal":
+    "Modo Normal: Encuentra todas las parejas. Cada acierto suma puntos y cada error resta.",
+  "memori.instructionsChallenge":
+    "Modo Desafío: Completa niveles en tiempo limitado.",
   "memori.instructionsEnd": "¡Diviértete y desafía tu memoria!",
   "ranking.sort.language": "Ordenar por idioma",
   "memori.congrats": "¡Enhorabuena!",
@@ -155,10 +168,15 @@
   "ahorcado.gameLanguage": "Idioma del juego",
   "ahorcado.viewRanking": "Ver ranking",
   "ahorcado.gameOver": "Fin del juego",
+  "ahorcado.allWordsCompleted": "🏆 ¡Has completado TODAS las palabras!",
 
   "ahorcado.points": "puntos",
   "ahorcado.score": "Puntuación",
   "common.info": "Información",
+  "common.info.No.U": "Error: No se encontró el campo usuario.",
+  "common.info.3.12": "El nombre debe tener entre 3 y 12 caracteres.",
+  "common.info.ingresa": "Por favor ingresa un nombre de usuario.",
+  "ahorcado.saveRecord": "Guardar récord local",
 
   "ahorcado.playAgain": "Volver a jugar",
   "ahorcado.saveLocalRecord": "Guardar récord",
@@ -166,22 +184,34 @@
   "common.instructions": "Instrucciones",
   "ahorcado.howToPlay": "Cómo jugar al Ahorcado",
   "ahorcado.instructions.objective": "OBJETIVO:",
-  "ahorcado.instructions.objectiveText": "Adivinar la palabra secreta antes de que se complete el dibujo del ahorcado.",
+  "ahorcado.instructions.objectiveText":
+    "Adivinar la palabra secreta antes de que se complete el dibujo del ahorcado.",
   "ahorcado.instructions.gameplay": "CÓMO JUGAR:",
-  "ahorcado.instructions.letters": "Haz clic en las letras para adivinar la palabra.",
-  "ahorcado.instructions.correct": "Si la letra es correcta, aparecerá en la palabra.",
-  "ahorcado.instructions.wrong": "Si la letra es incorrecta, se añadirá una parte al dibujo del ahorcado.",
-  "ahorcado.instructions.maxErrors": "Si completas el dibujo (10 errores), pierdes la palabra.",
+  "ahorcado.instructions.letters":
+    "Haz clic en las letras para adivinar la palabra.",
+  "ahorcado.instructions.correct":
+    "Si la letra es correcta, aparecerá en la palabra.",
+  "ahorcado.instructions.wrong":
+    "Si la letra es incorrecta, se añadirá una parte al dibujo del ahorcado.",
+  "ahorcado.instructions.maxErrors":
+    "Si completas el dibujo (10 errores), pierdes la palabra.",
   "ahorcado.instructions.scoring": "PUNTUACIÓN:",
-  "ahorcado.instructions.pointsPerWord": "Cada palabra acertada suma 1 punto al marcador.",
-  "ahorcado.instructions.scoreKeeps": "La puntuación se acumula durante toda la partida.",
-  "ahorcado.instructions.saveRecord": "Al finalizar puedes guardar tu récord en el ranking local.",
+  "ahorcado.instructions.pointsPerWord":
+    "Cada palabra acertada suma 1 punto al marcador.",
+  "ahorcado.instructions.scoreKeeps":
+    "La puntuación se acumula durante toda la partida.",
+  "ahorcado.instructions.saveRecord":
+    "Al finalizar puedes guardar tu récord en el ranking local.",
   "ahorcado.instructions.ranking": "RANKING:",
-  "ahorcado.instructions.saveButton": "Puedes guardar tu puntuación desde el menú final.",
-  "ahorcado.instructions.viewRanking": "Puedes ver el ranking desde el menú inicial o final.",
-  "ahorcado.instructions.exportRanking": "También puedes exportar el ranking en formato JSON.",
+  "ahorcado.instructions.saveButton":
+    "Puedes guardar tu puntuación desde el menú final.",
+  "ahorcado.instructions.viewRanking":
+    "Puedes ver el ranking desde el menú inicial o final.",
+  "ahorcado.instructions.exportRanking":
+    "También puedes exportar el ranking en formato JSON.",
   "ahorcado.instructions.language": "IDIOMA:",
-  "ahorcado.instructions.interfaceLanguage": "Puedes jugar a este juego en diferentes idiomas para practicar.",
+  "ahorcado.instructions.interfaceLanguage":
+    "Puedes jugar a este juego en diferentes idiomas para practicar.",
   "ahorcado.instructions.goodLuck": "¡Buena suerte!",
 
   "ranking.sort.points": "Ordenar por puntos",
@@ -199,7 +229,8 @@
   "menu.language.title": "Selecciona idioma",
 
   "menu.objective.title": "Objetivo del proyecto",
-  "menu.objective.text": "Este proyecto es una colección de juegos educativos pensados para niños y jóvenes a partir de 7 años. Su objetivo es fomentar el aprendizaje de forma divertida, trabajando áreas como las matemáticas, el lenguaje, la memoria y la lógica. Cada juego incluye instrucciones claras y sencillas, adaptadas para que cualquier usuario pueda empezar a jugar sin dificultad. El proyecto combina educación y entretenimiento, ayudando a desarrollar habilidades cognitivas mientras se disfruta del juego.",
+  "menu.objective.text":
+    "Este proyecto es una colección de juegos educativos pensados para niños y jóvenes a partir de 7 años. Su objetivo es fomentar el aprendizaje de forma divertida, trabajando áreas como las matemáticas, el lenguaje, la memoria y la lógica. Cada juego incluye instrucciones claras y sencillas, adaptadas para que cualquier usuario pueda empezar a jugar sin dificultad. El proyecto combina educación y entretenimiento, ayudando a desarrollar habilidades cognitivas mientras se disfruta del juego.",
 
   "footer.contact": "Contacto",
   "footer.privacy": "Política de Privacidad",
@@ -217,5 +248,5 @@
   "damas.config.result.black": "Tú juegas con NEGRAS",
 
   "damas.warning.title": "Aviso",
-  "damas.warning.mustShuffle": "Debes realizar el sorteo antes de jugar"
-}
+  "damas.warning.mustShuffle": "Debes realizar el sorteo antes de jugar",
+};

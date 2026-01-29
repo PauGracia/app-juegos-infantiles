@@ -1,11 +1,11 @@
-{
+window.translationsFR = {
   "menu.title": "Jeux Éducatifs pour Enfants",
   "menu.operaciones": "Opérations de Base",
   "menu.palabras": "Écris les Mots",
   "menu.memori": "Jeu des Paires",
   "menu.ahorcado": "Jeu du Pendu",
   "menu.damas": "Jeu de Dames",
-
+  "ahorcado.winMessage": "Mot correct !",
   "footer.rights": "Tous droits réservés.",
   "damas.yourPieces": "Tes pièces:",
   "damas.yourSide": "Tour:",
@@ -17,10 +17,21 @@
   "damas.shuffle": "Tirer au sort",
   "damas.instructions": "Instructions",
   "damas.howToPlay": "Comment jouer aux dames",
-
-  "damas.instructionsText": "• Le but est de capturer toutes les pièces de l'adversaire.\n\n• Les pièces se déplacent en diagonale vers l'avant.\n\n• Les captures sont obligatoires si elles existent.\n\n• Si une pièce atteint l'extrémité opposée, elle devient une dame.\n\n• Les dames peuvent se déplacer dans toutes les diagonales.",
+  "ahorcado.loseMessage": "Le mot était:",
+  "ahorcado.nextWord": "Mot suivant !",
+  "common.info.No.U": "Erreur : champ utilisateur introuvable.",
+  "common.info.3.12": "Le nom doit comporter entre 3 et 12 caractères.",
+  "common.info.ingresa": "Veuillez saisir un nom d'utilisateur.",
+  "ahorcado.saveRecord": "Enregistrer le score local",
+  "ahorcado.allWordsCompleted": "🏆 Vous avez complété TOUTES les mots !",
+  "ahorcado.extraHelpMessage": "💡 Vous avez gagné une aide supplémentaire!",
+  "damas.instructionsText":
+    "• Le but est de capturer toutes les pièces de l'adversaire.\n\n• Les pièces se déplacent en diagonale vers l'avant.\n\n• Les captures sont obligatoires si elles existent.\n\n• Si une pièce atteint l'extrémité opposée, elle devient une dame.\n\n• Les dames peuvent se déplacer dans toutes les diagonales.",
 
   "damas.you": "TOI",
+  "common.yes": "Oui",
+  "common.no": "Non",
+
   "damas.ai": "ORDINATEUR",
   "damas.white": "Blanches",
   "damas.black": "Noires",
@@ -76,15 +87,21 @@
   "operaciones.challengeCompleted": "Mode Défi Réussi !",
   "operaciones.allLevelsCompleted": "Tu as complété tous les niveaux.",
   "operaciones.mathLegend": "Tu es une véritable légende mathématique",
-  "operaciones.instructions.normal": "- Sélectionne le niveau de difficulté.<br />- Indique le nombre d'opérations à résoudre.<br />- Entre tes réponses et appuie sur \"Vérifier\".<br />- À la fin tu verras un résumé des bonnes et mauvaises réponses.",
-  "operaciones.instructions.challenge": "- Des niveaux consécutifs avec temps limite seront résolus.<br />- Chaque niveau a un nombre d'opérations différent et des opérateurs variés.<br />- Si tu complètes toutes les opérations avant le temps, tu passeras au niveau suivant.<br />- Si le temps s'écoule, tu devras recommencer le défi.",
+  "operaciones.instructions.normal":
+    '- Sélectionne le niveau de difficulté.<br />- Indique le nombre d\'opérations à résoudre.<br />- Entre tes réponses et appuie sur "Vérifier".<br />- À la fin tu verras un résumé des bonnes et mauvaises réponses.',
+  "operaciones.instructions.challenge":
+    "- Des niveaux consécutifs avec temps limite seront résolus.<br />- Chaque niveau a un nombre d'opérations différent et des opérateurs variés.<br />- Si tu complètes toutes les opérations avant le temps, tu passeras au niveau suivant.<br />- Si le temps s'écoule, tu devras recommencer le défi.",
   "operaciones.numOperationsPlaceholder": "Nombre d'opérations (max 50)",
-  "operaciones.maxOperatorPlaceholder": "Nombre maximum opérande (niveau 1 seulement)",
+  "operaciones.maxOperatorPlaceholder":
+    "Nombre maximum opérande (niveau 1 seulement)",
   "operaciones.timeOptionalPlaceholder": "Laisse vide pour pas de limite",
   "operaciones.maxCoefficientPlaceholder": "Nombre maximum coefficient",
-  "operaciones.invalidNumOperations": "Entre un nombre valide d'opérations (1-50).",
-  "operaciones.invalidMaxOperator": "Entre un nombre valide pour l'opérande maximum (0-1000).",
-  "operaciones.selectAtLeastOne": "Sélectionne au moins une opération en niveau 2.",
+  "operaciones.invalidNumOperations":
+    "Entre un nombre valide d'opérations (1-50).",
+  "operaciones.invalidMaxOperator":
+    "Entre un nombre valide pour l'opérande maximum (0-1000).",
+  "operaciones.selectAtLeastOne":
+    "Sélectionne au moins une opération en niveau 2.",
   "operaciones.timeUp": "⏰ Le temps est écoulé. Essaie à nouveau !",
   "operaciones.levelCompleted": "Niveau",
 
@@ -110,8 +127,10 @@
   "memori.instructions": "Instructions",
   "memori.instructionsTitle": "Instructions",
   "memori.instructionsIntro": "Bienvenue au Jeu des Paires. Il y a deux modes:",
-  "memori.instructionsNormal": "Mode Normal: Trouve toutes les paires. Chaque paire correcte ajoute des points et chaque erreur en retire.",
-  "memori.instructionsChallenge": "Mode Défi: Complète des niveaux avec temps limité.",
+  "memori.instructionsNormal":
+    "Mode Normal: Trouve toutes les paires. Chaque paire correcte ajoute des points et chaque erreur en retire.",
+  "memori.instructionsChallenge":
+    "Mode Défi: Complète des niveaux avec temps limité.",
   "memori.instructionsEnd": "Amuse-toi et défie ta mémoire !",
 
   "memori.congrats": "Félicitations !",
@@ -167,22 +186,34 @@
   "common.instructions": "Instructions",
   "ahorcado.howToPlay": "Comment jouer au Pendu",
   "ahorcado.instructions.objective": "OBJECTIF:",
-  "ahorcado.instructions.objectiveText": "Deviner le mot secret avant que le dessin du pendu soit complété.",
+  "ahorcado.instructions.objectiveText":
+    "Deviner le mot secret avant que le dessin du pendu soit complété.",
   "ahorcado.instructions.gameplay": "COMMENT JOUER:",
-  "ahorcado.instructions.letters": "Cliquez sur les lettres pour deviner le mot.",
-  "ahorcado.instructions.correct": "Si la lettre est correcte, elle apparaîtra dans le mot.",
-  "ahorcado.instructions.wrong": "Si la lettre est incorrecte, une partie sera ajoutée au dessin du pendu.",
-  "ahorcado.instructions.maxErrors": "Si vous complétez le dessin (10 erreurs), vous perdez le mot.",
+  "ahorcado.instructions.letters":
+    "Cliquez sur les lettres pour deviner le mot.",
+  "ahorcado.instructions.correct":
+    "Si la lettre est correcte, elle apparaîtra dans le mot.",
+  "ahorcado.instructions.wrong":
+    "Si la lettre est incorrecte, une partie sera ajoutée au dessin du pendu.",
+  "ahorcado.instructions.maxErrors":
+    "Si vous complétez le dessin (10 erreurs), vous perdez le mot.",
   "ahorcado.instructions.scoring": "SCORE:",
-  "ahorcado.instructions.pointsPerWord": "Chaque mot correct ajoute 1 point au score.",
-  "ahorcado.instructions.scoreKeeps": "Le score s'accumule tout au long de la partie.",
-  "ahorcado.instructions.saveRecord": "À la fin, vous pouvez sauvegarder votre record dans le classement local.",
+  "ahorcado.instructions.pointsPerWord":
+    "Chaque mot correct ajoute 1 point au score.",
+  "ahorcado.instructions.scoreKeeps":
+    "Le score s'accumule tout au long de la partie.",
+  "ahorcado.instructions.saveRecord":
+    "À la fin, vous pouvez sauvegarder votre record dans le classement local.",
   "ahorcado.instructions.ranking": "CLASSEMENT:",
-  "ahorcado.instructions.saveButton": "Vous pouvez sauvegarder votre score depuis le menu final.",
-  "ahorcado.instructions.viewRanking": "Vous pouvez voir le classement depuis le menu initial ou final.",
-  "ahorcado.instructions.exportRanking": "Vous pouvez aussi exporter le classement en format JSON.",
+  "ahorcado.instructions.saveButton":
+    "Vous pouvez sauvegarder votre score depuis le menu final.",
+  "ahorcado.instructions.viewRanking":
+    "Vous pouvez voir le classement depuis le menu initial ou final.",
+  "ahorcado.instructions.exportRanking":
+    "Vous pouvez aussi exporter le classement en format JSON.",
   "ahorcado.instructions.language": "LANGUE:",
-  "ahorcado.instructions.interfaceLanguage": "Tu peux jouer à ce jeu dans différentes langues pour t’entraîner.",
+  "ahorcado.instructions.interfaceLanguage":
+    "Tu peux jouer à ce jeu dans différentes langues pour t’entraîner.",
   "ahorcado.instructions.goodLuck": "Bonne chance!",
   "ranking.sort.points": "Trier par points",
   "ranking.sort.date": "Trier par date",
@@ -191,7 +222,8 @@
   "ranking.clear": "Effacer le classement",
   "ranking.noResults": "Aucun résultat",
   "common.clear": "Effacer",
-  "ranking.clearConfirm": "Êtes-vous sûr de vouloir supprimer tout le classement ?",
+  "ranking.clearConfirm":
+    "Êtes-vous sûr de vouloir supprimer tout le classement ?",
   "common.cancel": "Annuler",
   "menu.settings.language": "Langues",
   "menu.settings.objective": "Objectif",
@@ -199,7 +231,8 @@
   "menu.language.title": "Sélectionner la langue",
 
   "menu.objective.title": "Objectif du projet",
-  "menu.objective.text": "Ce projet est une collection de jeux éducatifs conçus pour les enfants et les jeunes à partir de 7 ans. Son objectif est de favoriser l’apprentissage de manière ludique, en travaillant des domaines tels que les mathématiques, le langage, la mémoire et la logique. Chaque jeu propose des instructions simples et claires afin que tout utilisateur puisse commencer à jouer facilement.",
+  "menu.objective.text":
+    "Ce projet est une collection de jeux éducatifs conçus pour les enfants et les jeunes à partir de 7 ans. Son objectif est de favoriser l’apprentissage de manière ludique, en travaillant des domaines tels que les mathématiques, le langage, la mémoire et la logique. Chaque jeu propose des instructions simples et claires afin que tout utilisateur puisse commencer à jouer facilement.",
 
   "footer.contact": "Contact",
   "footer.privacy": "Politique de Confidentialité",
@@ -217,5 +250,6 @@
   "damas.config.result.black": "Vous jouez avec les NOIRES",
 
   "damas.warning.title": "Avertissement",
-  "damas.warning.mustShuffle": "Vous devez mélanger les couleurs avant de jouer"
-}
+  "damas.warning.mustShuffle":
+    "Vous devez mélanger les couleurs avant de jouer",
+};

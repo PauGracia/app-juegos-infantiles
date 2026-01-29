@@ -1,4 +1,4 @@
-{
+window.translationsIT = {
   "menu.title": "Giochi Educativi per Bambini",
   "menu.operaciones": "Operazioni di Base",
   "menu.palabras": "Scrivi le Parole",
@@ -17,7 +17,8 @@
   "damas.shuffle": "Sorteggia",
   "damas.instructions": "Istruzioni",
   "damas.howToPlay": "Come giocare a Dama",
-  "damas.instructionsText": "• L'obiettivo è catturare tutte le pedine dell'avversario.\n\n• Le pedine si muovono in diagonale in avanti.\n\n• Le catture sono obbligatorie se possibili.\n\n• Se una pedina raggiunge l'estremità opposta, diventa dama.\n\n• Le dame possono muoversi in tutte le diagonali.",
+  "damas.instructionsText":
+    "• L'obiettivo è catturare tutte le pedine dell'avversario.\n\n• Le pedine si muovono in diagonale in avanti.\n\n• Le catture sono obbligatorie se possibili.\n\n• Se una pedina raggiunge l'estremità opposta, diventa dama.\n\n• Le dame possono muoversi in tutte le diagonali.",
 
   "damas.you": "TU",
   "damas.ai": "COMPUTER",
@@ -75,15 +76,20 @@
   "operaciones.challengeCompleted": "Modalità Sfida completata!",
   "operaciones.allLevelsCompleted": "Hai completato tutti i livelli.",
   "operaciones.mathLegend": "Sei una leggenda della matematica",
-  "operaciones.instructions.normal": "- Seleziona il livello di difficoltà.<br />- Indica il numero di operazioni da risolvere.<br />- Inserisci le risposte e premi \"Controlla\".<br />- Alla fine vedrai un riepilogo di corrette e errori.",
-  "operaciones.instructions.challenge": "- Si risolveranno livelli consecutivi con tempo limite.<br />- Ogni livello ha un numero diverso di operazioni e operatori vari.<br />- Se completi tutte le operazioni prima del tempo, passerai al livello successivo.<br />- Se il tempo scade, dovrai ricominciare la sfida.",
+  "operaciones.instructions.normal":
+    '- Seleziona il livello di difficoltà.<br />- Indica il numero di operazioni da risolvere.<br />- Inserisci le risposte e premi "Controlla".<br />- Alla fine vedrai un riepilogo di corrette e errori.',
+  "operaciones.instructions.challenge":
+    "- Si risolveranno livelli consecutivi con tempo limite.<br />- Ogni livello ha un numero diverso di operazioni e operatori vari.<br />- Se completi tutte le operazioni prima del tempo, passerai al livello successivo.<br />- Se il tempo scade, dovrai ricominciare la sfida.",
   "operaciones.numOperationsPlaceholder": "Numero di operazioni (max 50)",
   "operaciones.maxOperatorPlaceholder": "Numero operatore (solo livello 1)",
   "operaciones.timeOptionalPlaceholder": "Lascia vuoto per senza limite",
   "operaciones.maxCoefficientPlaceholder": "Coefficiente massimo",
-  "operaciones.invalidNumOperations": "Inserisci un numero valido di operazioni (1-50).",
-  "operaciones.invalidMaxOperator": "Inserisci un numero valido per l'operando massimo (0-1000).",
-  "operaciones.selectAtLeastOne": "Seleziona almeno un'operazione nel livello 2.",
+  "operaciones.invalidNumOperations":
+    "Inserisci un numero valido di operazioni (1-50).",
+  "operaciones.invalidMaxOperator":
+    "Inserisci un numero valido per l'operando massimo (0-1000).",
+  "operaciones.selectAtLeastOne":
+    "Seleziona almeno un'operazione nel livello 2.",
   "operaciones.timeUp": "⏰ Tempo scaduto! Riprova!",
   "operaciones.levelCompleted": "Livello",
 
@@ -108,9 +114,12 @@
   "memori.ranking": "Classifica",
   "memori.instructions": "Istruzioni",
   "memori.instructionsTitle": "Istruzioni",
-  "memori.instructionsIntro": "Benvenuto nel gioco A Coppie. Esistono due modalità:",
-  "memori.instructionsNormal": "Modalità Normale: Trova tutte le coppie. Ogni corretta fa guadagnare punti, ogni errore li toglie.",
-  "memori.instructionsChallenge": "Modalità Sfida: Completa i livelli entro il tempo limite.",
+  "memori.instructionsIntro":
+    "Benvenuto nel gioco A Coppie. Esistono due modalità:",
+  "memori.instructionsNormal":
+    "Modalità Normale: Trova tutte le coppie. Ogni corretta fa guadagnare punti, ogni errore li toglie.",
+  "memori.instructionsChallenge":
+    "Modalità Sfida: Completa i livelli entro il tempo limite.",
   "memori.instructionsEnd": "Divertiti e sfida la tua memoria!",
 
   "memori.congrats": "Complimenti!",
@@ -120,7 +129,8 @@
 
   "memori.noSaveZero": "0 punti non possono essere salvati",
   "memori.completedAllLevels": "Hai completato tutti i livelli!",
-  "memori.notEnoughElements": "Non ci sono elementi sufficienti per questo livello.",
+  "memori.notEnoughElements":
+    "Non ci sono elementi sufficienti per questo livello.",
   "memori.levelReached": "Hai raggiunto il livello",
   "memori.timeUpTitle": "⏰ Tempo scaduto",
   "memori.timeUpText": "Non hai completato il livello in tempo.",
@@ -162,22 +172,34 @@
   "common.instructions": "Istruzioni",
   "ahorcado.howToPlay": "Come giocare all'Impiccato",
   "ahorcado.instructions.objective": "OBIETTIVO:",
-  "ahorcado.instructions.objectiveText": "Indovina la parola segreta prima che il disegno dell'impiccato sia completo.",
+  "ahorcado.instructions.objectiveText":
+    "Indovina la parola segreta prima che il disegno dell'impiccato sia completo.",
   "ahorcado.instructions.gameplay": "COME GIOCARE:",
-  "ahorcado.instructions.letters": "Clicca sulle lettere per indovinare la parola.",
-  "ahorcado.instructions.correct": "Se la lettera è corretta, apparirà nella parola.",
-  "ahorcado.instructions.wrong": "Se la lettera è sbagliata, verrà aggiunta una parte al disegno dell'impiccato.",
-  "ahorcado.instructions.maxErrors": "Se completi il disegno (10 errori), perdi la parola.",
+  "ahorcado.instructions.letters":
+    "Clicca sulle lettere per indovinare la parola.",
+  "ahorcado.instructions.correct":
+    "Se la lettera è corretta, apparirà nella parola.",
+  "ahorcado.instructions.wrong":
+    "Se la lettera è sbagliata, verrà aggiunta una parte al disegno dell'impiccato.",
+  "ahorcado.instructions.maxErrors":
+    "Se completi il disegno (10 errori), perdi la parola.",
   "ahorcado.instructions.scoring": "PUNTEGGIO:",
-  "ahorcado.instructions.pointsPerWord": "Ogni parola indovinata aggiunge 1 punto al punteggio.",
-  "ahorcado.instructions.scoreKeeps": "Il punteggio si accumula durante tutta la partita.",
-  "ahorcado.instructions.saveRecord": "Alla fine puoi salvare il tuo record nella classifica locale.",
+  "ahorcado.instructions.pointsPerWord":
+    "Ogni parola indovinata aggiunge 1 punto al punteggio.",
+  "ahorcado.instructions.scoreKeeps":
+    "Il punteggio si accumula durante tutta la partita.",
+  "ahorcado.instructions.saveRecord":
+    "Alla fine puoi salvare il tuo record nella classifica locale.",
   "ahorcado.instructions.ranking": "CLASSIFICA:",
-  "ahorcado.instructions.saveButton": "Puoi salvare il tuo punteggio dal menu finale.",
-  "ahorcado.instructions.viewRanking": "Puoi vedere la classifica dal menu iniziale o finale.",
-  "ahorcado.instructions.exportRanking": "Puoi anche esportare la classifica in formato JSON.",
+  "ahorcado.instructions.saveButton":
+    "Puoi salvare il tuo punteggio dal menu finale.",
+  "ahorcado.instructions.viewRanking":
+    "Puoi vedere la classifica dal menu iniziale o finale.",
+  "ahorcado.instructions.exportRanking":
+    "Puoi anche esportare la classifica in formato JSON.",
   "ahorcado.instructions.language": "LINGUA:",
-  "ahorcado.instructions.interfaceLanguage": "Puoi giocare a questo gioco in diverse lingue per esercitarti.",
+  "ahorcado.instructions.interfaceLanguage":
+    "Puoi giocare a questo gioco in diverse lingue per esercitarti.",
   "ahorcado.instructions.goodLuck": "Buona fortuna!",
 
   "ranking.sort.points": "Ordina per punti",
@@ -194,7 +216,8 @@
 
   "menu.language.title": "Seleziona lingua",
   "menu.objective.title": "Obiettivo del progetto",
-  "menu.objective.text": "Questo progetto è una raccolta di giochi educativi pensati per bambini e ragazzi a partire dai 7 anni. L'obiettivo è favorire l'apprendimento in modo divertente, lavorando su aree come matematica, linguaggio, memoria e logica. Ogni gioco include istruzioni chiare e semplici, per permettere a chiunque di iniziare a giocare senza difficoltà. Il progetto combina educazione e intrattenimento, aiutando a sviluppare abilità cognitive mentre ci si diverte.",
+  "menu.objective.text":
+    "Questo progetto è una raccolta di giochi educativi pensati per bambini e ragazzi a partire dai 7 anni. L'obiettivo è favorire l'apprendimento in modo divertente, lavorando su aree come matematica, linguaggio, memoria e logica. Ogni gioco include istruzioni chiare e semplici, per permettere a chiunque di iniziare a giocare senza difficoltà. Il progetto combina educazione e intrattenimento, aiutando a sviluppare abilità cognitive mentre ci si diverte.",
 
   "footer.contact": "Contatto",
   "footer.privacy": "Privacy",
@@ -210,5 +233,16 @@
   "damas.config.result.white": "Gioci con le BIANCHE",
   "damas.config.result.black": "Gioci con le NERE",
   "damas.warning.title": "Avviso",
-  "damas.warning.mustShuffle": "Devi effettuare il sorteggio prima di giocare"
-}
+  "common.yes": "Sì",
+  "common.no": "No",
+  "ahorcado.loseMessage": "La parola era:",
+  "ahorcado.winMessage": "Parola corretta!",
+  "ahorcado.nextWord": "Prossima parola!",
+  "common.info.No.U": "Errore: campo utente non trovato.",
+  "common.info.3.12": "Il nome deve avere tra 3 e 12 caratteri.",
+  "common.info.ingresa": "Per favore inserisci un nome utente.",
+  "ahorcado.saveRecord": "Salva record locale",
+  "ahorcado.allWordsCompleted": "🏆 Hai completato TUTTE le parole!",
+  "ahorcado.extraHelpMessage": "💡 Hai guadagnato un aiuto extra!",
+  "damas.warning.mustShuffle": "Devi effettuare il sorteggio prima di giocare",
+};

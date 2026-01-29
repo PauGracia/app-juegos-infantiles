@@ -1,11 +1,16 @@
-{
+window.translationsCA = {
   "menu.title": "Jocs Educatius Infantils",
   "menu.operaciones": "Operacions Bàsiques",
   "menu.palabras": "Escriu les Paraules",
   "menu.memori": "En Parella",
   "menu.ahorcado": "Joc del Penjat",
   "menu.damas": "Joc de Dames",
-
+  "common.info.No.U": "Error: No s'ha trobat el camp usuari.",
+  "common.info.3.12": "El nom ha de tenir entre 3 i 12 caràcters.",
+  "common.info.ingresa": "Si us plau, introdueix un nom d'usuari.",
+  "ahorcado.saveRecord": "Guardar rècord local",
+  "ahorcado.allWordsCompleted": "🏆 Has completat TOTES les paraules!",
+  "ahorcado.extraHelpMessage": "💡 Has guanyat una ajuda extra!",
   "footer.rights": "Tots els drets reservats.",
   "damas.yourPieces": "Les teves peces:",
   "damas.yourSide": "Torn:",
@@ -17,8 +22,13 @@
   "damas.shuffle": "Sortejar",
   "damas.instructions": "Instruccions",
   "damas.howToPlay": "Com jugar a les dames",
-
-  "damas.instructionsText": "• L'objectiu és capturar totes les fitxes del rival.\n\n• Les fitxes es mouen en diagonal cap endavant.\n\n• Les captures són obligatòries si existeixen.\n\n• Si una fitxa arriba a l'extrem contrari, es converteix en reina.\n\n• Les reines poden moure's en totes les diagonals.",
+  "common.yes": "Sí",
+  "common.no": "No",
+  "ahorcado.loseMessage": "La paraula era:",
+  "ahorcado.winMessage": "Paraula encertada!",
+  "ahorcado.nextWord": "Següent paraula!",
+  "damas.instructionsText":
+    "• L'objectiu és capturar totes les fitxes del rival.\n\n• Les fitxes es mouen en diagonal cap endavant.\n\n• Les captures són obligatòries si existeixen.\n\n• Si una fitxa arriba a l'extrem contrari, es converteix en reina.\n\n• Les reines poden moure's en totes les diagonals.",
 
   "damas.you": "TU",
   "damas.ai": "MÀQUINA",
@@ -76,15 +86,20 @@
   "operaciones.challengeCompleted": "Mode Desafiament Superat!",
   "operaciones.allLevelsCompleted": "Has completat tots els nivells.",
   "operaciones.mathLegend": "Ets una autèntica llegenda matemàtica",
-  "operaciones.instructions.normal": "- Selecciona el nivell de dificultat.<br />- Indica el nombre d'operacions que vols resoldre.<br />- Introdueix les teves respostes i prem \"Comprovar\".<br />- Al finalitzar veuràs un resum d'encerts i errors.",
-  "operaciones.instructions.challenge": "- Es resoldran nivells consecutius amb temps límit.<br />- Cada nivell té un nombre d'operacions diferent i operadors variats.<br />- Si completes totes les operacions abans del temps, passaràs al següent nivell.<br />- Si s'acaba el temps, hauràs de reiniciar el desafiament.",
+  "operaciones.instructions.normal":
+    "- Selecciona el nivell de dificultat.<br />- Indica el nombre d'operacions que vols resoldre.<br />- Introdueix les teves respostes i prem \"Comprovar\".<br />- Al finalitzar veuràs un resum d'encerts i errors.",
+  "operaciones.instructions.challenge":
+    "- Es resoldran nivells consecutius amb temps límit.<br />- Cada nivell té un nombre d'operacions diferent i operadors variats.<br />- Si completes totes les operacions abans del temps, passaràs al següent nivell.<br />- Si s'acaba el temps, hauràs de reiniciar el desafiament.",
   "operaciones.numOperationsPlaceholder": "Nombre d'operacions (màx 50)",
   "operaciones.maxOperatorPlaceholder": "Número Operador (només nivell 1)",
   "operaciones.timeOptionalPlaceholder": "Deixa en blanc per sense límit",
   "operaciones.maxCoefficientPlaceholder": "Número màxim coeficient",
-  "operaciones.invalidNumOperations": "Introdueix un nombre vàlid d'operacions (1-50).",
-  "operaciones.invalidMaxOperator": "Introdueix un nombre vàlid per al màxim operand (0-1000).",
-  "operaciones.selectAtLeastOne": "Selecciona almenys una operació en nivell 2.",
+  "operaciones.invalidNumOperations":
+    "Introdueix un nombre vàlid d'operacions (1-50).",
+  "operaciones.invalidMaxOperator":
+    "Introdueix un nombre vàlid per al màxim operand (0-1000).",
+  "operaciones.selectAtLeastOne":
+    "Selecciona almenys una operació en nivell 2.",
   "operaciones.timeUp": "⏰ S'ha acabat el temps. Torna-ho a intentar!",
   "operaciones.levelCompleted": "Nivell",
 
@@ -110,8 +125,10 @@
   "memori.instructions": "Instruccions",
   "memori.instructionsTitle": "Instruccions",
   "memori.instructionsIntro": "Benvingut al joc En Parella. Hi ha dos modes:",
-  "memori.instructionsNormal": "Mode Normal: Troba totes les parelles. Cada encert suma punts i cada error resta.",
-  "memori.instructionsChallenge": "Mode Desafiament: Completa nivells en temps limitat.",
+  "memori.instructionsNormal":
+    "Mode Normal: Troba totes les parelles. Cada encert suma punts i cada error resta.",
+  "memori.instructionsChallenge":
+    "Mode Desafiament: Completa nivells en temps limitat.",
   "memori.instructionsEnd": "Divertiu-t'ho i desafia la teva memòria!",
 
   "memori.congrats": "Enhorabona!",
@@ -122,7 +139,8 @@
   "memori.noSaveZero": "0 punts no es poden guardar",
 
   "memori.completedAllLevels": "Has completat tots els nivells!",
-  "memori.notEnoughElements": "No hi ha suficients elements per a aquest nivell.",
+  "memori.notEnoughElements":
+    "No hi ha suficients elements per a aquest nivell.",
 
   "memori.levelReached": "Has assolit el nivell",
 
@@ -163,22 +181,34 @@
   "common.instructions": "Instruccions",
   "ahorcado.howToPlay": "Com jugar al Penjat",
   "ahorcado.instructions.objective": "OBJECTIU:",
-  "ahorcado.instructions.objectiveText": "Endevinar la paraula secreta abans que es completi el dibuix del penjat.",
+  "ahorcado.instructions.objectiveText":
+    "Endevinar la paraula secreta abans que es completi el dibuix del penjat.",
   "ahorcado.instructions.gameplay": "COM JUGAR:",
-  "ahorcado.instructions.letters": "Fes clic a les lletres per endevinar la paraula.",
-  "ahorcado.instructions.correct": "Si la lletra és correcta, apareixerà a la paraula.",
-  "ahorcado.instructions.wrong": "Si la lletra és incorrecta, s'afegirà una part al dibuix del penjat.",
-  "ahorcado.instructions.maxErrors": "Si completes el dibuix (10 errors), perds la paraula.",
+  "ahorcado.instructions.letters":
+    "Fes clic a les lletres per endevinar la paraula.",
+  "ahorcado.instructions.correct":
+    "Si la lletra és correcta, apareixerà a la paraula.",
+  "ahorcado.instructions.wrong":
+    "Si la lletra és incorrecta, s'afegirà una part al dibuix del penjat.",
+  "ahorcado.instructions.maxErrors":
+    "Si completes el dibuix (10 errors), perds la paraula.",
   "ahorcado.instructions.scoring": "PUNTUACIÓ:",
-  "ahorcado.instructions.pointsPerWord": "Cada paraula encertada suma 1 punt al marcador.",
-  "ahorcado.instructions.scoreKeeps": "La puntuació s'acumula durant tota la partida.",
-  "ahorcado.instructions.saveRecord": "Al finalitzar pots guardar el teu rècord al ranking local.",
+  "ahorcado.instructions.pointsPerWord":
+    "Cada paraula encertada suma 1 punt al marcador.",
+  "ahorcado.instructions.scoreKeeps":
+    "La puntuació s'acumula durant tota la partida.",
+  "ahorcado.instructions.saveRecord":
+    "Al finalitzar pots guardar el teu rècord al ranking local.",
   "ahorcado.instructions.ranking": "RANKING:",
-  "ahorcado.instructions.saveButton": "Pots guardar la teva puntuació des del menú final.",
-  "ahorcado.instructions.viewRanking": "Pots veure el ranking des del menú inicial o final.",
-  "ahorcado.instructions.exportRanking": "També pots exportar el ranking en format JSON.",
+  "ahorcado.instructions.saveButton":
+    "Pots guardar la teva puntuació des del menú final.",
+  "ahorcado.instructions.viewRanking":
+    "Pots veure el ranking des del menú inicial o final.",
+  "ahorcado.instructions.exportRanking":
+    "També pots exportar el ranking en format JSON.",
   "ahorcado.instructions.language": "IDIOMA:",
-  "ahorcado.instructions.interfaceLanguage": "Pots jugar a aquest joc en diferents idiomes per practicar.",
+  "ahorcado.instructions.interfaceLanguage":
+    "Pots jugar a aquest joc en diferents idiomes per practicar.",
   "ahorcado.instructions.goodLuck": "Bona sort!",
   "ranking.sort.points": "Ordenar per punts",
   "ranking.sort.date": "Ordenar per data",
@@ -195,7 +225,8 @@
   "menu.language.title": "Selecciona l’idioma",
 
   "menu.objective.title": "Objectiu del projecte",
-  "menu.objective.text": "Aquest projecte és una col·lecció de jocs educatius pensats per a infants i joves a partir dels 7 anys. El seu objectiu és fomentar l’aprenentatge d’una manera divertida, treballant àrees com les matemàtiques, el llenguatge, la memòria i la lògica. Cada joc inclou instruccions clares i senzilles perquè qualsevol usuari pugui començar a jugar sense dificultat.",
+  "menu.objective.text":
+    "Aquest projecte és una col·lecció de jocs educatius pensats per a infants i joves a partir dels 7 anys. El seu objectiu és fomentar l’aprenentatge d’una manera divertida, treballant àrees com les matemàtiques, el llenguatge, la memòria i la lògica. Cada joc inclou instruccions clares i senzilles perquè qualsevol usuari pugui començar a jugar sense dificultat.",
 
   "footer.contact": "Contacte",
   "footer.privacy": "Política de Privacitat",
@@ -213,5 +244,5 @@
   "damas.config.result.black": "Jugues amb NEGRES",
 
   "damas.warning.title": "Avís",
-  "damas.warning.mustShuffle": "Has de barrejar els colors abans de jugar"
-}
+  "damas.warning.mustShuffle": "Has de barrejar els colors abans de jugar",
+};
