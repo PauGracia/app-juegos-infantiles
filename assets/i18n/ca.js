@@ -252,5 +252,34 @@ window.translationsCA = {
   "common.confirmNo": "No",
   "common.confirmExit": "Segur que vols sortir?",
   "damas.warning.title": "Avís",
+  "palabras.config.help": "Activar ajuda",
+  "palabras.config.helpDescription":
+    "Mostra ajudes automàtiques després de diversos intents",
+
+  "palabras.info.checks": "Comprovacions:",
+  "palabras.info.helps": "Ajudes:",
+
+  "palabras.results.title": "Resultat final",
+  "palabras.results.correct": "Encerts:",
+  "palabras.results.checks": "Comprovacions:",
+  "palabras.results.helps": "Ajudes utilitzades:",
+
+  "palabras.results.words": "Paraules encertades",
+  "palabras.results.wordsWithHelp": "Amb ajuda",
+  "palabras.results.wordsWithoutHelp": "Sense ajuda",
+
+  "palabras.results.wordHelped": "amb ajuda",
+  "palabras.results.wordNotHelped": "sense ajuda",
+
+  "palabras.buttons.finish": "Finalitzar",
+  "palabras.buttons.check": "Comprovar",
+  "palabras.buttons.next": "Següent",
+  "palabras.buttons.restart": "Reiniciar",
+  "palabras.buttons.exit": "Sortir",
+
+  "palabras.instructions.title": "Com jugar",
+  "palabras.instructions.text":
+    "Escriu el nom correcte de la imatge.\n\nPots comprovar la paraula tantes vegades com vulguis.\n\nSi l'ajuda està activada, apareixerà automàticament després de diversos intents.\n\nTotes les paraules compten com a encert, però es registren les comprovacions i l'ús de l'ajuda.",
+
   "damas.warning.mustShuffle": "Has de barrejar els colors abans de jugar",
 };

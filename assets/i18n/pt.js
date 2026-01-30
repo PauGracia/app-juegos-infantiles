@@ -250,4 +250,32 @@ window.translationsPT = {
   "common.confirmExit": "Tem certeza de que deseja sair?",
   "common.confirmYes": "Sim",
   "common.confirmNo": "Não",
+  "palabras.config.help": "Ativar ajuda",
+  "palabras.config.helpDescription":
+    "Mostra ajuda automática após várias tentativas",
+
+  "palabras.info.checks": "Verificações:",
+  "palabras.info.helps": "Ajudas:",
+
+  "palabras.results.title": "Resultado final",
+  "palabras.results.correct": "Acertos:",
+  "palabras.results.checks": "Verificações:",
+  "palabras.results.helps": "Ajudas usadas:",
+
+  "palabras.results.words": "Palavras acertadas",
+  "palabras.results.wordsWithHelp": "Com ajuda",
+  "palabras.results.wordsWithoutHelp": "Sem ajuda",
+
+  "palabras.results.wordHelped": "com ajuda",
+  "palabras.results.wordNotHelped": "sem ajuda",
+
+  "palabras.buttons.finish": "Finalizar",
+  "palabras.buttons.check": "Verificar",
+  "palabras.buttons.next": "Seguinte",
+  "palabras.buttons.restart": "Reiniciar",
+  "palabras.buttons.exit": "Sair",
+
+  "palabras.instructions.title": "Como jogar",
+  "palabras.instructions.text":
+    "Escreve o nome correto da imagem.\n\nPodes verificar a palavra quantas vezes quiseres.\n\nSe a ajuda estiver ativada, aparecerá automaticamente após várias tentativas.\n\nTodas as palavras contam como acerto, mas as verificações e o uso da ajuda são registados.",
 };

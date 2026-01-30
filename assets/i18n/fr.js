@@ -261,4 +261,32 @@ window.translationsFR = {
   "common.confirmExit": "Êtes-vous sûr de vouloir quitter ?",
   "common.confirmYes": "Oui",
   "common.confirmNo": "Non",
+  "palabras.config.help": "Activer l'aide",
+  "palabras.config.helpDescription":
+    "Affiche une aide automatique après plusieurs tentatives",
+
+  "palabras.info.checks": "Vérifications :",
+  "palabras.info.helps": "Aides :",
+
+  "palabras.results.title": "Résultat final",
+  "palabras.results.correct": "Réussites :",
+  "palabras.results.checks": "Vérifications :",
+  "palabras.results.helps": "Aides utilisées :",
+
+  "palabras.results.words": "Mots réussis",
+  "palabras.results.wordsWithHelp": "Avec aide",
+  "palabras.results.wordsWithoutHelp": "Sans aide",
+
+  "palabras.results.wordHelped": "avec aide",
+  "palabras.results.wordNotHelped": "sans aide",
+
+  "palabras.buttons.finish": "Terminer",
+  "palabras.buttons.check": "Vérifier",
+  "palabras.buttons.next": "Suivant",
+  "palabras.buttons.restart": "Redémarrer",
+  "palabras.buttons.exit": "Quitter",
+
+  "palabras.instructions.title": "Comment jouer",
+  "palabras.instructions.text":
+    "Écris le nom correct de l'image.\n\nTu peux vérifier le mot autant de fois que tu le souhaites.\n\nSi l'aide est activée, elle apparaîtra automatiquement après plusieurs tentatives.\n\nTous les mots comptent comme réussis, mais les vérifications et l'utilisation de l'aide sont enregistrées.",
 };

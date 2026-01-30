@@ -36,22 +36,32 @@
         >
         <input type="number" id="cantidad" min="1" max="56" value="3" />
         <br /><br />
+        <div class="opcion-ayuda">
+          <label class="checkbox-ayuda">
+            <input type="checkbox" id="activar-ayuda" checked />
+            <span data-i18n="palabras.config.help">Activar ayuda</span>
+          </label>
+        </div>
 
         <div class="botones-configuracion">
           <button
             id="btn-instrucciones"
-            class="btn-instrucciones"
+            class="btn-modal btn-modal--blue"
             data-i18n="palabras.config.instructions"
           >
             Cómo jugar
           </button>
 
-          <button id="btn-iniciar" data-i18n="palabras.config.start">
+          <button
+            id="btn-iniciar"
+            class="btn-modal btn-modal--green"
+            data-i18n="palabras.config.start"
+          >
             Iniciar
           </button>
           <button
             id="btn-salir-config"
-            class="btn-salir"
+            class="btn-modal btn-modal--red"
             data-i18n="common.exit"
           >
             Salir
@@ -84,14 +94,14 @@
         <div class="botones-configuracion">
           <button
             id="btn-confirm-yes"
-            class="btn-instrucciones"
+            class="btn-modal btn-modal--blue"
             data-i18n="common.confirmYes"
           >
             Sí
           </button>
           <button
             id="btn-confirm-no"
-            class="btn-salir"
+            class="btn-modal btn-modal--red"
             data-i18n="common.confirmNo"
           >
             No
@@ -135,9 +145,15 @@
           <span id="total-aciertos"></span>
         </p>
         <p>
-          ❌ <span data-i18n="palabras.results.errors">Errores:</span>
-          <span id="total-errores"></span>
+          🔁 <span data-i18n="palabras.results.checks">Comprobaciones:</span>
+          <span id="total-comprobaciones"></span>
         </p>
+
+        <p id="final-ayudas">
+          💡 <span data-i18n="palabras.results.helps">Ayudas:</span>
+          <span id="total-ayudas"></span>
+        </p>
+
         <br />
         <ul id="lista-resultados"></ul>
         <br />
@@ -171,8 +187,13 @@
         <span id="info-aciertos">0</span>
       </p>
       <p>
-        ❌ <span data-i18n="palabras.results.errors">Errores:</span>
-        <span id="info-errores">0</span>
+        🔁 <span data-i18n="palabras.info.checks">Comprobaciones:</span>
+        <span id="info-comprobaciones">0</span>
+      </p>
+
+      <p id="fila-ayudas">
+        💡 <span data-i18n="palabras.info.helps">Ayudas:</span>
+        <span id="info-ayudas">0</span>
       </p>
     </div>
 

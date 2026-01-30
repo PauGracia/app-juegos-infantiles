@@ -50,12 +50,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Función para abrir modal de confirmación
   function abrirConfirmExit(callbackYes) {
+    // Ocultar el modal final primero si está visible
+    document.getElementById("modal-final").style.display = "none";
+
     modalConfirmExit.style.display = "flex";
+    modalConfirmExit.style.zIndex = "2000";
 
     function limpiar() {
       btnConfirmYes.removeEventListener("click", yesHandler);
       btnConfirmNo.removeEventListener("click", noHandler);
       modalConfirmExit.style.display = "none";
+      modalConfirmExit.style.zIndex = "";
     }
 
     const yesHandler = () => {
@@ -65,6 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const noHandler = () => {
       limpiar();
+      // Si estábamos en el modal final, restaurarlo
+      if (actual === seleccionados.length - 1) {
+        document.getElementById("modal-final").style.display = "flex";
+      }
     };
 
     btnConfirmYes.addEventListener("click", yesHandler);
@@ -139,11 +148,16 @@ document.addEventListener("DOMContentLoaded", () => {
   let objetoActual = null;
   let palabraObjetivo = "";
   let resultadoCorrecto = false;
-  let falloEstaPalabra = false;
   let aciertos = 0;
-  let errores = 0;
+  let comprobacionesTotales = 0;
+  let ayudasTotales = 0;
+  let comprobacionesEstaPalabra = 0;
+  let palabraUsadaConAyuda = false;
+
   let resumen = [];
   let intentosFallidosPalabra = 0;
+  let ayudaActivada = true;
+  let palabraFinalizada = false;
 
   // Normalizar texto
   function normalizar(texto) {
@@ -156,10 +170,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // -----------------------------
   // FUNCIONES PRINCIPALES
   // -----------------------------
+
   function iniciarJuego() {
+    const checkboxAyuda = document.getElementById("activar-ayuda");
+    ayudaActivada = checkboxAyuda ? checkboxAyuda.checked : true;
     resumen = [];
     aciertos = 0;
-    errores = 0;
+    comprobacionesTotales = 0;
+    ayudasTotales = 0;
     actual = 0;
 
     idiomaPalabrasSeleccionado = parseInt(selectPalabrasIdioma.value);
@@ -174,6 +192,9 @@ document.addEventListener("DOMContentLoaded", () => {
     seleccionados = [...elementosFiltrados]
       .sort(() => Math.random() - 0.5)
       .slice(0, cantidad);
+    document.getElementById("fila-ayudas").style.display = ayudaActivada
+      ? "flex"
+      : "none";
 
     document.getElementById("modal").style.display = "none";
     document.getElementById("juego").style.display = "flex";
@@ -181,7 +202,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("info-total").textContent = seleccionados.length;
     document.getElementById("info-actual").textContent = actual + 1;
     document.getElementById("info-aciertos").textContent = aciertos;
-    document.getElementById("info-errores").textContent = errores;
+    document.getElementById("info-comprobaciones").textContent =
+      comprobacionesTotales;
+
+    if (ayudaActivada) {
+      document.getElementById("info-ayudas").textContent = ayudasTotales;
+    }
 
     mostrarImagen();
   }
@@ -191,6 +217,10 @@ document.addEventListener("DOMContentLoaded", () => {
     resultadoCorrecto = false;
     falloEstaPalabra = false;
     intentosFallidosPalabra = 0;
+    palabraFinalizada = false;
+    comprobacionesEstaPalabra = 0;
+    palabraUsadaConAyuda = false;
+    palabraFinalizada = false;
 
     objetoActual = seleccionados[actual];
 
@@ -250,6 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
     applyTranslationsToElement(btnSiguiente);
 
     btnSiguiente.disabled = true;
+    document.getElementById("btnComprobar").disabled = false;
   }
 
   // Función auxiliar para aplicar traducción a un elemento específico
@@ -261,7 +292,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function siguiente() {
-    resumen.push({ palabra: palabraObjetivo, correcta: !falloEstaPalabra });
+    resumen.push({
+      palabra: palabraObjetivo,
+      conAyuda: palabraUsadaConAyuda,
+      comprobaciones: comprobacionesEstaPalabra,
+    });
+
+    document.getElementById("btnComprobar").disabled = false;
 
     if (actual < seleccionados.length - 1) {
       actual++;
@@ -273,6 +310,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function comprobar() {
+    if (palabraFinalizada) return;
+
+    comprobacionesTotales++;
+    comprobacionesEstaPalabra++;
+
+    document.getElementById("info-comprobaciones").textContent =
+      comprobacionesTotales;
+
     const inputs = document.querySelectorAll("#inputs input");
     if ([...inputs].some((input) => !input.value)) return;
 
@@ -284,44 +329,54 @@ document.addEventListener("DOMContentLoaded", () => {
     resultadoCorrecto = resultado === palabraObjetivo;
 
     if (resultadoCorrecto) {
-      if (!comprobado) aciertos++;
+      aciertos++;
+      palabraFinalizada = true;
 
       reproducirSonido("acierto");
 
       setTimeout(() => {
         contenedor.style.borderColor = "green";
-
-        for (let i = 0; i < palabraObjetivo.length; i++) {
-          inputs[i].style.backgroundColor = "#9f9";
-          inputs[i].disabled = true;
-        }
+        // Cuando la palabra es correcta, marcar TODAS las letras como correctas
+        inputs.forEach((input) => {
+          // Remover cualquier clase de error anterior
+          input.classList.remove("letra-error");
+          // Aplicar estilo de letra correcta
+          input.classList.add("letra-correcta");
+          input.style.backgroundColor = "#9f9";
+          input.disabled = true;
+        });
 
         document.getElementById("btnSiguiente").disabled = false;
+        document.getElementById("btnComprobar").disabled = true;
         document.getElementById("info-aciertos").textContent = aciertos;
       }, RETRASO_FEEDBACK);
-    } else {
-      intentosFallidosPalabra++;
-      errores++;
-      falloEstaPalabra = true;
 
+      return;
+    } else {
       reproducirSonido("fallo");
 
       for (let i = 0; i < palabraObjetivo.length; i++) {
-        if (normalizar(inputs[i].value) !== palabraObjetivo[i]) {
-          inputs[i].style.backgroundColor = "#f99";
-          inputs[i].classList.remove("letra-error");
-          void inputs[i].offsetWidth;
-          inputs[i].classList.add("letra-error");
-        } else {
-          inputs[i].style.backgroundColor = "#9f9";
-          inputs[i].disabled = true;
+        // Solo procesar letras que NO estén ya deshabilitadas (correctas anteriores)
+        if (!inputs[i].disabled) {
+          if (normalizar(inputs[i].value) !== palabraObjetivo[i]) {
+            // Letra incorrecta
+            inputs[i].classList.remove("letra-correcta");
+            inputs[i].classList.remove("letra-error");
+            void inputs[i].offsetWidth;
+            inputs[i].classList.add("letra-error");
+            inputs[i].style.backgroundColor = "#fed7d7";
+            inputs[i].disabled = false; // Permitir corrección
+          } else {
+            // Letra correcta en este intento
+            inputs[i].classList.remove("letra-error");
+            inputs[i].classList.add("letra-correcta");
+            inputs[i].style.backgroundColor = "#9f9";
+            inputs[i].disabled = true; // Deshabilitar porque ahora es correcta
+          }
         }
       }
 
-      document.getElementById("info-aciertos").textContent = aciertos;
-      document.getElementById("info-errores").textContent = errores;
-
-      if (intentosFallidosPalabra >= 3) {
+      if (ayudaActivada && comprobacionesEstaPalabra >= 3) {
         revelarPalabra(inputs);
       }
     }
@@ -332,38 +387,56 @@ document.addEventListener("DOMContentLoaded", () => {
   function revelarPalabra(inputs) {
     for (let i = 0; i < palabraObjetivo.length; i++) {
       inputs[i].value = palabraObjetivo[i];
-      inputs[i].style.backgroundColor = "#9dd7ff";
+
+      // Reset completo
+      inputs[i].className = ""; // Remover todas las clases
+      inputs[i].style.cssText = ""; // Remover todos los estilos inline
+
+      // Aplicar solo la clase de ayuda
+      inputs[i].classList.add("letra-ayuda");
       inputs[i].disabled = true;
     }
 
-    falloEstaPalabra = true;
-    comprobado = true;
+    palabraFinalizada = true;
+    palabraUsadaConAyuda = true;
+    ayudasTotales++;
+
     document.getElementById("btnSiguiente").disabled = false;
+    document.getElementById("btnComprobar").disabled = true;
+    document.getElementById("info-ayudas").textContent = ayudasTotales;
   }
 
   function mostrarResultadoFinal() {
     reproducirSonido("ganar");
+
+    modalConfirmExit.style.display = "none";
 
     setTimeout(() => {
       document.getElementById("juego").style.display = "none";
       document.getElementById("panel-info").style.display = "none";
 
       document.getElementById("total-aciertos").textContent = aciertos;
-      document.getElementById("total-errores").textContent = errores;
+      document.getElementById("total-comprobaciones").textContent =
+        comprobacionesTotales;
+
+      document.getElementById("final-ayudas").style.display = ayudasTotales
+        ? "block"
+        : "none";
+
+      document.getElementById("total-ayudas").textContent = ayudasTotales;
 
       const lista = document.getElementById("lista-resultados");
       lista.innerHTML = "";
 
       resumen.forEach((r) => {
         const li = document.createElement("li");
-        li.textContent = `${r.correcta ? "✅" : "❌"} ${r.palabra}`;
+        li.textContent = `${r.conAyuda ? "💡" : "✅"} ${r.palabra} (${r.comprobaciones})`;
         lista.appendChild(li);
       });
 
       document.getElementById("modal-final").style.display = "flex";
     }, RETRASO_FEEDBACK + 100);
   }
-
   const btnComprobar = document.getElementById("btnComprobar");
   const btnReiniciar = document.getElementById("btnReiniciar");
   const btnSalirFinal = document.getElementById("btnSalirFinal");
@@ -373,10 +446,12 @@ document.addEventListener("DOMContentLoaded", () => {
   btnComprobar.addEventListener("click", comprobar);
   btnSiguiente.addEventListener("click", siguiente);
   btnReiniciar.addEventListener("click", () => location.reload());
-  btnSalirFinal.addEventListener(
-    "click",
-    () => (location.href = "../../index.html"),
-  );
+  // Botón Salir Final con confirmación
+  btnSalirFinal.addEventListener("click", () => {
+    abrirConfirmExit(() => {
+      location.href = "../../index.html";
+    });
+  });
 
   const btnInstrucciones = document.getElementById("btn-instrucciones");
   const modalInstrucciones = document.getElementById("modal-instrucciones");

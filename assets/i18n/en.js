@@ -250,6 +250,34 @@ window.translationsEN = {
   "common.confirmNo": "No",
 
   "common.confirmExit": "Are you sure you want to exit?",
+  "palabras.config.help": "Enable help",
+  "palabras.config.helpDescription":
+    "Shows automatic help after several attempts",
+
+  "palabras.info.checks": "Checks:",
+  "palabras.info.helps": "Helps:",
+
+  "palabras.results.title": "Final result",
+  "palabras.results.correct": "Correct answers:",
+  "palabras.results.checks": "Checks:",
+  "palabras.results.helps": "Helps used:",
+
+  "palabras.results.words": "Correct words",
+  "palabras.results.wordsWithHelp": "With help",
+  "palabras.results.wordsWithoutHelp": "Without help",
+
+  "palabras.results.wordHelped": "with help",
+  "palabras.results.wordNotHelped": "without help",
+
+  "palabras.buttons.finish": "Finish",
+  "palabras.buttons.check": "Check",
+  "palabras.buttons.next": "Next",
+  "palabras.buttons.restart": "Restart",
+  "palabras.buttons.exit": "Exit",
+
+  "palabras.instructions.title": "How to play",
+  "palabras.instructions.text":
+    "Write the correct name of the image.\n\nYou can check the word as many times as you want.\n\nIf help is enabled, it will appear automatically after several attempts.\n\nAll words count as correct, but checks and help usage are recorded.",
 
   "damas.warning.title": "Warning",
   "damas.warning.mustShuffle": "You must shuffle colors before playing",

@@ -255,6 +255,35 @@ window.translationsES = {
   "common.confirmYes": "Sí",
   "common.confirmNo": "No",
 
+  "palabras.config.help": "Activar ayuda",
+  "palabras.config.helpDescription":
+    "Muestra ayudas automáticas tras varios intentos",
+
+  "palabras.info.checks": "Comprobaciones:",
+  "palabras.info.helps": "Ayudas:",
+
+  "palabras.results.title": "Resultado final",
+  "palabras.results.correct": "Aciertos:",
+  "palabras.results.checks": "Comprobaciones:",
+  "palabras.results.helps": "Ayudas usadas:",
+
+  "palabras.results.words": "Palabras acertadas",
+  "palabras.results.wordsWithHelp": "Con ayuda",
+  "palabras.results.wordsWithoutHelp": "Sin ayuda",
+
+  "palabras.results.wordHelped": "con ayuda",
+  "palabras.results.wordNotHelped": "sin ayuda",
+
+  "palabras.buttons.finish": "Finalizar",
+  "palabras.buttons.check": "Comprobar",
+  "palabras.buttons.next": "Siguiente",
+  "palabras.buttons.restart": "Reiniciar",
+  "palabras.buttons.exit": "Salir",
+
+  "palabras.instructions.title": "Cómo jugar",
+  "palabras.instructions.text":
+    "Escribe el nombre correcto de la imagen.\n\nPuedes comprobar la palabra tantas veces como quieras.\n\nSi tienes activada la ayuda, esta aparecerá automáticamente tras varios intentos.\n\nTodas las palabras cuentan como acierto, pero se registran las comprobaciones y si se usó ayuda.",
+
   "damas.warning.title": "Aviso",
   "damas.warning.mustShuffle": "Debes realizar el sorteo antes de jugar",
 };

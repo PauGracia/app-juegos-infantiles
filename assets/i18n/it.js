@@ -253,4 +253,32 @@ window.translationsIT = {
   "common.confirmExit": "Sei sicuro di voler uscire?",
   "common.confirmYes": "Sì",
   "common.confirmNo": "No",
+  "palabras.config.help": "Attiva aiuto",
+  "palabras.config.helpDescription":
+    "Mostra aiuti automatici dopo diversi tentativi",
+
+  "palabras.info.checks": "Verifiche:",
+  "palabras.info.helps": "Aiuti:",
+
+  "palabras.results.title": "Risultato finale",
+  "palabras.results.correct": "Risposte corrette:",
+  "palabras.results.checks": "Verifiche:",
+  "palabras.results.helps": "Aiuti utilizzati:",
+
+  "palabras.results.words": "Parole corrette",
+  "palabras.results.wordsWithHelp": "Con aiuto",
+  "palabras.results.wordsWithoutHelp": "Senza aiuto",
+
+  "palabras.results.wordHelped": "con aiuto",
+  "palabras.results.wordNotHelped": "senza aiuto",
+
+  "palabras.buttons.finish": "Termina",
+  "palabras.buttons.check": "Verifica",
+  "palabras.buttons.next": "Successivo",
+  "palabras.buttons.restart": "Riavvia",
+  "palabras.buttons.exit": "Esci",
+
+  "palabras.instructions.title": "Come giocare",
+  "palabras.instructions.text":
+    "Scrivi il nome corretto dell'immagine.\n\nPuoi verificare la parola tutte le volte che vuoi.\n\nSe l'aiuto è attivato, apparirà automaticamente dopo diversi tentativi.\n\nTutte le parole contano come corrette, ma le verifiche e l'uso dell'aiuto vengono registrati.",
 };
