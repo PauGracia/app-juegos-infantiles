@@ -216,13 +216,14 @@ window.translationsCA = {
   "ranking.sort.date": "Ordenar per data",
   "ranking.sort.user": "Ordenar per nom",
   "ranking.filterUser": "Filtrar per usuari",
-  "ranking.clear": "Esborrar rànquing",
+  "ranking.clear": "Esborrar",
   "ranking.noResults": "No hi ha resultats",
   "common.clear": "Netejar",
   "ranking.clearConfirm": "Segur que vols esborrar tot el rànquing?",
   "common.cancel": "Cancel·lar",
   "menu.settings.language": "Idiomes",
   "menu.settings.objective": "Objectiu",
+  "ranking.confirmDelete": "Segur que vols esborrar tot el ranking?",
 
   "menu.language.title": "Selecciona l’idioma",
 

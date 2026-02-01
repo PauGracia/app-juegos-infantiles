@@ -214,12 +214,13 @@ window.translationsES = {
   "ahorcado.instructions.interfaceLanguage":
     "Puedes jugar a este juego en diferentes idiomas para practicar.",
   "ahorcado.instructions.goodLuck": "¡Buena suerte!",
+  "ranking.confirmDelete": "¿Seguro que quieres borrar todo el ranking?",
 
   "ranking.sort.points": "Ordenar por puntos",
   "ranking.sort.date": "Ordenar por fecha",
   "ranking.sort.user": "Ordenar por nombre",
   "ranking.filterUser": "Filtrar por usuario",
-  "ranking.clear": "Borrar ranking",
+  "ranking.clear": "Borrar",
   "ranking.noResults": "No hay resultados",
   "common.clear": "Limpiar",
   "ranking.clearConfirm": "¿Seguro que quieres borrar todo el ranking?",

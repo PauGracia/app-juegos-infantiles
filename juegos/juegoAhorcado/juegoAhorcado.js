@@ -51,10 +51,65 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Llamar a la inicialización después de un breve delay
     setTimeout(inicializarSelectIdioma, 100);
+
     // Elementos del DOM
     const palabraEl = document.getElementById("palabra");
     const letrasEl = document.getElementById("letras");
     const marcadorEl = document.getElementById("marcador-ahorcado");
+
+    // Nuevos elementos del DOM para los botones movidos del HTML
+    const btnReiniciar = document.getElementById("btnReiniciar");
+    const btnSalirFinal = document.getElementById("btnSalirFinal");
+    const btnVerRankingFinal = document.getElementById("btnVerRankingFinal");
+    const btnExportarRanking = document.getElementById("btnExportarRanking");
+
+    // ================================
+    // FUNCIÓN PARA MOSTRAR MODAL DE CONFIRMACIÓN
+    // ================================
+    let confirmCallback = null;
+
+    function mostrarModalConfirmacion(mensaje, callback) {
+      confirmCallback = callback;
+      const modal = document.getElementById("modal-confirm-exit");
+      const titulo = modal.querySelector("h2");
+
+      // Usar traducción si está disponible
+      if (window.translations && window.translations["common.confirmExit"]) {
+        titulo.textContent = window.translations["common.confirmExit"];
+      } else {
+        titulo.textContent = mensaje || "¿Seguro que quieres salir?";
+      }
+
+      modal.style.display = "flex";
+
+      // Configurar botones del modal de confirmación
+      const btnYes = document.getElementById("btn-confirm-yes");
+      const btnNo = document.getElementById("btn-confirm-no");
+
+      // Remover listeners previos
+      btnYes.replaceWith(btnYes.cloneNode(true));
+      btnNo.replaceWith(btnNo.cloneNode(true));
+
+      // Agregar nuevos listeners
+      const newBtnYes = document.getElementById("btn-confirm-yes");
+      const newBtnNo = document.getElementById("btn-confirm-no");
+
+      newBtnYes.addEventListener("click", () => {
+        modal.style.display = "none";
+        if (confirmCallback) {
+          confirmCallback(true);
+          confirmCallback = null;
+        }
+      });
+
+      newBtnNo.addEventListener("click", () => {
+        modal.style.display = "none";
+        if (confirmCallback) {
+          confirmCallback(false);
+          confirmCallback = null;
+        }
+      });
+    }
 
     // ================================
     // FUNCIÓN PARA AJUSTAR LAYOUT EN MÓVILES
@@ -764,6 +819,60 @@ document.addEventListener("DOMContentLoaded", () => {
     // ================================
     // CONFIGURACIÓN DE EVENTOS
     // ================================
+
+    // Configurar eventos para los botones que se movieron del HTML
+    function configurarEventosBotones() {
+      // Botón Reiniciar en modal final
+      if (btnReiniciar) {
+        btnReiniciar.addEventListener("click", () => {
+          const modalFinal = document.getElementById("modal-final");
+          if (modalFinal) modalFinal.style.display = "none";
+          const modalInicio = document.getElementById("modal-inicio");
+          if (modalInicio) modalInicio.style.display = "flex";
+        });
+      }
+
+      // Botón Salir en modal final
+      if (btnSalirFinal) {
+        btnSalirFinal.addEventListener("click", () => {
+          mostrarModalConfirmacion(
+            "¿Seguro que quieres salir del juego?",
+            (confirmado) => {
+              if (confirmado) {
+                window.location.href = "../../index.html";
+              }
+            },
+          );
+        });
+      }
+
+      // Botón Ver Ranking en modal final
+      if (btnVerRankingFinal) {
+        btnVerRankingFinal.addEventListener("click", () => {
+          window.location.href = "../ranking/rankingLocal.html";
+        });
+      }
+
+      // Botón Exportar Ranking
+      if (btnExportarRanking) {
+        btnExportarRanking.addEventListener("click", () => {
+          const ranking =
+            JSON.parse(localStorage.getItem("rankingAhorcado")) || [];
+          const dataStr = JSON.stringify(ranking, null, 2);
+          const dataUri =
+            "data:application/json;charset=utf-8," +
+            encodeURIComponent(dataStr);
+
+          const exportFileDefaultName = `ranking_ahorcado_${new Date().toISOString().split("T")[0]}.json`;
+
+          const linkElement = document.createElement("a");
+          linkElement.setAttribute("href", dataUri);
+          linkElement.setAttribute("download", exportFileDefaultName);
+          linkElement.click();
+        });
+      }
+    }
+
     const btnEmpezar = document.getElementById("btnEmpezar");
     if (btnEmpezar) {
       if (isTouchDevice) {
@@ -833,14 +942,28 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
     const btnSalirModal = document.getElementById("btnSalir-modal");
     if (btnSalirModal) {
       btnSalirModal.addEventListener("click", () => {
-        window.location.href = "../../index.html";
+        mostrarModalConfirmacion(
+          "¿Seguro que quieres salir del juego?",
+          (confirmado) => {
+            if (confirmado) {
+              window.location.href = "../../index.html";
+            }
+          },
+        );
       });
     }
 
     const btnSalir = document.getElementById("btnSalir");
     if (btnSalir) {
       btnSalir.addEventListener("click", () => {
-        ah_resetearJuegoCompleto();
+        mostrarModalConfirmacion(
+          "¿Seguro que quieres reiniciar el juego?",
+          (confirmado) => {
+            if (confirmado) {
+              ah_resetearJuegoCompleto();
+            }
+          },
+        );
       });
     }
 
@@ -898,8 +1021,10 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       // Ocultar modales
       const modalFinal = document.getElementById("modal-final");
       const modalInfo = document.getElementById("modal-info");
+      const modalConfirm = document.getElementById("modal-confirm-exit");
       if (modalFinal) modalFinal.style.display = "none";
       if (modalInfo) modalInfo.style.display = "none";
+      if (modalConfirm) modalConfirm.style.display = "none";
 
       // Mostrar modal inicio
       const modalInicio = document.getElementById("modal-inicio");
@@ -913,30 +1038,12 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       inicializarSelectIdioma();
     }
 
-    window.ah_reiniciarCompleto = function () {
-      const modalFinal = document.getElementById("modal-final");
-      if (modalFinal) modalFinal.style.display = "none";
-      const modalInicio = document.getElementById("modal-inicio");
-      if (modalInicio) modalInicio.style.display = "flex";
-    };
+    // ================================
+    // INICIALIZAR TODO
+    // ================================
 
-    window.reiniciarCompleto = function () {
-      window.ah_reiniciarCompleto();
-    };
-
-    window.exportarRanking = function () {
-      const ranking = JSON.parse(localStorage.getItem("rankingAhorcado")) || [];
-      const dataStr = JSON.stringify(ranking, null, 2);
-      const dataUri =
-        "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
-
-      const exportFileDefaultName = `ranking_ahorcado_${new Date().toISOString().split("T")[0]}.json`;
-
-      const linkElement = document.createElement("a");
-      linkElement.setAttribute("href", dataUri);
-      linkElement.setAttribute("download", exportFileDefaultName);
-      linkElement.click();
-    };
+    // Configurar eventos de los botones que se movieron del HTML
+    configurarEventosBotones();
 
     // ================================
     // FIX PARA MÓVILES

@@ -221,7 +221,7 @@ window.translationsFR = {
   "ranking.sort.date": "Trier par date",
   "ranking.sort.user": "Trier par nom",
   "ranking.filterUser": "Filtrer par utilisateur",
-  "ranking.clear": "Effacer le classement",
+  "ranking.clear": "Effacer",
   "ranking.noResults": "Aucun résultat",
   "common.clear": "Effacer",
   "ranking.clearConfirm":
@@ -229,6 +229,9 @@ window.translationsFR = {
   "common.cancel": "Annuler",
   "menu.settings.language": "Langues",
   "menu.settings.objective": "Objectif",
+  "ranking.confirmDelete":
+    "Êtes-vous sûr de vouloir supprimer tout le classement ?",
+  "ranking.confirmDelete": "Sei sicuro di voler eliminare tutta la classifica?",
 
   "menu.language.title": "Sélectionner la langue",
 

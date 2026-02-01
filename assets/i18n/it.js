@@ -207,7 +207,7 @@ window.translationsIT = {
   "ranking.sort.date": "Ordina per data",
   "ranking.sort.user": "Ordina per nome",
   "ranking.filterUser": "Filtra per utente",
-  "ranking.clear": "Cancella classifica",
+  "ranking.clear": "Cancella",
   "ranking.noResults": "Nessun risultato",
   "common.clear": "Pulisci",
   "ranking.clearConfirm": "Sei sicuro di voler cancellare tutta la classifica?",

@@ -112,6 +112,29 @@
       <button id="btnSalir" data-i18n="common.exit">Salir</button>
     </div>
 
+    <!-- Modal de confirmación de salida -->
+    <div class="modal-palabras" id="modal-confirm-exit" style="display: none">
+      <div class="modal-contentPalabras">
+        <h2 data-i18n="common.confirmExit">¿Seguro que quieres salir?</h2>
+        <div class="botones-configuracion">
+          <button
+            id="btn-confirm-yes"
+            class="btn-modal btn-modal--blue"
+            data-i18n="common.confirmYes"
+          >
+            Sí
+          </button>
+          <button
+            id="btn-confirm-no"
+            class="btn-modal btn-modal--red"
+            data-i18n="common.confirmNo"
+          >
+            No
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Modal informativo reutilizable -->
     <div id="modal-info" class="modal-ranking" style="display: none">
       <div class="modal-ranking-contenido">
@@ -127,30 +150,19 @@
       <div id="modal-final-contenido">
         <h2 data-i18n="ahorcado.gameOver">Fin del juego</h2>
         <p id="resultado"></p>
-        <button onclick="reiniciarCompleto()" data-i18n="ahorcado.playAgain">
+        <button id="btnReiniciar" data-i18n="ahorcado.playAgain">
           Volver a jugar
         </button>
-        <button
-          onclick="window.location.href = '../../index.html'"
-          data-i18n="common.exitMenu"
-        >
-          Salir
-        </button>
+        <button id="btnSalirFinal" data-i18n="common.exitMenu">Salir</button>
 
         <div class="modal-final-acciones">
           <button id="btnGuardarRecord">Guardar récord local</button>
 
-          <button
-            onclick="window.location.href = '../ranking/rankingLocal.html'"
-            data-i18n="ahorcado.viewRanking"
-          >
+          <button id="btnVerRankingFinal" data-i18n="ahorcado.viewRanking">
             Ver ranking
           </button>
 
-          <button
-            onclick="exportarRanking()"
-            data-i18n="ahorcado.exportRanking"
-          >
+          <button id="btnExportarRanking" data-i18n="ahorcado.exportRanking">
             Exportar ranking
           </button>
         </div>
