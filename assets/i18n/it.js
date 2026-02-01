@@ -214,7 +214,18 @@ window.translationsIT = {
   "common.cancel": "Annulla",
   "menu.settings.language": "Lingue",
   "menu.settings.objective": "Obiettivo",
+  "ahorcado.instructions.minWords":
+    "Devi indovinare almeno 3 parole per poter salvare il tuo record.",
+  "ahorcado.minWordsRequired": "Minimo 3 parole per salvare",
+  "ahorcado.need3Words":
+    "Devi indovinare almeno 3 parole per salvare il tuo record",
+  "ahorcado.recordSaved": "Record salvato correttamente",
+  "ahorcado.extraHelpMessage": "💡 Hai guadagnato un aiuto extra!",
 
+  "ranking.sort.points": "Ordina per punti",
+  "ranking.sort.date": "Ordina per data",
+  "ranking.sort.user": "Ordina per nome",
+  "ranking.filterUser": "Filtra per utente",
   "menu.language.title": "Seleziona lingua",
   "menu.objective.title": "Obiettivo del progetto",
   "menu.objective.text":

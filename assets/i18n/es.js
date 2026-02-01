@@ -227,6 +227,18 @@ window.translationsES = {
   "common.cancel": "Cancelar",
   "menu.settings.language": "Idiomas",
   "menu.settings.objective": "Objetivo",
+  "ahorcado.instructions.minWords":
+    "Debes acertar al menos 3 palabras para poder guardar tu récord.",
+  "ahorcado.minWordsRequired": "Mínimo 3 palabras para guardar",
+  "ahorcado.need3Words":
+    "Necesitas acertar al menos 3 palabras para guardar tu récord",
+  "ahorcado.recordSaved": "Récord guardado correctamente",
+  "ahorcado.extraHelpMessage": "💡 ¡Has ganado una ayuda extra!",
+
+  "ranking.sort.points": "Ordenar por puntos",
+  "ranking.sort.date": "Ordenar por fecha",
+  "ranking.sort.user": "Ordenar por nombre",
+  "ranking.filterUser": "Filtrar por usuario",
 
   "menu.language.title": "Selecciona idioma",
 

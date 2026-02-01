@@ -238,7 +238,18 @@ window.translationsFR = {
   "menu.objective.title": "Objectif du projet",
   "menu.objective.text":
     "Ce projet est une collection de jeux éducatifs conçus pour les enfants et les jeunes à partir de 7 ans. Son objectif est de favoriser l’apprentissage de manière ludique, en travaillant des domaines tels que les mathématiques, le langage, la mémoire et la logique. Chaque jeu propose des instructions simples et claires afin que tout utilisateur puisse commencer à jouer facilement.",
+  "ahorcado.instructions.minWords":
+    "Vous devez deviner au moins 3 mots pour sauvegarder votre record.",
+  "ahorcado.minWordsRequired": "Minimum 3 mots pour sauvegarder",
+  "ahorcado.need3Words":
+    "Vous devez deviner au moins 3 mots pour sauvegarder votre record",
+  "ahorcado.recordSaved": "Record sauvegardé avec succès",
+  "ahorcado.extraHelpMessage": "💡 Vous avez gagné une aide supplémentaire!",
 
+  "ranking.sort.points": "Trier par points",
+  "ranking.sort.date": "Trier par date",
+  "ranking.sort.user": "Trier par nom",
+  "ranking.filterUser": "Filtrer par utilisateur",
   "footer.contact": "Contact",
   "footer.privacy": "Politique de Confidentialité",
   "footer.copyright": "© 2025 Jeux Éducatifs pour Enfants",

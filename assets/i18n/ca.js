@@ -226,6 +226,18 @@ window.translationsCA = {
   "ranking.confirmDelete": "Segur que vols esborrar tot el ranking?",
 
   "menu.language.title": "Selecciona l’idioma",
+  "ahorcado.instructions.minWords":
+    "Has d'encertar com a mínim 3 paraules per poder guardar el teu rècord.",
+  "ahorcado.minWordsRequired": "Mínim 3 paraules per guardar",
+  "ahorcado.need3Words":
+    "Necessites encertar com a mínim 3 paraules per guardar el teu rècord",
+  "ahorcado.recordSaved": "Rècord guardat correctament",
+  "ahorcado.extraHelpMessage": "💡 Has guanyat una ajuda extra!",
+
+  "ranking.sort.points": "Ordenar per punts",
+  "ranking.sort.date": "Ordenar per data",
+  "ranking.sort.user": "Ordenar per nom",
+  "ranking.filterUser": "Filtrar per usuari",
 
   "menu.objective.title": "Objectiu del projecte",
   "menu.objective.text":

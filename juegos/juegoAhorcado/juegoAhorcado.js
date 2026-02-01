@@ -2,6 +2,12 @@
    JUEGO AHORCADO 
    ========================= */
 document.addEventListener("DOMContentLoaded", () => {
+  // ================================
+  // FUNCIÓN DE TRADUCCIÓN GLOBAL
+  // ================================
+  window.getTranslation = function (key, fallback = "") {
+    return window.translations?.[key] || fallback || key;
+  };
   (function () {
     // ================================
     // INICIALIZAR IDIOMA DEL SELECT (VERSIÓN SIMPLIFICADA)
@@ -188,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
       constructor() {
         this.activeButton = null;
         this.lastTouchTime = 0;
-        this.touchMoveThreshold = 10;
+        this.touchMoveThreshold = 0;
         this.startX = 0;
         this.startY = 0;
       }
@@ -330,7 +336,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let ah_idiomaJuego = "es";
     let ah_bloqueado = false;
     const AH_MAX_LETRAS = 15;
-    let ah_palabrasUsadas = new Set(); // solo dura la partida
+    let ah_palabrasUsadas = new Set();
+    let ah_partidaPalabrasAcertadas = 0;
 
     const ah_partesSVG = [
       "poste",
@@ -349,6 +356,53 @@ document.addEventListener("DOMContentLoaded", () => {
     // ================================
     // FUNCIONES PRINCIPALES
     // ================================
+
+    function formatearInstruccionesParaModal(mensaje) {
+      const lineas = mensaje.split("\n");
+      let htmlFormateado = "";
+      let enLista = false;
+
+      lineas.forEach((linea, index) => {
+        const lineaTrim = linea.trim();
+
+        if (lineaTrim === "") {
+          // Línea vacía
+          if (enLista) {
+            htmlFormateado += "</div>";
+            enLista = false;
+          }
+          htmlFormateado += '<div style="height: 15px;"></div>';
+        } else if (lineaTrim.startsWith("•")) {
+          // Elemento de lista
+          if (!enLista) {
+            htmlFormateado += '<div style="margin: 10px 0 15px 15px;">';
+            enLista = true;
+          }
+          htmlFormateado += `<div style="margin-bottom: 10px; line-height: 1.5;">${lineaTrim}</div>`;
+        } else if (lineaTrim.endsWith(":")) {
+          // Título/sección
+          if (enLista) {
+            htmlFormateado += "</div>";
+            enLista = false;
+          }
+          htmlFormateado += `<div style="font-weight: 800; color: #2d3748; font-size: 1.1em; margin: 20px 0 12px 0; padding-bottom: 5px; border-bottom: 2px solid #e2e8f0;">${lineaTrim}</div>`;
+        } else {
+          // Texto normal
+          if (enLista) {
+            htmlFormateado += "</div>";
+            enLista = false;
+          }
+          htmlFormateado += `<div style="margin-bottom: 12px; line-height: 1.6;">${lineaTrim}</div>`;
+        }
+      });
+
+      if (enLista) {
+        htmlFormateado += "</div>";
+      }
+
+      return htmlFormateado;
+    }
+
     function reproducirSonido(audio) {
       if (!audio) return;
       try {
@@ -424,6 +478,7 @@ document.addEventListener("DOMContentLoaded", () => {
           deshabilitarTeclado();
 
           ah_puntos++;
+          ah_partidaPalabrasAcertadas++;
           animarMarcador();
           ah_actualizarMarcador();
 
@@ -511,6 +566,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       ah_ayudas = 2;
       ah_palabrasAcertadas = 0;
+      ah_partidaPalabrasAcertadas = 0;
       desbloquearAudioMovil();
       ah_palabrasUsadas.clear();
 
@@ -563,11 +619,22 @@ document.addEventListener("DOMContentLoaded", () => {
       ah_bloqueado = false;
       const btnGuardarRecord = document.getElementById("btnGuardarRecord");
       if (btnGuardarRecord) {
-        btnGuardarRecord.disabled = false;
-        btnGuardarRecord.textContent = getTranslation(
-          "ahorcado.saveRecord",
-          "Guardar récord local",
-        );
+        // Solo habilitar si ya tiene 3 o más palabras acertadas
+        if (ah_partidaPalabrasAcertadas >= 3) {
+          btnGuardarRecord.disabled = false;
+          btnGuardarRecord.textContent = getTranslation(
+            "ahorcado.saveRecord",
+            "Guardar récord local",
+          );
+          btnGuardarRecord.style.opacity = "1";
+        } else {
+          btnGuardarRecord.disabled = true;
+          btnGuardarRecord.textContent = getTranslation(
+            "ahorcado.saveRecord",
+            "Guardar récord local",
+          );
+          btnGuardarRecord.style.opacity = "0.7";
+        }
       }
 
       const lista = palabras[ah_idiomaJuego] || palabras.es;
@@ -809,11 +876,38 @@ document.addEventListener("DOMContentLoaded", () => {
         resultado.textContent = mensajeFinal;
       }
 
-      reproducirSonido(sonidos.fin);
-    }
+      // Controlar el botón de guardar récord
+      const btnGuardarRecord = document.getElementById("btnGuardarRecord");
+      if (btnGuardarRecord) {
+        if (ah_partidaPalabrasAcertadas >= 3) {
+          btnGuardarRecord.disabled = false;
+          btnGuardarRecord.textContent = getTranslation(
+            "ahorcado.saveRecord",
+            "Guardar récord local",
+          );
+          btnGuardarRecord.style.opacity = "1";
+        } else {
+          btnGuardarRecord.disabled = true;
+          btnGuardarRecord.textContent = getTranslation(
+            "ahorcado.minWordsRequired",
+            "Mínimo 3 palabras para guardar",
+          );
+          btnGuardarRecord.style.opacity = "0.7";
 
-    function getTranslation(key, fallback = "") {
-      return window.translations?.[key] || fallback || key;
+          // Mostrar mensaje informativo
+          setTimeout(() => {
+            mostrarMensajeTemporal(
+              getTranslation(
+                "ahorcado.need3Words",
+                "Necesitas acertar al menos 3 palabras para guardar tu récord",
+              ),
+              3000,
+            );
+          }, 500);
+        }
+      }
+
+      reproducirSonido(sonidos.fin);
     }
 
     // ================================
@@ -912,6 +1006,7 @@ ${getTranslation("ahorcado.instructions.scoring", "PUNTUACIÓN:")}
 • ${getTranslation("ahorcado.instructions.pointsPerWord", "Cada palabra acertada suma 1 punto al marcador.")}
 • ${getTranslation("ahorcado.instructions.scoreKeeps", "La puntuación se acumula durante toda la partida.")}
 • ${getTranslation("ahorcado.instructions.saveRecord", "Al finalizar puedes guardar tu récord en el ranking local.")}
+• ${getTranslation("ahorcado.instructions.minWords", "Debes acertar al menos 3 palabras para poder guardar tu récord.")}
 
 ${getTranslation("ahorcado.instructions.ranking", "RANKING:")}
 • ${getTranslation("ahorcado.instructions.saveButton", "Puedes guardar tu puntuación desde el menú final.")}
@@ -923,11 +1018,16 @@ ${getTranslation("ahorcado.instructions.language", "IDIOMA:")}
 
 
 ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
+
         `;
+
+        // Usar la función de formateo
+        const instruccionesFormateadas =
+          formatearInstruccionesParaModal(instrucciones);
 
         window.mostrarModalInfo(
           getTranslation("common.instructions", "Instrucciones"),
-          instrucciones,
+          instruccionesFormateadas,
         );
       });
     }
@@ -1011,6 +1111,7 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       ah_errores = 0;
       ah_puntos = 0;
       ah_usuario = "";
+      ah_partidaPalabrasAcertadas = 0;
 
       // Limpiar UI
       if (palabraEl) palabraEl.innerHTML = "";
@@ -1083,6 +1184,7 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
   })();
 
   // Funciones modal globales
+  // Funciones modal globales
   window.mostrarModalInfo = function (titulo, mensaje = "") {
     const modalTitulo = document.getElementById("modal-info-titulo");
     const modalTexto = document.getElementById("modal-info-texto");
@@ -1093,8 +1195,62 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       // Reemplazar saltos de línea por <br> para HTML
       const mensajeConSaltos = mensaje.replace(/\n/g, "<br>");
       modalTexto.innerHTML = mensajeConSaltos;
+
+      // Añadir estilos específicos para las instrucciones
+      if (
+        titulo === getTranslation("common.instructions", "Instrucciones") ||
+        titulo === "Instrucciones"
+      ) {
+        modalTexto.style.cssText = `
+        color: #4a5568;
+        font-size: 1.05em;
+        line-height: 1.7;
+        text-align: left;
+        padding: 10px 5px;
+      `;
+
+        // Estilos para secciones dentro de las instrucciones
+        const lineas = mensajeConSaltos.split("<br>");
+        let contenidoFormateado = "";
+
+        lineas.forEach((linea) => {
+          if (linea.trim().startsWith("•")) {
+            contenidoFormateado += `<div style="margin-bottom: 8px; padding-left: 10px;">${linea}</div>`;
+          } else if (linea.includes(":")) {
+            contenidoFormateado += `<div style="font-weight: 700; color: #2d3748; margin: 15px 0 8px 0;">${linea}</div>`;
+          } else if (linea.trim() === "") {
+            contenidoFormateado += '<div style="height: 10px;"></div>';
+          } else {
+            contenidoFormateado += `<div style="margin-bottom: 8px;">${linea}</div>`;
+          }
+        });
+
+        modalTexto.innerHTML = contenidoFormateado;
+      }
     }
     if (modal) modal.style.display = "flex";
+
+    // Si el contenido es muy largo, asegurar que el botón sea visible
+    setTimeout(() => {
+      const modalContenido = document.querySelector(".modal-ranking-contenido");
+      if (modalContenido) {
+        // Forzar scroll al inicio
+        const scrollContainer = modalContenido.querySelector(
+          ".modal-scroll-container",
+        );
+        if (scrollContainer) {
+          scrollContainer.scrollTop = 0;
+        }
+
+        // Asegurar que el modal no se salga de la pantalla
+        const viewportHeight = window.innerHeight;
+        const modalHeight = modalContenido.offsetHeight;
+
+        if (modalHeight > viewportHeight * 0.9) {
+          modalContenido.style.maxHeight = `${viewportHeight * 0.85}px`;
+        }
+      }
+    }, 50);
   };
 
   window.cerrarModalInfo = function () {

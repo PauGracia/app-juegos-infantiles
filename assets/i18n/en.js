@@ -224,6 +224,18 @@ window.translationsEN = {
   "common.cancel": "Cancel",
   "ranking.confirmDelete":
     "Are you sure you want to delete the entire ranking?",
+  "ahorcado.instructions.minWords":
+    "You need to guess at least 3 words to save your record.",
+  "ahorcado.minWordsRequired": "Minimum 3 words to save",
+  "ahorcado.need3Words":
+    "You need to guess at least 3 words to save your record",
+  "ahorcado.recordSaved": "Record saved successfully",
+  "ahorcado.extraHelpMessage": "💡 You've earned an extra help!",
+
+  "ranking.sort.points": "Sort by points",
+  "ranking.sort.date": "Sort by date",
+  "ranking.sort.user": "Sort by name",
+  "ranking.filterUser": "Filter by user",
   "menu.settings.language": "Languages",
   "menu.settings.objective": "Objective",
   "menu.language.title": "Select language",

@@ -50,8 +50,14 @@ function initRanking() {
   const lista = document.getElementById("listaRanking");
 
   if (rankingInicializado) return;
+
+  if (!lista) {
+    // Si no existe la lista, esperar un momento y reintentar
+    setTimeout(initRanking, 100);
+    return;
+  }
+
   rankingInicializado = true;
-  if (!lista) return;
 
   const ordenSelect = document.getElementById("ordenRanking");
   const filtroInput = document.getElementById("filtroUsuario");
@@ -93,7 +99,9 @@ function initRanking() {
 
     if (datos.length === 0) {
       const li = document.createElement("li");
-      li.innerHTML = `<div class="no-results">${translations["ranking.noResults"] || "No hay resultados"}</div>`;
+      li.innerHTML = `<div class="no-results">${
+        window.translations?.["ranking.noResults"] || "No hay resultados"
+      }</div>`;
       lista.appendChild(li);
       return;
     }
@@ -133,79 +141,99 @@ function initRanking() {
   filtroInput.addEventListener("input", renderRanking);
 
   // Botón Limpiar filtro
-  document.getElementById("btnLimpiarFiltro").addEventListener("click", () => {
-    filtroInput.value = "";
-    renderRanking();
-  });
+  const btnLimpiar = document.getElementById("btnLimpiarFiltro");
+  if (btnLimpiar) {
+    btnLimpiar.addEventListener("click", () => {
+      filtroInput.value = "";
+      renderRanking();
+    });
+  }
 
   // Botón Volver al juego
-  document.getElementById("btnVolverJuego").addEventListener("click", () => {
-    location.href = "../juegoAhorcado/index.html";
-  });
+  const btnVolver = document.getElementById("btnVolverJuego");
+  if (btnVolver) {
+    btnVolver.addEventListener("click", () => {
+      location.href = "../juegoAhorcado/index.html";
+    });
+  }
 
   // Modal para borrar ranking
   const modal = document.getElementById("modalConfirm");
   const modalOk = document.getElementById("modalOk");
   const modalCancel = document.getElementById("modalCancel");
+  const btnBorrar = document.getElementById("btnBorrarRanking");
 
-  document.getElementById("btnBorrarRanking").addEventListener("click", () => {
-    modal.style.display = "flex";
+  if (btnBorrar && modal && modalOk && modalCancel) {
+    btnBorrar.addEventListener("click", () => {
+      modal.style.display = "flex";
 
-    const aceptar = () => {
-      localStorage.removeItem("rankingAhorcado");
+      const aceptar = () => {
+        localStorage.removeItem("rankingAhorcado");
+        cargarRanking();
+        cerrarModal();
+      };
+
+      const cerrarModal = () => {
+        modal.style.display = "none";
+        modalOk.removeEventListener("click", aceptar);
+        modalCancel.removeEventListener("click", cerrarModal);
+      };
+
+      modalOk.addEventListener("click", aceptar);
+      modalCancel.addEventListener("click", cerrarModal);
+    });
+  }
+
+  // Cargar ranking y actualizar traducciones
+  function inicializarTraducciones() {
+    if (window.translations && Object.keys(window.translations).length > 0) {
+      actualizarPlaceholders();
+      actualizarEtiquetasSelect();
       cargarRanking();
-      cerrarModal();
-    };
+      return true;
+    }
+    return false;
+  }
 
-    const cerrarModal = () => {
-      modal.style.display = "none";
-      modalOk.removeEventListener("click", aceptar);
-      modalCancel.removeEventListener("click", cerrarModal);
-    };
-
-    modalOk.addEventListener("click", aceptar);
-    modalCancel.addEventListener("click", cerrarModal);
-  });
-
-  cargarRanking();
-
-  // Actualizar placeholders y etiquetas cuando haya traducciones
-  if (window.translations) {
-    actualizarPlaceholders();
-    actualizarEtiquetasSelect();
-  } else {
-    setTimeout(() => {
-      if (window.translations) {
-        actualizarPlaceholders();
-        actualizarEtiquetasSelect();
+  // Intentar inicializar traducciones
+  if (!inicializarTraducciones()) {
+    // Si no hay traducciones aún, esperar
+    const esperaTraducciones = setInterval(() => {
+      if (inicializarTraducciones()) {
+        clearInterval(esperaTraducciones);
       }
-    }, 300);
+    }, 100);
+
+    // Timeout después de 3 segundos
+    setTimeout(() => {
+      clearInterval(esperaTraducciones);
+      // Inicializar sin traducciones como fallback
+      cargarRanking();
+    }, 3000);
   }
 }
 
 // Inicializar cuando cambie el idioma
 document.addEventListener("languageChanged", () => {
-  initRanking();
   actualizarPlaceholders();
   actualizarEtiquetasSelect();
+  if (rankingInicializado) {
+    // Re-renderizar el ranking con las nuevas traducciones
+    const lista = document.getElementById("listaRanking");
+    if (lista) {
+      const event = new Event("change");
+      document.getElementById("ordenRanking").dispatchEvent(event);
+    }
+  }
 });
 
 // Inicializar cuando se cargue la página
-document.addEventListener("DOMContentLoaded", () => {
-  initRanking();
+document.addEventListener("DOMContentLoaded", initRanking);
 
-  // Actualizar placeholders después de un tiempo
-  setTimeout(() => {
-    if (window.translations) {
-      actualizarPlaceholders();
-      actualizarEtiquetasSelect();
-    } else {
-      setTimeout(() => {
-        if (window.translations) {
-          actualizarPlaceholders();
-          actualizarEtiquetasSelect();
-        }
-      }, 500);
-    }
-  }, 200);
-});
+// También inicializar si el DOM ya está listo (para Cordova)
+if (
+  document.readyState === "interactive" ||
+  document.readyState === "complete"
+) {
+  setTimeout(initRanking, 100);
+}

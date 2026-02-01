@@ -104,7 +104,18 @@ window.translationsPT = {
     "Selecione pelo menos uma operação no nível 2.",
   "operaciones.timeUp": "⏰ Tempo esgotado! Tente novamente!",
   "operaciones.levelCompleted": "Nível",
+  "ahorcado.instructions.minWords":
+    "Precisa acertar pelo menos 3 palavras para salvar seu recorde.",
+  "ahorcado.minWordsRequired": "Mínimo 3 palavras para salvar",
+  "ahorcado.need3Words":
+    "Precisa acertar pelo menos 3 palavras para salvar seu recorde",
+  "ahorcado.recordSaved": "Recorde salvo com sucesso",
+  "ahorcado.extraHelpMessage": "💡 Você ganhou uma ajuda extra!",
 
+  "ranking.sort.points": "Ordenar por pontos",
+  "ranking.sort.date": "Ordenar por data",
+  "ranking.sort.user": "Ordenar por nome",
+  "ranking.filterUser": "Filtrar por usuário",
   "common.start": "Iniciar",
   "common.check": "Verificar",
   "common.restart": "Reiniciar",

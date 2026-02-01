@@ -133,6 +133,7 @@ input {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-bottom: 30px;
 }
 
 .ranking-lista li {
@@ -154,7 +155,7 @@ input {
   align-items: center;
   gap: 20px;
   flex: 1;
-  min-width: 0; /* Permite que se ajuste */
+  min-width: 0;
 }
 
 .ranking-pos {
@@ -170,7 +171,7 @@ input {
   flex-direction: column;
   justify-content: center;
   flex: 1;
-  min-width: 0; /* Para el text-overflow */
+  min-width: 0;
 }
 
 .ranking-usuario {
@@ -227,7 +228,7 @@ input {
   border-radius: 4px;
 }
 
-/* Para el select recortado en móviles - FIXED */
+/* Para el select recortado en móviles*/
 .ranking-controles select {
   padding: 12px 16px;
   font-size: 1em;
@@ -249,7 +250,7 @@ input {
   min-height: 46px; /* Altura mínima para asegurar que se vea */
 }
 
-/* -------- FOOTER FIXED - SIMPLE Y FUNCIONAL -------- */
+/* -------- FOOTER FIXED -------- */
 .ranking-footer {
   width: 100%;
   display: flex;
@@ -261,38 +262,25 @@ input {
   margin-top: 20px;
 }
 
-/* Botones del footer - TAMAÑO LÓGICO Y RESPONSIVE */
+/* Botones del footer */
 .ranking-footer button {
-  /* Tamaño base lógico */
   min-width: 160px;
   max-width: 200px;
   width: auto;
-
-  /* Espaciado interno adecuado */
   padding: 10px 20px;
-
-  /* Tipografía clara */
   font-size: 1em;
   font-weight: 600;
-
-  /* Estilos visuales */
   border-radius: 12px;
   border: none;
   cursor: pointer;
   color: white;
   background: linear-gradient(45deg, #667eea, #764ba2);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-
-  /* Transiciones */
   transition: all 0.2s ease;
-
-  /* Texto bien controlado */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center;
-
-  /* Para evitar selección de texto */
   user-select: none;
   -webkit-user-select: none;
 }
