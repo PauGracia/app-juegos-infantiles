@@ -218,6 +218,7 @@ window.translationsEN = {
   "ranking.sort.user": "Sort by name",
   "ranking.filterUser": "Filter by user",
   "ranking.clear": "Clear",
+  "common.playAgain_en": "Play again",
   "ranking.noResults": "No results found",
   "common.clear": "Clear",
   "ranking.clearConfirm": "Are you sure you want to delete the entire ranking?",

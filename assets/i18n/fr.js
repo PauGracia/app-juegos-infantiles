@@ -224,6 +224,7 @@ window.translationsFR = {
   "ranking.clear": "Effacer",
   "ranking.noResults": "Aucun résultat",
   "common.clear": "Effacer",
+  "common.playAgain_fr": "Rejouer",
   "ranking.clearConfirm":
     "Êtes-vous sûr de vouloir supprimer tout le classement ?",
   "common.cancel": "Annuler",

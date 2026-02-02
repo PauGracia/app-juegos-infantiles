@@ -202,7 +202,7 @@ window.translationsIT = {
   "ahorcado.instructions.interfaceLanguage":
     "Puoi giocare a questo gioco in diverse lingue per esercitarti.",
   "ahorcado.instructions.goodLuck": "Buona fortuna!",
-
+  "common.playAgain_it": "Gioca di nuovo",
   "ranking.sort.points": "Ordina per punti",
   "ranking.sort.date": "Ordina per data",
   "ranking.sort.user": "Ordina per nome",

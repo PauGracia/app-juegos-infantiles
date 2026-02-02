@@ -219,6 +219,7 @@ window.translationsCA = {
   "ranking.clear": "Esborrar",
   "ranking.noResults": "No hi ha resultats",
   "common.clear": "Netejar",
+  "common.playAgain_ca": "Reiniciar",
   "ranking.clearConfirm": "Segur que vols esborrar tot el rànquing?",
   "common.cancel": "Cancel·lar",
   "menu.settings.language": "Idiomes",

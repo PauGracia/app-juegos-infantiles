@@ -215,7 +215,7 @@ window.translationsES = {
     "Puedes jugar a este juego en diferentes idiomas para practicar.",
   "ahorcado.instructions.goodLuck": "¡Buena suerte!",
   "ranking.confirmDelete": "¿Seguro que quieres borrar todo el ranking?",
-
+  "common.playAgain": "Reniciar",
   "ranking.sort.points": "Ordenar por puntos",
   "ranking.sort.date": "Ordenar por fecha",
   "ranking.sort.user": "Ordenar por nombre",

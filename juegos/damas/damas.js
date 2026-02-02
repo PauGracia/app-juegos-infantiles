@@ -137,6 +137,9 @@ const JuegoDamas = (() => {
     estadoGlobalDamas.turnoActualDamas =
       estadoGlobalDamas.colorHumano === "blancas" ? "humano" : "ia";
 
+    estadoGlobalDamas.ladoHumanoAsignado =
+      estadoGlobalDamas.colorHumano === "blancas" ? "bottom" : "top";
+
     estadoGlobalDamas.sorteoRealizado = true;
 
     const res = document.getElementById("resultado-sorteo");
@@ -665,6 +668,10 @@ const JuegoDamas = (() => {
     setTimeout(() => efecto.remove(), 1200);
   }
 
+  function salirAlMenuPrincipal() {
+    location.href = "../../index.html";
+  }
+
   // ======================================================================
   // FIN DE TURNO / IA / GANADOR
   // ======================================================================
@@ -695,14 +702,20 @@ const JuegoDamas = (() => {
     if (humano === 0) {
       estadoGlobalDamas.juegoTerminadoFlag = true;
       document.getElementById("ganador-info").textContent = t("damas.ai");
-      document.getElementById("mensaje-estado-damas").textContent =
-        t("damas.youLose");
+      const mensajeEstado = document.getElementById("mensaje-estado-damas");
+      if (mensajeEstado) {
+        mensajeEstado.textContent = t("damas.youLose");
+      }
+
       mostrarModalFin(false);
     } else if (ia === 0) {
       estadoGlobalDamas.juegoTerminadoFlag = true;
       document.getElementById("ganador-info").textContent = t("damas.you");
-      document.getElementById("mensaje-estado-damas").textContent =
-        t("damas.youWin");
+      const mensajeEstado = document.getElementById("mensaje-estado-damas");
+      if (mensajeEstado) {
+        mensajeEstado.textContent = t("damas.youWin");
+      }
+
       mostrarModalFin(true);
     }
   }
@@ -713,6 +726,7 @@ const JuegoDamas = (() => {
     const mensaje = document.getElementById("mensaje-resultado");
 
     modal.style.display = "flex";
+
     if (gano) {
       icono.textContent = "🏆";
       mensaje.textContent = t("damas.youWin");
@@ -723,19 +737,7 @@ const JuegoDamas = (() => {
       sonidosDamas.perder();
     }
 
-    document.getElementById("boton-reiniciar-modal").innerText =
-      t("damas.restart");
-    document.getElementById("boton-salir-modal").innerText = t("damas.exit");
-
-    document.getElementById("boton-reiniciar-modal").onclick = () => {
-      modal.style.display = "none";
-      estadoGlobalDamas.juegoTerminadoFlag = false;
-      JuegoDamas.reset();
-    };
-
-    document.getElementById("boton-salir-modal").onclick = () => {
-      location.href = "../../index.html";
-    };
+    estadoGlobalDamas.juegoTerminadoFlag = true;
   }
 
   function movimientoIA_Damas() {
@@ -846,17 +848,32 @@ const JuegoDamas = (() => {
     document.getElementById("modal-config-damas").style.display = "flex";
 
     // Limpiar tablero y paneles de info
-    document.getElementById("tablero-damas").innerHTML = "";
-    document.getElementById("color-humano-info").textContent = "—";
-    document.getElementById("turno-info").textContent = "—";
-    document.getElementById("ganador-info").textContent = "";
-    document.getElementById("captura-obligatoria-info").textContent = "—";
-    document.getElementById("capturas-humano-info").textContent = "0";
-    document.getElementById("capturas-ia-info").textContent = "0";
-    document.getElementById("mensaje-estado-damas").textContent = "";
+    const tableroDamas = document.getElementById("tablero-damas");
+    if (tableroDamas) tableroDamas.innerHTML = "";
+
+    const colorHumano = document.getElementById("color-humano-info");
+    if (colorHumano) colorHumano.textContent = "—";
+
+    const turnoInfo = document.getElementById("turno-info");
+    if (turnoInfo) turnoInfo.textContent = "—";
+
+    const ganadorInfo = document.getElementById("ganador-info");
+    if (ganadorInfo) ganadorInfo.textContent = "";
+
+    const capturaObligatoria = document.getElementById(
+      "captura-obligatoria-info",
+    );
+    if (capturaObligatoria) capturaObligatoria.textContent = "—";
+
+    const capturasHumano = document.getElementById("capturas-humano-info");
+    if (capturasHumano) capturasHumano.textContent = "0";
+
+    const capturasIA = document.getElementById("capturas-ia-info");
+    if (capturasIA) capturasIA.textContent = "0";
 
     // Resetear estado de JuegoDamas
-    estado.matrizDamas = [];
+    generarTableroInicialDamas();
+
     estado.ladoHumanoAsignado = null;
     estado.colorHumano = null;
     estado.turnoActualDamas = null;
@@ -877,19 +894,77 @@ const JuegoDamas = (() => {
   // ======================================================================
   // INICIALIZACIÓN
   // ======================================================================
+  let origenConfirmExit = null;
+  // valores posibles: "config" | "fin"
+
+  document
+    .getElementById("boton-salir-config")
+    .addEventListener("click", () => {
+      origenConfirmExit = "config";
+
+      document.getElementById("modal-config-damas").style.display = "none";
+      document.getElementById("modal-confirm-exit").style.display = "flex";
+    });
 
   function init() {
     document.getElementById("salirDamas").innerText = t("damas.exit");
 
     document
-      .getElementById("salirDamas")
-      ?.addEventListener("click", reiniciarJuegoDamas);
+      .getElementById("boton-reiniciar-modal")
+      .addEventListener("click", () => {
+        document.getElementById("modal-fin-damas").style.display = "none";
+        reiniciarJuegoDamas();
+      });
+
+    document.getElementById("btn-salir-fin").addEventListener("click", () => {
+      origenConfirmExit = "fin";
+
+      document.getElementById("modal-fin-damas").style.display = "none";
+      document.getElementById("modal-confirm-exit").style.display = "flex";
+    });
+
+    document.getElementById("btn-confirm-yes").addEventListener("click", () => {
+      document.getElementById("modal-confirm-exit").style.display = "none";
+      salirAlMenuPrincipal(); // index.html
+    });
+
+    document.getElementById("salirDamas").addEventListener("click", () => {
+      const estado = JuegoDamas.estado;
+
+      // Marcar partida como terminada
+      estado.juegoTerminadoFlag = true;
+
+      // Mostrar ganador como IA
+      const ganadorInfo = document.getElementById("ganador-info");
+      if (ganadorInfo) ganadorInfo.textContent = t("damas.ai");
+
+      // Mostrar modal de derrota
+      mostrarModalFin(false);
+    });
 
     document
       .getElementById("boton-reinicio-damas")
       ?.addEventListener("click", resetGameDamasUltra);
 
     resetGameDamasUltra();
+
+    document.getElementById("btn-salir-fin").addEventListener("click", () => {
+      // Ocultar modal de fin
+      document.getElementById("modal-fin-damas").style.display = "none";
+
+      // Mostrar modal de confirmación
+      document.getElementById("modal-confirm-exit").style.display = "flex";
+    });
+
+    document.getElementById("btn-confirm-yes").addEventListener("click", () => {
+      document.getElementById("modal-confirm-exit").style.display = "none";
+      salirAlMenuPrincipal();
+    });
+
+    document.getElementById("btn-confirm-no").addEventListener("click", () => {
+      document.getElementById("modal-confirm-exit").style.display = "none";
+      document.getElementById("modal-fin-damas").style.display = "flex";
+    });
   }
 
   document.addEventListener("DOMContentLoaded", init);
@@ -934,21 +1009,18 @@ document.getElementById("boton-jugar-config").addEventListener("click", () => {
 
   if (!estado.sorteoRealizado) {
     mostrarAvisoDamas(t("damas.warning.mustShuffle"));
-
     return;
   }
 
   document.getElementById("modal-config-damas").style.display = "none";
+
+  document.getElementById("juego-damas-contenedor").style.display = "block";
 
   JuegoDamas.dibujarTableroDamas();
 
   if (estado.turnoActualDamas === "ia") {
     setTimeout(JuegoDamas.movimientoIA_Damas, 500);
   }
-});
-
-document.getElementById("boton-salir-config").addEventListener("click", () => {
-  location.href = "../../index.html";
 });
 
 let ultimoClickTiempo = 0;

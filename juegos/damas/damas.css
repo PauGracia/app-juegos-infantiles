@@ -605,6 +605,21 @@
   animation: slideUp 0.4s ease;
 }
 
+/* Modal confirmación de salida */
+.modal-confirmacion h2 {
+  font-size: 24px;
+  margin-bottom: 25px;
+  color: var(--color-primario);
+}
+
+.modal-confirmacion .botones-modal .boton-damas:first-child {
+  background: linear-gradient(145deg, var(--color-exito), #219653);
+}
+
+.modal-confirmacion .botones-modal .boton-damas:last-child {
+  background: linear-gradient(145deg, var(--color-error), #c0392b);
+}
+
 @keyframes slideUp {
   from {
     transform: translateY(50px);
@@ -665,7 +680,7 @@
 }
 
 .botones-modal .boton-damas {
-  font-size: 16px;
+  font-size: 18px;
   padding: 14px 22px;
   flex: 1;
   min-width: 140px;
@@ -773,6 +788,16 @@
   .info-panel-damas {
     grid-column: 1;
     grid-row: 1;
+    background:
+      linear-gradient(145deg, #ffffff, #f6f7f9),
+      radial-gradient(
+        circle at top right,
+        rgba(52, 152, 219, 0.08),
+        transparent 60%
+      );
+    box-shadow:
+      0 10px 25px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
     width: 100%;
     height: 100%;
     font-size: calc(15px * var(--escala-ui));
@@ -785,11 +810,13 @@
   }
 
   .info-panel-damas div {
-    margin-bottom: 8px;
-    line-height: 1.4;
-    font-size: 14px;
-    padding: 3px 0;
-    min-height: 20px;
+    padding: 6px 4px;
+    border-radius: 6px;
+    transition: background 0.25s ease;
+  }
+
+  .info-panel-damas div:hover {
+    background: rgba(52, 152, 219, 0.06);
   }
 
   .info-panel-damas b {
@@ -1067,9 +1094,9 @@
   }
 
   .botones-modal .boton-damas {
-    min-width: 110px;
+    min-width: 100px;
     padding: 10px 12px;
-    font-size: 13px;
+    font-size: 18px;
   }
 }
 

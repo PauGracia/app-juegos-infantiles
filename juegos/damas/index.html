@@ -126,16 +126,36 @@
             Volver a jugar
           </button>
 
-          <button
-            class="boton-damas"
-            id="boton-salir-modal"
-            data-i18n="damas.exit"
-          >
+          <button class="boton-damas" id="btn-salir-fin" data-i18n="damas.exit">
             Salir
           </button>
         </div>
       </div>
     </div>
+
+    <!-- Modal de confirmación de salida -->
+    <div id="modal-confirm-exit" class="modal-fin-damas" style="display: none">
+      <div class="modal-contenido modal-confirmacion">
+        <h2 data-i18n="common.confirmExit">¿Seguro que quieres salir?</h2>
+        <div class="botones-modal">
+          <button
+            id="btn-confirm-yes"
+            class="boton-damas"
+            data-i18n="common.confirmYes"
+          >
+            Sí
+          </button>
+          <button
+            id="btn-confirm-no"
+            class="boton-damas"
+            data-i18n="common.confirmNo"
+          >
+            No
+          </button>
+        </div>
+      </div>
+    </div>
+
     <div id="modal-instrucciones-damas" class="modal-fin-damas">
       <div class="modal-contenido modal-instrucciones">
         <h2 data-i18n="damas.howToPlay">Cómo jugar a las damas</h2>
