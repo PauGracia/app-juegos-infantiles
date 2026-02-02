@@ -214,11 +214,17 @@ window.translationsEN = {
     "You can play this game in different languages to practice.",
   "ahorcado.instructions.goodLuck": "Good luck!",
   "ranking.sort.points": "Sort by points",
+  "operaciones.invalidNumOperations":
+    "The number of operations must be between 3 and 50",
+  "operaciones.invalidMaxOperator":
+    "The maximum number must be between 3 and 1000",
+  "operaciones.invalidTime":
+    "The minimum time is 5 seconds (or 0 for no limit)",
   "ranking.sort.date": "Sort by date",
   "ranking.sort.user": "Sort by name",
   "ranking.filterUser": "Filter by user",
   "ranking.clear": "Clear",
-  "common.playAgain_en": "Play again",
+  "common.playAgain": "Play again",
   "ranking.noResults": "No results found",
   "common.clear": "Clear",
   "ranking.clearConfirm": "Are you sure you want to delete the entire ranking?",

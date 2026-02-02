@@ -1,7 +1,13 @@
 // -----JUEGO OPERACIONES-----
+
 // Constantes globales para el juego de operaciones
+const MIN_OPERACIONES = 3;
 const MAX_OPERACIONES = 50;
+
+const MIN_OPERANDO = 3;
 const MAX_OPERANDO = 1000;
+
+const MIN_TIEMPO = 5; // si lo usas luego
 
 // =============================
 // INICIALIZACIÓN DE IDIOMA
@@ -370,11 +376,12 @@ function iniciar() {
   const maxInput = document.getElementById("input-maximo").value;
 
   // Validar número de operaciones
-  const cantidad = parseInt(cantidadInput);
+  const cantidad = parseInt(cantidadInput, 10);
+
   if (
     !cantidadInput ||
     isNaN(cantidad) ||
-    cantidad < 1 ||
+    cantidad < MIN_OPERACIONES ||
     cantidad > MAX_OPERACIONES
   ) {
     mostrarModalAviso("operaciones.invalidNumOperations");
@@ -390,11 +397,13 @@ function iniciar() {
 
   if (nivel === "1") {
     // Validar máximo operando
-    const max = parseInt(maxInput);
-    if (!maxInput || isNaN(max) || max < 0 || max > MAX_OPERANDO) {
+    const max = parseInt(maxInput, 10);
+
+    if (!maxInput || isNaN(max) || max < MIN_OPERANDO || max > MAX_OPERANDO) {
       mostrarModalAviso("operaciones.invalidMaxOperator");
       return;
     }
+
     document.getElementById("pizarra").innerHTML = "";
     document.getElementById("modal-operaciones").style.display = "none";
     generarNivel1(cantidad, max);
@@ -1094,3 +1103,12 @@ if (btnSalirMenu) {
     abrirConfirmacionSalir();
   });
 }
+
+// Salir DESDE el modal final
+const btnSalirFinal = document.querySelector("#modal-final .btn-exit-final");
+
+btnSalirFinal.addEventListener("click", (e) => {
+  e.preventDefault();
+  contextoSalida = "juego";
+  abrirConfirmacionSalir();
+});

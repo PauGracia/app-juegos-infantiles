@@ -247,6 +247,12 @@ window.translationsES = {
     "Este proyecto es una colección de juegos educativos pensados para niños y jóvenes a partir de 7 años. Su objetivo es fomentar el aprendizaje de forma divertida, trabajando áreas como las matemáticas, el lenguaje, la memoria y la lógica. Cada juego incluye instrucciones claras y sencillas, adaptadas para que cualquier usuario pueda empezar a jugar sin dificultad. El proyecto combina educación y entretenimiento, ayudando a desarrollar habilidades cognitivas mientras se disfruta del juego.",
 
   "footer.contact": "Contacto",
+  "operaciones.invalidNumOperations":
+    "El número de operaciones debe estar entre 3 y 50",
+  "operaciones.invalidMaxOperator":
+    "El número máximo debe estar entre 3 y 1000",
+  "operaciones.invalidTime":
+    "El tiempo mínimo es de 5 segundos (o 0 para sin límite)",
   "footer.privacy": "Política de Privacidad",
   "footer.copyright": "© 2025 Juegos Educativos Infantiles",
   "footer.about": "Sobre el Proyecto",

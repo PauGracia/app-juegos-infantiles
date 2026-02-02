@@ -224,7 +224,13 @@ window.translationsFR = {
   "ranking.clear": "Effacer",
   "ranking.noResults": "Aucun résultat",
   "common.clear": "Effacer",
-  "common.playAgain_fr": "Rejouer",
+  "common.playAgain": "Rejouer",
+  "operaciones.invalidNumOperations":
+    "Le nombre d’opérations doit être compris entre 3 et 50",
+  "operaciones.invalidMaxOperator":
+    "Le nombre maximum doit être compris entre 3 et 1000",
+  "operaciones.invalidTime":
+    "Le temps minimum est de 5 secondes (ou 0 pour sans limite)",
   "ranking.clearConfirm":
     "Êtes-vous sûr de vouloir supprimer tout le classement ?",
   "common.cancel": "Annuler",

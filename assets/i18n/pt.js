@@ -98,7 +98,12 @@ window.translationsPT = {
   "operaciones.maxCoefficientPlaceholder": "Coeficiente máximo",
   "operaciones.invalidNumOperations":
     "Insira um número válido de operações (1-50).",
-  "common.playAgain_pt": "Jogar novamente",
+  "operaciones.invalidNumOperations":
+    "O número de operações deve estar entre 3 e 50",
+  "operaciones.invalidMaxOperator": "O número máximo deve estar entre 3 e 1000",
+  "operaciones.invalidTime":
+    "O tempo mínimo é de 5 segundos (ou 0 para sem limite)",
+  "common.playAgain": "Jogar novamente",
   "operaciones.invalidMaxOperator":
     "Insira um número válido para o operando máximo (0-1000).",
   "operaciones.selectAtLeastOne":

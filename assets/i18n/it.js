@@ -202,13 +202,19 @@ window.translationsIT = {
   "ahorcado.instructions.interfaceLanguage":
     "Puoi giocare a questo gioco in diverse lingue per esercitarti.",
   "ahorcado.instructions.goodLuck": "Buona fortuna!",
-  "common.playAgain_it": "Gioca di nuovo",
+  "common.playAgain": "Gioca di nuovo",
   "ranking.sort.points": "Ordina per punti",
   "ranking.sort.date": "Ordina per data",
   "ranking.sort.user": "Ordina per nome",
   "ranking.filterUser": "Filtra per utente",
   "ranking.clear": "Cancella",
   "ranking.noResults": "Nessun risultato",
+  "operaciones.invalidNumOperations":
+    "Il numero di operazioni deve essere compreso tra 3 e 50",
+  "operaciones.invalidMaxOperator":
+    "Il numero massimo deve essere compreso tra 3 e 1000",
+  "operaciones.invalidTime":
+    "Il tempo minimo è di 5 secondi (oppure 0 per nessun limite)",
   "common.clear": "Pulisci",
   "ranking.clearConfirm": "Sei sicuro di voler cancellare tutta la classifica?",
   "common.cancel": "Annulla",
