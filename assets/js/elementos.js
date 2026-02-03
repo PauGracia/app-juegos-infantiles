@@ -159,7 +159,7 @@ const elementos = [
   {
     id: 25,
     palabras: ["carta", "carta", "letter", "lettre", "lettera", "carta"],
-    imagen: "../../assets/img/iconos/sobre.png",
+    imagen: "../../assets/img/iconos/carta.png",
   },
   {
     id: 26,
@@ -373,5 +373,22 @@ const elementos = [
     id: 56,
     palabras: ["volcan", "volca", "volcano", "volcan", "vulcano", "vulcao"],
     imagen: "../../assets/img/iconos/volcan.png",
+  },
+  {
+    id: 57,
+    palabras: [
+      "dinosaurio",
+      "dinosaure",
+      "dinosaur",
+      "dinossauro",
+      "dinosauro",
+      "dinossauro",
+    ],
+    imagen: "../../assets/img/iconos/dinosaurio.png",
+  },
+  {
+    id: 58,
+    palabras: ["móvil", "mòbil", "cell", "portable", "cellulare", "telemóvel"],
+    imagen: "../../assets/img/iconos/mobil.png",
   },
 ];
