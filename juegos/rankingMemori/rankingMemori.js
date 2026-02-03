@@ -1,6 +1,9 @@
 // ------------------ RANKING ------------------
 
 document.addEventListener("DOMContentLoaded", () => {
+  // UTITLIZAR PARA PROBAR RANKING
+  //seedRankingMemori();
+
   // Cargar el idioma inicial
   if (typeof initLanguage === "function") {
     initLanguage();
@@ -61,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ">": "&gt;",
             '"': "&quot;",
             "'": "&#39;",
-          }[m])
+          })[m],
       );
     }
 
@@ -86,14 +89,14 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="empty-state-icon">🏆</div>
         <div class="empty-state-title">${t(
           "ranking.noScores",
-          "No hay puntuaciones aún"
+          "No hay puntuaciones aún",
         )}</div>
         <div class="empty-state-subtitle">Sé el primero en jugar y aparecer aquí</div>
       </div>
     `;
         paginaSpan.textContent = `${t("ranking.page", "Página")} 0 ${t(
           "ranking.of",
-          "de"
+          "de",
         )} 0`;
         prevBtn.disabled = true;
         nextBtn.disabled = true;
@@ -108,6 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Generar HTML para la lista de ranking
       let html = `<ol>`;
       paginaDatos.forEach((r, index) => {
+        const numeroRanking = inicio + index + 1;
         const esNormal = tipoRanking === "normal";
         const puntosTexto = esNormal
           ? `${r.puntuacion} ${t("ranking.points", "pts")}`
@@ -116,29 +120,28 @@ document.addEventListener("DOMContentLoaded", () => {
         const badgeClass = esNormal ? "badge-normal" : "badge-desafio";
         const puntosClass = esNormal ? "normal" : "desafio";
 
+        let claseTop = "";
+
+        if (numeroRanking === 1) claseTop = "top1";
+        else if (numeroRanking === 2) claseTop = "top2";
+        else if (numeroRanking === 3) claseTop = "top3";
+
         html += `
-      <li class="fade-in">
-        <div class="ranking-item-content">
-          <div class="nombre-container">
-            <span class="nombre">${escapeHtml(r.nombre)}</span>
-            <span class="ranking-badge ${badgeClass}">
-              ${t(
-                esNormal ? "ranking.normal" : "ranking.challenge",
-                esNormal ? "Normal" : "Desafío"
-              )}
-            </span>
+        <li class="fade-in ${claseTop}" data-rank="${numeroRanking}">
+          <div class="ranking-item-content">
+            <div class="nombre-container">
+              <span class="nombre">${escapeHtml(r.nombre)}</span>
+              <span class="ranking-badge ${badgeClass}">
+                ${t(esNormal ? "ranking.normal" : "ranking.challenge", esNormal ? "Normal" : "Desafío")}
+              </span>
+            </div>
+            <div class="puntos-container">
+              <span class="puntos-label">${esNormal ? t("ranking.points", "Puntos") : t("ranking.level", "Nivel")}</span>
+              <span class="puntos ${puntosClass}">${puntosTexto}</span>
+            </div>
           </div>
-          <div class="puntos-container">
-            <span class="puntos-label">${
-              esNormal
-                ? t("ranking.points", "Puntos")
-                : t("ranking.level", "Nivel")
-            }</span>
-            <span class="puntos ${puntosClass}">${puntosTexto}</span>
-          </div>
-        </div>
-      </li>
-    `;
+        </li>
+        `;
       });
 
       html += "</ol>";
@@ -148,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Actualizar información de paginación
       paginaSpan.textContent = `${t(
         "ranking.page",
-        "Página"
+        "Página",
       )} ${paginaActual} ${t("ranking.of", "de")} ${totalPaginas}`;
       prevBtn.disabled = paginaActual === 1;
       nextBtn.disabled = paginaActual === totalPaginas;
@@ -164,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ranking.sort((a, b) =>
         tipoRanking === "normal"
           ? b.puntuacion - a.puntuacion
-          : b.nivel - a.nivel
+          : b.nivel - a.nivel,
       );
 
       paginaActual = 1;
@@ -189,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Evento para volver al juego de memori
     atrasBtn.addEventListener(
       "click",
-      () => (location.href = "../memori/index.html")
+      () => (location.href = "../memori/index.html"),
     );
 
     document.querySelectorAll(".tab").forEach((btn) => {
@@ -216,3 +219,26 @@ document.addEventListener("DOMContentLoaded", () => {
     iniciarRanking();
   }
 });
+
+// ------------------ DEV: seed ranking ------------------
+function seedRankingMemori() {
+  const fakeNormal = [];
+  const fakeDesafio = [];
+
+  for (let i = 1; i <= 50; i++) {
+    fakeNormal.push({
+      nombre: `Jugador_${i}`,
+      puntuacion: Math.floor(Math.random() * 5000) + 100,
+    });
+
+    fakeDesafio.push({
+      nombre: `Jugador_${i}`,
+      nivel: Math.floor(Math.random() * 30) + 1,
+    });
+  }
+
+  localStorage.setItem("ranking_memori", JSON.stringify(fakeNormal));
+  localStorage.setItem("ranking_desafio", JSON.stringify(fakeDesafio));
+
+  console.log("✅ Ranking de prueba cargado");
+}
