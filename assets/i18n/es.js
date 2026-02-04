@@ -201,6 +201,7 @@ window.translationsES = {
     "Cada palabra acertada suma 1 punto al marcador.",
   "ahorcado.instructions.scoreKeeps":
     "La puntuación se acumula durante toda la partida.",
+  "memori.recordSaved": "Récord guardado",
   "ahorcado.instructions.saveRecord":
     "Al finalizar puedes guardar tu récord en el ranking local.",
   "ahorcado.instructions.ranking": "RANKING:",

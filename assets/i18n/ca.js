@@ -212,8 +212,10 @@ window.translationsCA = {
   "ahorcado.instructions.interfaceLanguage":
     "Pots jugar a aquest joc en diferents idiomes per practicar.",
   "ahorcado.instructions.goodLuck": "Bona sort!",
+  "memori.recordSaved": "Registre guardat",
   "ranking.sort.points": "Ordenar per punts",
-  "palabras.errors.invalidAmount": "El nombre de paraules ha d'estar entre 1 i 50",
+  "palabras.errors.invalidAmount":
+    "El nombre de paraules ha d'estar entre 1 i 50",
 
   "ranking.sort.date": "Ordenar per data",
   "ranking.sort.user": "Ordenar per nom",
@@ -231,7 +233,6 @@ window.translationsCA = {
   "common.cancel": "Cancel·lar",
   "menu.settings.language": "Idiomes",
   "menu.settings.objective": "Objectiu",
-  
 
   "ranking.confirmDelete": "Segur que vols esborrar tot el ranking?",
 

@@ -178,25 +178,44 @@ document.addEventListener("DOMContentLoaded", () => {
     let nivelActual = 0;
     let columnasNivel = 0;
     let parejasDelNivel = 0; // para el modo desafío
+    let nivelEnCurso = null;
 
     // ------------------ NIVELES DESAFÍO ------------------
     const niveles = [
       //{ nivel: 1, parejas: 4, columnas: 4, tiempo: 300 },
-      { nivel: 1, parejas: 4, columnas: 4, tiempo: 20 },
-      /* { nivel: 2, parejas: 6, columnas: 4, tiempo: 330 },
-      { nivel: 3, parejas: 8, columnas: 4, tiempo: 360 },
-      { nivel: 4, parejas: 10, columnas: 5, tiempo: 390 },
-      { nivel: 5, parejas: 12, columnas: 6, tiempo: 420 },
-      { nivel: 6, parejas: 15, columnas: 6, tiempo: 450 },
-      { nivel: 7, parejas: 18, columnas: 6, tiempo: 480 },
-      { nivel: 8, parejas: 20, columnas: 8, tiempo: 510 },
-      { nivel: 9, parejas: 24, columnas: 8, tiempo: 540 },
-      { nivel: 10, parejas: 30, columnas: 10, tiempo: 570 },
-      { nivel: 11, parejas: 36, columnas: 9, tiempo: 585 },
-      { nivel: 12, parejas: 40, columnas: 10, tiempo: 600 },*/ // MODO NORMAL
+      /* { nivel: 1, parejas: 4, columnas: 4, tiempo: 90 },
+      { nivel: 2, parejas: 6, columnas: 4, tiempo: 90 },
+      { nivel: 3, parejas: 8, columnas: 4, tiempo: 100 },
+      { nivel: 4, parejas: 10, columnas: 5, tiempo: 120 },
+      { nivel: 5, parejas: 12, columnas: 6, tiempo: 140 },
+      { nivel: 6, parejas: 15, columnas: 6, tiempo: 160 },
+      { nivel: 7, parejas: 18, columnas: 6, tiempo: 200 },
+      { nivel: 8, parejas: 20, columnas: 8, tiempo: 240 },*/
+      { nivel: 9, parejas: 24, columnas: 8, tiempo: 280 },
+      { nivel: 10, parejas: 30, columnas: 10, tiempo: 300 },
+      { nivel: 11, parejas: 36, columnas: 9, tiempo: 360 },
+      { nivel: 12, parejas: 40, columnas: 10, tiempo: 420 }, // MODO NORMAL
     ];
 
     // ------------------ FUNCIONES COMUNES ------------------
+
+    function mostrarBonusTiempo() {
+      const bonus = document.createElement("span");
+      bonus.classList.add("bonus-tiempo");
+      bonus.textContent = "+2";
+
+      // Añadimos al body
+      document.body.appendChild(bonus);
+
+      // Calculamos la posición del marcador en pantalla
+      const rect = marcador.getBoundingClientRect();
+      bonus.style.left = `${rect.left + rect.width / 2}px`;
+      bonus.style.top = `${rect.top}px`;
+      bonus.style.transform = "translateX(-50%)";
+
+      // Eliminamos tras la animación
+      bonus.addEventListener("animationend", () => bonus.remove());
+    }
 
     // Función para mostrar modal de confirmación de salida
     function confirmarSalida(callbackYes) {
@@ -286,17 +305,24 @@ document.addEventListener("DOMContentLoaded", () => {
       // Guardar puntuación usando la clave correspondiente
       guardarBtn.onclick = () => {
         registro.style.display = "block";
+
         registrarBtn.onclick = () => {
           const nombre = nombreJugador.value.trim();
+
           if (nombre.length < 3 || nombre.length > 10) {
             mostrarModalAviso(t("memori.invalidName"));
-
             return;
           }
+
           guardarRankingLocal(claveRanking, nombre, puntuacion);
+          cargarRankingLocal(claveRanking);
+
+          // BLOQUEAR GUARDADO
+          guardarBtn.disabled = true;
+          guardarBtn.textContent = t("memori.recordSaved");
+
           registro.style.display = "none";
           nombreJugador.value = "";
-          cargarRankingLocal(claveRanking);
         };
       };
     }
@@ -438,6 +464,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ------------------ MODO DESAFÍO ------------------
     function mostrarModalDesafioFinal() {
+      guardarBtn.disabled = false;
+      guardarBtn.textContent = t("memori.saveRecord");
+
       playSound(sonidos.win);
       modal.classList.add("mostrar");
 
@@ -468,6 +497,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function siguienteNivel() {
       if (nivelActual >= niveles.length) {
         alert(t("memori.completedAllLevels"));
+        nivelEnCurso = niveles[nivelActual - 1];
+
         return;
       }
 
@@ -480,6 +511,7 @@ document.addEventListener("DOMContentLoaded", () => {
       parejasEncontradas = 0;
       nivelActual++;
       const nivel = niveles[nivelActual - 1];
+      nivelEnCurso = nivel;
       parejasDelNivel = nivel.parejas;
       columnasNivel = nivel.columnas;
       tiempoRestante = nivel.tiempo;
@@ -525,10 +557,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const btnIniciar = modalNivel.querySelector("#iniciarNivel");
 
-      // Escuchar cambios de idioma
-      document.addEventListener("languageChanged", (e) => {
+      const languageHandler = () => {
         actualizarModalTexto();
-      });
+      };
+      // Escuchar cambios de idioma
+      document.addEventListener("languageChanged", languageHandler);
 
       const iniciarHandler = () => {
         console.log("Botón Iniciar clickeado, nivel:", nivelActual);
@@ -539,8 +572,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Remover el event listener del cambio de idioma
-        document.removeEventListener("languageChanged", actualizarModalTexto);
-
+        document.removeEventListener("languageChanged", languageHandler);
         modalNivel.remove();
         console.log("Modal removido, cargando nivel...");
 
@@ -560,7 +592,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ajustarGridPorNivel(parejasDelNivel, columnasNivel);
 
       actualizarMarcador();
-      actualizarBotonGuardar("ranking_desafio");
+
       cargarRankingLocal("ranking_desafio");
 
       // Iniciar cronómetro
@@ -616,6 +648,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
             puntuacion += 100;
             parejasEncontradas++;
+
+            // BONUS DE TIEMPO a partir del nivel 9
+            if (nivelEnCurso && nivelEnCurso.nivel >= 9) {
+              tiempoRestante += 2;
+              marcador.textContent = `${Math.floor(tiempoRestante / 60)}:${String(
+                tiempoRestante % 60,
+              ).padStart(2, "0")}`;
+              // Mostrar animación +2
+              mostrarBonusTiempo();
+            }
 
             if (parejasEncontradas === parejasDelNivel) {
               clearInterval(intervaloTiempo);
@@ -677,15 +719,19 @@ document.addEventListener("DOMContentLoaded", () => {
           const nombre = nombreJugador.value.trim();
 
           if (nombre.length < 3 || nombre.length > 10) {
-            alert("El nombre debe tener entre 3 y 10 caracteres");
+            mostrarModalAviso(t("memori.invalidName"));
             return;
           }
 
           guardarRankingDesafio(nombre, nivelMaximoAlcanzado);
+          cargarRankingDesafio();
+
+          // BLOQUEAR GUARDADO
+          guardarBtn.disabled = true;
+          guardarBtn.textContent = t("memori.recordSaved");
+
           registro.style.display = "none";
           nombreJugador.value = "";
-
-          cargarRankingDesafio();
         };
       };
     }
@@ -696,6 +742,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function mostrarModalTiempoAgotado() {
+      guardarBtn.disabled = false;
+      guardarBtn.textContent = t("memori.saveRecord");
       playSound(sonidos.finTiempo);
       clearInterval(intervaloTiempo);
 

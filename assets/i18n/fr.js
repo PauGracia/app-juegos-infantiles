@@ -224,6 +224,7 @@ window.translationsFR = {
   "ranking.clear": "Effacer",
   "palabras.errors.invalidAmount":
     "Le nombre de mots doit être compris entre 1 et 50",
+  "memori.recordSaved": "Enregistrement sauvegardé",
 
   "ranking.noResults": "Aucun résultat",
   "common.clear": "Effacer",
