@@ -1,3 +1,21 @@
+function initIdioma() {
+  const savedLang = localStorage.getItem("uiLang") || "es";
+
+  if (typeof loadLanguage === "function") {
+    loadLanguage(savedLang);
+  } else {
+    setTimeout(initIdioma, 100);
+  }
+}
+
+if (window.cordova) {
+  // Cordova
+  document.addEventListener("deviceready", initIdioma, false);
+} else {
+  // Web normal
+  document.addEventListener("DOMContentLoaded", initIdioma);
+}
+
 /* =========================
    JUEGO AHORCADO 
    ========================= */
@@ -893,17 +911,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "Mínimo 3 palabras para guardar",
           );
           btnGuardarRecord.style.opacity = "0.7";
-
-          // Mostrar mensaje informativo
-          setTimeout(() => {
-            mostrarMensajeTemporal(
-              getTranslation(
-                "ahorcado.need3Words",
-                "Necesitas acertar al menos 3 palabras para guardar tu récord",
-              ),
-              3000,
-            );
-          }, 500);
         }
       }
 
