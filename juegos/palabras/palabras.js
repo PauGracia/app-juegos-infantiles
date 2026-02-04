@@ -158,6 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let intentosFallidosPalabra = 0;
   let ayudaActivada = true;
   let palabraFinalizada = false;
+  let cantidad = 3;
 
   // Normalizar texto
   function normalizar(texto) {
@@ -171,9 +172,57 @@ document.addEventListener("DOMContentLoaded", () => {
   // FUNCIONES PRINCIPALES
   // -----------------------------
 
+  function mostrarMensajeTemporal(texto, tiempo = 1500) {
+    const contenedor = document.getElementById("mensaje-temporal");
+
+    if (!contenedor) return;
+
+    contenedor.textContent = texto;
+    contenedor.style.display = "block";
+
+    // Forzar el reflow para animación
+    void contenedor.offsetWidth;
+
+    contenedor.style.opacity = "1";
+
+    setTimeout(() => {
+      contenedor.style.opacity = "0";
+      setTimeout(() => {
+        contenedor.style.display = "none";
+      }, 300); // coincide con la transición de CSS
+    }, tiempo);
+  }
+
+  function shuffle(array) {
+    const a = [...array];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
   function iniciarJuego() {
     const checkboxAyuda = document.getElementById("activar-ayuda");
     ayudaActivada = checkboxAyuda ? checkboxAyuda.checked : true;
+
+    const cantidadInput = document.getElementById("cantidad");
+    cantidad = parseInt(cantidadInput.value, 10);
+
+    // -----------------------------
+    // VALIDACIÓN DE CANTIDAD
+    // -----------------------------
+    if (isNaN(cantidad) || cantidad < 1 || cantidad > 50) {
+      const msg =
+        window.translations?.palabras?.errors?.invalidAmount ??
+        "El número de palabras debe estar entre 1 y 50";
+
+      mostrarMensajeTemporal(msg, 1500);
+
+      cantidadInput.value = Math.min(Math.max(cantidad || 1, 1), 50);
+      return;
+    }
+
     resumen = [];
     aciertos = 0;
     comprobacionesTotales = 0;
@@ -181,17 +230,34 @@ document.addEventListener("DOMContentLoaded", () => {
     actual = 0;
 
     idiomaPalabrasSeleccionado = parseInt(selectPalabrasIdioma.value);
-    const cantidad = parseInt(document.getElementById("cantidad").value);
 
-    // Filtrar palabras demasiado largas (>15)
+    // -----------------------------
+    // FILTRAR PALABRAS VÁLIDAS
+    // -----------------------------
     const elementosFiltrados = elementos.filter((el) => {
       const palabra = normalizar(el.palabras[idiomaPalabrasSeleccionado]);
       return palabra.length <= 15;
     });
 
-    seleccionados = [...elementosFiltrados]
-      .sort(() => Math.random() - 0.5)
-      .slice(0, cantidad);
+    // Aviso si se piden más palabras de las disponibles
+    if (cantidad > elementosFiltrados.length) {
+      mostrarMensajeTemporal(
+        `Solo hay ${elementosFiltrados.length} palabras disponibles para este idioma.`,
+        1500,
+      );
+      cantidad = elementosFiltrados.length;
+      cantidadInput.value = cantidad;
+    }
+
+    // -----------------------------
+    // SELECCIÓN ALEATORIA SIN REPETICIÓN
+    // -----------------------------
+    const mezclados = shuffle(elementosFiltrados);
+    seleccionados = mezclados.slice(0, cantidad);
+
+    // -----------------------------
+    // INICIALIZAR INTERFAZ DE JUEGO
+    // -----------------------------
     document.getElementById("fila-ayudas").style.display = ayudaActivada
       ? "flex"
       : "none";

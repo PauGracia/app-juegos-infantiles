@@ -84,6 +84,9 @@ window.translationsPT = {
   "operaciones.timeRemaining": "",
   "operaciones.gameFinished": "Jogo terminado",
   "operaciones.correctOperations": "Operações corretas",
+  "palabras.errors.invalidAmount":
+    "O número de palavras deve estar entre 1 e 50",
+
   "operaciones.incorrectOperations": "Operações incorretas",
   "operaciones.challengeCompleted": "Modo Desafio concluído!",
   "operaciones.allLevelsCompleted": "Você completou todos os níveis.",

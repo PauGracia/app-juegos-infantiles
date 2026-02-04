@@ -211,6 +211,9 @@ window.translationsES = {
   "ahorcado.instructions.exportRanking":
     "También puedes exportar el ranking en formato JSON.",
   "ahorcado.instructions.language": "IDIOMA:",
+  "palabras.errors.invalidAmount":
+    "El número de palabras debe estar entre 1 y 50",
+
   "ahorcado.instructions.interfaceLanguage":
     "Puedes jugar a este juego en diferentes idiomas para practicar.",
   "ahorcado.instructions.goodLuck": "¡Buena suerte!",

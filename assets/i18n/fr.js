@@ -222,6 +222,9 @@ window.translationsFR = {
   "ranking.sort.user": "Trier par nom",
   "ranking.filterUser": "Filtrer par utilisateur",
   "ranking.clear": "Effacer",
+  "palabras.errors.invalidAmount":
+    "Le nombre de mots doit être compris entre 1 et 50",
+
   "ranking.noResults": "Aucun résultat",
   "common.clear": "Effacer",
   "common.playAgain": "Rejouer",

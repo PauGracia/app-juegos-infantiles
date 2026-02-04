@@ -203,6 +203,9 @@ window.translationsIT = {
     "Puoi giocare a questo gioco in diverse lingue per esercitarti.",
   "ahorcado.instructions.goodLuck": "Buona fortuna!",
   "common.playAgain": "Gioca di nuovo",
+  "palabras.errors.invalidAmount":
+    "Il numero di parole deve essere compreso tra 1 e 50",
+
   "ranking.sort.points": "Ordina per punti",
   "ranking.sort.date": "Ordina per data",
   "ranking.sort.user": "Ordina per nome",
