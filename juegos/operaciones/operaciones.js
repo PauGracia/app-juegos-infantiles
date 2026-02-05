@@ -133,95 +133,139 @@ function abrirModalInstrucciones() {
 function cerrarModalInstrucciones() {
   document.getElementById("modal-instrucciones").classList.add("oculto");
 }
-
 function reglasNivel(nivel) {
   let reglas = {
     cantidad: 5,
-    max: 9,
+    max: 10,
     negativos: false,
-    ops: ["+", "-"],
-    tiempo: 480, // tiempo por defecto (8 minutos)
+    ops: ["+"],
+    tiempo: 480, // 8 min por defecto
   };
 
+  // ───────────────
+  // 6–7 años
+  // ───────────────
   if (nivel === 1) {
-    reglas.tiempo = 480; // 7 minutos
+    reglas.ops = ["+"];
+    reglas.cantidad = 5;
+    reglas.max = 5;
   }
 
   if (nivel === 2) {
-    reglas.tiempo = 480; // 7 minutos
-    reglas.cantidad = 10;
+    reglas.ops = ["+", "-"];
+    reglas.cantidad = 5;
+    reglas.max = 5;
   }
 
   if (nivel === 3) {
-    reglas.max = 20;
+    reglas.cantidad = 6;
+    reglas.max = 10;
   }
 
   if (nivel === 4) {
-    reglas.cantidad = 5;
-    reglas.max = 20;
-    reglas.tiempo = 360;
-  }
-
-  if (nivel === 5) {
-    reglas.cantidad = 8;
-    reglas.max = 25;
-    reglas.tiempo = 420;
-  }
-
-  if (nivel === 6) {
-    reglas.cantidad = 10;
-    reglas.max = 30;
-  }
-
-  if (nivel === 7) {
-    reglas.cantidad = 10;
-    reglas.max = 30;
-  }
-
-  if (nivel === 8) {
-    reglas.negativos = true;
     reglas.cantidad = 8;
     reglas.max = 10;
   }
 
-  if (nivel === 9) {
-    reglas.negativos = true;
+  if (nivel === 5) {
+    reglas.cantidad = 10;
+    reglas.max = 10;
+    reglas.tiempo = 420;
+  }
+
+  // ───────────────
+  // 7–8 años
+  // ───────────────
+  if (nivel === 6) {
     reglas.cantidad = 8;
     reglas.max = 20;
   }
 
-  if (nivel === 10) {
-    reglas.negativos = true;
+  if (nivel === 7) {
+    reglas.cantidad = 10;
+    reglas.max = 20;
+  }
+
+  if (nivel === 8) {
     reglas.cantidad = 10;
     reglas.max = 30;
   }
 
+  if (nivel === 9) {
+    reglas.cantidad = 12;
+    reglas.max = 30;
+  }
+
+  if (nivel === 10) {
+    reglas.cantidad = 12;
+    reglas.max = 50;
+    reglas.tiempo = 360;
+  }
+
+  // ───────────────
+  // 8–9 años (multiplicación)
+  // ───────────────
   if (nivel === 11) {
-    reglas.negativos = true;
-    reglas.cantidad = 10;
-    reglas.max = 100;
-    reglas.tiempo = 540;
+    reglas.ops = ["+", "-", "*"];
+    reglas.cantidad = 8;
+    reglas.max = 10;
   }
 
   if (nivel === 12) {
-    reglas.negativos = true;
-    reglas.cantidad = 15;
-    reglas.max = 100;
+    reglas.cantidad = 10;
+    reglas.max = 10;
   }
 
-  if (nivel >= 13) {
-    reglas.negativos = true;
-    reglas.ops = ["+", "-", "*"];
+  if (nivel === 13) {
+    reglas.cantidad = 10;
+    reglas.max = 20;
   }
 
-  if (nivel >= 17) {
+  if (nivel === 14) {
+    reglas.cantidad = 12;
+    reglas.max = 20;
+    reglas.tiempo = 360;
+  }
+
+  // ───────────────
+  // 9–10 años (división exacta)
+  // ───────────────
+  if (nivel === 15) {
     reglas.ops = ["+", "-", "*", "/"];
+    reglas.cantidad = 8;
+    reglas.max = 10;
+  }
+
+  if (nivel === 16) {
+    reglas.cantidad = 10;
+    reglas.max = 20;
+  }
+
+  if (nivel === 17) {
+    reglas.cantidad = 12;
+    reglas.max = 30;
+  }
+
+  if (nivel === 18) {
+    reglas.cantidad = 14;
+    reglas.max = 30;
+    reglas.tiempo = 300;
+  }
+
+  // ───────────────
+  // RETO FINAL
+  // ───────────────
+  if (nivel === 19) {
+    reglas.negativos = true;
+    reglas.cantidad = 12;
+    reglas.max = 20;
   }
 
   if (nivel === 20) {
-    reglas.cantidad = 18;
-    reglas.max = 100;
-    reglas.tiempo = 600;
+    reglas.negativos = true;
+    reglas.cantidad = 15;
+    reglas.max = 30;
+    reglas.tiempo = 300;
   }
 
   return reglas;
