@@ -258,7 +258,7 @@ const elementos = [
   {
     id: 39,
     palabras: ["dinero", "diners", "money", "argent", "soldi", "dinheiro"],
-    imagen: "../../assets/img/iconos/monedas.png",
+    imagen: "../../assets/img/iconos/presupuesto.png",
   },
 
   {
@@ -390,5 +390,215 @@ const elementos = [
     id: 58,
     palabras: ["móvil", "mòbil", "cell", "portable", "cellulare", "telemóvel"],
     imagen: "../../assets/img/iconos/mobil.png",
+  },
+  {
+    id: 59,
+    palabras: ["pez", "peix", "fish", "poisson", "pesce", "peixe"],
+    imagen: "../../assets/img/iconos/pez.png",
+  },
+  {
+    id: 60,
+    palabras: ["tiburón", "tauró", "shark", "requin", "squalo", "tubarão"],
+    imagen: "../../assets/img/iconos/tiburon.png",
+  },
+  {
+    id: 61,
+    palabras: ["pelota", "pilota", "ball", "ballon", "palla", "bola"],
+    imagen: "../../assets/img/iconos/pelota.png",
+  },
+  {
+    id: 62,
+    palabras: ["camión", "camió", "lorry", "camion", "camion", "camião"],
+    imagen: "../../assets/img/iconos/camion.png",
+  },
+  {
+    id: 63,
+    palabras: ["muñeca", "nina", "doll", "poupée", "bambola", "boneca"],
+    imagen: "../../assets/img/iconos/muñeca.png",
+  },
+  {
+    id: 64,
+    palabras: ["mano", "mà", "hand", "main", "mano", "mão"],
+    imagen: "../../assets/img/iconos/mano.png",
+  },
+  {
+    id: 65,
+    palabras: ["pie", "peu", "foot", "pied", "piede", "pé"],
+    imagen: "../../assets/img/iconos/pie.png",
+  },
+  {
+    id: 66,
+    palabras: ["billete", "bitllet", "banknote", "billet", "banconota", "nota"],
+    imagen: "../../assets/img/iconos/dolar.png",
+  },
+  {
+    id: 67,
+    palabras: ["leon", "lleó", "lion", "lion", "leone", "leão"],
+    imagen: "../../assets/img/iconos/leon.png",
+  },
+  {
+    id: 68,
+    palabras: [
+      "canguro",
+      "cangur",
+      "kangaroo",
+      "kangourou",
+      "canguro",
+      "canguru",
+    ],
+    imagen: "../../assets/img/iconos/canguro.png",
+  },
+  {
+    id: 69,
+    palabras: ["tren", "tren", "train", "train", "treno", "trem"],
+    imagen: "../../assets/img/iconos/tren.png",
+  },
+  {
+    id: 70,
+    palabras: ["luna", "lluna", "moon", "lune", "luna", "lua"],
+    imagen: "../../assets/img/iconos/luna.png",
+  },
+  {
+    id: 71,
+    palabras: ["sol", "sol", "sun", "soleil", "sole", "sol"],
+    imagen: "../../assets/img/iconos/sol.png",
+  },
+  {
+    id: 72,
+    palabras: ["caballo", "cavall", "horse", "cheval", "cavallo", "cavalo"],
+    imagen: "../../assets/img/iconos/caballo.png",
+  },
+  {
+    id: 73,
+    palabras: ["vaca", "vaca", "cow", "vache", "mucca", "vaca"],
+    imagen: "../../assets/img/iconos/vaca.png",
+  },
+  {
+    id: 74,
+    palabras: ["rana", "granota", "frog", "grenouille", "rana", "rã"],
+    imagen: "../../assets/img/iconos/rana.png",
+  },
+  {
+    id: 75,
+    palabras: [
+      "tortuga",
+      "tortuga",
+      "turtle",
+      "tortue",
+      "tartaruga",
+      "tartaruga",
+    ],
+    imagen: "../../assets/img/iconos/tortuga.png",
+  },
+  {
+    id: 76,
+    palabras: ["jirafa", "girafa", "giraffe", "girafe", "giraffa", "girafa"],
+    imagen: "../../assets/img/iconos/jirafa.png",
+  },
+  {
+    id: 77,
+    palabras: [
+      "elefante",
+      "elefant",
+      "elephant",
+      "éléphant",
+      "elefante",
+      "elefante",
+    ],
+    imagen: "../../assets/img/iconos/elefante.png",
+  },
+  {
+    id: 78,
+    palabras: ["arbol", "arbre", "tree", "arbre", "albero", "árvore"],
+    imagen: "../../assets/img/iconos/arboles.png",
+  },
+  {
+    id: 79,
+    palabras: ["hoja", "fulla", "leaf", "feuille", "foglia", "folha"],
+    imagen: "../../assets/img/iconos/hoja.png",
+  },
+  {
+    id: 80,
+    palabras: ["banana", "plàtan", "banana", "banane", "banana", "banana"],
+    imagen: "../../assets/img/iconos/banana.png",
+  },
+  {
+    id: 81,
+    palabras: ["oso", "ós", "bear", "ours", "orso", "urso"],
+    imagen: "../../assets/img/iconos/oso.png",
+  },
+  {
+    id: 82,
+    palabras: ["gato", "gat", "cat", "chat", "gatto", "gato"],
+    imagen: "../../assets/img/iconos/gato.png",
+  },
+  {
+    id: 83,
+    palabras: ["perro", "gos", "dog", "chien", "cane", "cão"],
+    imagen: "../../assets/img/iconos/perro.png",
+  },
+  {
+    id: 84,
+    palabras: ["globo", "globus", "balloon", "ballon", "palloncino", "balão"],
+    imagen: "../../assets/img/iconos/globo.png",
+  },
+  {
+    id: 85,
+    palabras: ["dragón", "drac", "dragon", "dragon", "drago", "dragão"],
+    imagen: "../../assets/img/iconos/dragon.png",
+  },
+  {
+    id: 86,
+    palabras: [
+      "rinoceronte",
+      "rinoceront",
+      "rhinoceros",
+      "rhinocéros",
+      "rinoceronte",
+      "rinoceronte",
+    ],
+    imagen: "../../assets/img/iconos/rinoceronte.png",
+  },
+  {
+    id: 87,
+    palabras: ["araña", "aranya", "spider", "araignée", "ragno", "aranha"],
+    imagen: "../../assets/img/iconos/arana.png",
+  },
+  {
+    id: 87,
+    palabras: ["hormiga", "formiga", "ant", "fourmi", "formica", "formiga"],
+    imagen: "../../assets/img/iconos/hormiga.png",
+  },
+  {
+    id: 88,
+    palabras: ["pulpo", "pop", "octopus", "poulpe", "polpo", "polvo"],
+    imagen: "../../assets/img/iconos/pulpo.png",
+  },
+  {
+    id: 89,
+    palabras: ["flor", "flor", "flower", "fleur", "fiore", "flor"],
+    imagen: "../../assets/img/iconos/flor.png",
+  },
+  {
+    id: 90,
+    palabras: ["queso", "formatge", "cheese", "fromage", "formaggio", "queijo"],
+    imagen: "../../assets/img/iconos/queso.png",
+  },
+  {
+    id: 91,
+    palabras: ["futbol", "futbol", "football", "football", "calcio", "futebol"],
+    imagen: "../../assets/img/iconos/futbol.png",
+  },
+  {
+    id: 92,
+    palabras: [
+      "baloncesto",
+      "bàsquet",
+      "basketball",
+      "basket-ball",
+      "pallacanestro",
+      "basquetebol",
+    ],
+    imagen: "../../assets/img/iconos/baloncesto.png",
   },
 ];

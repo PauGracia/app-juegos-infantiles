@@ -183,14 +183,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // ------------------ NIVELES DESAFÍO ------------------
     const niveles = [
       //{ nivel: 1, parejas: 4, columnas: 4, tiempo: 300 },
-      /* { nivel: 1, parejas: 4, columnas: 4, tiempo: 90 },
+      { nivel: 1, parejas: 4, columnas: 4, tiempo: 90 },
       { nivel: 2, parejas: 6, columnas: 4, tiempo: 90 },
       { nivel: 3, parejas: 8, columnas: 4, tiempo: 100 },
       { nivel: 4, parejas: 10, columnas: 5, tiempo: 120 },
       { nivel: 5, parejas: 12, columnas: 6, tiempo: 140 },
       { nivel: 6, parejas: 15, columnas: 6, tiempo: 160 },
       { nivel: 7, parejas: 18, columnas: 6, tiempo: 200 },
-      { nivel: 8, parejas: 20, columnas: 8, tiempo: 240 },*/
+      { nivel: 8, parejas: 20, columnas: 8, tiempo: 240 },
       { nivel: 9, parejas: 24, columnas: 8, tiempo: 280 },
       { nivel: 10, parejas: 30, columnas: 10, tiempo: 300 },
       { nivel: 11, parejas: 36, columnas: 9, tiempo: 360 },
@@ -359,16 +359,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ------------------ JUEGO NORMAL ------------------
     function iniciarJuegoNormal() {
-      const seleccionados = elementos.slice(0, 40);
-      if (!seleccionados.length) return alert(t("memori.noElements"));
+      if (!elementos || elementos.length === 0)
+        return alert(t("memori.noElements"));
 
-      let valores = [...seleccionados, ...seleccionados];
-      valores = mezclar(valores);
+      const cantidadParejas = 40;
+      const seleccionados = mezclar([...elementos]).slice(0, cantidadParejas); // selecciona 20 al azar
 
-      // Crear cartas y lógica normal
+      let valores = [...seleccionados, ...seleccionados]; // duplicar para parejas
+      valores = mezclar(valores); // mezclar el orden final
+
       tablero.innerHTML = "";
       valores.forEach(crearCartaNormal);
       ajustarGrid(valores.length);
+
       puntuacion = 0;
       parejasEncontradas = 0;
       actualizarMarcador();
