@@ -86,6 +86,9 @@ window.translationsPT = {
   "operaciones.correctOperations": "Operações corretas",
   "palabras.errors.invalidAmount":
     "O número de palavras deve estar entre 1 e 50",
+  "memori.timeUpTitle": "Tempo esgotado",
+  "memori.timeUpFinal": "Perdeste por falta de tempo",
+  "memori.levelReached": "Nível alcançado:",
 
   "operaciones.incorrectOperations": "Operações incorretas",
   "operaciones.challengeCompleted": "Modo Desafio concluído!",

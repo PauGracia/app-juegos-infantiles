@@ -219,6 +219,9 @@ window.translationsEN = {
   "ranking.sort.points": "Sort by points",
   "operaciones.invalidNumOperations":
     "The number of operations must be between 3 and 50",
+  "memori.timeUpTitle": "Time's up",
+  "memori.timeUpFinal": "You ran out of time",
+  "memori.levelReached": "Level reached:",
   "operaciones.invalidMaxOperator":
     "The maximum number must be between 3 and 1000",
   "operaciones.invalidTime":

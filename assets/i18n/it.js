@@ -206,6 +206,9 @@ window.translationsIT = {
   "palabras.errors.invalidAmount":
     "Il numero di parole deve essere compreso tra 1 e 50",
   "memori.recordSaved": "Record salvato",
+  "memori.timeUpTitle": "Tempo scaduto",
+  "memori.timeUpFinal": "Hai perso per mancanza di tempo",
+  "memori.levelReached": "Livello raggiunto:",
 
   "ranking.sort.points": "Ordina per punti",
   "ranking.sort.date": "Ordina per data",

@@ -229,6 +229,10 @@ window.translationsFR = {
   "ranking.noResults": "Aucun résultat",
   "common.clear": "Effacer",
   "common.playAgain": "Rejouer",
+  "memori.timeUpTitle": "Temps écoulé",
+  "memori.timeUpFinal": "Vous avez manqué de temps",
+  "memori.levelReached": "Niveau atteint :",
+
   "operaciones.invalidNumOperations":
     "Le nombre d’opérations doit être compris entre 3 et 50",
   "operaciones.invalidMaxOperator":

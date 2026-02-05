@@ -214,6 +214,9 @@ window.translationsES = {
   "ahorcado.instructions.language": "IDIOMA:",
   "palabras.errors.invalidAmount":
     "El número de palabras debe estar entre 1 y 50",
+  "memori.timeUpTitle": "Tiempo agotado",
+  "memori.timeUpFinal": "Has perdido por tiempo",
+  "memori.levelReached": "Nivel alcanzado:",
 
   "ahorcado.instructions.interfaceLanguage":
     "Puedes jugar a este juego en diferentes idiomas para practicar.",

@@ -414,7 +414,7 @@ const elementos = [
   {
     id: 63,
     palabras: ["muñeca", "nina", "doll", "poupée", "bambola", "boneca"],
-    imagen: "../../assets/img/iconos/muñeca.png",
+    imagen: "../../assets/img/iconos/muneca.png",
   },
   {
     id: 64,

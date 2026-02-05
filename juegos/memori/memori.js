@@ -466,6 +466,40 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ------------------ MODO DESAFÍO ------------------
+    function mostrarModalTiempoAgotadoConRecord() {
+      playSound(sonidos.finTiempo);
+
+      modal.classList.add("mostrar");
+
+      modal.querySelector("h2").textContent = t("memori.timeUpTitle");
+
+      // Texto principal
+      let texto = modal.querySelector("#mensajeTiempo");
+      if (!texto) {
+        texto = document.createElement("p");
+        texto.id = "mensajeTiempo";
+        modal.querySelector("h2").after(texto);
+      }
+
+      texto.textContent = t("memori.timeUpFinal");
+
+      // Nivel alcanzado
+      let nivelElement = modal.querySelector("#nivelAlcanzado");
+      if (!nivelElement) {
+        nivelElement = document.createElement("p");
+        nivelElement.id = "nivelAlcanzado";
+        texto.after(nivelElement);
+      }
+
+      nivelElement.textContent = `${t("memori.levelReached")} ${nivelMaximoAlcanzado}`;
+
+      // Ocultar registro inicialmente
+      registro.style.display = "none";
+
+      // Activar guardado
+      actualizarBotonGuardarDesafio();
+    }
+
     function mostrarModalDesafioFinal() {
       guardarBtn.disabled = false;
       guardarBtn.textContent = t("memori.saveRecord");
@@ -745,17 +779,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function mostrarModalTiempoAgotado() {
-      guardarBtn.disabled = false;
-      guardarBtn.textContent = t("memori.saveRecord");
-      playSound(sonidos.finTiempo);
       clearInterval(intervaloTiempo);
+      playSound(sonidos.finTiempo);
 
-      // Guardamos el nivel alcanzado aunque no se complete
+      // Guardamos el nivel alcanzado
       nivelMaximoAlcanzado = Math.max(nivelMaximoAlcanzado, nivelActual);
 
-      if (nivelActual >= 5) {
-        mostrarModalDesafioFinal();
+      if (nivelActual >= 6) {
+        // Modal tipo victoria (pero sin victoria)
+        mostrarModalTiempoAgotadoConRecord();
       } else {
+        // Derrota simple (reiniciar)
         mostrarModalTiempoAgotadoDesafio();
       }
     }

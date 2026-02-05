@@ -216,6 +216,9 @@ window.translationsCA = {
   "ranking.sort.points": "Ordenar per punts",
   "palabras.errors.invalidAmount":
     "El nombre de paraules ha d'estar entre 1 i 50",
+  "memori.timeUpTitle": "Temps esgotat",
+  "memori.timeUpFinal": "Has perdut per temps",
+  "memori.levelReached": "Nivell assolit:",
 
   "ranking.sort.date": "Ordenar per data",
   "ranking.sort.user": "Ordenar per nom",
