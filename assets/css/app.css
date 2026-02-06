@@ -662,6 +662,32 @@ footer a:hover {
 }
 
 /* =========================
+   TOAST IDIOMA SELECCIONADO
+========================= */
+.language-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  background: var(--color-secondary);
+  color: var(--color-light);
+  padding: 18px 32px;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  font-size: 1.2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.35s ease;
+  z-index: 3000;
+  text-align: center;
+}
+
+.language-toast.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* =========================
    Mejoras para toques (mobile/tablet)
 ========================= */
 @media (hover: none) and (pointer: coarse) {

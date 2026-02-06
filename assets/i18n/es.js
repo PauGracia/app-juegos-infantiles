@@ -202,6 +202,7 @@ window.translationsES = {
   "ahorcado.instructions.scoreKeeps":
     "La puntuación se acumula durante toda la partida.",
   "memori.recordSaved": "Récord guardado",
+  "language.selected": "Idioma seleccionado: {lang}",
   "ahorcado.instructions.saveRecord":
     "Al finalizar puedes guardar tu récord en el ranking local.",
   "ahorcado.instructions.ranking": "RANKING:",

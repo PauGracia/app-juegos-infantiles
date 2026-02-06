@@ -94,6 +94,7 @@ window.translationsPT = {
   "operaciones.continueChallenge": "Deseja continuar com o próximo nível?",
   "operaciones.andNowStarts": "e agora você começa",
   "common.continue": "Continuar",
+  "language.selected": "Idioma selecionado: {lang}",
   "operaciones.incorrectOperations": "Operações incorretas",
   "operaciones.challengeCompleted": "Modo Desafio concluído!",
   "operaciones.allLevelsCompleted": "Você completou todos os níveis.",

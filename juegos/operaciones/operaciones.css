@@ -1,4 +1,21 @@
 /*----Juego Operaciones-----*/
+
+/* Añade al inicio del CSS */
+body {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+:root {
+  --verde-operacion: #2e7d5b;
+}
+
+body.translations-loaded {
+  visibility: visible;
+  opacity: 1;
+}
+
 html,
 body {
   margin: 0;
@@ -90,6 +107,8 @@ body {
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .operacion::before {
@@ -99,7 +118,7 @@ body {
   left: 0;
   right: 0;
   height: 5px;
-  background: linear-gradient(90deg, #2e7d5b, #4caf50, #2e7d5b);
+  background: var(--verde-operacion);
 }
 
 .operacion:hover {
@@ -114,18 +133,23 @@ body {
   width: 100%;
   font-weight: 600;
   margin: 6px 0;
-  color: #2e7d5b;
+  color: var(--verde-operacion);
 }
 
 .operacion .operador {
   font-weight: 700;
-  color: #2e7d5b;
+  color: var(--verde-operacion);
 }
 
 .operacion .raya {
   border-top: 3px solid #444;
   margin: 8px 0;
   opacity: 0.8;
+}
+
+.operacion .linea,
+.operacion .operador {
+  font-weight: 700;
 }
 
 /* Inputs mejorados */
@@ -1114,7 +1138,7 @@ body {
     font-size: 2rem;
     padding: 10px 15px;
     margin: 15px 10px;
-    margin-top: 75px;
+    margin-top: 40px;
   }
 
   .operaciones-pizarra {

@@ -42,6 +42,30 @@ function cerrarModalSettings() {
   });
 }
 
+function mostrarToastIdioma(texto) {
+  const toast = document.getElementById("language-toast");
+  if (!toast) return;
+
+  toast.textContent = texto;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2500);
+}
+
+document.addEventListener("languageChanged", (e) => {
+  if (!e.detail.manual) return; // ignorar inicio automático
+
+  const lang = e.detail.lang;
+
+  const langName = translations[`language.${lang}`] || lang.toUpperCase();
+  const template =
+    translations["language.selected"] || "Language selected: {lang}";
+
+  mostrarToastIdioma(template.replace("{lang}", langName));
+});
+
 // Asignar eventos a los botones del menú de ajustes
 document.addEventListener("DOMContentLoaded", function () {
   // Botón de idiomas

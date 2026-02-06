@@ -26,13 +26,22 @@ document.addEventListener("languageChanged", () => {
 
 function applyStaticTranslations() {
   if (!window.translations) return;
+
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const key = el.dataset.i18n;
     if (window.translations[key]) {
       el.textContent = window.translations[key];
     }
   });
+
+  // Marcar que las traducciones se han cargado
+  document.body.classList.add("translations-loaded");
 }
+
+// Asegurar que se muestre incluso si no hay traducciones
+setTimeout(() => {
+  document.body.classList.add("translations-loaded");
+}, 500);
 
 function updateDynamicTexts() {
   if (!window.translations) return;

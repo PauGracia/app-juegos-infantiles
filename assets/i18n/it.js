@@ -203,6 +203,8 @@ window.translationsIT = {
     "Puoi giocare a questo gioco in diverse lingue per esercitarti.",
   "ahorcado.instructions.goodLuck": "Buona fortuna!",
   "common.playAgain": "Gioca di nuovo",
+  "language.selected": "Lingua selezionata: {lang}",
+
   "palabras.errors.invalidAmount":
     "Il numero di parole deve essere compreso tra 1 e 50",
   "memori.recordSaved": "Record salvato",

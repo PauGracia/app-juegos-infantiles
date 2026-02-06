@@ -33,12 +33,30 @@
         <h2 data-i18n="menu.language.title">Idioma</h2>
 
         <div class="language-list">
-          <button onclick="loadLanguage('es')" data-i18n="language.es"></button>
-          <button onclick="loadLanguage('en')" data-i18n="language.en"></button>
-          <button onclick="loadLanguage('ca')" data-i18n="language.ca"></button>
-          <button onclick="loadLanguage('fr')" data-i18n="language.fr"></button>
-          <button onclick="loadLanguage('it')" data-i18n="language.it"></button>
-          <button onclick="loadLanguage('pt')" data-i18n="language.pt"></button>
+          <button
+            onclick="loadLanguage('es', true)"
+            data-i18n="language.es"
+          ></button>
+          <button
+            onclick="loadLanguage('en', true)"
+            data-i18n="language.en"
+          ></button>
+          <button
+            onclick="loadLanguage('ca', true)"
+            data-i18n="language.ca"
+          ></button>
+          <button
+            onclick="loadLanguage('fr', true)"
+            data-i18n="language.fr"
+          ></button>
+          <button
+            onclick="loadLanguage('it', true)"
+            data-i18n="language.it"
+          ></button>
+          <button
+            onclick="loadLanguage('pt', true)"
+            data-i18n="language.pt"
+          ></button>
         </div>
 
         <button
@@ -105,6 +123,9 @@
         </li>
       </ul>
     </div>
+    <!-- Toast idioma seleccionado -->
+    <div id="language-toast" class="language-toast" aria-live="polite"></div>
+
     <footer id="main-footer">
       <div class="footer-content">
         <!-- Parte visible inicialmente -->

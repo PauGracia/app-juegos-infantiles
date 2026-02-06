@@ -219,7 +219,7 @@ window.translationsCA = {
   "memori.timeUpTitle": "Temps esgotat",
   "memori.timeUpFinal": "Has perdut per temps",
   "memori.levelReached": "Nivell assolit:",
-
+  "language.selected": "Idioma seleccionat: {lang}",
   "ranking.sort.date": "Ordenar per data",
   "ranking.sort.user": "Ordenar per nom",
   "ranking.filterUser": "Filtrar per usuari",

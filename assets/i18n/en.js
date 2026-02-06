@@ -214,6 +214,7 @@ window.translationsEN = {
     "You can play this game in different languages to practice.",
   "ahorcado.instructions.goodLuck": "Good luck!",
   "memori.recordSaved": "Record saved",
+  "language.selected": "Selected language: {lang}",
   "palabras.errors.invalidAmount":
     "The number of words must be between 1 and 50",
   "ranking.sort.points": "Sort by points",
