@@ -217,6 +217,11 @@ window.translationsES = {
   "memori.timeUpTitle": "Tiempo agotado",
   "memori.timeUpFinal": "Has perdido por tiempo",
   "memori.levelReached": "Nivel alcanzado:",
+  "operaciones.congratulations": "¡Felicidades!",
+  "operaciones.hasCompleted": "Has superado el nivel para",
+  "operaciones.continueChallenge": "¿Quieres continuar con el siguiente nivel?",
+  "operaciones.andNowStarts": "y ahora comienzas",
+  "common.continue": "Continuar",
 
   "ahorcado.instructions.interfaceLanguage":
     "Puedes jugar a este juego en diferentes idiomas para practicar.",

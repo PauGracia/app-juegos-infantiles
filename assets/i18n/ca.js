@@ -225,6 +225,11 @@ window.translationsCA = {
   "ranking.filterUser": "Filtrar per usuari",
   "operaciones.invalidNumOperations":
     "El nombre d’operacions ha d’estar entre 3 i 50",
+  "operaciones.congratulations": "Felicitats!",
+  "operaciones.hasCompleted": "Has superat el nivell per a",
+  "operaciones.continueChallenge": "Vols continuar amb el següent nivell?",
+  "operaciones.andNowStarts": "i ara comences",
+  "common.continue": "Continuar",
   "operaciones.invalidMaxOperator": "El nombre màxim ha d’estar entre 3 i 1000",
   "operaciones.invalidTime":
     "El temps mínim és de 5 segons (o 0 per sense límit)",

@@ -106,6 +106,7 @@ let comprobacionBloqueada = false;
 let inicioTiempo = null;
 let tiempoLimiteModoNormal = null;
 let contextoSalida = null; // "juego" | "menu"
+let ultimoGrupoEdadSuperado = "";
 
 // ───── SONIDOS ─────
 const sonidoComprobar = new Audio("sounds/ping.mp3");
@@ -113,7 +114,9 @@ const sonidoFinal = new Audio("sounds/finalOperaciones.mp3");
 const sonidoFinTiempo = new Audio("sounds/fin-time.mp3");
 const sonidoNuevoNivel = new Audio("sounds/new-level.mp3");
 const sonidoGranVictoria = new Audio("sounds/gran-victoria.mp3");
+const sonidoSuperacionEdad = new Audio("sounds/edad.mp3");
 sonidoGranVictoria.preload = "auto";
+sonidoSuperacionEdad.preload = "auto";
 
 // Para evitar retrasos al reproducir
 [sonidoComprobar, sonidoFinal, sonidoFinTiempo, sonidoNuevoNivel].forEach(
@@ -133,13 +136,17 @@ function abrirModalInstrucciones() {
 function cerrarModalInstrucciones() {
   document.getElementById("modal-instrucciones").classList.add("oculto");
 }
+
 function reglasNivel(nivel) {
   let reglas = {
     cantidad: 5,
     max: 10,
     negativos: false,
     ops: ["+"],
-    tiempo: 480, // 8 min por defecto
+    tiempo: 480,
+    grupoEdad: "",
+    minEdad: 0,
+    maxEdad: 0,
   };
 
   // ───────────────
@@ -149,28 +156,43 @@ function reglasNivel(nivel) {
     reglas.ops = ["+"];
     reglas.cantidad = 5;
     reglas.max = 5;
+    reglas.grupoEdad = "6 a 7 años";
+    reglas.minEdad = 6;
+    reglas.maxEdad = 7;
   }
 
   if (nivel === 2) {
     reglas.ops = ["+", "-"];
     reglas.cantidad = 5;
     reglas.max = 5;
+    reglas.grupoEdad = "6 a 7 años";
+    reglas.minEdad = 6;
+    reglas.maxEdad = 7;
   }
 
   if (nivel === 3) {
     reglas.cantidad = 6;
     reglas.max = 10;
+    reglas.grupoEdad = "6 a 7 años";
+    reglas.minEdad = 6;
+    reglas.maxEdad = 7;
   }
 
   if (nivel === 4) {
     reglas.cantidad = 8;
     reglas.max = 10;
+    reglas.grupoEdad = "6 a 7 años";
+    reglas.minEdad = 6;
+    reglas.maxEdad = 7;
   }
 
   if (nivel === 5) {
     reglas.cantidad = 10;
     reglas.max = 10;
     reglas.tiempo = 420;
+    reglas.grupoEdad = "6 a 7 años";
+    reglas.minEdad = 6;
+    reglas.maxEdad = 7;
   }
 
   // ───────────────
@@ -179,27 +201,42 @@ function reglasNivel(nivel) {
   if (nivel === 6) {
     reglas.cantidad = 8;
     reglas.max = 20;
+    reglas.grupoEdad = "7 a 8 años";
+    reglas.minEdad = 7;
+    reglas.maxEdad = 8;
   }
 
   if (nivel === 7) {
     reglas.cantidad = 10;
     reglas.max = 20;
+    reglas.grupoEdad = "7 a 8 años";
+    reglas.minEdad = 7;
+    reglas.maxEdad = 8;
   }
 
   if (nivel === 8) {
     reglas.cantidad = 10;
     reglas.max = 30;
+    reglas.grupoEdad = "7 a 8 años";
+    reglas.minEdad = 7;
+    reglas.maxEdad = 8;
   }
 
   if (nivel === 9) {
     reglas.cantidad = 12;
     reglas.max = 30;
+    reglas.grupoEdad = "7 a 8 años";
+    reglas.minEdad = 7;
+    reglas.maxEdad = 8;
   }
 
   if (nivel === 10) {
     reglas.cantidad = 12;
     reglas.max = 50;
     reglas.tiempo = 360;
+    reglas.grupoEdad = "7 a 8 años";
+    reglas.minEdad = 7;
+    reglas.maxEdad = 8;
   }
 
   // ───────────────
@@ -209,22 +246,34 @@ function reglasNivel(nivel) {
     reglas.ops = ["+", "-", "*"];
     reglas.cantidad = 8;
     reglas.max = 10;
+    reglas.grupoEdad = "8 a 9 años";
+    reglas.minEdad = 8;
+    reglas.maxEdad = 9;
   }
 
   if (nivel === 12) {
     reglas.cantidad = 10;
     reglas.max = 10;
+    reglas.grupoEdad = "8 a 9 años";
+    reglas.minEdad = 8;
+    reglas.maxEdad = 9;
   }
 
   if (nivel === 13) {
     reglas.cantidad = 10;
     reglas.max = 20;
+    reglas.grupoEdad = "8 a 9 años";
+    reglas.minEdad = 8;
+    reglas.maxEdad = 9;
   }
 
   if (nivel === 14) {
     reglas.cantidad = 12;
     reglas.max = 20;
     reglas.tiempo = 360;
+    reglas.grupoEdad = "8 a 9 años";
+    reglas.minEdad = 8;
+    reglas.maxEdad = 9;
   }
 
   // ───────────────
@@ -234,22 +283,34 @@ function reglasNivel(nivel) {
     reglas.ops = ["+", "-", "*", "/"];
     reglas.cantidad = 8;
     reglas.max = 10;
+    reglas.grupoEdad = "9 a 10 años";
+    reglas.minEdad = 9;
+    reglas.maxEdad = 10;
   }
 
   if (nivel === 16) {
     reglas.cantidad = 10;
     reglas.max = 20;
+    reglas.grupoEdad = "9 a 10 años";
+    reglas.minEdad = 9;
+    reglas.maxEdad = 10;
   }
 
   if (nivel === 17) {
     reglas.cantidad = 12;
     reglas.max = 30;
+    reglas.grupoEdad = "9 a 10 años";
+    reglas.minEdad = 9;
+    reglas.maxEdad = 10;
   }
 
   if (nivel === 18) {
     reglas.cantidad = 14;
     reglas.max = 30;
     reglas.tiempo = 300;
+    reglas.grupoEdad = "9 a 10 años";
+    reglas.minEdad = 9;
+    reglas.maxEdad = 10;
   }
 
   // ───────────────
@@ -259,6 +320,9 @@ function reglasNivel(nivel) {
     reglas.negativos = true;
     reglas.cantidad = 12;
     reglas.max = 20;
+    reglas.grupoEdad = "Reto Final";
+    reglas.minEdad = 10;
+    reglas.maxEdad = 12;
   }
 
   if (nivel === 20) {
@@ -266,6 +330,9 @@ function reglasNivel(nivel) {
     reglas.cantidad = 15;
     reglas.max = 30;
     reglas.tiempo = 300;
+    reglas.grupoEdad = "Reto Final";
+    reglas.minEdad = 10;
+    reglas.maxEdad = 12;
   }
 
   return reglas;
@@ -349,12 +416,32 @@ function salirModoDesafio() {
   document.getElementById("modal-modo").style.display = "flex";
 }
 
+const NIVELES_ULTIMOS_GRUPO = [5, 10, 14, 18, 20];
+
 function mostrarModalNivelSuperado() {
   // nuevo nivel
   reproducirSonido(sonidoNuevoNivel);
 
+  // Obtener información del nivel COMPLETADO (nivelDesafio - 1 es el que acaba de completar)
+  const nivelCompletado = nivelDesafio - 1;
+  const reglasCompletado = reglasNivel(nivelCompletado);
+
+  // Verificar si el nivel completado es el ÚLTIMO de su grupo de edad
+  if (NIVELES_ULTIMOS_GRUPO.includes(nivelCompletado)) {
+    // Obtener información del SIGUIENTE nivel (el que vamos a jugar)
+    const reglasSiguiente = reglasNivel(nivelDesafio);
+
+    // Mostrar modal especial de nivel de edad
+    mostrarModalNivelEdad(
+      reglasSiguiente.grupoEdad,
+      reglasCompletado.grupoEdad,
+    );
+    return;
+  }
+
+  // Si no es un cambio de edad, mostrar el modal normal
   mostrarModalAviso(
-    `🎉 ${t("operaciones.levelCompleted") || "Nivel"} ${nivelDesafio - 1} ${
+    `🎉 ${t("operaciones.levelCompleted") || "Nivel"} ${nivelCompletado} ${
       t("operaciones.superado") || "superado"
     }`,
   );
@@ -362,6 +449,49 @@ function mostrarModalNivelSuperado() {
     cerrarModalAviso();
     lanzarNivelDesafio();
   }, 2000);
+}
+
+function mostrarModalNivelEdad(nuevoGrupoEdad, grupoAnterior) {
+  reproducirSonido(sonidoSuperacionEdad);
+
+  // Traducciones según el idioma
+  const felicidades = t("operaciones.congratulations") || "¡Felicidades!";
+  const hasSuperado =
+    t("operaciones.hasCompleted") || "Has superado el nivel para";
+  const quieresContinuar =
+    t("operaciones.continueChallenge") ||
+    "¿Quieres continuar con el siguiente nivel?";
+  const yAhoraComienzas = t("operaciones.andNowStarts") || "y ahora comienzas";
+
+  document.getElementById("titulo-nivel-edad").textContent = felicidades;
+
+  // Mostrar ambos grupos si hay un grupo anterior
+  if (grupoAnterior && grupoAnterior !== nuevoGrupoEdad) {
+    document.getElementById("mensaje-nivel-edad").textContent =
+      `${hasSuperado} ${grupoAnterior} ${yAhoraComienzas} ${nuevoGrupoEdad}!`;
+  } else {
+    document.getElementById("mensaje-nivel-edad").textContent =
+      `${hasSuperado} ${nuevoGrupoEdad}!`;
+  }
+
+  document.getElementById("detalle-nivel-edad").textContent = quieresContinuar;
+
+  // Mostrar el modal
+  document.getElementById("modal-nivel-edad").classList.remove("oculto");
+}
+
+function cerrarModalNivelEdad() {
+  document.getElementById("modal-nivel-edad").classList.add("oculto");
+}
+
+function continuarDesafio() {
+  cerrarModalNivelEdad();
+  lanzarNivelDesafio();
+}
+
+function salirDeDesafio() {
+  cerrarModalNivelEdad();
+  salirModoDesafio();
 }
 
 function derrotaTiempo() {
@@ -983,6 +1113,7 @@ function resetearTodo() {
   comprobacionBloqueada = false;
   numeroComprobaciones = 0;
   tiempoRestante = 0;
+  ultimoGrupoEdadSuperado = "";
 
   // ─── UI del juego ───
   document.getElementById("pizarra").innerHTML = "";
@@ -1016,7 +1147,7 @@ function resetearTodo() {
     .querySelectorAll("input[type='number'], input[type='text']")
     .forEach((input) => (input.value = ""));
 
-  // Clases visuales de modo (si usas botones)
+  // Clases visuales de modo
   modal
     .querySelectorAll(".activo, .seleccionado")
     .forEach((el) => el.classList.remove("activo", "seleccionado"));
@@ -1156,3 +1287,15 @@ btnSalirFinal.addEventListener("click", (e) => {
   contextoSalida = "juego";
   abrirConfirmacionSalir();
 });
+
+// Botones modal niveles de edad
+const btnContinuarDesafio = document.getElementById("btn-continuar-desafio");
+const btnSalirDesafio = document.getElementById("btn-salir-desafio");
+
+if (btnContinuarDesafio) {
+  btnContinuarDesafio.addEventListener("click", continuarDesafio);
+}
+
+if (btnSalirDesafio) {
+  btnSalirDesafio.addEventListener("click", salirDeDesafio);
+}

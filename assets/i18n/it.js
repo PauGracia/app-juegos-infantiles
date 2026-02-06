@@ -209,7 +209,11 @@ window.translationsIT = {
   "memori.timeUpTitle": "Tempo scaduto",
   "memori.timeUpFinal": "Hai perso per mancanza di tempo",
   "memori.levelReached": "Livello raggiunto:",
-
+  "operaciones.congratulations": "Congratulazioni!",
+  "operaciones.hasCompleted": "Hai completato il livello per",
+  "operaciones.continueChallenge": "Vuoi continuare con il livello successivo?",
+  "operaciones.andNowStarts": "e ora inizi",
+  "common.continue": "Continuare",
   "ranking.sort.points": "Ordina per punti",
   "ranking.sort.date": "Ordina per data",
   "ranking.sort.user": "Ordina per nome",

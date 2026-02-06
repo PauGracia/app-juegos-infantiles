@@ -232,6 +232,12 @@ window.translationsFR = {
   "memori.timeUpTitle": "Temps écoulé",
   "memori.timeUpFinal": "Vous avez manqué de temps",
   "memori.levelReached": "Niveau atteint :",
+  "operaciones.congratulations": "Félicitations !",
+  "operaciones.hasCompleted": "Vous avez terminé le niveau pour",
+  "operaciones.continueChallenge":
+    "Voulez-vous continuer avec le niveau suivant ?",
+  "operaciones.andNowStarts": "et maintenant vous commencez",
+  "common.continue": "Continuer",
 
   "operaciones.invalidNumOperations":
     "Le nombre d’opérations doit être compris entre 3 et 50",

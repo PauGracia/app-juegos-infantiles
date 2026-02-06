@@ -231,6 +231,12 @@ window.translationsEN = {
   "ranking.filterUser": "Filter by user",
   "ranking.clear": "Clear",
   "common.playAgain": "Play again",
+  "operaciones.congratulations": "Congratulations!",
+  "operaciones.hasCompleted": "You have completed the level for",
+  "operaciones.continueChallenge":
+    "Do you want to continue with the next level?",
+  "operaciones.andNowStarts": "and now you start",
+  "common.continue": "Continue",
   "ranking.noResults": "No results found",
   "common.clear": "Clear",
   "ranking.clearConfirm": "Are you sure you want to delete the entire ranking?",

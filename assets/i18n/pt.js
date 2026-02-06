@@ -89,7 +89,11 @@ window.translationsPT = {
   "memori.timeUpTitle": "Tempo esgotado",
   "memori.timeUpFinal": "Perdeste por falta de tempo",
   "memori.levelReached": "Nível alcançado:",
-
+  "operaciones.congratulations": "Parabéns!",
+  "operaciones.hasCompleted": "Você completou o nível para",
+  "operaciones.continueChallenge": "Deseja continuar com o próximo nível?",
+  "operaciones.andNowStarts": "e agora você começa",
+  "common.continue": "Continuar",
   "operaciones.incorrectOperations": "Operações incorretas",
   "operaciones.challengeCompleted": "Modo Desafio concluído!",
   "operaciones.allLevelsCompleted": "Você completou todos os níveis.",
