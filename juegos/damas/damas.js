@@ -500,9 +500,7 @@ const JuegoDamas = (() => {
   // ======================================================================
   // ANIMACIONES SIMPLIFICADAS
   // ======================================================================
-  // ======================================================================
-  // ANIMACIONES SIMPLIFICADAS - VERSIÓN CORREGIDA
-  // ======================================================================
+
   function animarCapturasConRuta(desde, capturas, ficha, callback) {
     const posiciones = [];
     let posActual = { r: desde.r, c: desde.c };
@@ -907,6 +905,7 @@ const JuegoDamas = (() => {
     });
 
   function init() {
+    initLanguage();
     document.getElementById("salirDamas").innerText = t("damas.exit");
 
     document
