@@ -1196,18 +1196,25 @@ function abrirConfirmacionSalir() {
 function cerrarConfirmacionSalir() {
   document.getElementById("modal-confirmar-salir").classList.add("oculto");
 }
+
 function confirmarSalida() {
   cerrarConfirmacionSalir();
 
+  // Salir al menú principal
   if (contextoSalida === "menu") {
     window.location.href = "../../index.html";
     return;
   }
 
-  // Salida desde el juego → reset TOTAL
-  resetearTodo();
+  // Salir desde el modal de nivel de edad (modo desafío)
+  if (contextoSalida === "nivel-edad") {
+    cerrarModalNivelEdad();
+    salirModoDesafio();
+    return;
+  }
 
-  // Volver al selector de modo
+  // Salida desde el juego normal
+  resetearTodo();
   document.getElementById("modal-modo").style.display = "flex";
 }
 
@@ -1306,5 +1313,8 @@ if (btnContinuarDesafio) {
 }
 
 if (btnSalirDesafio) {
-  btnSalirDesafio.addEventListener("click", salirDeDesafio);
+  btnSalirDesafio.addEventListener("click", () => {
+    contextoSalida = "nivel-edad";
+    abrirConfirmacionSalir();
+  });
 }
