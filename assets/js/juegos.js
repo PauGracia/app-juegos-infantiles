@@ -103,6 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+  initLanguage();
   const footer = document.querySelector("footer");
   const bodyIndex = document.getElementById("body-index");
   const footerTop = footer.querySelector(".footer-top");
@@ -187,4 +188,26 @@ document.addEventListener("DOMContentLoaded", () => {
   // Inicializamos altura
   footer.style.height = `${footerTop.offsetHeight}px`;
   updateBodyPadding(footerTop.offsetHeight);
+
+  document.querySelectorAll("[data-lang]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const lang = btn.dataset.lang;
+      loadLanguage(lang, true);
+    });
+  });
+
+  const footerAbout = document.getElementById("footer-about");
+
+  if (footerAbout) {
+    footerAbout.addEventListener("click", (e) => {
+      e.preventDefault();
+      abrirModalSettings("modal-objective");
+    });
+  }
+
+  document.querySelectorAll("[data-close-modal]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      cerrarModalSettings();
+    });
+  });
 });

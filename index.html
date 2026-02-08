@@ -7,6 +7,17 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
     />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data:;
+    media-src 'self';
+  "
+    />
+
     <title>Indice</title>
 
     <link rel="stylesheet" href="./assets/css/app.css" />
@@ -33,37 +44,16 @@
         <h2 data-i18n="menu.language.title">Idioma</h2>
 
         <div class="language-list">
-          <button
-            onclick="loadLanguage('es', true)"
-            data-i18n="language.es"
-          ></button>
-          <button
-            onclick="loadLanguage('en', true)"
-            data-i18n="language.en"
-          ></button>
-          <button
-            onclick="loadLanguage('ca', true)"
-            data-i18n="language.ca"
-          ></button>
-          <button
-            onclick="loadLanguage('fr', true)"
-            data-i18n="language.fr"
-          ></button>
-          <button
-            onclick="loadLanguage('it', true)"
-            data-i18n="language.it"
-          ></button>
-          <button
-            onclick="loadLanguage('pt', true)"
-            data-i18n="language.pt"
-          ></button>
+          <button data-lang="es" data-i18n="language.es"></button>
+
+          <button data-lang="en" data-i18n="language.en"></button>
+          <button data-lang="ca" data-i18n="language.ca"></button>
+          <button data-lang="fr" data-i18n="language.fr"></button>
+          <button data-lang="it" data-i18n="language.it"></button>
+          <button data-lang="pt" data-i18n="language.pt"></button>
         </div>
 
-        <button
-          class="close-btn"
-          onclick="cerrarModalSettings()"
-          data-i18n="common.close"
-        >
+        <button class="close-btn" data-close-modal data-i18n="common.close">
           Cerrar
         </button>
       </div>
@@ -76,11 +66,7 @@
 
         <p data-i18n="menu.objective.text"></p>
 
-        <button
-          class="close-btn"
-          onclick="cerrarModalSettings()"
-          data-i18n="common.close"
-        >
+        <button class="close-btn" data-close-modal data-i18n="common.close">
           Cerrar
         </button>
       </div>
@@ -153,16 +139,8 @@
           </div>
 
           <div class="footer-links">
-            <a
-              href="#"
-              onclick="
-                document.getElementById('modal-objective').style.display =
-                  'flex'
-              "
-              data-i18n="footer.about"
-            >
-              Sobre el Proyecto
-            </a>
+            <a href="#" id="footer-about" data-i18n="footer.about"></a>
+
             <span>•</span>
             <a href="#" data-i18n="footer.privacy">Privacidad</a>
             <span>•</span>
@@ -177,10 +155,6 @@
     </footer>
 
     <script src="./assets/js/i18n.js" data-i18n-path="./assets/i18n/"></script>
-
-    <script>
-      initLanguage();
-    </script>
 
     <script src="./assets/js/juegos.js"></script>
   </body>
