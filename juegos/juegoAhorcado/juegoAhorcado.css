@@ -483,9 +483,14 @@ html {
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
   position: relative;
   overflow: hidden;
-  background: linear-gradient(45deg, #48bb78, #38a169) !important;
-  border: 2px solid white !important;
-  margin: 10px auto !important;
+
+  border: 2px solid white;
+  margin: 10px auto;
+}
+
+#modal-final-contenido button,
+#btnModalInfoAceptar {
+  background: linear-gradient(45deg, #48bb78, #38a169);
 }
 
 #modal-final-contenido button:last-child {
@@ -547,6 +552,10 @@ html {
 #btnSalir-modal,
 #modal-final-contenido button:last-child {
   background: linear-gradient(45deg, #a0aec0, #718096);
+}
+
+#btnSalir-modal {
+  background: linear-gradient(45deg, #f56565, #e53e3e);
 }
 
 #btnModalInfoAceptar {
@@ -731,7 +740,7 @@ html {
 }
 
 .btn-modal--blue {
-  background: linear-gradient(45deg, #4a90e2, #357abd);
+  background: linear-gradient(45deg, #48bb78, #38a169);
   border: 2px solid rgba(255, 255, 255, 0.8);
 }
 
