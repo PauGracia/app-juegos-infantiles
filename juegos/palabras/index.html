@@ -6,9 +6,23 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data:;
+        media-src 'self';
+      "
+    />
     <title data-i18n="palabras.title">Escribe el nombre</title>
     <link rel="stylesheet" href="../../assets/css/app.css?v=20251111" />
     <link rel="stylesheet" href="palabras.css?v=20251111" />
+    <script
+      src="../../assets/js/i18n.js"
+      data-i18n-path="../../assets/i18n/"
+    ></script>
   </head>
 
   <body>
@@ -199,10 +213,6 @@
 
     <div id="mensaje-temporal"></div>
 
-    <script
-      src="../../assets/js/i18n.js"
-      data-i18n-path="../../assets/i18n/"
-    ></script>
     <script src="../../assets/js/elementos.js"></script>
     <script src="palabras.js"></script>
   </body>

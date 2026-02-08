@@ -7,8 +7,22 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
     />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data:;
+        media-src 'self';
+      "
+    />
     <link rel="stylesheet" href="../../assets/css/app.css?v=20251111" />
     <link rel="stylesheet" href="rankingMemori.css" />
+    <script
+      src="../../assets/js/i18n.js"
+      data-i18n-path="../../assets/i18n/"
+    ></script>
   </head>
   <body id="body-ranking">
     <!-- Header fijo -->
@@ -52,10 +66,6 @@
       <button id="atras" data-i18n="common.back">Atrás</button>
     </div>
 
-    <script
-      src="../../assets/js/i18n.js"
-      data-i18n-path="../../assets/i18n/"
-    ></script>
     <script src="rankingMemori.js"></script>
   </body>
 </html>

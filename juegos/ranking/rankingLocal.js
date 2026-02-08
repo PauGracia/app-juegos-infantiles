@@ -185,45 +185,21 @@ function initRanking() {
   }
 
   // Cargar ranking y actualizar traducciones
-  function inicializarTraducciones() {
-    if (window.translations && Object.keys(window.translations).length > 0) {
-      actualizarPlaceholders();
-      actualizarEtiquetasSelect();
-      cargarRanking();
-      return true;
-    }
-    return false;
-  }
 
-  // Intentar inicializar traducciones
-  if (!inicializarTraducciones()) {
-    // Si no hay traducciones aún, esperar
-    const esperaTraducciones = setInterval(() => {
-      if (inicializarTraducciones()) {
-        clearInterval(esperaTraducciones);
-      }
-    }, 100);
+  window.ranking_refrescarUI = function () {
+    actualizarPlaceholders();
+    actualizarEtiquetasSelect();
+    renderRanking();
+  };
 
-    // Timeout después de 3 segundos
-    setTimeout(() => {
-      clearInterval(esperaTraducciones);
-      // Inicializar sin traducciones como fallback
-      cargarRanking();
-    }, 3000);
-  }
+  cargarRanking();
 }
 
 // Inicializar cuando cambie el idioma
+
 document.addEventListener("languageChanged", () => {
-  actualizarPlaceholders();
-  actualizarEtiquetasSelect();
-  if (rankingInicializado) {
-    // Re-renderizar el ranking con las nuevas traducciones
-    const lista = document.getElementById("listaRanking");
-    if (lista) {
-      const event = new Event("change");
-      document.getElementById("ordenRanking").dispatchEvent(event);
-    }
+  if (typeof window.ranking_refrescarUI === "function") {
+    window.ranking_refrescarUI();
   }
 });
 

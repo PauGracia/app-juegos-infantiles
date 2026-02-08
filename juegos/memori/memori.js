@@ -16,6 +16,7 @@ function applyTranslations() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  initLanguage();
   function iniciarMemori() {
     // Referencias DOM
     const tablero = document.getElementById("tablero");

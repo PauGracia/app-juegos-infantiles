@@ -6,50 +6,23 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
     />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data:;
+        media-src 'self';
+      "
+    />
 
     <link rel="stylesheet" href="../../assets/css/app.css" />
     <link rel="stylesheet" href="rankingLocal.css" />
-
-    <!-- Scripts al final del head para evitar bloqueo -->
     <script
       src="../../assets/js/i18n.js"
       data-i18n-path="../../assets/i18n/"
     ></script>
-
-    <!-- Script de inicialización optimizado -->
-    <script>
-      // Configurar idioma antes de que la página se renderice
-      (function () {
-        // Obtener idioma guardado
-        const savedLang = localStorage.getItem("uiLang") || "es";
-
-        // Función para cargar idioma con retry
-        function cargarIdioma() {
-          if (typeof loadLanguage === "function") {
-            loadLanguage(savedLang);
-            return true;
-          }
-          return false;
-        }
-
-        // Intentar inmediatamente
-        if (!cargarIdioma()) {
-          // Si falla, intentar varias veces
-          let intentos = 0;
-          const intervalo = setInterval(() => {
-            intentos++;
-            if (cargarIdioma() || intentos >= 5) {
-              clearInterval(intervalo);
-            }
-          }, 150);
-        }
-
-        // Para Cordova
-        if (typeof device !== "undefined") {
-          document.addEventListener("deviceready", cargarIdioma, false);
-        }
-      })();
-    </script>
   </head>
 
   <body class="body-ranking">
@@ -112,6 +85,7 @@
         </div>
       </div>
     </div>
+
     <script src="rankingLocal.js"></script>
   </body>
 </html>

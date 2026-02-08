@@ -19,6 +19,10 @@
     <title data-i18n="menu.ahorcado">El Ahorcado</title>
     <link rel="stylesheet" href="../../assets/css/app.css?v=20251111" />
     <link rel="stylesheet" href="juegoAhorcado.css" />
+    <script
+      src="../../assets/js/i18n.js"
+      data-i18n-path="../../assets/i18n/"
+    ></script>
   </head>
 
   <body class="body-ahorcado">
@@ -181,31 +185,6 @@
       </div>
     </div>
 
-    <script
-      src="../../assets/js/i18n.js"
-      data-i18n-path="../../assets/i18n/"
-    ></script>
-    <script>
-      // Inicializar el idioma desde localStorage cuando se carga el juego
-      document.addEventListener("DOMContentLoaded", function () {
-        // Cargar el idioma guardado desde el menú
-        const savedLang = localStorage.getItem("uiLang") || "es";
-
-        // Verificar si loadLanguage existe
-        if (typeof loadLanguage === "function") {
-          loadLanguage(savedLang);
-        } else {
-          // Si no está disponible, esperar un momento e intentar de nuevo
-          setTimeout(() => {
-            if (typeof loadLanguage === "function") {
-              loadLanguage(savedLang);
-            } else {
-              console.error("loadLanguage no está definido");
-            }
-          }, 100);
-        }
-      });
-    </script>
     <script src="../../assets/js/palabras.js"></script>
     <script src="juegoAhorcado.js"></script>
   </body>

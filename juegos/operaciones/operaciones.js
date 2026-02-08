@@ -104,6 +104,9 @@ document.addEventListener("languageChanged", () => {
 
 // Obtener elementos del DOM para configuración
 const nivelSelect = document.getElementById("nivel");
+if (nivelSelect) {
+  nivelSelect.addEventListener("change", cambiarNivel);
+}
 const inputMaximo = document.getElementById("input-maximo");
 
 let numeroComprobaciones = 0;
@@ -808,32 +811,6 @@ function crearOperacion(a, b, op) {
   });
 
   pizarra.appendChild(div);
-}
-
-// Configurar comportamiento del nivel 2 (deshabilitar operador máximo)
-if (nivelSelect && inputMaximo) {
-  nivelSelect.addEventListener("change", () => {
-    if (nivelSelect.value === "2") {
-      inputMaximo.disabled = true;
-      inputMaximo.value = "";
-      const notApplicableText =
-        window.translations && window.translations["operaciones.notApplicable"];
-      inputMaximo.placeholder = notApplicableText || "No aplicable en nivel 2";
-    } else {
-      inputMaximo.disabled = false;
-      const maxOpText =
-        window.translations &&
-        window.translations["operaciones.maxOperatorPlaceholder"];
-      inputMaximo.placeholder = maxOpText || "Número Operador (solo nivel 1)";
-    }
-  });
-
-  // Ejecutar cambio inicial después de un pequeño delay para que las traducciones se carguen
-  setTimeout(() => {
-    if (nivelSelect) {
-      nivelSelect.dispatchEvent(new Event("change"));
-    }
-  }, 500);
 }
 
 const btnComprobar = document.getElementById("btn-comprobar");

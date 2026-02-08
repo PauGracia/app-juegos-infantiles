@@ -6,9 +6,23 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
     />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data:;
+        media-src 'self';
+      "
+    />
     <title data-i18n="operaciones.title">Operaciones</title>
     <link rel="stylesheet" href="../../assets/css/app.css?v=20251111" />
     <link rel="stylesheet" href="operaciones.css" />
+    <script
+      src="../../assets/js/i18n.js"
+      data-i18n-path="../../assets/i18n/"
+    ></script>
   </head>
   <body class="body-operaciones">
     <div class="modal-operaciones" id="modal-modo">
@@ -57,7 +71,7 @@
         <label for="nivel" data-i18n="operaciones.difficultyLevel"
           >Nivel de dificultad:</label
         ><br />
-        <select id="nivel" onchange="cambiarNivel()">
+        <select id="nivel">
           <option value="1" data-i18n="operaciones.level1">
             Nivel 1 (fácil)
           </option>
@@ -253,11 +267,6 @@
         </div>
       </div>
     </div>
-    <script
-      src="../../assets/js/i18n.js"
-      data-i18n-path="../../assets/i18n/"
-    ></script>
-
     <script src="operaciones.js"></script>
   </body>
 </html>

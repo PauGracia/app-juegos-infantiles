@@ -1,19 +1,24 @@
-function initIdioma() {
-  const savedLang = localStorage.getItem("uiLang") || "es";
+// escucha languageChanged
 
-  if (typeof loadLanguage === "function") {
-    loadLanguage(savedLang);
-  } else {
-    setTimeout(initIdioma, 100);
-  }
+function actualizarEtiquetasSelectIdioma() {
+  const select = document.getElementById("idioma-juego");
+  if (!select || !window.translations) return;
+
+  select.querySelectorAll("option").forEach((opt) => {
+    const key = `language.${opt.value}`;
+    opt.textContent = window.translations[key] || opt.value;
+  });
 }
 
-if (window.cordova) {
-  // Cordova
-  document.addEventListener("deviceready", initIdioma, false);
-} else {
-  // Web normal
-  document.addEventListener("DOMContentLoaded", initIdioma);
+document.addEventListener("languageChanged", () => {
+  actualizarEtiquetasSelectIdioma();
+  actualizarTextosJuego();
+});
+
+function actualizarTextosJuego() {
+  if (typeof window.ah_refrescarUI === "function") {
+    window.ah_refrescarUI();
+  }
 }
 
 /* =========================
@@ -31,50 +36,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // INICIALIZAR IDIOMA DEL SELECT (VERSIÓN SIMPLIFICADA)
     // ================================
     function inicializarSelectIdioma() {
-      const savedLang = localStorage.getItem("uiLang") || "es";
-      const idiomaJuegoSelect = document.getElementById("idioma-juego");
+      const select = document.getElementById("idioma-juego");
+      if (!select) return;
 
-      if (idiomaJuegoSelect) {
-        // Establecer el valor por defecto
-        idiomaJuegoSelect.value = savedLang;
+      const savedGameLang = localStorage.getItem("gameLang") || "es";
+      select.value = savedGameLang;
 
-        // Si ya tenemos traducciones, actualizar las etiquetas
-        if (window.translations) {
-          actualizarEtiquetasSelect(idiomaJuegoSelect);
-        }
-        // Si no, intentar de nuevo después de un tiempo
-        else {
-          setTimeout(() => {
-            if (window.translations) {
-              actualizarEtiquetasSelect(idiomaJuegoSelect);
-            } else {
-              // Último intento
-              setTimeout(() => {
-                if (window.translations) {
-                  actualizarEtiquetasSelect(idiomaJuegoSelect);
-                }
-              }, 500);
-            }
-          }, 300);
-        }
-      }
-    }
-
-    function actualizarEtiquetasSelect(selectElement) {
-      if (!selectElement || !window.translations) return;
-
-      const options = selectElement.querySelectorAll("option");
-      options.forEach((option) => {
-        const langCode = option.value;
-        const translationKey = `language.${langCode}`;
-        if (window.translations[translationKey]) {
-          option.textContent = window.translations[translationKey];
-        }
+      select.addEventListener("change", (e) => {
+        ah_idiomaJuego = e.target.value;
+        localStorage.setItem("gameLang", ah_idiomaJuego);
       });
     }
 
-    // Llamar a la inicialización después de un breve delay
-    setTimeout(inicializarSelectIdioma, 100);
+    // Llamar a la inicialización
+    document.addEventListener("DOMContentLoaded", inicializarSelectIdioma);
 
     // Elementos del DOM
     const palabraEl = document.getElementById("palabra");
@@ -580,6 +555,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     window.iniciarAhorcado = function () {
+      ah_idiomaJuego =
+        localStorage.getItem("gameLang") ||
+        document.getElementById("idioma-juego")?.value ||
+        "es";
+
       ah_bloqueado = false;
 
       ah_ayudas = 2;
@@ -621,7 +601,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (modalInicio) modalInicio.style.display = "none";
 
       ah_puntos = 0;
-      ah_actualizarMarcador();
+      window.ah_refrescarUI = function () {
+        ah_actualizarMarcador();
+      };
+
       ah_resetearSVG();
       ah_nuevaPalabra();
     };
