@@ -765,7 +765,6 @@
   }
 
   #tablero-damas {
-    width: 85vw;
     max-width: 85vw;
     height: auto;
     aspect-ratio: 1/1;
@@ -773,7 +772,6 @@
   }
 
   .panel-y-botones {
-    width: 85vw;
     max-width: 85vw;
     margin: 0 auto;
     order: 2;
