@@ -94,6 +94,11 @@ window.translationsPT = {
   "operaciones.continueChallenge": "Deseja continuar com o próximo nível?",
   "operaciones.andNowStarts": "e agora você começa",
   "common.continue": "Continuar",
+  "damas.title": "Jogo de Damas",
+  "damas.config.aiLevel": "Nível da IA",
+  "damas.config.aiNormal": "Normal",
+  "damas.config.aiHard": "Difícil",
+
   "language.selected": "Idioma selecionado: {lang}",
   "operaciones.incorrectOperations": "Operações incorretas",
   "operaciones.challengeCompleted": "Modo Desafio concluído!",

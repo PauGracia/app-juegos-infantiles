@@ -203,6 +203,7 @@ window.translationsES = {
     "La puntuación se acumula durante toda la partida.",
   "memori.recordSaved": "Récord guardado",
   "language.selected": "Idioma seleccionado: {lang}",
+  "damas.title": "Juego de Damas",
   "ahorcado.instructions.saveRecord":
     "Al finalizar puedes guardar tu récord en el ranking local.",
   "ahorcado.instructions.ranking": "RANKING:",
@@ -223,6 +224,9 @@ window.translationsES = {
   "operaciones.continueChallenge": "¿Quieres continuar con el siguiente nivel?",
   "operaciones.andNowStarts": "y ahora comienzas",
   "common.continue": "Continuar",
+  "damas.config.aiLevel": "Nivel de la IA",
+  "damas.config.aiNormal": "Normal",
+  "damas.config.aiHard": "Difícil",
 
   "ahorcado.instructions.interfaceLanguage":
     "Puedes jugar a este juego en diferentes idiomas para practicar.",

@@ -204,9 +204,14 @@ window.translationsIT = {
   "ahorcado.instructions.goodLuck": "Buona fortuna!",
   "common.playAgain": "Gioca di nuovo",
   "language.selected": "Lingua selezionata: {lang}",
+  "damas.config.aiLevel": "Livello dell’IA",
+  "damas.config.aiNormal": "Normale",
+  "damas.config.aiHard": "Difficile",
 
   "palabras.errors.invalidAmount":
     "Il numero di parole deve essere compreso tra 1 e 50",
+  "damas.title": "Gioco della Dama",
+
   "memori.recordSaved": "Record salvato",
   "memori.timeUpTitle": "Tempo scaduto",
   "memori.timeUpFinal": "Hai perso per mancanza di tempo",

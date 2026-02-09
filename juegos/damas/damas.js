@@ -88,7 +88,7 @@ const JuegoDamas = (() => {
     capturasHumano: 0,
     mostrarSugerencias: true,
     sorteoRealizado: false,
-
+    nivelIA: "normal", // "normal" | "dificil"
     capturasIA: 0,
   };
 
@@ -401,6 +401,16 @@ const JuegoDamas = (() => {
     return movsSimples;
   }
 
+  function calcularMovimientosDesdeMatriz(matriz, r, c) {
+    const backup = estadoGlobalDamas.matrizDamas;
+    estadoGlobalDamas.matrizDamas = matriz;
+
+    const res = calcularMovimientosDesdeDamas(r, c);
+
+    estadoGlobalDamas.matrizDamas = backup;
+    return res;
+  }
+
   function ejecutarMovimientoDamas(mov) {
     if (estadoGlobalDamas.juegoTerminadoFlag) return;
 
@@ -495,6 +505,64 @@ const JuegoDamas = (() => {
 
       terminarTurnoDamas();
     }
+  }
+
+  function evaluarMovimientoIA(mov) {
+    let score = 0;
+
+    // 1Capturar es bueno
+    score += mov.capturas.length * 100;
+
+    // Coronar es MUY bueno
+    if (mov.reyDespues) score += 300;
+
+    // Avanzar piezas normales
+    const avance =
+      estadoGlobalDamas.ladoHumanoAsignado === "top"
+        ? mov.hacia.r
+        : 7 - mov.hacia.r;
+    score += avance * 2;
+
+    // Evitar quedar capturable
+    const copia = simularMovimiento(mov);
+    if (piezaQuedaEnPeligro(copia, mov.hacia)) score -= 400;
+
+    return score;
+  }
+
+  function simularMovimiento(mov) {
+    const m = clonarMatrizDamas(estadoGlobalDamas.matrizDamas);
+
+    const p = m[mov.desde.r][mov.desde.c];
+    m[mov.desde.r][mov.desde.c] = null;
+    m[mov.hacia.r][mov.hacia.c] = { ...p };
+
+    mov.capturas.forEach((c) => {
+      m[c.r][c.c] = null;
+    });
+
+    if (mov.reyDespues) m[mov.hacia.r][mov.hacia.c].rey = true;
+
+    return m;
+  }
+
+  function piezaQuedaEnPeligro(matriz, pos) {
+    for (let r = 0; r < 8; r++)
+      for (let c = 0; c < 8; c++) {
+        const p = matriz[r][c];
+        if (!p || p.dueño === estadoGlobalDamas.ladoHumanoAsignado) continue;
+
+        const caps = calcularMovimientosDesdeMatriz(matriz, r, c);
+
+        if (
+          caps.some((m) =>
+            m.capturas.some((cap) => cap.r === pos.r && cap.c === pos.c),
+          )
+        ) {
+          return true;
+        }
+      }
+    return false;
   }
 
   // ======================================================================
@@ -742,6 +810,7 @@ const JuegoDamas = (() => {
     if (estadoGlobalDamas.juegoTerminadoFlag) return;
 
     const movs = [];
+
     for (let r = 0; r < 8; r++)
       for (let c = 0; c < 8; c++) {
         const p = estadoGlobalDamas.matrizDamas[r][c];
@@ -749,20 +818,24 @@ const JuegoDamas = (() => {
         calcularMovimientosDesdeDamas(r, c).forEach((m) => movs.push(m));
       }
 
-    if (!movs.length) {
-      estadoGlobalDamas.juegoTerminadoFlag = true;
-      document.getElementById("ganador-info").textContent = "TÚ";
-      return;
-    }
+    if (!movs.length) return;
 
-    const capt = movs.filter((m) => m.capturas.length);
-    const pool = capt.length ? capt : movs;
-    const choice = pool[Math.floor(Math.random() * pool.length)];
+    let choice;
+
+    if (estadoGlobalDamas.nivelIA === "dificil") {
+      choice = movs
+        .map((m) => ({ m, score: evaluarMovimientoIA(m) }))
+        .sort((a, b) => b.score - a.score)[0].m;
+    } else {
+      const capt = movs.filter((m) => m.capturas.length);
+      const pool = capt.length ? capt : movs;
+      choice = pool[Math.floor(Math.random() * pool.length)];
+    }
 
     estadoGlobalDamas.seleccionActualDamas = choice.desde;
     dibujarTableroDamas();
 
-    setTimeout(() => ejecutarMovimientoDamas(choice), 1000);
+    setTimeout(() => ejecutarMovimientoDamas(choice), 900);
   }
 
   // ======================================================================
@@ -883,6 +956,7 @@ const JuegoDamas = (() => {
     estado.capturasIA = 0;
     estado.mostrarSugerencias = true;
     estado.sorteoRealizado = false;
+    estado.nivelIA = "normal";
 
     // Inicialización segura de inputs del modal
     document.getElementById("check-sugerencias").checked = true;
@@ -1010,6 +1084,8 @@ document.getElementById("boton-jugar-config").addEventListener("click", () => {
     mostrarAvisoDamas(t("damas.warning.mustShuffle"));
     return;
   }
+
+  estado.nivelIA = document.getElementById("nivel-ia").value;
 
   document.getElementById("modal-config-damas").style.display = "none";
 

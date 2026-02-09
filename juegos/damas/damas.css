@@ -122,6 +122,26 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Titulo */
+
+.titulo-damas {
+  width: 100%;
+  text-align: center;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 10px 0 10px 0;
+
+  /* Tamaño fluido según pantalla */
+  font-size: clamp(22px, 4vw, 42px);
+
+  letter-spacing: 1px;
+  text-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.35),
+    0 0 20px rgba(255, 255, 255, 0.15);
+
+  user-select: none;
+}
+
 /* -------------------- TABLERO Y CELDAS -------------------- */
 #juego-damas-contenedor #tablero-damas > .celda-damas.oscura-damas {
   background: linear-gradient(145deg, #2f5f3a, #1e3a24);
@@ -265,6 +285,7 @@
     sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
@@ -713,6 +734,72 @@
   margin-bottom: 25px;
 }
 
+/* ================================
+   Configuración – Select Nivel IA
+   ================================ */
+
+.config-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.config-item label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #eaeaea;
+}
+
+#nivel-ia {
+  position: relative;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 40px 10px 12px;
+  margin: 15px 0;
+  margin-bottom: 45px;
+
+  font-size: 15px;
+  font-weight: 600;
+  background-color: var(--color-boton);
+  background-image: none;
+  box-shadow:
+    inset 0 -2px 0 rgba(0, 0, 0, 0.25),
+    0 4px 8px rgba(0, 0, 0, 0.15);
+  color: white;
+  border: 2px solid #444;
+
+  cursor: pointer;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+  overflow: visible;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+#nivel-ia::after {
+  content: "▾";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+/* Opciones */
+#nivel-ia option {
+  background: linear-gradient(145deg, var(--color-boton), #6c7a7d);
+  color: white;
+}
+
 /* -------------------- MEDIA QUERIES -------------------- */
 
 /* PANTALLAS GRANDES (Desktop) */
@@ -968,6 +1055,10 @@
     font-size: 12px;
     margin-top: auto !important;
   }
+
+  #nivel-ia {
+    font-size: 16px;
+  }
 }
 
 /* MÓVILES (Hasta 480px) - CORREGIDO: Layout especial y más compacto */
@@ -1095,6 +1186,11 @@
     min-width: 100px;
     padding: 10px 12px;
     font-size: 18px;
+  }
+
+  .titulo-damas {
+    margin: 8px 0 10px 0;
+    letter-spacing: 0.5px;
   }
 }
 

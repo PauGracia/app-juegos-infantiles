@@ -212,6 +212,11 @@ window.translationsCA = {
   "ahorcado.instructions.interfaceLanguage":
     "Pots jugar a aquest joc en diferents idiomes per practicar.",
   "ahorcado.instructions.goodLuck": "Bona sort!",
+  "damas.title": "Joc de Dames",
+  "damas.config.aiLevel": "Nivell de la IA",
+  "damas.config.aiNormal": "Normal",
+  "damas.config.aiHard": "Difícil",
+
   "memori.recordSaved": "Registre guardat",
   "ranking.sort.points": "Ordenar per punts",
   "palabras.errors.invalidAmount":

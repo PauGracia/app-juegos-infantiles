@@ -33,12 +33,17 @@ window.translationsFR = {
   "damas.you": "TOI",
   "common.yes": "Oui",
   "common.no": "Non",
+  "damas.config.aiLevel": "Niveau de l’IA",
+  "damas.config.aiNormal": "Normal",
+  "damas.config.aiHard": "Difficile",
 
   "damas.ai": "ORDINATEUR",
   "damas.white": "Blanches",
   "damas.black": "Noires",
   "damas.youWin": "Tu as gagné !",
   "damas.youLose": "Tu as perdu",
+  "damas.title": "Jeu de Dames",
+
   "damas.bottom": "Bas",
   "damas.none": "—",
   "damas.restart": "Redémarrer",

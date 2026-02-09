@@ -217,6 +217,11 @@ window.translationsEN = {
   "language.selected": "Selected language: {lang}",
   "palabras.errors.invalidAmount":
     "The number of words must be between 1 and 50",
+  "damas.title": "Checkers",
+  "damas.config.aiLevel": "AI difficulty",
+  "damas.config.aiNormal": "Normal",
+  "damas.config.aiHard": "Hard",
+
   "ranking.sort.points": "Sort by points",
   "operaciones.invalidNumOperations":
     "The number of operations must be between 3 and 50",

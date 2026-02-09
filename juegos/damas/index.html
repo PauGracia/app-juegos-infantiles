@@ -25,6 +25,8 @@
     ></script>
   </head>
   <body class="body-damas">
+    <h1 class="titulo-damas" data-i18n="damas.title"></h1>
+
     <!-- Modal configuración inicial -->
     <div id="modal-config-damas" class="modal-fin-damas" style="display: flex">
       <div class="modal-contenido modal-configuracion">
@@ -48,6 +50,13 @@
             <input type="checkbox" id="check-sugerencias" checked />
             <span data-i18n="damas.config.enableHints"></span>
           </label>
+        </div>
+        <div class="config-item">
+          <label for="nivel-ia" data-i18n="damas.config.aiLevel"></label>
+          <select id="nivel-ia">
+            <option value="normal" data-i18n="damas.config.aiNormal"></option>
+            <option value="dificil" data-i18n="damas.config.aiHard"></option>
+          </select>
         </div>
 
         <!-- Botones finales -->
