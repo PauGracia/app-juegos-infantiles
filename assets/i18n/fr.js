@@ -36,6 +36,11 @@ window.translationsFR = {
   "damas.config.aiLevel": "Niveau de l’IA",
   "damas.config.aiNormal": "Normal",
   "damas.config.aiHard": "Difficile",
+  "footer.attributionsTitle": "Attributions",
+  "footer.attributions.iconsTitle": "Icônes :",
+  "footer.attributions.iconsText": "Icônes conçues par Freepik sur",
+  "footer.attributions.soundsTitle": "Effets sonores :",
+  "footer.attributions.soundsText": "Effets sonores obtenus depuis",
 
   "damas.ai": "ORDINATEUR",
   "damas.white": "Blanches",

@@ -58,6 +58,7 @@ body::-webkit-scrollbar {
   --color-hover: #2980b9;
   --color-text: #333333;
   --color-light: #ffffff;
+  --color-action: #ffffffa4;
   --color-dark: #1a1a1a;
   --color-success: #27ae60;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -227,6 +228,8 @@ body::-webkit-scrollbar {
   position: relative;
   overflow: hidden;
   z-index: 1;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 #lista-enlaces a::before {
@@ -248,11 +251,11 @@ body::-webkit-scrollbar {
 
 #lista-enlaces a:hover,
 #lista-enlaces a:focus {
-  background: linear-gradient(135deg, var(--color-accent), var(--color-hover));
-  color: var(--color-light);
+  background: linear-gradient(135deg, var(--color-light), var(--color-action));
+  color: var(--color-text);
   transform: translateY(-4px) scale(1.02);
   box-shadow: var(--shadow-lg);
-  border-color: var(--color-light);
+  border-color: var(--color-text);
 }
 
 #lista-enlaces a:hover::before {
@@ -293,7 +296,7 @@ body::-webkit-scrollbar {
 
 #settings-btn:hover,
 #settings-btn:focus {
-  background: var(--color-accent);
+  background: var(--color-light);
   transform: rotate(90deg) scale(1.1);
   box-shadow: var(--shadow-lg);
 }
@@ -522,6 +525,8 @@ footer a {
   font-weight: 500;
   padding: 4px 8px;
   border-radius: var(--radius-sm);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 footer a:hover {
@@ -529,6 +534,21 @@ footer a:hover {
   background-color: rgba(52, 152, 219, 0.15);
   text-decoration: none;
   transform: translateY(-1px);
+}
+
+/* Estados activos para móvil */
+footer a:active,
+footer a:focus {
+  background-color: rgba(52, 152, 219, 0.1);
+  color: var(--color-accent);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Para Android específicamente */
+footer a:hover:active {
+  background-color: rgba(52, 152, 219, 0.1);
+  transform: none;
 }
 
 /* Links en fila */
@@ -691,21 +711,6 @@ footer a:hover {
    Mejoras para toques (mobile/tablet)
 ========================= */
 @media (hover: none) and (pointer: coarse) {
-  #lista-enlaces a:active {
-    background: linear-gradient(
-      135deg,
-      var(--color-accent),
-      var(--color-hover)
-    );
-    color: var(--color-light);
-    transform: scale(0.98);
-  }
-
-  #settings-btn:active {
-    background: var(--color-accent);
-    transform: rotate(90deg) scale(0.95);
-  }
-
   .language-list button:active {
     background: var(--color-accent);
     color: var(--color-light);
@@ -721,6 +726,18 @@ footer a:hover {
   .letter-symbol:active {
     transform: scale(1.3);
     box-shadow: 0 0 20px currentColor;
+  }
+
+  footer a:hover {
+    background-color: transparent;
+    color: var(--color-accent);
+    transform: none;
+  }
+
+  footer a:active {
+    background-color: rgba(52, 152, 219, 0.15);
+    color: var(--color-light);
+    transition: background-color 0.1s ease;
   }
 }
 

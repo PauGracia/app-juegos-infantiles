@@ -98,12 +98,13 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   position: relative;
   overflow: hidden;
-  min-width: 140px;
+  min-width: 200px;
   margin: 0 5px;
 }
 
 #boton-jugar-config {
   background: linear-gradient(145deg, var(--color-exito), #219653);
+  margin-top: 20px;
 }
 
 #boton-jugar-config:hover {
@@ -747,57 +748,64 @@
 .config-item label {
   font-size: 14px;
   font-weight: 600;
-  color: #eaeaea;
+  color: var(--color-primario);
 }
 
-#nivel-ia {
+.custom-select {
   position: relative;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-  width: 100%;
-  min-height: 44px;
-  padding: 10px 40px 10px 12px;
-  margin: 15px 0;
-  margin-bottom: 45px;
-
-  font-size: 15px;
-  font-weight: 600;
-  background-color: var(--color-boton);
-  background-image: none;
-  box-shadow:
-    inset 0 -2px 0 rgba(0, 0, 0, 0.25),
-    0 4px 8px rgba(0, 0, 0, 0.15);
-  color: white;
-  border: 2px solid #444;
-
-  cursor: pointer;
-
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 18px;
-  overflow: visible;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  font-family: Arial, sans-serif;
 }
 
-#nivel-ia::after {
+.select-selected {
+  background: linear-gradient(145deg, #3498db, #2980b9);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+}
+
+.select-selected::after {
   content: "▾";
   position: absolute;
-  right: 14px;
+  right: 16px;
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
-  opacity: 0.8;
+  color: white;
+  font-size: 16px;
 }
 
-/* Opciones */
-#nivel-ia option {
-  background: linear-gradient(145deg, var(--color-boton), #6c7a7d);
+.select-items {
+  position: absolute;
+  background: #3498db;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border-radius: 12px;
+  z-index: 99;
+  max-height: 200px;
+  overflow-y: auto;
+  display: block;
+}
+
+.select-items div {
+  padding: 10px 16px;
+  cursor: pointer;
   color: white;
+}
+
+.select-items div:hover {
+  background: #2874a6;
+}
+
+.select-hide {
+  display: none;
+}
+
+.select-arrow-active::after {
+  transform: translateY(-50%) rotate(180deg);
 }
 
 /* -------------------- MEDIA QUERIES -------------------- */

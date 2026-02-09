@@ -208,6 +208,12 @@ window.translationsCA = {
     "Pots veure el ranking des del menú inicial o final.",
   "ahorcado.instructions.exportRanking":
     "També pots exportar el ranking en format JSON.",
+  "footer.attributions": "Atribucions",
+  "footer.attributionsTitle": "Atribucions",
+  "footer.attributions.iconsTitle": "Icones:",
+  "footer.attributions.iconsText": "Icones dissenyades per Freepik a",
+  "footer.attributions.soundsTitle": "Efectes de so:",
+  "footer.attributions.soundsText": "Efectes de so obtinguts de",
   "ahorcado.instructions.language": "IDIOMA:",
   "ahorcado.instructions.interfaceLanguage":
     "Pots jugar a aquest joc en diferents idiomes per practicar.",

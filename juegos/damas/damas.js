@@ -218,6 +218,62 @@ const JuegoDamas = (() => {
   // ======================================================================
   // SELECCIÓN Y MOVIMIENTOS
   // ======================================================================
+  function initCustomSelect() {
+    const customSelects = document.querySelectorAll(".custom-select");
+
+    customSelects.forEach((container) => {
+      const select = container.querySelector("select");
+      const selected = container.querySelector(".select-selected");
+      const optionsContainer = container.querySelector(".select-items");
+
+      // Inicializar el texto del selected
+
+      if (!select || !selected || !optionsContainer) return;
+      selected.textContent = select.options[select.selectedIndex].text;
+
+      // Llenar las opciones
+      optionsContainer.innerHTML = "";
+      Array.from(select.options).forEach((opt, idx) => {
+        const div = document.createElement("div");
+        div.textContent = opt.text;
+        div.addEventListener("click", () => {
+          select.selectedIndex = idx;
+          selected.textContent = opt.text;
+          optionsContainer.classList.add("select-hide");
+        });
+        optionsContainer.appendChild(div);
+      });
+
+      // Abrir/cerrar al click
+      selected.addEventListener("click", (e) => {
+        e.stopPropagation();
+        closeAllSelects(selected);
+        optionsContainer.classList.toggle("select-hide");
+        selected.classList.toggle("select-arrow-active");
+      });
+    });
+
+    function closeAllSelects(except) {
+      document.querySelectorAll(".select-items").forEach((el) => {
+        if (el.parentElement.querySelector(".select-selected") !== except) {
+          el.classList.add("select-hide");
+        }
+      });
+
+      document.querySelectorAll(".select-selected").forEach((el) => {
+        if (el !== except) {
+          el.classList.remove("select-arrow-active");
+        }
+      });
+    }
+
+    // Cerrar al hacer click fuera
+    document.addEventListener("click", closeAllSelects);
+  }
+
+  // Inicializar al cargar la página
+  document.addEventListener("DOMContentLoaded", initCustomSelect);
+
   function manejarClickPiezaDamas(r, c) {
     if (estadoGlobalDamas.juegoTerminadoFlag) return;
     if (estadoGlobalDamas.turnoActualDamas !== "humano") return;

@@ -53,10 +53,20 @@
         </div>
         <div class="config-item">
           <label for="nivel-ia" data-i18n="damas.config.aiLevel"></label>
-          <select id="nivel-ia">
-            <option value="normal" data-i18n="damas.config.aiNormal"></option>
-            <option value="dificil" data-i18n="damas.config.aiHard"></option>
-          </select>
+
+          <div class="custom-select" id="nivel-ia-container">
+            <div class="select-selected" id="nivel-ia-selected"></div>
+            <div class="select-items select-hide" id="nivel-ia-options"></div>
+
+            <select id="nivel-ia" style="display: none">
+              <option value="normal" data-i18n="damas.config.aiNormal">
+                Normal
+              </option>
+              <option value="dificil" data-i18n="damas.config.aiHard">
+                Difícil
+              </option>
+            </select>
+          </div>
         </div>
 
         <!-- Botones finales -->

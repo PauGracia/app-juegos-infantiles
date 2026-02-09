@@ -204,6 +204,12 @@ window.translationsES = {
   "memori.recordSaved": "Récord guardado",
   "language.selected": "Idioma seleccionado: {lang}",
   "damas.title": "Juego de Damas",
+  "footer.attributions": "Atribuciones",
+  "footer.attributionsTitle": "Atribuciones",
+  "footer.attributions.iconsTitle": "Iconos:",
+  "footer.attributions.iconsText": "Iconos diseñados por Freepik en",
+  "footer.attributions.soundsTitle": "Efectos de sonido:",
+  "footer.attributions.soundsText": "Efectos de sonido obtenidos de",
   "ahorcado.instructions.saveRecord":
     "Al finalizar puedes guardar tu récord en el ranking local.",
   "ahorcado.instructions.ranking": "RANKING:",

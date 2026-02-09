@@ -102,6 +102,17 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// Controlar modal atribuciones
+
+const footerAttributions = document.getElementById("footer-attributions");
+
+if (footerAttributions) {
+  footerAttributions.addEventListener("click", (e) => {
+    e.preventDefault();
+    abrirModalSettings("modal-attributions");
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initLanguage();
   const footer = document.querySelector("footer");

@@ -86,6 +86,12 @@ window.translationsPT = {
   "operaciones.correctOperations": "Operações corretas",
   "palabras.errors.invalidAmount":
     "O número de palavras deve estar entre 1 e 50",
+  "footer.attributions": "Atribuições",
+  "footer.attributionsTitle": "Atribuições",
+  "footer.attributions.iconsTitle": "Ícones:",
+  "footer.attributions.iconsText": "Ícones criados por Freepik em",
+  "footer.attributions.soundsTitle": "Efeitos sonoros:",
+  "footer.attributions.soundsText": "Efeitos sonoros obtidos de",
   "memori.timeUpTitle": "Tempo esgotado",
   "memori.timeUpFinal": "Perdeste por falta de tempo",
   "memori.levelReached": "Nível alcançado:",

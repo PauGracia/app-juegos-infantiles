@@ -199,6 +199,8 @@ window.translationsIT = {
   "ahorcado.instructions.exportRanking":
     "Puoi anche esportare la classifica in formato JSON.",
   "ahorcado.instructions.language": "LINGUA:",
+  "footer.attributions": "Attribuzioni",
+  "footer.attributionsTitle": "Attribuzioni",
   "ahorcado.instructions.interfaceLanguage":
     "Puoi giocare a questo gioco in diverse lingue per esercitarti.",
   "ahorcado.instructions.goodLuck": "Buona fortuna!",
@@ -207,6 +209,11 @@ window.translationsIT = {
   "damas.config.aiLevel": "Livello dell’IA",
   "damas.config.aiNormal": "Normale",
   "damas.config.aiHard": "Difficile",
+  "footer.attributionsTitle": "Attribuzioni",
+  "footer.attributions.iconsTitle": "Icone:",
+  "footer.attributions.iconsText": "Icone realizzate da Freepik su",
+  "footer.attributions.soundsTitle": "Effetti sonori:",
+  "footer.attributions.soundsText": "Effetti sonori ottenuti da",
 
   "palabras.errors.invalidAmount":
     "Il numero di parole deve essere compreso tra 1 e 50",

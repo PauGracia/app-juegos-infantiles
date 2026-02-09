@@ -212,6 +212,12 @@ window.translationsEN = {
   "ahorcado.instructions.language": "LANGUAGE:",
   "ahorcado.instructions.interfaceLanguage":
     "You can play this game in different languages to practice.",
+  "footer.attributions": "Attributions",
+  "footer.attributionsTitle": "Attributions",
+  "footer.attributions.iconsTitle": "Icons:",
+  "footer.attributions.iconsText": "Icons made by Freepik from",
+  "footer.attributions.soundsTitle": "Sound effects:",
+  "footer.attributions.soundsText": "Sound effects obtained from",
   "ahorcado.instructions.goodLuck": "Good luck!",
   "memori.recordSaved": "Record saved",
   "language.selected": "Selected language: {lang}",
