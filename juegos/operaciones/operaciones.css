@@ -1198,6 +1198,71 @@ body {
   }
 }
 
+@media (max-width: 380px) {
+  .titulo-operaciones {
+    font-size: 2rem;
+    padding: 10px 15px;
+    margin: 15px 10px;
+    margin-top: 30px;
+  }
+
+  .operaciones-pizarra {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .operacion {
+    width: 90px;
+    font-size: 16px;
+    padding: 6px;
+  }
+
+  .resultado-input {
+    font-size: 16px;
+    padding: 6px 8px;
+  }
+
+  .botones-operaciones button,
+  #boton-salir-operaciones button {
+    width: 120px;
+    font-size: 1rem;
+    padding: 10px 16px;
+  }
+
+  .cronometro {
+    top: 10px;
+    right: 25px;
+    font-size: 1.1rem;
+    padding: 8px 12px;
+  }
+
+  #cronometro #tiempo {
+    font-size: 1.1rem;
+  }
+
+  .modal-operaciones .modal-content {
+    width: 95%;
+    padding: 20px;
+    max-height: 90vh;
+  }
+
+  #modal-final .modal-aviso-content {
+    padding: 25px;
+  }
+
+  #modal-final h2 {
+    font-size: 1.5rem;
+  }
+
+  #resumen-general {
+    font-size: 16px;
+  }
+
+  #modal-final li {
+    font-size: 14px;
+  }
+}
+
 /* Para dispositivos táctiles */
 @media (hover: none) and (pointer: coarse) {
   .operacion:hover {
