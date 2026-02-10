@@ -515,7 +515,7 @@ const elementos = [
   {
     id: 79,
     palabras: ["hoja", "fulla", "leaf", "feuille", "foglia", "folha"],
-    imagen: "../../assets/img/iconos/hoja.png",
+    imagen: "../../assets/img/iconos/hojas.png",
   },
   {
     id: 80,

@@ -77,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (intervaloTiempo) clearInterval(intervaloTiempo);
 
-      // Mostrar el modal ORIGINAL (el que tiene instrucciones)
       modalInicio.classList.add("mostrar");
     }
 
@@ -364,7 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return alert(t("memori.noElements"));
 
       const cantidadParejas = 40;
-      const seleccionados = mezclar([...elementos]).slice(0, cantidadParejas); // selecciona 20 al azar
+      const seleccionados = mezclar([...elementos]).slice(0, cantidadParejas); // selecciona al azar
 
       let valores = [...seleccionados, ...seleccionados]; // duplicar para parejas
       valores = mezclar(valores); // mezclar el orden final
@@ -402,7 +401,6 @@ document.addEventListener("DOMContentLoaded", () => {
       inner.appendChild(back);
       div.appendChild(inner);
 
-      // En la función crearCartaNormal, en el evento click donde se encuentra pareja:
       div.addEventListener("click", () => {
         if (bloqueo || div.classList.contains("volteada")) return;
         playSound(sonidos.girar);

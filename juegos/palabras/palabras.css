@@ -355,6 +355,16 @@ body {
   box-shadow: 0 6px 12px rgba(102, 126, 234, 0.25);
 }
 
+#btnReiniciar {
+  background: linear-gradient(90deg, #48bb78, #38a169);
+}
+
+#btnSalirFinal {
+  background: linear-gradient(135deg, #e53e3e, #c53030);
+}
+
+
+
 .btn-final:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(102, 126, 234, 0.35);
