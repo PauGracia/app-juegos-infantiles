@@ -24,7 +24,7 @@ window.translationsES = {
   "ahorcado.loseMessage": "La palabra era:",
   "ahorcado.winMessage": "¡Palabra acertada!",
   "damas.instructionsText":
-    "• El objetivo es capturar todas las fichas del rival.\n\n• Las fichas se mueven en diagonal hacia adelante.\n\n• Las capturas son obligatorias si existen.\n\n• Si una ficha llega al extremo contrario, se convierte en reina.\n\n• Las reinas pueden moverse en todas las diagonales.",
+    "• El objetivo es capturar todas las fichas del rival.\n• Las fichas se mueven en diagonal hacia adelante.\n• Las capturas son obligatorias si existen.\n• Si una ficha llega al extremo contrario, se convierte en reina.\n• Las reinas pueden moverse en todas las diagonales.",
 
   "damas.you": "TÚ",
   "damas.ai": "MÁQUINA",

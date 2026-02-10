@@ -563,28 +563,9 @@ const JuegoDamas = (() => {
     }
   }
 
-  function evaluarMovimientoIA(mov) {
-    let score = 0;
-
-    // 1Capturar es bueno
-    score += mov.capturas.length * 100;
-
-    // Coronar es MUY bueno
-    if (mov.reyDespues) score += 300;
-
-    // Avanzar piezas normales
-    const avance =
-      estadoGlobalDamas.ladoHumanoAsignado === "top"
-        ? mov.hacia.r
-        : 7 - mov.hacia.r;
-    score += avance * 2;
-
-    // Evitar quedar capturable
-    const copia = simularMovimiento(mov);
-    if (piezaQuedaEnPeligro(copia, mov.hacia)) score -= 400;
-
-    return score;
-  }
+  // ======================================================================
+  // FUNCIONES AUXILIARES PARA LA IA MEJORADA
+  // ======================================================================
 
   function simularMovimiento(mov) {
     const m = clonarMatrizDamas(estadoGlobalDamas.matrizDamas);
@@ -600,6 +581,335 @@ const JuegoDamas = (() => {
     if (mov.reyDespues) m[mov.hacia.r][mov.hacia.c].rey = true;
 
     return m;
+  }
+
+  function estaEnPeligroInmediato(matriz, pos, ladoIA) {
+    const { r, c } = pos;
+    const ficha = matriz[r][c];
+    if (!ficha) return false;
+
+    // Verificar en las 4 direcciones (dependiendo si es rey o no)
+    const direcciones = ficha.rey
+      ? [
+          [1, 1],
+          [1, -1],
+          [-1, 1],
+          [-1, -1],
+        ]
+      : ladoIA === "top"
+        ? [
+            [1, 1],
+            [1, -1],
+          ] // top se mueve hacia abajo
+        : [
+            [-1, 1],
+            [-1, -1],
+          ]; // bottom se mueve hacia arriba
+
+    for (const [dr, dc] of direcciones) {
+      const mr = r + dr;
+      const mc = c + dc;
+      const tr = r + 2 * dr;
+      const tc = c + 2 * dc;
+
+      if (enLimiteDamas(mr, mc) && enLimiteDamas(tr, tc)) {
+        const medio = matriz[mr][mc];
+        const destino = matriz[tr][tc];
+
+        if (medio && medio.dueño !== ladoIA && !destino) {
+          // ¡Esta ficha puede ser capturada!
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  function esPosicionPeligrosa(pos, ladoIA) {
+    const { r, c } = pos;
+
+    // Las esquinas pueden ser trampas para reyes
+    if (
+      (r === 0 && c === 0) ||
+      (r === 0 && c === 7) ||
+      (r === 7 && c === 0) ||
+      (r === 7 && c === 7)
+    ) {
+      return true;
+    }
+
+    // Posiciones en los bordes laterales pueden ser peligrosas
+    if (c === 0 || c === 7) {
+      // Solo una dirección de ataque posible
+      return true;
+    }
+
+    return false;
+  }
+
+  function contarFichasAliadasCercanas(matriz, pos, ladoIA) {
+    let count = 0;
+    const { r, c } = pos;
+
+    // Verificar en un radio de 2 casillas
+    for (let dr = -2; dr <= 2; dr++) {
+      for (let dc = -2; dc <= 2; dc++) {
+        const nr = r + dr;
+        const nc = c + dc;
+
+        if (enLimiteDamas(nr, nc) && !(dr === 0 && dc === 0)) {
+          const ficha = matriz[nr][nc];
+          if (ficha && ficha.dueño === ladoIA) {
+            count++;
+          }
+        }
+      }
+    }
+
+    return count;
+  }
+
+  function contarPiezasExpuestas(matriz, ladoIA) {
+    let expuestas = 0;
+
+    // Buscar todas las fichas del lado IA
+    for (let r = 0; r < 8; r++) {
+      for (let c = 0; c < 8; c++) {
+        const ficha = matriz[r][c];
+        if (ficha && ficha.dueño === ladoIA) {
+          if (estaEnPeligroInmediato(matriz, { r, c }, ladoIA)) {
+            expuestas++;
+          }
+        }
+      }
+    }
+
+    return expuestas;
+  }
+
+  function creaAmenazaDoble(matriz, pos, ladoIA) {
+    const { r, c } = pos;
+    const ficha = matriz[r][c];
+    if (!ficha) return false;
+
+    let amenazasDobles = 0;
+
+    // Para reyes, verificar las 4 direcciones
+    const direcciones = ficha.rey
+      ? [
+          [1, 1],
+          [1, -1],
+          [-1, 1],
+          [-1, -1],
+        ]
+      : ladoIA === "top"
+        ? [
+            [1, 1],
+            [1, -1],
+          ]
+        : [
+            [-1, 1],
+            [-1, -1],
+          ];
+
+    for (const [dr, dc] of direcciones) {
+      const mr = r + dr;
+      const mc = c + dc;
+      const tr = r + 2 * dr;
+      const tc = c + 2 * dc;
+
+      if (enLimiteDamas(mr, mc) && enLimiteDamas(tr, tc)) {
+        const medio = matriz[mr][mc];
+        const destino = matriz[tr][tc];
+
+        if (medio && medio.dueño !== ladoIA && !destino) {
+          amenazasDobles++;
+
+          // Verificar si desde esta posición podemos amenazar otra ficha
+          if (ficha.rey) {
+            // Para reyes, verificar si podemos amenazar otra ficha desde tr, tc
+            for (const [dr2, dc2] of direcciones) {
+              const mr2 = tr + dr2;
+              const mc2 = tc + dc2;
+              const tr2 = tr + 2 * dr2;
+              const tc2 = tc + 2 * dc2;
+
+              if (enLimiteDamas(mr2, mc2) && enLimiteDamas(tr2, tc2)) {
+                const medio2 = matriz[mr2][mc2];
+                const destino2 = matriz[tr2][tc2];
+
+                if (medio2 && medio2.dueño !== ladoIA && !destino2) {
+                  return true; // ¡Amenaza doble encontrada!
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Si tenemos múltiples amenazas desde la misma posición
+    return amenazasDobles > 1;
+  }
+
+  function bloqueaFichasPropias(matriz, nuevaPos, viejaPos, ladoIA) {
+    const { r: nuevaR, c: nuevaC } = nuevaPos;
+    const { r: viejaR, c: viejaC } = viejaPos;
+
+    // Verificar si la posición vieja bloqueaba el avance de otras fichas
+    for (let r = 0; r < 8; r++) {
+      for (let c = 0; c < 8; c++) {
+        const ficha = matriz[r][c];
+        if (ficha && ficha.dueño === ladoIA && !ficha.rey) {
+          // Verificar si esta ficha ahora está bloqueada
+          const direccion = ladoIA === "top" ? 1 : -1;
+
+          // Posiciones de avance posibles
+          const avance1 = { r: r + direccion, c: c + 1 };
+          const avance2 = { r: r + direccion, c: c - 1 };
+
+          // Si la nueva posición bloquea uno de estos avances
+          if (
+            (avance1.r === nuevaR && avance1.c === nuevaC) ||
+            (avance2.r === nuevaR && avance2.c === nuevaC)
+          ) {
+            // Verificar si estaba libre antes
+            const estabaLibre1 = avance1.r !== viejaR || avance1.c !== viejaC;
+            const estabaLibre2 = avance2.r !== viejaR || avance2.c !== viejaC;
+
+            if (
+              (avance1.r === nuevaR && avance1.c === nuevaC && estabaLibre1) ||
+              (avance2.r === nuevaR && avance2.c === nuevaC && estabaLibre2)
+            ) {
+              return true;
+            }
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  // ======================================================================
+  // IA MEJORADA PARA NIVEL DIFÍCIL
+  // ======================================================================
+
+  function evaluarMovimientoIA_Mejorado(mov) {
+    let score = 0;
+    const esTop = estadoGlobalDamas.ladoHumanoAsignado === "top";
+    const ladoIA = esTop ? "top" : "bottom";
+
+    if (mov.capturas.length > 0) {
+      score += mov.capturas.length * 1000;
+
+      const reyesCapturados = mov.capturas.filter((cap) => {
+        const pieza = estadoGlobalDamas.matrizDamas[cap.r][cap.c];
+        return pieza && pieza.rey;
+      }).length;
+      score += reyesCapturados * 2000;
+
+      if (mov.capturas.length > 1) {
+        score += (mov.capturas.length - 1) * 500;
+      }
+    }
+
+    if (mov.reyDespues) {
+      score += 450;
+    }
+
+    if (mov.capturas.length === 0) {
+      if (!mov.reyDespues) {
+        const pieza = estadoGlobalDamas.matrizDamas[mov.desde.r][mov.desde.c];
+        if (!pieza.rey) {
+          const filaDestino = mov.hacia.r;
+
+          if (ladoIA === "top") {
+            const progreso = filaDestino;
+            score += progreso * 8;
+
+            if (filaDestino >= 5) score += 50;
+            if (filaDestino === 6) score += 100;
+            if (filaDestino === 7) score += 200;
+          } else {
+            const progreso = 7 - filaDestino;
+            score += progreso * 8;
+
+            if (filaDestino <= 2) score += 50;
+            if (filaDestino === 1) score += 100;
+            if (filaDestino === 0) score += 200;
+          }
+        }
+      }
+    }
+
+    const copia = simularMovimiento(mov);
+    const posicionDestino = mov.hacia;
+
+    if (estaEnPeligroInmediato(copia, posicionDestino, ladoIA)) {
+      if (mov.capturas.length === 0) {
+        score -= 600;
+      } else {
+        score -= 100;
+      }
+    }
+
+    if (mov.capturas.length === 0) {
+      const piezaOriginal =
+        estadoGlobalDamas.matrizDamas[mov.desde.r][mov.desde.c];
+      if (piezaOriginal.rey) {
+        score += 50;
+
+        if (posicionDestino.c === 0 || posicionDestino.c === 7) {
+          score -= 30;
+        }
+
+        const distanciaCentro = Math.abs(posicionDestino.c - 3.5);
+        score -= distanciaCentro * 5;
+      }
+    }
+
+    const fichasAliadasCercanas = contarFichasAliadasCercanas(
+      copia,
+      posicionDestino,
+      ladoIA,
+    );
+    score += fichasAliadasCercanas * 15;
+
+    if (mov.reyDespues) {
+      const movimientosFuturos = calcularMovimientosDesdeMatriz(
+        copia,
+        posicionDestino.r,
+        posicionDestino.c,
+      );
+      const capturasFuturas = movimientosFuturos.filter(
+        (m) => m.capturas.length > 0,
+      ).length;
+      score += capturasFuturas * 100;
+    }
+
+    if (mov.capturas.length === 0) {
+      const piezasExpuestas = contarPiezasExpuestas(copia, ladoIA);
+      score -= piezasExpuestas * 80;
+    }
+
+    if (creaAmenazaDoble(copia, posicionDestino, ladoIA)) {
+      score += 120;
+    }
+
+    if (
+      mov.capturas.length === 0 &&
+      bloqueaFichasPropias(copia, posicionDestino, mov.desde, ladoIA)
+    ) {
+      score -= 70;
+    }
+
+    return score;
+  }
+
+  function evaluarMovimientoIA(mov) {
+    return evaluarMovimientoIA_Mejorado(mov);
   }
 
   function piezaQuedaEnPeligro(matriz, pos) {
@@ -743,6 +1053,7 @@ const JuegoDamas = (() => {
       callback();
     }, 1000);
   }
+
   function efectoCoronacion(r, c) {
     const idx = indicePlanoDamas(r, c);
     const celda = tableroDamasPrincipal.children[idx];
@@ -860,32 +1171,74 @@ const JuegoDamas = (() => {
     }
 
     estadoGlobalDamas.juegoTerminadoFlag = true;
+
+    // Asegurarse de que el botón "Salir" del modal vaya directamente al menú
+    const btnSalirFin = document.getElementById("btn-salir-fin");
+    btnSalirFin.onclick = () => {
+      document.getElementById("modal-fin-damas").style.display = "none";
+      salirAlMenuPrincipal();
+    };
   }
+
+  // ======================================================================
+  // IA MEJORADA - FUNCIÓN PRINCIPAL
+  // ======================================================================
 
   function movimientoIA_Damas() {
     if (estadoGlobalDamas.juegoTerminadoFlag) return;
 
     const movs = [];
 
-    for (let r = 0; r < 8; r++)
+    // Primero, verificar si hay capturas disponibles para la IA
+    const capturasDisponibles = [];
+
+    for (let r = 0; r < 8; r++) {
       for (let c = 0; c < 8; c++) {
         const p = estadoGlobalDamas.matrizDamas[r][c];
         if (!p || p.dueño === estadoGlobalDamas.ladoHumanoAsignado) continue;
-        calcularMovimientosDesdeDamas(r, c).forEach((m) => movs.push(m));
+
+        const movimientosDesdeCasilla = calcularMovimientosDesdeDamas(r, c);
+        movimientosDesdeCasilla.forEach((m) => {
+          if (m.capturas.length > 0) {
+            capturasDisponibles.push(m);
+          }
+          movs.push(m);
+        });
       }
+    }
 
     if (!movs.length) return;
 
     let choice;
 
+    const movimientosPermitidos =
+      capturasDisponibles.length > 0 ? capturasDisponibles : movs;
+
     if (estadoGlobalDamas.nivelIA === "dificil") {
-      choice = movs
-        .map((m) => ({ m, score: evaluarMovimientoIA(m) }))
-        .sort((a, b) => b.score - a.score)[0].m;
+      const movimientosEvaluados = movimientosPermitidos.map((m) => ({
+        m,
+        score: evaluarMovimientoIA_Mejorado(m),
+      }));
+
+      // Ordenar por score (mayor primero)
+      movimientosEvaluados.sort((a, b) => b.score - a.score);
+      const mejores = movimientosEvaluados.slice(0, 3); // Tomar los 3 mejores
+
+      if (Math.random() < 0.8 || mejores.length === 1) {
+        choice = mejores[0].m;
+      } else {
+        const indiceAleatorio = Math.floor(
+          Math.random() * Math.min(3, mejores.length),
+        );
+        choice = mejores[indiceAleatorio].m;
+      }
     } else {
-      const capt = movs.filter((m) => m.capturas.length);
-      const pool = capt.length ? capt : movs;
-      choice = pool[Math.floor(Math.random() * pool.length)];
+      // Nivel normal
+
+      choice =
+        movimientosPermitidos[
+          Math.floor(Math.random() * movimientosPermitidos.length)
+        ];
     }
 
     estadoGlobalDamas.seleccionActualDamas = choice.desde;
@@ -1034,10 +1387,15 @@ const JuegoDamas = (() => {
       document.getElementById("modal-confirm-exit").style.display = "flex";
     });
 
+  // ======================================================================
+  // INICIALIZACIÓN - VERSIÓN SIMPLIFICADA
+  // ======================================================================
+
   function init() {
     initLanguage();
     document.getElementById("salirDamas").innerText = t("damas.exit");
 
+    // Eventos del modal de fin
     document
       .getElementById("boton-reiniciar-modal")
       .addEventListener("click", () => {
@@ -1046,54 +1404,66 @@ const JuegoDamas = (() => {
       });
 
     document.getElementById("btn-salir-fin").addEventListener("click", () => {
-      origenConfirmExit = "fin";
-
       document.getElementById("modal-fin-damas").style.display = "none";
+      salirAlMenuPrincipal();
+    });
+
+    // Eventos del botón "Salir" durante la partida
+    document.getElementById("salirDamas").addEventListener("click", () => {
+      // Mostrar modal de confirmación
       document.getElementById("modal-confirm-exit").style.display = "flex";
     });
 
+    // Eventos del modal de confirmación
     document.getElementById("btn-confirm-yes").addEventListener("click", () => {
       document.getElementById("modal-confirm-exit").style.display = "none";
-      salirAlMenuPrincipal(); // index.html
+
+      // Si estamos en la configuración inicial, salir al menú
+      if (origenConfirmExit === "config") {
+        salirAlMenuPrincipal();
+      }
+      // Si estamos en medio de una partida, mostrar derrota
+      else if (origenConfirmExit === "juego") {
+        const estado = JuegoDamas.estado;
+        estado.juegoTerminadoFlag = true;
+        const ganadorInfo = document.getElementById("ganador-info");
+        if (ganadorInfo) ganadorInfo.textContent = t("damas.ai");
+        mostrarModalFin(false);
+      }
     });
 
+    document.getElementById("btn-confirm-no").addEventListener("click", () => {
+      document.getElementById("modal-confirm-exit").style.display = "none";
+
+      // Si veníamos de la configuración, volver a ella
+      if (origenConfirmExit === "config") {
+        document.getElementById("modal-config-damas").style.display = "flex";
+      }
+      // Si veníamos de la partida, simplemente cerrar (no hacer nada)
+    });
+
+    // Evento para el botón "Salir" de la configuración inicial
+    document
+      .getElementById("boton-salir-config")
+      .addEventListener("click", () => {
+        origenConfirmExit = "config";
+        document.getElementById("modal-config-damas").style.display = "none";
+        document.getElementById("modal-confirm-exit").style.display = "flex";
+      });
+
+    // Evento específico para cuando se hace click en "Salir" durante la partida
+    // (esto establece el origen para que el modal de confirmación sepa qué hacer)
     document.getElementById("salirDamas").addEventListener("click", () => {
-      const estado = JuegoDamas.estado;
-
-      // Marcar partida como terminada
-      estado.juegoTerminadoFlag = true;
-
-      // Mostrar ganador como IA
-      const ganadorInfo = document.getElementById("ganador-info");
-      if (ganadorInfo) ganadorInfo.textContent = t("damas.ai");
-
-      // Mostrar modal de derrota
-      mostrarModalFin(false);
+      origenConfirmExit = "juego";
+      document.getElementById("modal-confirm-exit").style.display = "flex";
     });
 
+    // Botón de reinicio
     document
       .getElementById("boton-reinicio-damas")
       ?.addEventListener("click", resetGameDamasUltra);
 
     resetGameDamasUltra();
-
-    document.getElementById("btn-salir-fin").addEventListener("click", () => {
-      // Ocultar modal de fin
-      document.getElementById("modal-fin-damas").style.display = "none";
-
-      // Mostrar modal de confirmación
-      document.getElementById("modal-confirm-exit").style.display = "flex";
-    });
-
-    document.getElementById("btn-confirm-yes").addEventListener("click", () => {
-      document.getElementById("modal-confirm-exit").style.display = "none";
-      salirAlMenuPrincipal();
-    });
-
-    document.getElementById("btn-confirm-no").addEventListener("click", () => {
-      document.getElementById("modal-confirm-exit").style.display = "none";
-      document.getElementById("modal-fin-damas").style.display = "flex";
-    });
   }
 
   document.addEventListener("DOMContentLoaded", init);
@@ -1162,6 +1532,7 @@ function clickSeguro() {
   ultimoClickTiempo = ahora;
   return true;
 }
+
 // Funcion de avisos
 function mostrarAvisoDamas(texto) {
   const modal = document.getElementById("modal-aviso-damas");
