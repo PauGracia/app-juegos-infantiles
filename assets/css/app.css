@@ -330,7 +330,7 @@ body::-webkit-scrollbar {
   border-radius: var(--radius-sm);
   border: 1px solid #eee;
   cursor: pointer;
-  background: var(--color-primary);
+
   color: var(--color-text);
   transition: all var(--transition-fast);
   outline: none;
@@ -419,7 +419,7 @@ body.modal-open {
   font-size: clamp(1rem, 3vw, 1.1rem);
   border-radius: var(--radius-md);
   border: 2px solid #e0e0e0;
-  background: var(--color-primary);
+
   color: var(--color-text);
   cursor: pointer;
   transition: all var(--transition-normal);
