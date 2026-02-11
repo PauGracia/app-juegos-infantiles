@@ -98,7 +98,7 @@ window.translationsES = {
     "Selecciona al menos una operación en nivel 2.",
   "operaciones.timeUp": "⏰ Se acabó el tiempo. ¡Inténtalo de nuevo!",
   "operaciones.levelCompleted": "Nivel",
-
+  "common.save": "Guardar",
   "common.start": "Iniciar",
   "common.check": "Comprobar",
   "common.restart": "Reiniciar",
@@ -109,6 +109,19 @@ window.translationsES = {
   "operaciones.checksPerformed": "Comprobaciones realizadas",
   "operaciones.timeElapsed": "Tiempo transcurrido",
   "operaciones.notApplicable": "No aplicable en nivel 2",
+  "privacy.title": "Política de privacidad",
+  "privacy.intro":
+    "Esta aplicación es totalmente local y no recopila datos personales.",
+  "privacy.data":
+    "No se recoge, almacena ni transmite ningún tipo de información personal, datos de uso, ubicación, identificadores del dispositivo ni cookies.",
+  "privacy.storage":
+    "Toda la información utilizada por la aplicación (como el idioma seleccionado) se guarda únicamente en el propio dispositivo del usuario y nunca se comparte con terceros.",
+  "privacy.thirdParties":
+    "La aplicación no utiliza servicios externos, analíticas, publicidad ni conexiones a servidores remotos.",
+  "privacy.children":
+    "Esta aplicación está diseñada para un uso educativo infantil y cumple con los principios de protección de la privacidad de los menores.",
+  "privacy.changes":
+    "Si en el futuro se produjera algún cambio que afecte a esta política, se informará claramente dentro de la aplicación.",
 
   "common.min": "min",
   "common.sec": "seg",
@@ -267,7 +280,7 @@ window.translationsES = {
 
   "menu.objective.title": "Objetivo del proyecto",
   "menu.objective.text":
-    "Este proyecto es una colección de juegos educativos pensados para niños y jóvenes a partir de 7 años. Su objetivo es fomentar el aprendizaje de forma divertida, trabajando áreas como las matemáticas, el lenguaje, la memoria y la lógica. Cada juego incluye instrucciones claras y sencillas, adaptadas para que cualquier usuario pueda empezar a jugar sin dificultad. El proyecto combina educación y entretenimiento, ayudando a desarrollar habilidades cognitivas mientras se disfruta del juego.",
+    "Este proyecto es una colección de juegos educativos pensados para niños y jóvenes a partir de 6 años. Su objetivo es fomentar el aprendizaje de forma divertida, trabajando áreas como las matemáticas, el lenguaje, la memoria y la lógica. Cada juego incluye instrucciones claras y sencillas, adaptadas para que cualquier usuario pueda empezar a jugar sin dificultad. El proyecto combina educación y entretenimiento, ayudando a desarrollar habilidades cognitivas mientras se disfruta del juego.",
 
   "footer.contact": "Contacto",
   "operaciones.invalidNumOperations":

@@ -87,7 +87,11 @@ body::-webkit-scrollbar {
   align-items: center;
   padding: 20px;
   position: relative;
-  padding-bottom: 70px; /* Solo espacio para la parte visible del footer */
+  padding-bottom: 70px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #body-index::before {
@@ -294,11 +298,11 @@ body::-webkit-scrollbar {
   padding: 0;
 }
 
-#settings-btn:hover,
 #settings-btn:focus {
   background: var(--color-light);
   transform: rotate(90deg) scale(1.1);
   box-shadow: var(--shadow-lg);
+  border-color: var(--color-text);
 }
 
 #settings-menu {
@@ -329,13 +333,20 @@ body::-webkit-scrollbar {
   background: var(--color-primary);
   color: var(--color-text);
   transition: all var(--transition-fast);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-focus-ring-color: transparent;
 }
 
-#settings-menu button:hover {
-  background: var(--color-accent);
-  color: var(--color-light);
-  border-color: var(--color-accent);
-  transform: translateX(-2px);
+#settings-menu button:focus {
+  background: var(--color-primary);
+  box-shadow: none;
+}
+
+#settings-menu button:focus-visible {
+  background: var(--color-light);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-text);
 }
 
 /* =========================
@@ -354,6 +365,11 @@ body::-webkit-scrollbar {
   animation: fadeIn var(--transition-normal);
 }
 
+body.modal-open {
+  overflow: hidden;
+  touch-action: none;
+}
+
 .modal-box {
   background: var(--color-light);
   padding: clamp(20px, 4vw, 30px);
@@ -364,6 +380,10 @@ body::-webkit-scrollbar {
   border: 3px solid var(--color-accent);
   position: relative;
   animation: slideUp var(--transition-normal);
+  max-height: 85vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-box h2 {
@@ -394,6 +414,7 @@ body::-webkit-scrollbar {
   justify-content: center;
   gap: 12px;
   width: 100%;
+  height: 45px;
   padding: 16px;
   font-size: clamp(1rem, 3vw, 1.1rem);
   border-radius: var(--radius-md);
@@ -402,13 +423,24 @@ body::-webkit-scrollbar {
   color: var(--color-text);
   cursor: pointer;
   transition: all var(--transition-normal);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-focus-ring-color: transparent;
 }
 
-.language-list button:hover {
-  background: var(--color-accent);
-  color: var(--color-light);
-  border-color: var(--color-accent);
-  transform: translateY(-2px);
+.language-list button:focus {
+  background: var(--color-primary);
+  color: var(--color-text);
+  border-color: var(--color-text);
+  outline: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.language-list button:focus-visible {
+  background: linear-gradient(135deg, var(--color-light), var(--color-action));
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-text);
 }
 
 .close-btn {
@@ -694,12 +726,13 @@ footer a:hover:active {
   padding: 18px 32px;
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
-  font-size: 1.2rem;
+  font-size: 1rem;
   opacity: 0;
   pointer-events: none;
   transition: all 0.35s ease;
   z-index: 3000;
   text-align: center;
+  width: 30%;
 }
 
 .language-toast.show {
@@ -707,16 +740,17 @@ footer a:hover:active {
   transform: translate(-50%, -50%) scale(1);
 }
 
+/* Permitir seleccionar texto solo en este modal */
+#modal-privacy p,
+#modal-privacy h2 {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 /* =========================
    Mejoras para toques (mobile/tablet)
 ========================= */
 @media (hover: none) and (pointer: coarse) {
-  .language-list button:active {
-    background: var(--color-accent);
-    color: var(--color-light);
-    transform: scale(0.98);
-  }
-
   .close-btn:active {
     background: var(--color-accent);
     transform: scale(0.98);
@@ -742,6 +776,15 @@ footer a:hover:active {
 }
 
 /* Media Queries optimizadas */
+
+@media (max-width: 1280px) {
+  .language-toast {
+    font-size: 1rem;
+
+    width: 40%;
+  }
+}
+
 @media (max-width: 768px) {
   #body-index {
     padding: 15px;
@@ -801,6 +844,12 @@ footer a:hover:active {
 
   .footer-links span {
     display: none;
+  }
+
+  .language-toast {
+    font-size: 1rem;
+
+    width: 50%;
   }
 }
 
@@ -866,6 +915,11 @@ footer a:hover:active {
     width: 22px;
     height: 22px;
   }
+  .language-toast {
+    font-size: 1rem;
+
+    width: 70%;
+  }
 }
 
 @media (max-width: 360px) {
@@ -894,6 +948,12 @@ footer a:hover:active {
 
   .footer-top p {
     font-size: 0.8rem;
+  }
+
+  .language-toast {
+    font-size: 0.9rem;
+
+    width: 80%;
   }
 }
 

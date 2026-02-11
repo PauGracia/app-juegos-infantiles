@@ -262,11 +262,24 @@ window.translationsPT = {
   "common.cancel": "Cancelar",
   "menu.settings.language": "Idiomas",
   "menu.settings.objective": "Objetivo",
-
+  "common.save": "Salvar",
   "menu.language.title": "Selecione idioma",
   "menu.objective.title": "Objetivo do projeto",
   "menu.objective.text":
-    "Este projeto é uma coleção de jogos educativos pensados para crianças e jovens a partir de 7 anos. O objetivo é promover o aprendizado de forma divertida, trabalhando áreas como matemática, linguagem, memória e lógica. Cada jogo inclui instruções claras e simples, permitindo que qualquer usuário comece a jogar sem dificuldade. O projeto combina educação e entretenimento, ajudando a desenvolver habilidades cognitivas enquanto se diverte.",
+    "Este projeto é uma coleção de jogos educativos pensados para crianças e jovens a partir de 6 anos. O objetivo é promover o aprendizado de forma divertida, trabalhando áreas como matemática, linguagem, memória e lógica. Cada jogo inclui instruções claras e simples, permitindo que qualquer usuário comece a jogar sem dificuldade. O projeto combina educação e entretenimento, ajudando a desenvolver habilidades cognitivas enquanto se diverte.",
+  "privacy.title": "Política de privacidade",
+  "privacy.intro":
+    "Esta aplicação funciona totalmente de forma local e não recolhe dados pessoais.",
+  "privacy.data":
+    "Não são recolhidos, armazenados ou transmitidos dados pessoais, dados de utilização, dados de localização, identificadores do dispositivo ou cookies.",
+  "privacy.storage":
+    "Toda a informação utilizada pela aplicação (como o idioma selecionado) é armazenada apenas no dispositivo do utilizador e nunca é partilhada com terceiros.",
+  "privacy.thirdParties":
+    "A aplicação não utiliza serviços externos, ferramentas de análise, publicidade ou ligações a servidores remotos.",
+  "privacy.children":
+    "Esta aplicação foi concebida para uso educativo infantil e respeita os princípios de proteção da privacidade das crianças.",
+  "privacy.changes":
+    "Caso ocorram alterações a esta política no futuro, os utilizadores serão claramente informados dentro da aplicação.",
 
   "footer.contact": "Contato",
   "footer.privacy": "Política de Privacidade",

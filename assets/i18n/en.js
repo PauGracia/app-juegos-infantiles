@@ -272,7 +272,7 @@ window.translationsEN = {
   "menu.language.title": "Select language",
   "menu.objective.title": "Project objective",
   "menu.objective.text":
-    "This project is a collection of educational games designed for children and young people from the age of 7. Its goal is to encourage learning through fun activities, covering areas such as mathematics, language, memory and logic. Each game includes simple and clear instructions so anyone can start playing easily.",
+    "This project is a collection of educational games designed for children and young people from the age of 6. Its goal is to encourage learning through fun activities, covering areas such as mathematics, language, memory and logic. Each game includes simple and clear instructions so anyone can start playing easily.",
 
   "footer.contact": "Contact",
   "footer.privacy": "Privacy Policy",
@@ -285,6 +285,19 @@ window.translationsEN = {
   "damas.config.enableHints": "Enable Move Hints",
   "damas.config.play": "Play",
   "damas.config.exit": "Exit",
+  "privacy.title": "Privacy Policy",
+  "privacy.intro":
+    "This application is completely local and does not collect personal data.",
+  "privacy.data":
+    "No personal information, usage data, location data, device identifiers or cookies are collected, stored or transmitted.",
+  "privacy.storage":
+    "All information used by the application (such as the selected language) is stored only on the user’s device and is never shared with third parties.",
+  "privacy.thirdParties":
+    "The application does not use external services, analytics, advertising, or connections to remote servers.",
+  "privacy.children":
+    "This application is designed for educational use by children and follows principles for protecting children’s privacy.",
+  "privacy.changes":
+    "If any changes affecting this policy occur in the future, users will be clearly informed within the application.",
 
   "damas.config.result.white": "You play with WHITE",
   "damas.config.result.black": "You play with BLACK",
@@ -293,7 +306,7 @@ window.translationsEN = {
     "- Look at the image.\n- Type the word letter by letter.\n- Press Check.\n- After 3 mistakes, the word is revealed.",
   "common.confirmYes": "Yes",
   "common.confirmNo": "No",
-
+  "common.save": "Save",
   "common.confirmExit": "Are you sure you want to exit?",
   "palabras.config.help": "Enable help",
   "palabras.config.helpDescription":

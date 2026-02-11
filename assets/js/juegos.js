@@ -19,27 +19,21 @@ document.addEventListener("click", function (e) {
   }
 });
 
-// Función para abrir modales de configuración
+// Función para abrir y cerrar modales de configuración
 function abrirModalSettings(modalId) {
-  // Cerrar menú de ajustes
   document.getElementById("settings-menu").style.display = "none";
+  document.body.classList.add("modal-open");
 
-  // Mostrar el modal solicitado
-  document.getElementById(modalId).style.display = "flex";
-
-  // Cerrar otros modales (por si acaso)
   document.querySelectorAll(".modal-settings").forEach((modal) => {
-    if (modal.id !== modalId) {
-      modal.style.display = "none";
-    }
+    modal.style.display = modal.id === modalId ? "flex" : "none";
   });
 }
 
-// Función para cerrar modales de configuración (ya existe pero la mejoramos)
 function cerrarModalSettings() {
   document.querySelectorAll(".modal-settings").forEach((modal) => {
     modal.style.display = "none";
   });
+  document.body.classList.remove("modal-open");
 }
 
 function mostrarToastIdioma(texto) {
@@ -221,4 +215,13 @@ document.addEventListener("DOMContentLoaded", () => {
       cerrarModalSettings();
     });
   });
+
+  const footerPrivacy = document.getElementById("footer-privacy");
+
+  if (footerPrivacy) {
+    footerPrivacy.addEventListener("click", (e) => {
+      e.preventDefault();
+      abrirModalSettings("modal-privacy");
+    });
+  }
 });

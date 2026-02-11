@@ -263,12 +263,12 @@ window.translationsFR = {
   "ranking.confirmDelete":
     "Êtes-vous sûr de vouloir supprimer tout le classement ?",
   "ranking.confirmDelete": "Sei sicuro di voler eliminare tutta la classifica?",
-
+  "common.save": "Enregistrer",
   "menu.language.title": "Sélectionner la langue",
 
   "menu.objective.title": "Objectif du projet",
   "menu.objective.text":
-    "Ce projet est une collection de jeux éducatifs conçus pour les enfants et les jeunes à partir de 7 ans. Son objectif est de favoriser l’apprentissage de manière ludique, en travaillant des domaines tels que les mathématiques, le langage, la mémoire et la logique. Chaque jeu propose des instructions simples et claires afin que tout utilisateur puisse commencer à jouer facilement.",
+    "Ce projet est une collection de jeux éducatifs conçus pour les enfants et les jeunes à partir de 6 ans. Son objectif est de favoriser l’apprentissage de manière ludique, en travaillant des domaines tels que les mathématiques, le langage, la mémoire et la logique. Chaque jeu propose des instructions simples et claires afin que tout utilisateur puisse commencer à jouer facilement.",
   "ahorcado.instructions.minWords":
     "Vous devez deviner au moins 3 mots pour sauvegarder votre record.",
   "ahorcado.minWordsRequired": "Minimum 3 mots pour sauvegarder",
@@ -276,6 +276,19 @@ window.translationsFR = {
     "Vous devez deviner au moins 3 mots pour sauvegarder votre record",
   "ahorcado.recordSaved": "Record sauvegardé avec succès",
   "ahorcado.extraHelpMessage": "💡 Vous avez gagné une aide supplémentaire!",
+  "privacy.title": "Politique de confidentialité",
+  "privacy.intro":
+    "Cette application fonctionne entièrement en local et ne collecte aucune donnée personnelle.",
+  "privacy.data":
+    "Aucune information personnelle, donnée d’utilisation, donnée de localisation, identifiant de l’appareil ou cookie n’est collecté, stocké ou transmis.",
+  "privacy.storage":
+    "Toutes les informations utilisées par l’application (comme la langue sélectionnée) sont stockées uniquement sur l’appareil de l’utilisateur et ne sont jamais partagées avec des tiers.",
+  "privacy.thirdParties":
+    "L’application n’utilise pas de services externes, d’outils d’analyse, de publicité ni de connexions à des serveurs distants.",
+  "privacy.children":
+    "Cette application est conçue pour un usage éducatif destiné aux enfants et respecte les principes de protection de la vie privée des mineurs.",
+  "privacy.changes":
+    "Si des modifications affectant cette politique sont apportées à l’avenir, les utilisateurs en seront clairement informés dans l’application.",
 
   "ranking.sort.points": "Trier par points",
   "ranking.sort.date": "Trier par date",

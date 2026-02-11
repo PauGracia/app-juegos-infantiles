@@ -252,6 +252,19 @@ window.translationsIT = {
     "Devi indovinare almeno 3 parole per salvare il tuo record",
   "ahorcado.recordSaved": "Record salvato correttamente",
   "ahorcado.extraHelpMessage": "💡 Hai guadagnato un aiuto extra!",
+  "privacy.title": "Informativa sulla privacy",
+  "privacy.intro":
+    "Questa applicazione funziona interamente in locale e non raccoglie dati personali.",
+  "privacy.data":
+    "Non vengono raccolti, archiviati o trasmessi dati personali, dati di utilizzo, dati di posizione, identificatori del dispositivo o cookie.",
+  "privacy.storage":
+    "Tutte le informazioni utilizzate dall’applicazione (come la lingua selezionata) vengono salvate esclusivamente sul dispositivo dell’utente e non vengono condivise con terze parti.",
+  "privacy.thirdParties":
+    "L’applicazione non utilizza servizi esterni, sistemi di analisi, pubblicità o connessioni a server remoti.",
+  "privacy.children":
+    "Questa applicazione è progettata per un uso educativo destinato ai bambini e rispetta i principi di tutela della privacy dei minori.",
+  "privacy.changes":
+    "Se in futuro verranno apportate modifiche che influenzano questa informativa, gli utenti saranno chiaramente informati all’interno dell’applicazione.",
 
   "ranking.sort.points": "Ordina per punti",
   "ranking.sort.date": "Ordina per data",
@@ -260,8 +273,8 @@ window.translationsIT = {
   "menu.language.title": "Seleziona lingua",
   "menu.objective.title": "Obiettivo del progetto",
   "menu.objective.text":
-    "Questo progetto è una raccolta di giochi educativi pensati per bambini e ragazzi a partire dai 7 anni. L'obiettivo è favorire l'apprendimento in modo divertente, lavorando su aree come matematica, linguaggio, memoria e logica. Ogni gioco include istruzioni chiare e semplici, per permettere a chiunque di iniziare a giocare senza difficoltà. Il progetto combina educazione e intrattenimento, aiutando a sviluppare abilità cognitive mentre ci si diverte.",
-
+    "Questo progetto è una raccolta di giochi educativi pensati per bambini e ragazzi a partire dai 6 anni. L'obiettivo è favorire l'apprendimento in modo divertente, lavorando su aree come matematica, linguaggio, memoria e logica. Ogni gioco include istruzioni chiare e semplici, per permettere a chiunque di iniziare a giocare senza difficoltà. Il progetto combina educazione e intrattenimento, aiutando a sviluppare abilità cognitive mentre ci si diverte.",
+  "common.save": "Salva",
   "footer.contact": "Contatto",
   "footer.privacy": "Privacy",
   "footer.copyright": "© 2025 Giochi Educativi per Bambini",

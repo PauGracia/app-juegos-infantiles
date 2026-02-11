@@ -263,7 +263,7 @@ window.translationsCA = {
     "Necessites encertar com a mínim 3 paraules per guardar el teu rècord",
   "ahorcado.recordSaved": "Rècord guardat correctament",
   "ahorcado.extraHelpMessage": "💡 Has guanyat una ajuda extra!",
-
+  "common.save": "Desar",
   "ranking.sort.points": "Ordenar per punts",
   "ranking.sort.date": "Ordenar per data",
   "ranking.sort.user": "Ordenar per nom",
@@ -271,7 +271,20 @@ window.translationsCA = {
 
   "menu.objective.title": "Objectiu del projecte",
   "menu.objective.text":
-    "Aquest projecte és una col·lecció de jocs educatius pensats per a infants i joves a partir dels 7 anys. El seu objectiu és fomentar l’aprenentatge d’una manera divertida, treballant àrees com les matemàtiques, el llenguatge, la memòria i la lògica. Cada joc inclou instruccions clares i senzilles perquè qualsevol usuari pugui començar a jugar sense dificultat.",
+    "Aquest projecte és una col·lecció de jocs educatius pensats per a infants i joves a partir dels 6 anys. El seu objectiu és fomentar l’aprenentatge d’una manera divertida, treballant àrees com les matemàtiques, el llenguatge, la memòria i la lògica. Cada joc inclou instruccions clares i senzilles perquè qualsevol usuari pugui començar a jugar sense dificultat.",
+  "privacy.title": "Política de privacitat",
+  "privacy.intro":
+    "Aquesta aplicació és totalment local i no recull dades personals.",
+  "privacy.data":
+    "No es recullen, emmagatzemen ni transmeten dades personals, dades d’ús, ubicació, identificadors del dispositiu ni cookies.",
+  "privacy.storage":
+    "Tota la informació utilitzada per l’aplicació (com l’idioma seleccionat) es guarda únicament al dispositiu de l’usuari i no es comparteix amb tercers.",
+  "privacy.thirdParties":
+    "L’aplicació no utilitza serveis externs, analítiques, publicitat ni connexions a servidors remots.",
+  "privacy.children":
+    "Aquesta aplicació està dissenyada per a un ús educatiu infantil i compleix els principis de protecció de la privacitat dels menors.",
+  "privacy.changes":
+    "Si en el futur es produeix algun canvi que afecti aquesta política, se n’informarà clarament dins de l’aplicació.",
 
   "footer.contact": "Contacte",
   "footer.privacy": "Política de Privacitat",
