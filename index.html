@@ -37,6 +37,47 @@
         <button id="btn-settings-objective" data-i18n="menu.settings.objective">
           🎯 Objetivo
         </button>
+
+        <button id="btn-settings-history" data-i18n="menu.settings.history">
+          📋 Historial
+        </button>
+      </div>
+    </div>
+    <!-- MODAL HISTORIAL -->
+    <div id="modal-history" class="modal-settings">
+      <div class="modal-box">
+        <h2 data-i18n="history.title">Historial de partidas</h2>
+
+        <div style="margin: 20px 0">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 12px 0;
+              border-bottom: 1px solid #eee;
+            "
+          >
+            <span data-i18n="menu.ahorcado">Juego Ahorcado</span>
+            <button
+              id="btn-delete-ahorcado"
+              class="close-btn"
+              style="
+                background-color: #f44336;
+                width: auto;
+                padding: 8px 16px;
+                margin-top: 0;
+              "
+              data-i18n="history.delete"
+            >
+              Borrar datos
+            </button>
+          </div>
+        </div>
+
+        <button class="close-btn" data-close-modal data-i18n="common.close">
+          Cerrar
+        </button>
       </div>
     </div>
 

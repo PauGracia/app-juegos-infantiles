@@ -286,6 +286,16 @@ window.translationsEN = {
   "damas.config.play": "Play",
   "damas.config.exit": "Exit",
   "privacy.title": "Privacy Policy",
+  "menu.settings.history": "History",
+  "history.title": "Game History",
+  "history.delete": "Delete data",
+  "history.deleteAll": "Delete all data",
+  "history.confirmTitle": "Confirm deletion",
+  "history.confirmMessage": "Are you sure you want to delete all data from",
+  "history.confirmAllTitle": "Delete entire history",
+  "history.confirmAllMessage":
+    "Are you sure you want to delete ALL data from the following games?",
+  "history.deleted": "Data deleted successfully",
   "privacy.intro":
     "This application is completely local and does not collect personal data.",
   "privacy.data":

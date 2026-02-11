@@ -265,6 +265,17 @@ window.translationsFR = {
   "ranking.confirmDelete": "Sei sicuro di voler eliminare tutta la classifica?",
   "common.save": "Enregistrer",
   "menu.language.title": "Sélectionner la langue",
+  "menu.settings.history": "Historique",
+  "history.title": "Historique des parties",
+  "history.delete": "Supprimer les données",
+  "history.deleteAll": "Supprimer toutes les données",
+  "history.confirmTitle": "Confirmer la suppression",
+  "history.confirmMessage":
+    "Êtes-vous sûr de vouloir supprimer toutes les données de",
+  "history.confirmAllTitle": "Supprimer tout l'historique",
+  "history.confirmAllMessage":
+    "Êtes-vous sûr de vouloir supprimer TOUTES les données des jeux suivants ?",
+  "history.deleted": "Données supprimées avec succès",
 
   "menu.objective.title": "Objectif du projet",
   "menu.objective.text":

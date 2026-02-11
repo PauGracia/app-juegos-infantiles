@@ -280,7 +280,17 @@ window.translationsPT = {
     "Esta aplicação foi concebida para uso educativo infantil e respeita os princípios de proteção da privacidade das crianças.",
   "privacy.changes":
     "Caso ocorram alterações a esta política no futuro, os utilizadores serão claramente informados dentro da aplicação.",
-
+  "menu.settings.history": "Histórico",
+  "history.title": "Histórico de partidas",
+  "history.delete": "Apagar dados",
+  "history.deleteAll": "Apagar todos os dados",
+  "history.confirmTitle": "Confirmar exclusão",
+  "history.confirmMessage":
+    "Tens a certeza que queres apagar todos os dados de",
+  "history.confirmAllTitle": "Apagar todo o histórico",
+  "history.confirmAllMessage":
+    "Tens a certeza que queres apagar TODOS os dados dos seguintes jogos?",
+  "history.deleted": "Dados apagados com sucesso",
   "footer.contact": "Contato",
   "footer.privacy": "Política de Privacidade",
   "footer.copyright": "© 2025 Jogos Educativos Infantis",

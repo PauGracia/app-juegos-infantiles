@@ -265,7 +265,16 @@ window.translationsIT = {
     "Questa applicazione è progettata per un uso educativo destinato ai bambini e rispetta i principi di tutela della privacy dei minori.",
   "privacy.changes":
     "Se in futuro verranno apportate modifiche che influenzano questa informativa, gli utenti saranno chiaramente informati all’interno dell’applicazione.",
-
+  "menu.settings.history": "Cronologia",
+  "history.title": "Cronologia partite",
+  "history.delete": "Elimina dati",
+  "history.deleteAll": "Elimina tutti i dati",
+  "history.confirmTitle": "Conferma eliminazione",
+  "history.confirmMessage": "Sei sicuro di voler eliminare tutti i dati di",
+  "history.confirmAllTitle": "Elimina tutta la cronologia",
+  "history.confirmAllMessage":
+    "Sei sicuro di voler eliminare TUTTI i dati dei seguenti giochi?",
+  "history.deleted": "Dati eliminati correttamente",
   "ranking.sort.points": "Ordina per punti",
   "ranking.sort.date": "Ordina per data",
   "ranking.sort.user": "Ordina per nome",

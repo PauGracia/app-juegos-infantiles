@@ -224,4 +224,33 @@ document.addEventListener("DOMContentLoaded", () => {
       abrirModalSettings("modal-privacy");
     });
   }
+
+  // Botón de historial - AÑADIR dentro del DOMContentLoaded donde están los otros botones
+  const btnHistory = document.getElementById("btn-settings-history");
+  if (btnHistory) {
+    btnHistory.addEventListener("click", function () {
+      abrirModalSettings("modal-history");
+    });
+  }
+
+  // Botón para borrar datos del ahorcado - AÑADIR dentro del DOMContentLoaded
+  const btnDeleteAhorcado = document.getElementById("btn-delete-ahorcado");
+  if (btnDeleteAhorcado) {
+    btnDeleteAhorcado.addEventListener("click", function () {
+      if (confirm("¿Seguro que quieres borrar todos los datos del Ahorcado?")) {
+        localStorage.removeItem("rankingAhorcado");
+
+        // Mostrar toast
+        const toast = document.getElementById("language-toast");
+        if (toast) {
+          toast.textContent = "Datos del Ahorcado borrados";
+          toast.classList.add("show");
+          setTimeout(() => toast.classList.remove("show"), 2000);
+        }
+
+        // Cerrar modal
+        cerrarModalSettings();
+      }
+    });
+  }
 });

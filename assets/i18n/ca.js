@@ -268,6 +268,16 @@ window.translationsCA = {
   "ranking.sort.date": "Ordenar per data",
   "ranking.sort.user": "Ordenar per nom",
   "ranking.filterUser": "Filtrar per usuari",
+  "menu.settings.history": "Historial",
+  "history.title": "Historial de partides",
+  "history.delete": "Esborrar dades",
+  "history.deleteAll": "Esborrar totes les dades",
+  "history.confirmTitle": "Confirmar esborrat",
+  "history.confirmMessage": "Segur que vols esborrar totes les dades de",
+  "history.confirmAllTitle": "Esborrar tot l'historial",
+  "history.confirmAllMessage":
+    "Segur que vols esborrar TOTES les dades dels següents jocs?",
+  "history.deleted": "Dades esborrades correctament",
 
   "menu.objective.title": "Objectiu del projecte",
   "menu.objective.text":
