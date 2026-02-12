@@ -443,6 +443,9 @@ body.modal-open {
   border-color: var(--color-text);
 }
 
+/*************************************************************
+********** POSIBLE CODIGO VIEJO DEL MODAL BORRAR HISTORIAL****
+************************************************************** */
 .close-btn {
   background: var(--color-secondary);
   color: var(--color-light);
@@ -745,6 +748,70 @@ footer a:hover:active {
 #modal-privacy h2 {
   -webkit-user-select: text;
   user-select: text;
+}
+
+/* =========================
+   HISTORIAL - REDISEÑO
+========================= */
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.history-card {
+  background: linear-gradient(135deg, var(--color-primary), #e8e8e0);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-md);
+  border: 2px solid var(--color-accent);
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+  color: var(--color-secondary);
+  margin-bottom: 15px;
+}
+
+.history-icon {
+  font-size: 1.5rem;
+}
+
+/* Botones internos */
+.history-warning {
+  background-color: #ffb74d;
+  color: #4e342e;
+}
+
+.history-danger {
+  background-color: #e57373;
+  color: #fff;
+}
+
+.history-subactions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+/* Zona peligrosa global */
+.history-global-danger {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 3px dashed rgba(0, 0, 0, 0.15);
+}
+
+.history-danger-big {
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 16px;
+  background: linear-gradient(135deg, #c62828, #b71c1c);
 }
 
 /* =========================
