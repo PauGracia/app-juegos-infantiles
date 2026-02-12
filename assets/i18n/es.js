@@ -112,6 +112,8 @@ window.translationsES = {
   "history.confirmAllMessage":
     "¿Seguro que quieres borrar TODOS los datos de los siguientes juegos?",
   "history.deleted": "Datos borrados correctamente",
+  "history.deleteNormal": "Normal",
+  "history.deleteChallenge": "Desafio",
   "common.exit": "Salir",
   "common.close": "Cerrar",
   "common.accept": "Aceptar",

@@ -291,6 +291,8 @@ window.translationsPT = {
   "history.confirmAllMessage":
     "Tens a certeza que queres apagar TODOS os dados dos seguintes jogos?",
   "history.deleted": "Dados apagados com sucesso",
+  "history.deleteNormal": "Normal",
+  "history.deleteChallenge": "Desafio",
   "footer.contact": "Contato",
   "footer.privacy": "Política de Privacidade",
   "footer.copyright": "© 2025 Jogos Educativos Infantis",

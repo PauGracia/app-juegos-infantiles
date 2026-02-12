@@ -44,11 +44,20 @@
       </div>
     </div>
     <!-- MODAL HISTORIAL -->
+
     <div id="modal-history" class="modal-settings">
       <div class="modal-box">
         <h2 data-i18n="history.title">Historial de partidas</h2>
 
-        <div style="margin: 20px 0">
+        <div
+          style="
+            margin: 20px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 5px;
+          "
+        >
+          <!-- JUEGO AHORCADO -->
           <div
             style="
               display: flex;
@@ -58,7 +67,10 @@
               border-bottom: 1px solid #eee;
             "
           >
-            <span data-i18n="menu.ahorcado">Juego Ahorcado</span>
+            <span style="display: flex; align-items: center; gap: 8px">
+              <span style="font-size: 1.2rem">🪢</span>
+              <span data-i18n="menu.ahorcado">Juego Ahorcado</span>
+            </span>
             <button
               id="btn-delete-ahorcado"
               class="close-btn"
@@ -73,9 +85,96 @@
               Borrar datos
             </button>
           </div>
+
+          <!-- JUEGO MEMORI -->
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 12px 0;
+              border-bottom: 1px solid #eee;
+            "
+          >
+            <span style="display: flex; align-items: center; gap: 8px">
+              <span style="font-size: 1.2rem">🎴</span>
+              <span data-i18n="menu.memori">En Pareja</span>
+            </span>
+            <div style="display: flex; gap: 8px">
+              <button
+                id="btn-delete-memori-normal"
+                class="close-btn"
+                style="
+                  background-color: #ff9800;
+                  width: auto;
+                  padding: 8px 12px;
+                  margin-top: 0;
+                  font-size: 0.85rem;
+                "
+                data-i18n="history.deleteNormal"
+              >
+                Normal
+              </button>
+              <button
+                id="btn-delete-memori-desafio"
+                class="close-btn"
+                style="
+                  background-color: #ff9800;
+                  width: auto;
+                  padding: 8px 12px;
+                  margin-top: 0;
+                  font-size: 0.85rem;
+                "
+                data-i18n="history.deleteChallenge"
+              >
+                Desafío
+              </button>
+              <button
+                id="btn-delete-memori-all"
+                class="close-btn"
+                style="
+                  background-color: #f44336;
+                  width: auto;
+                  padding: 8px 16px;
+                  margin-top: 0;
+                "
+                data-i18n="history.delete"
+              >
+                Borrar todo
+              </button>
+            </div>
+          </div>
         </div>
 
-        <button class="close-btn" data-close-modal data-i18n="common.close">
+        <!-- BOTÓN DE BORRADO MASIVO - TODOS LOS JUEGOS -->
+        <div
+          style="
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+          "
+        >
+          <button
+            id="btn-delete-all-games"
+            class="close-btn"
+            style="
+              background-color: #b71c1c;
+              width: 100%;
+              padding: 14px;
+              font-weight: bold;
+            "
+            data-i18n="history.deleteAll"
+          >
+            🗑️ BORRAR TODOS LOS DATOS DE TODOS LOS JUEGOS
+          </button>
+        </div>
+
+        <button
+          class="close-btn"
+          data-close-modal
+          data-i18n="common.close"
+          style="margin-top: 20px"
+        >
           Cerrar
         </button>
       </div>

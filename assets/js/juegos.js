@@ -225,7 +225,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Botón de historial - AÑADIR dentro del DOMContentLoaded donde están los otros botones
+  // ============================================
+  // GESTIÓN DE BORRADO DE DATOS
+  // ============================================
+
+  // Botón de historial
   const btnHistory = document.getElementById("btn-settings-history");
   if (btnHistory) {
     btnHistory.addEventListener("click", function () {
@@ -233,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Botón para borrar datos del ahorcado - AÑADIR dentro del DOMContentLoaded
+  // Botón para borrar datos del ahorcado
   const btnDeleteAhorcado = document.getElementById("btn-delete-ahorcado");
   if (btnDeleteAhorcado) {
     btnDeleteAhorcado.addEventListener("click", function () {
@@ -246,6 +250,117 @@ document.addEventListener("DOMContentLoaded", () => {
           toast.textContent = "Datos del Ahorcado borrados";
           toast.classList.add("show");
           setTimeout(() => toast.classList.remove("show"), 2000);
+        }
+
+        // Cerrar modal
+        cerrarModalSettings();
+      }
+    });
+  }
+
+  // Función genérica para borrar datos con confirmación
+  function borrarDatosJuego(claves, nombreJuego, mensajeExito) {
+    // Si es un array de claves, borrar múltiples
+    if (Array.isArray(claves)) {
+      if (
+        confirm(`¿Seguro que quieres borrar todos los datos de ${nombreJuego}?`)
+      ) {
+        claves.forEach((clave) => localStorage.removeItem(clave));
+      }
+    } else {
+      // Una sola clave
+      if (
+        confirm(`¿Seguro que quieres borrar todos los datos de ${nombreJuego}?`)
+      ) {
+        localStorage.removeItem(claves);
+      }
+    }
+
+    // Mostrar toast
+    const toast = document.getElementById("language-toast");
+    if (toast) {
+      toast.textContent = mensajeExito || `${nombreJuego} - Datos borrados`;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2000);
+    }
+
+    // Cerrar modal
+    cerrarModalSettings();
+  }
+
+  // BOTONES DEL MEMORI
+  const btnMemoriNormal = document.getElementById("btn-delete-memori-normal");
+  if (btnMemoriNormal) {
+    btnMemoriNormal.addEventListener("click", function () {
+      borrarDatosJuego(
+        "ranking_memori",
+        "Memori - Modo Normal",
+        "Memori Normal borrado",
+      );
+    });
+  }
+
+  const btnMemoriDesafio = document.getElementById("btn-delete-memori-desafio");
+  if (btnMemoriDesafio) {
+    btnMemoriDesafio.addEventListener("click", function () {
+      borrarDatosJuego(
+        "ranking_desafio",
+        "Memori - Modo Desafío",
+        "Memori Desafío borrado",
+      );
+    });
+  }
+
+  const btnMemoriAll = document.getElementById("btn-delete-memori-all");
+  if (btnMemoriAll) {
+    btnMemoriAll.addEventListener("click", function () {
+      borrarDatosJuego(
+        ["ranking_memori", "ranking_desafio"],
+        "Memori (todos los modos)",
+        "Todos los datos del Memori borrados",
+      );
+    });
+  }
+
+  // BOTÓN DE BORRAR TODOS LOS JUEGOS
+  const btnDeleteAllGames = document.getElementById("btn-delete-all-games");
+  if (btnDeleteAllGames) {
+    btnDeleteAllGames.addEventListener("click", function () {
+      // Lista completa de todos los rankings de todos los juegos
+      const todosLosRankings = [
+        // Memori
+        "ranking_memori",
+        "ranking_desafio",
+        // Ahorcado
+        "rankingAhorcado",
+        // Operaciones (cuando esté implementado)
+        // "rankingOperaciones",
+        // Palabras (cuando esté implementado)
+        // "rankingPalabras",
+        // Damas (cuando esté implementado)
+        // "rankingDamas"
+      ];
+
+      const confirmacion = confirm(
+        "⚠️ ¿Seguro que quieres borrar TODOS LOS DATOS de TODOS LOS JUEGOS?\n\n" +
+          "Esta acción no se puede deshacer.",
+      );
+
+      if (confirmacion) {
+        // Borrar todos los rankings
+        todosLosRankings.forEach((clave) => {
+          if (localStorage.getItem(clave) !== null) {
+            localStorage.removeItem(clave);
+          }
+        });
+
+        // Mostrar toast
+        const toast = document.getElementById("language-toast");
+        if (toast) {
+          toast.textContent =
+            "✅ Todos los datos de todos los juegos han sido borrados";
+          toast.classList.add("show");
+          setTimeout(() => toast.classList.remove("show"), 3000);
         }
 
         // Cerrar modal

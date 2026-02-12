@@ -275,6 +275,8 @@ window.translationsIT = {
   "history.confirmAllMessage":
     "Sei sicuro di voler eliminare TUTTI i dati dei seguenti giochi?",
   "history.deleted": "Dati eliminati correttamente",
+  "history.deleteNormal": "Normale",
+  "history.deleteChallenge": "Sfida",
   "ranking.sort.points": "Ordina per punti",
   "ranking.sort.date": "Ordina per data",
   "ranking.sort.user": "Ordina per nome",

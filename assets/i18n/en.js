@@ -273,7 +273,8 @@ window.translationsEN = {
   "menu.objective.title": "Project objective",
   "menu.objective.text":
     "This project is a collection of educational games designed for children and young people from the age of 6. Its goal is to encourage learning through fun activities, covering areas such as mathematics, language, memory and logic. Each game includes simple and clear instructions so anyone can start playing easily.",
-
+  "history.deleteNormal": "Normal",
+  "history.deleteChallenge": "Challenge",
   "footer.contact": "Contact",
   "footer.privacy": "Privacy Policy",
   "footer.copyright": "© 2025 Educational Children's Games",
