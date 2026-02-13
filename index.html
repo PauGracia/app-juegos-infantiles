@@ -55,13 +55,15 @@
           <!-- JUEGO AHORCADO -->
           <div class="history-card">
             <div class="history-header">
-              <span class="history-icon">🪢</span>
+              <span class="history-icon">
+                <img src="./assets/img/iconos/ahorcado.png" alt="" />
+              </span>
               <span data-i18n="menu.ahorcado">Juego Ahorcado</span>
             </div>
 
             <button
               id="btn-delete-ahorcado"
-              class="close-btn history-danger"
+              class="close-btn-historial history-danger"
               data-i18n="history.delete"
             >
               Borrar datos
@@ -71,14 +73,16 @@
           <!-- JUEGO MEMORI -->
           <div class="history-card">
             <div class="history-header">
-              <span class="history-icon">🎴</span>
+              <span class="history-icon">
+                <img src="./assets/img/iconos/memori.png" alt="" />
+              </span>
               <span data-i18n="menu.memori">En Pareja</span>
             </div>
 
             <div class="history-subactions">
               <button
                 id="btn-delete-memori-normal"
-                class="close-btn history-warning"
+                class="close-btn-historial history-warning"
                 data-i18n="history.deleteNormal"
               >
                 Normal
@@ -86,7 +90,7 @@
 
               <button
                 id="btn-delete-memori-desafio"
-                class="close-btn history-warning"
+                class="close-btn-historial history-warning"
                 data-i18n="history.deleteChallenge"
               >
                 Desafío
@@ -95,7 +99,7 @@
 
             <button
               id="btn-delete-memori-all"
-              class="close-btn history-danger"
+              class="close-btn-historial history-danger"
               data-i18n="history.delete"
             >
               Borrar todo
@@ -107,7 +111,7 @@
         <div class="history-global-danger">
           <button
             id="btn-delete-all-games"
-            class="close-btn history-danger history-danger-big"
+            class="close-btn-historial history-danger history-danger-big"
             data-i18n="history.deleteAll"
           >
             🗑️ BORRAR TODOS LOS DATOS DE TODOS LOS JUEGOS
@@ -162,31 +166,55 @@
     <div id="lista-enlaces">
       <ul>
         <li>
-          <a
-            href="./juegos/operaciones/index.html"
-            data-i18n="menu.operaciones"
-          >
-            Operaciones Básicas
+          <a href="./juegos/operaciones/index.html">
+            <span class="menu-icon">
+              <img src="./assets/img/iconos/operaciones.png" alt="" />
+            </span>
+            <span class="menu-text" data-i18n="menu.operaciones">
+              Operaciones Básicas
+            </span>
           </a>
         </li>
+
         <li>
-          <a href="./juegos/palabras/index.html" data-i18n="menu.palabras">
-            Escribe las Palabras
+          <a href="./juegos/palabras/index.html">
+            <span class="menu-icon">
+              <img src="./assets/img/iconos/palabras.png" alt="" />
+            </span>
+            <span class="menu-text" data-i18n="menu.palabras">
+              Escribe las Palabras
+            </span>
           </a>
         </li>
+
         <li>
-          <a href="./juegos/memori/index.html" data-i18n="menu.memori">
-            En Pareja
+          <a href="./juegos/memori/index.html">
+            <span class="menu-icon">
+              <img src="./assets/img/iconos/memori.png" alt="" />
+            </span>
+            <span class="menu-text" data-i18n="menu.memori"> En Pareja </span>
           </a>
         </li>
+
         <li>
-          <a href="./juegos/juegoAhorcado/index.html" data-i18n="menu.ahorcado">
-            Juego Ahorcado
+          <a href="./juegos/juegoAhorcado/index.html">
+            <span class="menu-icon">
+              <img src="./assets/img/iconos/ahorcado.png" alt="" />
+            </span>
+            <span class="menu-text" data-i18n="menu.ahorcado">
+              Juego Ahorcado
+            </span>
           </a>
         </li>
+
         <li>
-          <a href="./juegos/damas/index.html" data-i18n="menu.damas">
-            Juego de Damas
+          <a href="./juegos/damas/index.html">
+            <span class="menu-icon">
+              <img src="./assets/img/iconos/damas.png" alt="" />
+            </span>
+            <span class="menu-text" data-i18n="menu.damas">
+              Juego de Damas
+            </span>
           </a>
         </li>
       </ul>
@@ -278,6 +306,35 @@
             <button class="close-btn" data-close-modal data-i18n="common.close">
               Cerrar
             </button>
+          </div>
+        </div>
+
+        <!-- MODAL CONFIRMACIÓN BORRADO -->
+        <div id="modal-confirm-delete" class="modal-settings">
+          <div class="modal-box modal-confirm">
+            <h2 data-i18n="history.confirmTitle">Confirmar borrado</h2>
+
+            <p id="confirm-message" data-i18n="history.confirmText">
+              ¿Seguro que quieres borrar estos datos?
+            </p>
+
+            <div class="confirm-actions">
+              <button
+                id="btn-confirm-cancel"
+                class="close-btn-historial"
+                data-i18n="common.cancel"
+              >
+                Cancelar
+              </button>
+
+              <button
+                id="btn-confirm-accept"
+                class="close-btn-historial history-danger"
+                data-i18n="common.confirm"
+              >
+                Borrar
+              </button>
+            </div>
           </div>
         </div>
 

@@ -280,6 +280,13 @@ window.translationsCA = {
   "history.deleted": "Dades esborrades correctament",
   "history.deleteNormal": "Normal",
   "history.deleteChallenge": "Desafio",
+  "history.confirmTitle": "Confirmar esborrat",
+  "history.confirmText": "Estàs segur que vols esborrar aquestes dades?",
+  "history.confirmTextAll":
+    "⚠️ Estàs segur que vols esborrar TOTES LES DADES de TOTS ELS JOCS?\nAquesta acció no es pot desfer.",
+  "common.cancel": "Cancel·lar",
+  "common.confirm": "Esborrar",
+  "history.allDeleted": "S'han esborrat totes les dades de tots els jocs",
   "menu.objective.title": "Objectiu del projecte",
   "menu.objective.text":
     "Aquest projecte és una col·lecció de jocs educatius pensats per a infants i joves a partir dels 6 anys. El seu objectiu és fomentar l’aprenentatge d’una manera divertida, treballant àrees com les matemàtiques, el llenguatge, la memòria i la lògica. Cada joc inclou instruccions clares i senzilles perquè qualsevol usuari pugui començar a jugar sense dificultat.",

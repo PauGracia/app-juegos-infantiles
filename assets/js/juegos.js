@@ -1,3 +1,5 @@
+let confirmAction = null;
+
 // Abrir/cerrar menú de configuración
 document.getElementById("settings-btn").addEventListener("click", function (e) {
   e.stopPropagation();
@@ -18,6 +20,21 @@ document.addEventListener("click", function (e) {
     settingsMenu.style.display = "none";
   }
 });
+
+function abrirModalConfirmacion(mensaje, accion) {
+  const modal = document.getElementById("modal-confirm-delete");
+  const messageEl = document.getElementById("confirm-message");
+
+  messageEl.textContent = mensaje;
+  confirmAction = accion;
+
+  abrirModalSettings("modal-confirm-delete");
+}
+
+function cerrarModalConfirmacion() {
+  confirmAction = null;
+  cerrarModalSettings();
+}
 
 // Función para abrir y cerrar modales de configuración
 function abrirModalSettings(modalId) {
@@ -240,52 +257,31 @@ document.addEventListener("DOMContentLoaded", () => {
   // Botón para borrar datos del ahorcado
   const btnDeleteAhorcado = document.getElementById("btn-delete-ahorcado");
   if (btnDeleteAhorcado) {
-    btnDeleteAhorcado.addEventListener("click", function () {
-      if (confirm("¿Seguro que quieres borrar todos los datos del Ahorcado?")) {
-        localStorage.removeItem("rankingAhorcado");
-
-        // Mostrar toast
-        const toast = document.getElementById("language-toast");
-        if (toast) {
-          toast.textContent = "Datos del Ahorcado borrados";
-          toast.classList.add("show");
-          setTimeout(() => toast.classList.remove("show"), 2000);
-        }
-
-        // Cerrar modal
-        cerrarModalSettings();
-      }
+    btnDeleteAhorcado.addEventListener("click", () => {
+      abrirModalConfirmacion(
+        "¿Seguro que quieres borrar todos los datos del Ahorcado?",
+        () => {
+          localStorage.removeItem("rankingAhorcado");
+          mostrarToastIdioma("Datos del Ahorcado borrados");
+        },
+      );
     });
   }
 
   // Función genérica para borrar datos con confirmación
   function borrarDatosJuego(claves, nombreJuego, mensajeExito) {
-    // Si es un array de claves, borrar múltiples
-    if (Array.isArray(claves)) {
-      if (
-        confirm(`¿Seguro que quieres borrar todos los datos de ${nombreJuego}?`)
-      ) {
-        claves.forEach((clave) => localStorage.removeItem(clave));
-      }
-    } else {
-      // Una sola clave
-      if (
-        confirm(`¿Seguro que quieres borrar todos los datos de ${nombreJuego}?`)
-      ) {
-        localStorage.removeItem(claves);
-      }
-    }
+    abrirModalConfirmacion(
+      `¿Seguro que quieres borrar todos los datos de ${nombreJuego}?`,
+      () => {
+        if (Array.isArray(claves)) {
+          claves.forEach((clave) => localStorage.removeItem(clave));
+        } else {
+          localStorage.removeItem(claves);
+        }
 
-    // Mostrar toast
-    const toast = document.getElementById("language-toast");
-    if (toast) {
-      toast.textContent = mensajeExito || `${nombreJuego} - Datos borrados`;
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 2000);
-    }
-
-    // Cerrar modal
-    cerrarModalSettings();
+        mostrarToastIdioma(mensajeExito || `${nombreJuego} - Datos borrados`);
+      },
+    );
   }
 
   // BOTONES DEL MEMORI
@@ -341,31 +337,39 @@ document.addEventListener("DOMContentLoaded", () => {
         // "rankingDamas"
       ];
 
-      const confirmacion = confirm(
-        "⚠️ ¿Seguro que quieres borrar TODOS LOS DATOS de TODOS LOS JUEGOS?\n\n" +
-          "Esta acción no se puede deshacer.",
+      abrirModalConfirmacion(
+        "⚠️ ¿Seguro que quieres borrar TODOS LOS DATOS de TODOS LOS JUEGOS?\n\nEsta acción no se puede deshacer.",
+        () => {
+          todosLosRankings.forEach((clave) => {
+            if (localStorage.getItem(clave) !== null) {
+              localStorage.removeItem(clave);
+            }
+          });
+
+          mostrarToastIdioma(
+            "Todos los datos de todos los juegos han sido borrados",
+          );
+
+          cerrarModalSettings();
+        },
       );
-
-      if (confirmacion) {
-        // Borrar todos los rankings
-        todosLosRankings.forEach((clave) => {
-          if (localStorage.getItem(clave) !== null) {
-            localStorage.removeItem(clave);
-          }
-        });
-
-        // Mostrar toast
-        const toast = document.getElementById("language-toast");
-        if (toast) {
-          toast.textContent =
-            "✅ Todos los datos de todos los juegos han sido borrados";
-          toast.classList.add("show");
-          setTimeout(() => toast.classList.remove("show"), 3000);
-        }
-
-        // Cerrar modal
-        cerrarModalSettings();
-      }
     });
+  }
+
+  // Funcionalidad modal de confirmacion
+  const btnConfirmAccept = document.getElementById("btn-confirm-accept");
+  const btnConfirmCancel = document.getElementById("btn-confirm-cancel");
+
+  if (btnConfirmAccept) {
+    btnConfirmAccept.addEventListener("click", () => {
+      if (typeof confirmAction === "function") {
+        confirmAction();
+      }
+      cerrarModalConfirmacion();
+    });
+  }
+
+  if (btnConfirmCancel) {
+    btnConfirmCancel.addEventListener("click", cerrarModalConfirmacion);
   }
 });

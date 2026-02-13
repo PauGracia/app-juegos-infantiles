@@ -277,6 +277,13 @@ window.translationsIT = {
   "history.deleted": "Dati eliminati correttamente",
   "history.deleteNormal": "Normale",
   "history.deleteChallenge": "Sfida",
+  "history.confirmTitle": "Conferma eliminazione",
+  "history.confirmText": "Sei sicuro di voler eliminare questi dati?",
+  "history.confirmTextAll":
+    "⚠️ Sei sicuro di voler eliminare TUTTI I DATI di TUTTI I GIOCHI?\nQuesta azione non può essere annullata.",
+  "common.cancel": "Annulla",
+  "common.confirm": "Elimina",
+  "history.allDeleted": "Tutti i dati di tutti i giochi sono stati eliminati",
   "ranking.sort.points": "Ordina per punti",
   "ranking.sort.date": "Ordina per data",
   "ranking.sort.user": "Ordina per nome",

@@ -128,7 +128,7 @@ body::-webkit-scrollbar {
   color: var(--color-text);
   border-radius: var(--radius-xl);
   padding: clamp(20px, 4vw, 30px) clamp(30px, 6vw, 50px);
-  margin-top: clamp(40px, 6vh, 60px);
+  margin-top: clamp(20px, 6vh, 20px);
   box-shadow: var(--shadow-lg);
   border: 3px solid var(--color-accent);
   position: relative;
@@ -219,7 +219,7 @@ body::-webkit-scrollbar {
 
   min-height: clamp(60px, 9vh, 80px);
   align-items: center;
-
+  gap: 16px;
   background: linear-gradient(135deg, var(--color-primary), #e8e8e0);
   color: var(--color-text);
   text-decoration: none;
@@ -234,6 +234,32 @@ body::-webkit-scrollbar {
   z-index: 1;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
+}
+
+.menu-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 1.6em;
+  height: 1.6em;
+  flex-shrink: 0;
+
+  background: rgba(52, 152, 219, 0.15);
+  border-radius: 50%;
+}
+
+.menu-icon img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+/* Hover suave para acompañar al enlace */
+#lista-enlaces a:hover .menu-icon {
+  background: rgba(52, 152, 219, 0.25);
+  transform: scale(1.1);
+  transition: all 0.3s ease;
 }
 
 #lista-enlaces a::before {
@@ -441,28 +467,6 @@ body.modal-open {
   background: linear-gradient(135deg, var(--color-light), var(--color-action));
   box-shadow: var(--shadow-lg);
   border-color: var(--color-text);
-}
-
-/*************************************************************
-********** POSIBLE CODIGO VIEJO DEL MODAL BORRAR HISTORIAL****
-************************************************************** */
-.close-btn {
-  background: var(--color-secondary);
-  color: var(--color-light);
-  border: none;
-  padding: 12px 32px;
-  font-size: clamp(1rem, 3vw, 1.1rem);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  margin-top: 20px;
-  width: 100%;
-}
-
-.close-btn:hover {
-  background: var(--color-accent);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
 }
 
 /* =========================
@@ -674,6 +678,25 @@ footer a:hover:active {
   animation-delay: 1.2s;
 }
 
+.close-btn {
+  background: var(--color-secondary);
+  color: var(--color-light);
+  border: none;
+  padding: 12px 32px;
+  font-size: clamp(1rem, 3vw, 1.1rem);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  margin-top: 20px;
+  width: 100%;
+}
+
+.close-btn:hover {
+  background: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
 /* Animaciones */
 @keyframes float-symbol {
   0%,
@@ -751,7 +774,7 @@ footer a:hover:active {
 }
 
 /* =========================
-   HISTORIAL - REDISEÑO
+   HISTORIAL 
 ========================= */
 
 .history-list {
@@ -778,8 +801,28 @@ footer a:hover:active {
   margin-bottom: 15px;
 }
 
+/* =========================
+   HISTORIAL - ICONOS JUEGOS
+========================= */
+
 .history-icon {
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 1.8em;
+  height: 1.8em;
+  border-radius: 50%;
+
+  background: rgba(52, 152, 219, 0.15);
+  flex-shrink: 0;
+}
+
+.history-icon img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  display: block;
 }
 
 /* Botones internos */
@@ -812,6 +855,47 @@ footer a:hover:active {
   font-weight: bold;
   padding: 16px;
   background: linear-gradient(135deg, #c62828, #b71c1c);
+}
+
+.close-btn-historial {
+  border: none;
+  padding: 12px 32px;
+  font-size: clamp(1rem, 3vw, 1.1rem);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  margin-top: 20px;
+  width: 100%;
+}
+
+.close-btn-historial:hover {
+  background: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* =========================
+   MODAL CONFIRMACION BORRADO
+========================= */
+
+.modal-confirm {
+  max-width: 420px;
+  text-align: center;
+}
+
+.modal-confirm p {
+  margin: 1em 0 1.5em;
+  line-height: 1.4;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.confirm-actions button {
+  min-width: 120px;
 }
 
 /* =========================

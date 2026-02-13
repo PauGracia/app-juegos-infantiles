@@ -297,6 +297,13 @@ window.translationsEN = {
   "history.confirmAllMessage":
     "Are you sure you want to delete ALL data from the following games?",
   "history.deleted": "Data deleted successfully",
+  "history.confirmTitle": "Confirm deletion",
+  "history.confirmText": "Are you sure you want to delete this data?",
+  "history.confirmTextAll":
+    "⚠️ Are you sure you want to delete ALL DATA from ALL GAMES?\nThis action cannot be undone.",
+  "common.cancel": "Cancel",
+  "common.confirm": "Delete",
+  "history.allDeleted": "All data from all games has been deleted",
   "privacy.intro":
     "This application is completely local and does not collect personal data.",
   "privacy.data":

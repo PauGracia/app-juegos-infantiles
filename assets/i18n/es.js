@@ -102,6 +102,13 @@ window.translationsES = {
   "common.start": "Iniciar",
   "common.check": "Comprobar",
   "common.restart": "Reiniciar",
+  "history.confirmTitle": "Confirmar borrado",
+  "history.confirmText": "¿Seguro que quieres borrar estos datos?",
+  "history.confirmTextAll":
+    "⚠️ ¿Seguro que quieres borrar TODOS LOS DATOS de TODOS LOS JUEGOS?\nEsta acción no se puede deshacer.",
+  "common.cancel": "Cancelar",
+  "common.confirm": "Borrar",
+  "history.allDeleted": "Todos los datos de todos los juegos han sido borrados",
   "menu.settings.history": "Historial",
   "history.title": "Historial de partidas",
   "history.delete": "Borrar datos",

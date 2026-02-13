@@ -293,6 +293,13 @@ window.translationsPT = {
   "history.deleted": "Dados apagados com sucesso",
   "history.deleteNormal": "Normal",
   "history.deleteChallenge": "Desafio",
+  "history.confirmTitle": "Confirmar exclusão",
+  "history.confirmText": "Tem certeza de que deseja apagar estes dados?",
+  "history.confirmTextAll":
+    "⚠️ Tem certeza de que deseja apagar TODOS OS DADOS de TODOS OS JOGOS?\nEsta ação não pode ser desfeita.",
+  "common.cancel": "Cancelar",
+  "common.confirm": "Apagar",
+  "history.allDeleted": "Todos os dados de todos os jogos foram apagados",
   "footer.contact": "Contato",
   "footer.privacy": "Política de Privacidade",
   "footer.copyright": "© 2025 Jogos Educativos Infantis",

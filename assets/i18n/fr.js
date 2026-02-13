@@ -278,6 +278,14 @@ window.translationsFR = {
   "history.deleted": "Données supprimées avec succès",
   "history.deleteNormal": "Normal",
   "history.deleteChallenge": "Défi",
+  "history.confirmTitle": "Confirmer la suppression",
+  "history.confirmText": "Êtes-vous sûr de vouloir supprimer ces données ?",
+  "history.confirmTextAll":
+    "⚠️ Êtes-vous sûr de vouloir supprimer TOUTES LES DONNÉES de TOUS LES JEUX ?\nCette action est irréversible.",
+  "common.cancel": "Annuler",
+  "common.confirm": "Supprimer",
+  "history.allDeleted":
+    "Toutes les données de tous les jeux ont été supprimées",
   "menu.objective.title": "Objectif du projet",
   "menu.objective.text":
     "Ce projet est une collection de jeux éducatifs conçus pour les enfants et les jeunes à partir de 6 ans. Son objectif est de favoriser l’apprentissage de manière ludique, en travaillant des domaines tels que les mathématiques, le langage, la mémoire et la logique. Chaque jeu propose des instructions simples et claires afin que tout utilisateur puisse commencer à jouer facilement.",
