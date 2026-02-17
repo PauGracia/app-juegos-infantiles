@@ -591,14 +591,7 @@ const elementos = [
   },
   {
     id: 92,
-    palabras: [
-      "baloncesto",
-      "bàsquet",
-      "basketball",
-      "basket-ball",
-      "pallacanestro",
-      "basquetebol",
-    ],
-    imagen: "../../assets/img/iconos/baloncesto.png",
+    palabras: ["patín", "patí", "skate", "patin", "pattino", "patim"],
+    imagen: "../../assets/img/iconos/patin.png",
   },
 ];
