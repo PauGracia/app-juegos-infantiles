@@ -156,6 +156,7 @@ function reglasNivel(nivel) {
     negativos: false,
     ops: ["+"],
     tiempo: 480,
+    //tiempo: 20,
     grupoEdad: "",
     minEdad: 0,
     maxEdad: 0,

@@ -614,6 +614,18 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+#btn-si {
+  background: #2e7d5b;
+  color: #ddd;
+  border: 3px solid #2e7d5b;
+}
+
+#btn-no {
+  background: #d32f2f;
+  color: #ddd;
+  border: 3px solid #d32f2f;
+}
+
 .modal-aviso-content button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
