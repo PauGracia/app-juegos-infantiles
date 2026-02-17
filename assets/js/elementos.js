@@ -258,7 +258,7 @@ const elementos = [
   {
     id: 39,
     palabras: ["dinero", "diners", "money", "argent", "soldi", "dinheiro"],
-    imagen: "../../assets/img/iconos/presupuesto.png",
+    imagen: "../../assets/img/iconos/dinero.png",
   },
 
   {
@@ -565,11 +565,6 @@ const elementos = [
     imagen: "../../assets/img/iconos/arana.png",
   },
   {
-    id: 87,
-    palabras: ["hormiga", "formiga", "ant", "fourmi", "formica", "formiga"],
-    imagen: "../../assets/img/iconos/hormiga.png",
-  },
-  {
     id: 88,
     palabras: ["pulpo", "pop", "octopus", "poulpe", "polpo", "polvo"],
     imagen: "../../assets/img/iconos/pulpo.png",
@@ -593,5 +588,10 @@ const elementos = [
     id: 92,
     palabras: ["patín", "patí", "skate", "patin", "pattino", "patim"],
     imagen: "../../assets/img/iconos/patin.png",
+  },
+  {
+    id: 93,
+    palabras: ["hormiga", "formiga", "ant", "fourmi", "formica", "formiga"],
+    imagen: "../../assets/img/iconos/hormiga.png",
   },
 ];

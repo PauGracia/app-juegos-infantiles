@@ -179,6 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let columnasNivel = 0;
     let parejasDelNivel = 0; // para el modo desafío
     let nivelEnCurso = null;
+    const TIEMPO_MAX_ESPERA_NIVEL = 5 * 60 * 1000;
 
     // ------------------ NIVELES DESAFÍO ------------------
     const niveles = [
@@ -219,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Función para mostrar modal de confirmación de salida
     function confirmarSalida(callbackYes) {
-      // Crear modal confirmación de salida UNA SOLA VEZ
+      // Crear modal confirmación de salida
       let modalConfirm = document.getElementById("modal-confirm-exit");
 
       if (!modalConfirm) {
@@ -588,6 +589,19 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
       document.body.appendChild(modalNivel);
 
+      const timeoutNivel = setTimeout(() => {
+        console.warn("Tiempo de espera agotado en selección de nivel");
+
+        // Cerrar modal si sigue abierto
+        if (modalNivel.parentNode) {
+          modalNivel.remove();
+        }
+
+        // Simular fin de tiempo
+        nivelMaximoAlcanzado = Math.max(nivelMaximoAlcanzado, nivelActual - 1);
+        mostrarModalTiempoAgotado();
+      }, TIEMPO_MAX_ESPERA_NIVEL);
+
       // Actualizar texto inicial
       actualizarModalTexto();
 
@@ -602,6 +616,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const iniciarHandler = () => {
         console.log("Botón Iniciar clickeado, nivel:", nivelActual);
 
+        // Cancelar timeout de espera
+        clearTimeout(timeoutNivel);
         if (!elementos || elementos.length < parejasDelNivel) {
           alert(t("memori.notEnoughElements"));
           return;
