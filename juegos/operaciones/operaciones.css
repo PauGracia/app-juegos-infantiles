@@ -256,8 +256,8 @@ body {
 }
 
 #boton-salir-operaciones button {
-  background: linear-gradient(145deg, #f5f5f0, #e8e8e0);
-  color: #333;
+  background: #d32f2f;
+  color: #ddd;
   font-size: 1.3rem;
   font-weight: 600;
   width: 220px;
@@ -270,10 +270,8 @@ body {
 }
 
 #boton-salir-operaciones button:hover {
-  background: white;
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-  color: #2e7d5b;
 }
 
 #boton-salir-operaciones button:active {
@@ -439,9 +437,9 @@ body {
 }
 
 .modal-content .btn-exit {
-  background: linear-gradient(145deg, #6ac49d, #5ab48d);
+  background: linear-gradient(145deg, #d32f2f, #ee0404);
   color: white;
-  border-color: #4caf50;
+  border-color: #ff0000;
 }
 
 .modal-content #btn-instrucciones {

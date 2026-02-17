@@ -119,6 +119,7 @@ let inicioTiempo = null;
 let tiempoLimiteModoNormal = null;
 let contextoSalida = null; // "juego" | "menu"
 let ultimoGrupoEdadSuperado = "";
+let operacionesProximas = [];
 
 // ───── SONIDOS ─────
 const sonidoComprobar = new Audio("sounds/ping.mp3");
@@ -185,6 +186,7 @@ function reglasNivel(nivel) {
 
   if (nivel === 3) {
     reglas.cantidad = 6;
+    reglas.ops = ["+", "-"];
     reglas.max = 10;
     reglas.grupoEdad = "6 a 7 años";
     reglas.minEdad = 6;
@@ -193,6 +195,7 @@ function reglasNivel(nivel) {
 
   if (nivel === 4) {
     reglas.cantidad = 8;
+    reglas.ops = ["+", "-"];
     reglas.max = 10;
     reglas.grupoEdad = "6 a 7 años";
     reglas.minEdad = 6;
@@ -201,6 +204,7 @@ function reglasNivel(nivel) {
 
   if (nivel === 5) {
     reglas.cantidad = 10;
+    reglas.ops = ["+", "-"];
     reglas.max = 10;
     reglas.tiempo = 420;
     reglas.grupoEdad = "6 a 7 años";
@@ -213,6 +217,7 @@ function reglasNivel(nivel) {
   // ───────────────
   if (nivel === 6) {
     reglas.cantidad = 8;
+    reglas.ops = ["+", "-"];
     reglas.max = 20;
     reglas.grupoEdad = "7 a 8 años";
     reglas.minEdad = 7;
@@ -221,6 +226,7 @@ function reglasNivel(nivel) {
 
   if (nivel === 7) {
     reglas.cantidad = 10;
+    reglas.ops = ["+", "-"];
     reglas.max = 20;
     reglas.grupoEdad = "7 a 8 años";
     reglas.minEdad = 7;
@@ -229,6 +235,7 @@ function reglasNivel(nivel) {
 
   if (nivel === 8) {
     reglas.cantidad = 10;
+    reglas.ops = ["+", "-"];
     reglas.max = 30;
     reglas.grupoEdad = "7 a 8 años";
     reglas.minEdad = 7;
@@ -237,6 +244,7 @@ function reglasNivel(nivel) {
 
   if (nivel === 9) {
     reglas.cantidad = 12;
+    reglas.ops = ["+", "-"];
     reglas.max = 30;
     reglas.grupoEdad = "7 a 8 años";
     reglas.minEdad = 7;
@@ -245,6 +253,7 @@ function reglasNivel(nivel) {
 
   if (nivel === 10) {
     reglas.cantidad = 12;
+    reglas.ops = ["+", "-"];
     reglas.max = 50;
     reglas.tiempo = 360;
     reglas.grupoEdad = "7 a 8 años";
@@ -266,6 +275,7 @@ function reglasNivel(nivel) {
 
   if (nivel === 12) {
     reglas.cantidad = 10;
+    reglas.ops = ["+", "-", "*"];
     reglas.max = 10;
     reglas.grupoEdad = "8 a 9 años";
     reglas.minEdad = 8;
@@ -273,6 +283,7 @@ function reglasNivel(nivel) {
   }
 
   if (nivel === 13) {
+    reglas.ops = ["+", "-", "*"];
     reglas.cantidad = 10;
     reglas.max = 20;
     reglas.grupoEdad = "8 a 9 años";
@@ -281,6 +292,7 @@ function reglasNivel(nivel) {
   }
 
   if (nivel === 14) {
+    reglas.ops = ["+", "-", "*"];
     reglas.cantidad = 12;
     reglas.max = 20;
     reglas.tiempo = 360;
@@ -302,6 +314,7 @@ function reglasNivel(nivel) {
   }
 
   if (nivel === 16) {
+    reglas.ops = ["+", "-", "*", "/"];
     reglas.cantidad = 10;
     reglas.max = 20;
     reglas.grupoEdad = "9 a 10 años";
@@ -310,6 +323,7 @@ function reglasNivel(nivel) {
   }
 
   if (nivel === 17) {
+    reglas.ops = ["+", "-", "*", "/"];
     reglas.cantidad = 12;
     reglas.max = 30;
     reglas.grupoEdad = "9 a 10 años";
@@ -318,6 +332,7 @@ function reglasNivel(nivel) {
   }
 
   if (nivel === 18) {
+    reglas.ops = ["+", "-", "*", "/"];
     reglas.cantidad = 14;
     reglas.max = 30;
     reglas.tiempo = 300;
@@ -330,6 +345,7 @@ function reglasNivel(nivel) {
   // RETO FINAL
   // ───────────────
   if (nivel === 19) {
+    reglas.ops = ["+", "-", "*", "/"];
     reglas.negativos = true;
     reglas.cantidad = 12;
     reglas.max = 20;
@@ -339,6 +355,7 @@ function reglasNivel(nivel) {
   }
 
   if (nivel === 20) {
+    reglas.ops = ["+", "-", "*", "/"];
     reglas.negativos = true;
     reglas.cantidad = 15;
     reglas.max = 30;
@@ -364,24 +381,33 @@ function lanzarNivelDesafio() {
   const reglas = reglasNivel(nivelDesafio);
   comprobacionBloqueada = false;
 
-  tiempoRestante = reglas.tiempo; // USAR EL TIEMPO DEL NIVEL
+  tiempoRestante = reglas.tiempo;
   iniciarCronometro();
 
-  for (let i = 0; i < reglas.cantidad; i++) {
-    let op = reglas.ops[Math.floor(Math.random() * reglas.ops.length)];
-    let a, b;
+  // Si hay operaciones pre-cargadas, usarlas
+  if (operacionesProximas.length > 0) {
+    operacionesProximas.forEach((op) => {
+      crearOperacion(op.a, op.b, op.op);
+    });
+    operacionesProximas = []; // Limpiar para el siguiente nivel
+  } else {
+    // Si no hay pre-cargadas (primer nivel o recarga manual), generarlas
+    for (let i = 0; i < reglas.cantidad; i++) {
+      let op = reglas.ops[Math.floor(Math.random() * reglas.ops.length)];
+      let a, b;
 
-    if (op === "/") {
-      b = random(reglas.max, false) || 1;
-      a = random(reglas.max, false);
-      a = Math.floor(a / b) * b;
-    } else {
-      a = random(reglas.max, reglas.negativos);
-      b = random(reglas.max, reglas.negativos);
-      if (op === "-" && !reglas.negativos && b > a) [a, b] = [b, a];
+      if (op === "/") {
+        b = random(reglas.max, false) || 1;
+        a = random(reglas.max, false);
+        a = Math.floor(a / b) * b;
+      } else {
+        a = random(reglas.max, reglas.negativos);
+        b = random(reglas.max, reglas.negativos);
+        if (op === "-" && !reglas.negativos && b > a) [a, b] = [b, a];
+      }
+
+      crearOperacion(a, b, op);
     }
-
-    crearOperacion(a, b, op);
   }
 }
 
@@ -432,7 +458,6 @@ function salirModoDesafio() {
 const NIVELES_ULTIMOS_GRUPO = [5, 10, 14, 18, 20];
 
 function mostrarModalNivelSuperado() {
-  // nuevo nivel
   reproducirSonido(sonidoNuevoNivel);
 
   // Obtener información del nivel COMPLETADO (nivelDesafio - 1 es el que acaba de completar)
@@ -452,16 +477,39 @@ function mostrarModalNivelSuperado() {
     return;
   }
 
-  // Si no es un cambio de edad, mostrar el modal normal
+  operacionesProximas = generarOperacionesNivel(nivelDesafio);
+
+  // Mostrar modal con las operaciones ya preparadas
   mostrarModalAviso(
     `🎉 ${t("operaciones.levelCompleted") || "Nivel"} ${nivelCompletado} ${
       t("operaciones.superado") || "superado"
     }`,
+    true,
   );
-  setTimeout(() => {
-    cerrarModalAviso();
-    lanzarNivelDesafio();
-  }, 2000);
+}
+
+function generarOperacionesNivel(nivel) {
+  const reglas = reglasNivel(nivel);
+  const operacionesTemp = [];
+
+  for (let i = 0; i < reglas.cantidad; i++) {
+    let op = reglas.ops[Math.floor(Math.random() * reglas.ops.length)];
+    let a, b;
+
+    if (op === "/") {
+      b = random(reglas.max, false) || 1;
+      a = random(reglas.max, false);
+      a = Math.floor(a / b) * b;
+    } else {
+      a = random(reglas.max, reglas.negativos);
+      b = random(reglas.max, reglas.negativos);
+      if (op === "-" && !reglas.negativos && b > a) [a, b] = [b, a];
+    }
+
+    operacionesTemp.push({ a, b, op });
+  }
+
+  return operacionesTemp;
 }
 
 function mostrarModalNivelEdad(nuevoGrupoEdad, grupoAnterior) {
@@ -998,13 +1046,24 @@ function modoDesafio() {
 }
 
 // Mostrar mensaje en el modal de aviso
-function mostrarModalAviso(mensajeKey) {
+function mostrarModalAviso(mensajeKey, esNivelSuperado = false) {
   const modal = document.getElementById("modal-aviso");
   const mensajeP = document.getElementById("mensaje-aviso");
+  const btnAceptar = document.querySelector("#modal-aviso button");
 
-  // Si es una clave de traducción, traducirla
   const mensaje = t(mensajeKey) || mensajeKey;
   mensajeP.textContent = mensaje;
+
+  const nuevoBtn = btnAceptar.cloneNode(true);
+  btnAceptar.parentNode.replaceChild(nuevoBtn, btnAceptar);
+
+  nuevoBtn.addEventListener("click", () => {
+    modal.classList.add("oculto");
+    if (esNivelSuperado) {
+      lanzarNivelDesafio();
+    }
+  });
+
   modal.classList.remove("oculto");
 }
 
