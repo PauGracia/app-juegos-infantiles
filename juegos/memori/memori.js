@@ -64,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ------------------ BOTONES SALIR ------------------
+
     function volverAlModalInicial() {
       // Cerrar modal de victoria si está abierto
       modal.classList.remove("mostrar");
@@ -77,8 +78,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (intervaloTiempo) clearInterval(intervaloTiempo);
 
+      // Limpiar timeout del modal de inicio
+      if (timeoutNivelActual) {
+        clearTimeout(timeoutNivelActual);
+        timeoutNivelActual = null;
+      }
+
       modalInicio.classList.add("mostrar");
     }
+
+    // En reiniciarBtn:
+    reiniciarBtn.addEventListener("click", () => {
+      modal.classList.remove("mostrar");
+
+      tablero.innerHTML = "";
+      puntuacion = 0;
+      parejasEncontradas = 0;
+      primeraCarta = null;
+      bloqueo = false;
+
+      if (intervaloTiempo) clearInterval(intervaloTiempo);
+
+      // Limpiar timeout del modal de inicio
+      if (timeoutNivelActual) {
+        clearTimeout(timeoutNivelActual);
+        timeoutNivelActual = null;
+      }
+
+      // Reset flags de desafío
+      desafioTerminado = false;
+      nivelActual = 0;
+
+      // Volver al modal inicial
+      modalInicio.classList.add("mostrar");
+    });
 
     // ---------- BOTÓN REINICIAR ----------
     reiniciarBtn.addEventListener("click", () => {
@@ -180,6 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let parejasDelNivel = 0; // para el modo desafío
     let nivelEnCurso = null;
     const TIEMPO_MAX_ESPERA_NIVEL = 5 * 60 * 1000;
+    let timeoutNivelActual = null;
 
     // ------------------ NIVELES DESAFÍO ------------------
     const niveles = [
@@ -363,6 +397,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!elementos || elementos.length === 0)
         return alert(t("memori.noElements"));
 
+      // Limpiar cualquier intervalo de tiempo si existiera
+      if (intervaloTiempo) {
+        clearInterval(intervaloTiempo);
+        intervaloTiempo = null;
+      }
+
       const cantidadParejas = 40;
       const seleccionados = mezclar([...elementos]).slice(0, cantidadParejas); // selecciona al azar
 
@@ -527,15 +567,42 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function iniciarJuegoDesafio() {
+      // Limpiar cualquier intervalo y resetear variables
+      if (intervaloTiempo) {
+        clearInterval(intervaloTiempo);
+        intervaloTiempo = null;
+      }
+
+      if (timeoutNivelActual) {
+        clearTimeout(timeoutNivelActual);
+        timeoutNivelActual = null;
+      }
+
       nivelActual = 0;
+      puntuacion = 0;
+      parejasEncontradas = 0;
+
+      marcador.textContent = "0:00";
+
       siguienteNivel();
     }
 
     function siguienteNivel() {
+      // Limpiar cualquier intervalo anterior antes de continuar
+      if (intervaloTiempo) {
+        clearInterval(intervaloTiempo);
+        intervaloTiempo = null;
+      }
+
+      // IMPORTANTE: Limpiar el timeout del nivel anterior si existe
+      if (timeoutNivelActual) {
+        clearTimeout(timeoutNivelActual);
+        timeoutNivelActual = null;
+      }
+
       if (nivelActual >= niveles.length) {
         alert(t("memori.completedAllLevels"));
         nivelEnCurso = niveles[nivelActual - 1];
-
         return;
       }
 
@@ -581,15 +648,16 @@ document.addEventListener("DOMContentLoaded", () => {
       modalNivel.classList.add("modal-memori", "mostrar");
       modalNivel.setAttribute("id", "modal-nivel");
       modalNivel.innerHTML = `
-        <div class="modal-contentMemori">
-          <h2></h2>
-          <p></p>
-          <button id="iniciarNivel"></button>
-        </div>
-      `;
+    <div class="modal-contentMemori">
+      <h2></h2>
+      <p></p>
+      <button id="iniciarNivel"></button>
+    </div>
+  `;
       document.body.appendChild(modalNivel);
 
-      const timeoutNivel = setTimeout(() => {
+      // Guardar el timeout en la variable global
+      timeoutNivelActual = setTimeout(() => {
         console.warn("Tiempo de espera agotado en selección de nivel");
 
         // Cerrar modal si sigue abierto
@@ -600,6 +668,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // Simular fin de tiempo
         nivelMaximoAlcanzado = Math.max(nivelMaximoAlcanzado, nivelActual - 1);
         mostrarModalTiempoAgotado();
+
+        timeoutNivelActual = null; // Limpiar referencia
       }, TIEMPO_MAX_ESPERA_NIVEL);
 
       // Actualizar texto inicial
@@ -610,6 +680,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const languageHandler = () => {
         actualizarModalTexto();
       };
+
       // Escuchar cambios de idioma
       document.addEventListener("languageChanged", languageHandler);
 
@@ -617,7 +688,11 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Botón Iniciar clickeado, nivel:", nivelActual);
 
         // Cancelar timeout de espera
-        clearTimeout(timeoutNivel);
+        if (timeoutNivelActual) {
+          clearTimeout(timeoutNivelActual);
+          timeoutNivelActual = null;
+        }
+
         if (!elementos || elementos.length < parejasDelNivel) {
           alert(t("memori.notEnoughElements"));
           return;
@@ -633,7 +708,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       btnIniciar.addEventListener("click", iniciarHandler, { once: true });
     }
+
     function cargarNivelDesafio() {
+      // Limpiar cualquier intervalo previo
+      if (intervaloTiempo) {
+        clearInterval(intervaloTiempo);
+        intervaloTiempo = null;
+      }
+
       // Seleccionamos parejas al azar
       const seleccionados = mezclar(elementos).slice(0, parejasDelNivel);
       let valores = [...seleccionados, ...seleccionados];
@@ -647,15 +729,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       cargarRankingLocal("ranking_desafio");
 
+      const minutos = Math.floor(tiempoRestante / 60);
+      const segundos = tiempoRestante % 60;
+      marcador.textContent = `${minutos}:${segundos.toString().padStart(2, "0")}`;
+
       // Iniciar cronómetro
-      if (intervaloTiempo) clearInterval(intervaloTiempo);
       intervaloTiempo = setInterval(() => {
         tiempoRestante--;
-        marcador.textContent = `${Math.floor(tiempoRestante / 60)}:${String(
-          tiempoRestante % 60,
-        ).padStart(2, "0")}`;
+
+        // Actualizar marcador con formato mm:ss
+        const mins = Math.floor(tiempoRestante / 60);
+        const segs = tiempoRestante % 60;
+        marcador.textContent = `${mins}:${segs.toString().padStart(2, "0")}`;
+
         if (tiempoRestante <= 0) {
           clearInterval(intervaloTiempo);
+          intervaloTiempo = null;
           mostrarModalTiempoAgotado();
         }
       }, 1000);
@@ -713,7 +802,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (parejasEncontradas === parejasDelNivel) {
               clearInterval(intervaloTiempo);
-
+              intervaloTiempo = null;
               nivelMaximoAlcanzado = Math.max(
                 nivelMaximoAlcanzado,
                 nivelActual,
@@ -865,7 +954,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function actualizarMarcador() {
-      marcador.textContent = puntuacion;
+      // En modo normal muestra puntuación, en modo desafío el tiempo se maneja por separado
+      if (modoActual === "normal") {
+        marcador.textContent = puntuacion;
+      }
+      // En modo desafío, el tiempo se actualiza en el intervalo
+    }
+
+    // También modificar en los bonus de tiempo:
+    if (nivelEnCurso && nivelEnCurso.nivel >= 9) {
+      tiempoRestante += 2;
+      const mins = Math.floor(tiempoRestante / 60);
+      const segs = tiempoRestante % 60;
+      marcador.textContent = `${mins}:${segs.toString().padStart(2, "0")}`;
+      mostrarBonusTiempo();
     }
   }
 
