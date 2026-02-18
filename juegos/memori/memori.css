@@ -712,6 +712,188 @@ body {
   box-shadow: 0 6px 12px rgba(66, 153, 225, 0.3);
 }
 
+.modal-contentMemori button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+}
+
+.modal-contentMemori button::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0) invert(1); /* Hace el icono blanco */
+}
+
+/* Iconos específicos para cada botón */
+#modoNormal::before {
+  background-image: url("../../assets/img/iconos/play.png");
+}
+
+#modoDesafio::before {
+  background-image: url("../../assets/img/iconos/play-mas.png");
+}
+
+#rankingInicio::before,
+.ranking-btn::before {
+  background-image: url("../../assets/img/iconos/ranking.png");
+}
+
+#instruccionesBtn::before {
+  background-image: url("../../assets/img/iconos/instrucciones.png");
+}
+
+.salir-btn::before,
+#salirInicio::before,
+#salir-juego-memori::before {
+  background-image: url("../../assets/img/iconos/salida.png");
+}
+
+/* Ajuste para botones dentro de .botones */
+.botones button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Para el botón de salir durante el juego (fuera del modal) */
+#salir-juego-memori {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#salir-juego-memori::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url("../../assets/img/iconos/salida.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0) invert(1);
+}
+
+/* Botones del modal de confirmación */
+#btnConfirmYes::before,
+#btnConfirmNo::before {
+  display: none; /* Ocultar iconos en botones de confirmación si no queremos */
+}
+
+/* Ajuste para el botón de instrucciones que ya tiene su propio estilo */
+#cerrarInstrucciones {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#cerrarInstrucciones::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url("../../assets/img/iconos/instrucciones.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0) invert(1);
+}
+
+/* Ajuste para botones deshabilitados */
+.guardar-btn:disabled::before {
+  opacity: 0.5;
+}
+
+/* Ajuste para el botón de reiniciar en modal de tiempo */
+#reiniciarTiempo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#reiniciarTiempo::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url("../../assets/img/iconos/play.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0) invert(1);
+}
+
+/* Ajuste para el botón de guardar */
+.guardar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.guardar-btn::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url("../../assets/img/iconos/ranking.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0) invert(1);
+}
+
+/* Ajuste para el botón de registrar */
+.registrar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.registrar-btn::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url("../../assets/img/iconos/ranking.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0) invert(1);
+}
+
+/* Ajuste para el botón de iniciar nivel */
+#iniciarNivel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#iniciarNivel::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url("../../assets/img/iconos/play.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0) invert(1);
+}
+
 /* Pantallas raras */
 @media (max-width: 1380px) {
   #titulo-memori {
@@ -991,5 +1173,9 @@ body {
     position: static;
     margin-left: 10px;
     width: 80px;
+  }
+  .modal-contentMemori button::before {
+    width: 18px;
+    height: 18px;
   }
 }
