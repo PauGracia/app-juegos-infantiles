@@ -268,7 +268,7 @@ input {
   align-items: center;
   justify-content: center;
   min-height: 30px;
-
+  min-width: 200px;
   width: 200px;
 
   padding: 10px 20px;
@@ -278,7 +278,7 @@ input {
   border: none;
   cursor: pointer;
   color: white;
-  background: linear-gradient(45deg, #667eea, #764ba2);
+
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   transition: all 0.2s ease;
   white-space: normal;
@@ -354,6 +354,57 @@ input {
 
 .modal-buttons button.danger {
   background: linear-gradient(45deg, #f56565, #e53e3e);
+}
+
+/* === ESTILOS PARA BOTÓN VOLVER CON FLECHA === */
+.btn-volver {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(45deg, #4299e1, #3182ce);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 20px rgba(66, 153, 225, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-volver::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.btn-volver:hover::after {
+  left: 100%;
+}
+
+.btn-volver:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 30px rgba(66, 153, 225, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.btn-volver:active {
+  transform: translateY(0) !important;
+}
+
+.flecha-izquierda {
+  font-size: 1.3em;
+  line-height: 1;
+  display: inline-block;
+  transform: translateY(-1px);
 }
 
 /* -------- ANIMACIONES -------- */
@@ -465,9 +516,19 @@ input {
   .ranking-footer button {
     height: 30px;
     width: 100px;
-    font-size: 0.9em;
+    font-size: 1.1em;
     padding: 4px 12px;
     line-height: 1.1;
+    min-width: 150px;
+    margin: 5px;
+  }
+
+  .btn-volver {
+    gap: 6px !important;
+  }
+
+  .flecha-izquierda {
+    font-size: 1.2em;
   }
 }
 

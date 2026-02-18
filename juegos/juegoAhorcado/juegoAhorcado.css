@@ -515,7 +515,7 @@ html {
   background: linear-gradient(45deg, #48bb78, #38a169) !important;
 }
 
-#modal-contenido button::before,
+/*#modal-contenido button::before,
 #modal-final-contenido button::before {
   content: "";
   position: absolute;
@@ -530,7 +530,7 @@ html {
     transparent
   );
   transition: 0.5s;
-}
+}*/
 
 #modal-contenido button:hover::before,
 #modal-final-contenido button:hover::before {
@@ -923,6 +923,44 @@ html {
   animation: pulse 0.5s ease;
 }
 
+/* === ESTILOS PARA BOTONES CON ICONOS (VÍA PSEUDOELEMENTO) === */
+.btn-icon {
+  position: relative;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px;
+}
+
+.btn-icon::before {
+  content: "";
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+/* Iconos específicos */
+.btn-iniciar::before {
+  background-image: url("../../assets/img/iconos/play.png");
+}
+
+.btn-instrucciones::before {
+  background-image: url("../../assets/img/iconos/instrucciones.png");
+}
+
+.btn-ranking::before {
+  background-image: url("../../assets/img/iconos/ranking.png");
+}
+
+.btn-salir::before {
+  background-image: url("../../assets/img/iconos/salida.png");
+}
+
 /* === MEDIA QUERIES MEJORADAS PARA MÓVILES === */
 @media (max-width: 780px) {
   .body-ahorcado {
@@ -1247,6 +1285,10 @@ html {
   #btnModalInfoAceptar {
     padding: 12px 24px;
     font-size: 1em;
+  }
+  .btn-icon::before {
+    width: 1.1em;
+    height: 1.1em;
   }
 }
 

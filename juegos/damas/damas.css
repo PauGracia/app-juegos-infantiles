@@ -844,6 +844,39 @@
   transform: translateY(-50%) rotate(180deg);
 }
 
+/* === ESTILOS PARA BOTONES CON ICONOS EN MODAL CONFIGURACIÓN === */
+#boton-jugar-config,
+#boton-salir-config {
+  position: relative;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+}
+
+#boton-jugar-config::before,
+#boton-salir-config::before {
+  content: "";
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+/* Icono específico para botón jugar */
+#boton-jugar-config::before {
+  background-image: url("../../assets/img/iconos/play.png");
+}
+
+/* Icono específico para botón salir */
+#boton-salir-config::before {
+  background-image: url("../../assets/img/iconos/salida.png");
+}
+
 /* -------------------- MEDIA QUERIES -------------------- */
 
 /* PANTALLAS GRANDES (Desktop) */
@@ -1103,6 +1136,12 @@
   #nivel-ia {
     font-size: 16px;
   }
+
+  #boton-jugar-config::before,
+  #boton-salir-config::before {
+    width: 1.1em;
+    height: 1.1em;
+  }
 }
 
 /* MÓVILES (Hasta 480px) - CORREGIDO: Layout especial y más compacto */
@@ -1236,6 +1275,17 @@
     margin: 8px 0 10px 0;
     letter-spacing: 0.5px;
   }
+
+  #boton-jugar-config,
+  #boton-salir-config {
+    gap: 6px !important;
+  }
+
+  #boton-jugar-config::before,
+  #boton-salir-config::before {
+    width: 1em;
+    height: 1em;
+  }
 }
 
 /* TABLETS EN MODO HORIZONTAL */
@@ -1287,6 +1337,7 @@
   .contenedor-botones-damas .boton-damas {
     padding: 12px 16px;
     font-size: 14px;
+    margin-bottom: 20px;
   }
 }
 

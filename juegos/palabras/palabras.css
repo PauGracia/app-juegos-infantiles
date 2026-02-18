@@ -60,6 +60,26 @@ body {
   animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+.modal-contentPalabras .checkbox-ayuda {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Checkbox */
+.modal-contentPalabras .checkbox-ayuda input[type="checkbox"] {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* Texto */
+.modal-contentPalabras .checkbox-ayuda span {
+  line-height: 1.2;
+}
+
 @keyframes slideUp {
   from {
     transform: translateY(30px);
@@ -338,6 +358,45 @@ body {
   border-bottom: none;
 }
 
+/* ===============================
+   Botones con icono (i18n safe)
+   =============================== */
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+}
+
+/* Icono proporcional al texto */
+.btn-icon::before {
+  content: "";
+  width: 1em;
+  height: 1em;
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  flex-shrink: 0;
+
+  /* alineación óptica automática */
+  vertical-align: middle;
+}
+
+.btn-instrucciones::before {
+  background-image: url("../../assets/img/iconos/instrucciones.png");
+}
+
+.btn-iniciar::before {
+  background-image: url("../../assets/img/iconos/play.png");
+}
+
+.btn-salir::before {
+  background-image: url("../../assets/img/iconos/salida.png");
+}
+
 /* Botones en modal final */
 .btn-final {
   background: linear-gradient(135deg, #667eea, #764ba2);
@@ -362,8 +421,6 @@ body {
 #btnSalirFinal {
   background: linear-gradient(135deg, #e53e3e, #c53030);
 }
-
-
 
 .btn-final:hover {
   transform: translateY(-3px);

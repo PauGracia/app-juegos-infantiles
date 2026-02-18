@@ -624,6 +624,44 @@ body {
   border: 3px solid #d32f2f;
 }
 
+/* Botones con icono */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em; /* separación icono-texto */
+}
+
+/* Tamaño del icono = tamaño del texto */
+.btn-icon::before {
+  content: "";
+  width: 1em;
+  height: 1em;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  position: relative;
+  top: 0.05em;
+}
+
+/* Iconos específicos */
+.btn-normal::before {
+  background-image: url("../../assets/img/iconos/play.png");
+}
+
+.btn-desafio::before {
+  background-image: url("../../assets/img/iconos/play-mas.png");
+}
+
+.btn-instrucciones::before {
+  background-image: url("../../assets/img/iconos/instrucciones.png");
+}
+
+.btn-salir::before {
+  background-image: url("../../assets/img/iconos/salida.png");
+}
+
 .modal-aviso-content button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);

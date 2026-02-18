@@ -157,35 +157,7 @@ function initRanking() {
     });
   }
 
-  // Modal para borrar ranking
-  const modal = document.getElementById("modalConfirm");
-  const modalOk = document.getElementById("modalOk");
-  const modalCancel = document.getElementById("modalCancel");
-  const btnBorrar = document.getElementById("btnBorrarRanking");
-
-  if (btnBorrar && modal && modalOk && modalCancel) {
-    btnBorrar.addEventListener("click", () => {
-      modal.style.display = "flex";
-
-      const aceptar = () => {
-        localStorage.removeItem("rankingAhorcado");
-        cargarRanking();
-        cerrarModal();
-      };
-
-      const cerrarModal = () => {
-        modal.style.display = "none";
-        modalOk.removeEventListener("click", aceptar);
-        modalCancel.removeEventListener("click", cerrarModal);
-      };
-
-      modalOk.addEventListener("click", aceptar);
-      modalCancel.addEventListener("click", cerrarModal);
-    });
-  }
-
   // Cargar ranking y actualizar traducciones
-
   window.ranking_refrescarUI = function () {
     actualizarPlaceholders();
     actualizarEtiquetasSelect();
@@ -196,7 +168,6 @@ function initRanking() {
 }
 
 // Inicializar cuando cambie el idioma
-
 document.addEventListener("languageChanged", () => {
   if (typeof window.ranking_refrescarUI === "function") {
     window.ranking_refrescarUI();
@@ -206,7 +177,7 @@ document.addEventListener("languageChanged", () => {
 // Inicializar cuando se cargue la página
 document.addEventListener("DOMContentLoaded", initRanking);
 
-// También inicializar si el DOM ya está listo (para Cordova)
+// También inicializar si el DOM ya está listo
 if (
   document.readyState === "interactive" ||
   document.readyState === "complete"
