@@ -318,7 +318,7 @@ window.translationsES = {
   "damas.config.enableHints": "Activar sugerencia de movimientos",
   "damas.config.play": "Jugar",
   "damas.config.exit": "Salir",
-
+  "damas.timeLeft": "Tiempo restante:",
   "damas.config.result.white": "Tú juegas con BLANCAS",
   "damas.config.result.black": "Tú juegas con NEGRAS",
   "palabras.instructions.title": "Cómo jugar",

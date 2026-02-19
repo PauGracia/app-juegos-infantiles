@@ -846,16 +846,20 @@
 
 /* === ESTILOS PARA BOTONES CON ICONOS EN MODAL CONFIGURACIÓN === */
 #boton-jugar-config,
-#boton-salir-config {
+#boton-salir-config,
+#salirDamas,
+#boton-instrucciones-damas {
   position: relative;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 8px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 #boton-jugar-config::before,
-#boton-salir-config::before {
+#boton-salir-config::before,
+#salirDamas::before,
+#boton-instrucciones-damas::before {
   content: "";
   display: inline-block;
   width: 1.2em;
@@ -874,8 +878,13 @@
 }
 
 /* Icono específico para botón salir */
-#boton-salir-config::before {
+#boton-salir-config::before,
+#salirDamas::before {
   background-image: url("../../assets/img/iconos/salida.png");
+}
+
+#boton-instrucciones-damas::before {
+  background-image: url("../../assets/img/iconos/instrucciones.png");
 }
 
 /* -------------------- MEDIA QUERIES -------------------- */
@@ -1244,7 +1253,7 @@
     width: 100%;
     min-height: 40px;
     padding: 6px 4px;
-    font-size: 11px;
+    font-size: 10px;
     border-radius: 6px;
   }
 

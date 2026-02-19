@@ -346,7 +346,7 @@ window.translationsPT = {
   "palabras.buttons.next": "Seguinte",
   "palabras.buttons.restart": "Reiniciar",
   "palabras.buttons.exit": "Sair",
-
+  "damas.timeLeft": "Tempo restante:",
   "palabras.instructions.title": "Como jogar",
   "palabras.instructions.text":
     "Escreve o nome correto da imagem.\n\nPodes verificar a palavra quantas vezes quiseres.\n\nSe a ajuda estiver ativada, aparecerá automaticamente após várias tentativas.\n\nTodas as palavras contam como acerto, mas as verificações e o uso da ajuda são registados.",

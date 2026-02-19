@@ -316,7 +316,7 @@ window.translationsCA = {
   "damas.config.play": "Jugar",
   "damas.config.exit": "Sortir",
   "palabras.config.instructions": "Com jugar",
-
+  "damas.timeLeft": "Temps restant:",
   "damas.config.result.white": "Jugues amb BLANQUES",
   "damas.config.result.black": "Jugues amb NEGRES",
   "palabras.instructions.title": "Com jugar",

@@ -344,7 +344,7 @@ window.translationsIT = {
 
   "palabras.results.wordHelped": "con aiuto",
   "palabras.results.wordNotHelped": "senza aiuto",
-
+  "damas.timeLeft": "Tempo rimasto:",
   "palabras.buttons.finish": "Termina",
   "palabras.buttons.check": "Verifica",
   "palabras.buttons.next": "Successivo",

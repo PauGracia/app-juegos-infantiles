@@ -10,50 +10,145 @@ function t(key) {
 // SONIDOS
 // ================================
 
-document.addEventListener(
-  "click",
-  () => {
-    ["movement", "comer1", "you-win", "game-over"].forEach((s) => {
-      const a = new Audio(`sounds/${s}.mp3`);
-      a.volume = 0;
-      a.play().catch(() => {});
-    });
-  },
-  { once: true },
-);
-
 // ================================
-// SONIDOS OPTIMIZADOS
+// SONIDOS OPTIMIZADOS CON PRECARGA
 // ================================
 
 const sonidosDamas = (() => {
-  const sonidos = {
-    movimiento: new Audio("sounds/movement.mp3"),
-    comer: new Audio("sounds/comer1.mp3"),
-    ganar: new Audio("sounds/you-win.mp3"),
-    perder: new Audio("sounds/game-over.mp3"),
-    coronar: new Audio("sounds/christmas.mp3"),
+  // Lista de todos los sonidos necesarios
+  const archivosSonidos = {
+    movimiento: "sounds/movement.mp3",
+    comer: "sounds/comer1.mp3",
+    ganar: "sounds/you-win.mp3",
+    perder: "sounds/game-over.mp3",
+    coronar: "sounds/christmas.mp3",
   };
 
-  sonidos.movimiento.volume = 0.8;
-  sonidos.comer.volume = 0.9;
-  sonidos.ganar.volume = 1;
-  sonidos.perder.volume = 1;
-  sonidos.coronar.volume = 1;
+  // Objeto para almacenar los Audio elements precargados
+  const sonidos = {};
 
-  function play(audio) {
-    audio.currentTime = 0;
-    audio.play().catch(() => {});
+  // Estado de carga
+  let sonidosCargados = 0;
+  const totalSonidos = Object.keys(archivosSonidos).length;
+  let precargaCompleta = false;
+
+  /**
+   * Precarga todos los sonidos al iniciar
+   */
+  function precargarSonidos() {
+    console.log("🎵 Precargando sonidos...");
+
+    Object.entries(archivosSonidos).forEach(([key, ruta]) => {
+      const audio = new Audio();
+
+      // Eventos para monitorear la carga
+      audio.addEventListener(
+        "canplaythrough",
+        () => {
+          sonidosCargados++;
+          console.log(
+            `✅ Sonido cargado: ${key} (${sonidosCargados}/${totalSonidos})`,
+          );
+
+          if (sonidosCargados === totalSonidos) {
+            precargaCompleta = true;
+            console.log("🎵 Todos los sonidos precargados correctamente");
+          }
+        },
+        { once: true },
+      );
+
+      audio.addEventListener("error", (e) => {
+        console.error(`❌ Error cargando sonido: ${key}`, e);
+      });
+
+      // Configurar volumen y precargar
+      audio.src = ruta;
+      audio.load(); // Inicia la precarga
+      audio.volume = key === "movimiento" ? 0.8 : key === "comer" ? 0.9 : 1;
+
+      sonidos[key] = audio;
+    });
   }
 
+  /**
+   * Reproduce un sonido de forma optimizada
+   */
+  function playSonido(key) {
+    const audio = sonidos[key];
+    if (!audio) {
+      console.warn(`Sonido no encontrado: ${key}`);
+      return;
+    }
+
+    // Clonar para permitir reproducción simultánea
+
+    try {
+      // Resetear y reproducir
+      audio.currentTime = 0;
+
+      // Usar Promise para manejar mejor los errores de autoplay
+      const playPromise = audio.play();
+
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          if (error.name !== "NotAllowedError") {
+            console.warn(`Error reproduciendo ${key}:`, error);
+          }
+        });
+      }
+    } catch (error) {
+      console.warn(`Error en reproducción de ${key}:`, error);
+    }
+  }
+
+  // Iniciar precarga inmediatamente
+  precargarSonidos();
+
+  // Desbloquear audio en la primera interacción del usuario (COMPATIBLE CON CSP)
+  const desbloquearAudio = () => {
+    // Crear un contexto de audio silencioso en lugar de un data URI
+    try {
+      // Intentar crear un oscilador silencioso
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) {
+        const ctx = new AudioContext();
+        if (ctx.state === "suspended") {
+          ctx
+            .resume()
+            .then(() => {
+              console.log("🔊 AudioContext desbloqueado");
+            })
+            .catch(() => {});
+        }
+      }
+    } catch (e) {
+      // Fallback: reproducir uno de los sonidos precargados a volumen 0
+      const audioSilencioso = sonidos.movimiento.cloneNode();
+      audioSilencioso.volume = 0;
+      audioSilencioso.play().catch(() => {});
+    }
+
+    document.removeEventListener("click", desbloquearAudio);
+    document.removeEventListener("touchstart", desbloquearAudio);
+  };
+
+  document.addEventListener("click", desbloquearAudio, { once: true });
+  document.addEventListener("touchstart", desbloquearAudio, { once: true });
+
+  // API pública
   return {
-    movimiento: () => play(sonidos.movimiento),
-    comer: () => play(sonidos.comer),
-    ganar: () => play(sonidos.ganar),
-    perder: () => play(sonidos.perder),
-    coronar: () => play(sonidos.coronar),
+    movimiento: () => playSonido("movimiento"),
+    comer: () => playSonido("comer"),
+    ganar: () => playSonido("ganar"),
+    perder: () => playSonido("perder"),
+    coronar: () => playSonido("coronar"),
+    // Método de utilidad para verificar estado
+    estaPrecargado: () => precargaCompleta,
   };
 })();
+
+// ELIMINA el bloque anterior de sonidos (el que tenía el document.addEventListener para precarga silenciosa)
 
 // ================================
 // CONSTANTES DEL JUEGO
@@ -90,6 +185,8 @@ const JuegoDamas = (() => {
     sorteoRealizado: false,
     nivelIA: "normal", // "normal" | "dificil"
     capturasIA: 0,
+    tiempoRestante: 300000, // 5 minutos en milisegundos (5 * 60 * 1000)
+    intervaloInactividad: null,
   };
 
   // ======================================================================
@@ -100,6 +197,90 @@ const JuegoDamas = (() => {
   const clonarMatrizDamas = (m) =>
     m.map((fila) => fila.map((celda) => (celda ? { ...celda } : null)));
 
+  // ======================================================================
+  // FUNCIONES PARA EL TEMPORIZADOR DE INACTIVIDAD
+  // ======================================================================
+
+  /**
+   * Formatea los milisegundos a un string MM:SS
+   */
+  function formatearTiempo(ms) {
+    if (ms < 0) ms = 0;
+    const totalSegundos = Math.floor(ms / 1000);
+    const minutos = Math.floor(totalSegundos / 60);
+    const segundos = totalSegundos % 60;
+    return `${minutos.toString().padStart(2, "0")}:${segundos.toString().padStart(2, "0")}`;
+  }
+
+  /**
+   * Actualiza el elemento HTML del temporizador con el tiempo actual
+   */
+  function actualizarDisplayTiempo() {
+    const tiempoSpan = document.getElementById("tiempo-restante-info");
+    if (tiempoSpan) {
+      tiempoSpan.textContent = formatearTiempo(
+        estadoGlobalDamas.tiempoRestante,
+      );
+    }
+  }
+
+  /**
+   * Reinicia el temporizador a 5 minutos.
+   * Se llama después de cada movimiento del jugador.
+   */
+  function reiniciarTemporizador() {
+    estadoGlobalDamas.tiempoRestante = 300000;
+    actualizarDisplayTiempo();
+  }
+
+  /**
+   * Detiene el intervalo del temporizador.
+   */
+  function detenerTemporizador() {
+    if (estadoGlobalDamas.intervaloInactividad) {
+      clearInterval(estadoGlobalDamas.intervaloInactividad);
+      estadoGlobalDamas.intervaloInactividad = null;
+    }
+  }
+
+  /**
+   * Inicia (o reinicia) el temporizador de inactividad.
+   */
+  function iniciarTemporizador() {
+    // Si el juego ya terminó, no iniciar temporizador
+    if (estadoGlobalDamas.juegoTerminadoFlag) {
+      return;
+    }
+
+    detenerTemporizador();
+
+    estadoGlobalDamas.intervaloInactividad = setInterval(() => {
+      // Doble comprobación: si el juego terminó, detener el intervalo
+      if (estadoGlobalDamas.juegoTerminadoFlag) {
+        detenerTemporizador();
+        return;
+      }
+
+      if (estadoGlobalDamas.turnoActualDamas !== "humano") {
+        return;
+      }
+
+      estadoGlobalDamas.tiempoRestante -= 1000;
+      actualizarDisplayTiempo();
+
+      if (estadoGlobalDamas.tiempoRestante <= 0) {
+        console.log("Tiempo agotado - Jugador pierde");
+        detenerTemporizador();
+        estadoGlobalDamas.tiempoRestante = 0;
+        actualizarDisplayTiempo();
+
+        // Marcar como terminado ANTES de mostrar el modal
+        estadoGlobalDamas.juegoTerminadoFlag = true;
+
+        mostrarModalFin(false);
+      }
+    }, 1000);
+  }
   // ======================================================================
   // INICIALIZAR TABLERO
   // ======================================================================
@@ -483,6 +664,12 @@ const JuegoDamas = (() => {
       sonidosDamas.comer();
     } else {
       sonidosDamas.movimiento();
+    }
+
+    // Renicio temporizador despues de movimiento jugador
+    // Solo reiniciamos si fue el humano quien movió
+    if (estadoGlobalDamas.turnoActualDamas === "humano") {
+      reiniciarTemporizador();
     }
 
     estadoGlobalDamas.seleccionActualDamas = null;
@@ -1112,14 +1299,29 @@ const JuegoDamas = (() => {
     if (animacionEnCurso) return;
 
     evaluarGanadorDamas();
-    if (estadoGlobalDamas.juegoTerminadoFlag) return;
 
+    // Si el juego terminó, NO continuar con el cambio de turno
+    if (estadoGlobalDamas.juegoTerminadoFlag) {
+      detenerTemporizador(); // Asegurar que el temporizador se detiene
+      return;
+    }
+
+    // Cambiar el turno SOLO si el juego no ha terminado
     estadoGlobalDamas.turnoActualDamas =
       estadoGlobalDamas.turnoActualDamas === "humano" ? "ia" : "humano";
     actualizarPanelInfoDamas();
 
-    if (estadoGlobalDamas.turnoActualDamas === "ia")
+    // Control del temporizador según el turno
+    if (estadoGlobalDamas.turnoActualDamas === "humano") {
+      reiniciarTemporizador();
+      iniciarTemporizador();
+    } else {
+      detenerTemporizador();
+    }
+
+    if (estadoGlobalDamas.turnoActualDamas === "ia") {
       setTimeout(movimientoIA_Damas, DAMAS.IA_DELAY_MS);
+    }
   }
 
   function evaluarGanadorDamas() {
@@ -1154,6 +1356,12 @@ const JuegoDamas = (() => {
   }
 
   function mostrarModalFin(gano) {
+    // DETENER TEMPORIZADOR INMEDIATAMENTE
+    detenerTemporizador();
+
+    // También asegurar que el estado refleja que el juego terminó
+    estadoGlobalDamas.juegoTerminadoFlag = true;
+
     const modal = document.getElementById("modal-fin-damas");
     const icono = document.getElementById("icono-resultado");
     const mensaje = document.getElementById("mensaje-resultado");
@@ -1170,9 +1378,6 @@ const JuegoDamas = (() => {
       sonidosDamas.perder();
     }
 
-    estadoGlobalDamas.juegoTerminadoFlag = true;
-
-    // Asegurarse de que el botón "Salir" del modal vaya directamente al menú
     const btnSalirFin = document.getElementById("btn-salir-fin");
     btnSalirFin.onclick = () => {
       document.getElementById("modal-fin-damas").style.display = "none";
@@ -1295,7 +1500,12 @@ const JuegoDamas = (() => {
   function resetGameDamasUltra() {
     generarTableroInicialDamas();
     estadoGlobalDamas.ladoHumanoAsignado = "bottom";
-    document.getElementById("color-humano-info").textContent = "Abajo";
+
+    // Actualizar color humano de forma segura
+    const colorHumanoInfo = document.getElementById("color-humano-info");
+    if (colorHumanoInfo) {
+      colorHumanoInfo.textContent = t("damas.bottom");
+    }
 
     estadoGlobalDamas.seleccionActualDamas = null;
     estadoGlobalDamas.movimientosDisponiblesDamas = [];
@@ -1303,22 +1513,39 @@ const JuegoDamas = (() => {
     estadoGlobalDamas.capturasHumano = 0;
     estadoGlobalDamas.capturasIA = 0;
 
-    document.getElementById("color-humano-info").textContent =
-      t("damas.bottom");
-
-    document.getElementById("ganador-info").textContent = "";
+    // Limpiar ganador-info de forma segura
+    const ganadorInfo = document.getElementById("ganador-info");
+    if (ganadorInfo) {
+      ganadorInfo.textContent = "";
+    }
 
     dibujarTableroDamas();
 
-    if (estadoGlobalDamas.turnoActualDamas === "ia")
+    if (estadoGlobalDamas.turnoActualDamas === "ia") {
       setTimeout(movimientoIA_Damas, 500);
+    }
   }
-
   // ======================================================================
   // RESET COMPLETO DEL JUEGO
   // ======================================================================
   function reiniciarJuegoDamas() {
+    // Detener temporizador al reniciar
+    detenerTemporizador();
     const estado = JuegoDamas.estado;
+
+    estado.tiempoRestante = 300000;
+    estado.ladoHumanoAsignado = null;
+    estado.colorHumano = null;
+    estado.turnoActualDamas = null;
+    estado.seleccionActualDamas = null;
+    estado.movimientosDisponiblesDamas = [];
+    estado.tableroGiradoFlag = false;
+    estado.juegoTerminadoFlag = false;
+    estado.capturasHumano = 0;
+    estado.capturasIA = 0;
+    estado.mostrarSugerencias = true;
+    estado.sorteoRealizado = false;
+    estado.nivelIA = "normal";
 
     // Ocultar tablero y modal de fin
     document.getElementById("juego-damas-contenedor").style.display = "none";
@@ -1354,19 +1581,6 @@ const JuegoDamas = (() => {
     // Resetear estado de JuegoDamas
     generarTableroInicialDamas();
 
-    estado.ladoHumanoAsignado = null;
-    estado.colorHumano = null;
-    estado.turnoActualDamas = null;
-    estado.seleccionActualDamas = null;
-    estado.movimientosDisponiblesDamas = [];
-    estado.tableroGiradoFlag = false;
-    estado.juegoTerminadoFlag = false;
-    estado.capturasHumano = 0;
-    estado.capturasIA = 0;
-    estado.mostrarSugerencias = true;
-    estado.sorteoRealizado = false;
-    estado.nivelIA = "normal";
-
     // Inicialización segura de inputs del modal
     document.getElementById("check-sugerencias").checked = true;
     document.getElementById("resultado-sorteo").textContent = "—";
@@ -1391,6 +1605,9 @@ const JuegoDamas = (() => {
   // INICIALIZACIÓN - VERSIÓN SIMPLIFICADA
   // ======================================================================
 
+  // ======================================================================
+  // INICIALIZACIÓN - VERSIÓN SIMPLIFICADA (DENTRO DE JuegoDamas)
+  // ======================================================================
   function init() {
     initLanguage();
     document.getElementById("salirDamas").innerText = t("damas.exit");
@@ -1410,20 +1627,15 @@ const JuegoDamas = (() => {
 
     // Eventos del botón "Salir" durante la partida
     document.getElementById("salirDamas").addEventListener("click", () => {
-      // Mostrar modal de confirmación
       document.getElementById("modal-confirm-exit").style.display = "flex";
     });
 
     // Eventos del modal de confirmación
     document.getElementById("btn-confirm-yes").addEventListener("click", () => {
       document.getElementById("modal-confirm-exit").style.display = "none";
-
-      // Si estamos en la configuración inicial, salir al menú
       if (origenConfirmExit === "config") {
         salirAlMenuPrincipal();
-      }
-      // Si estamos en medio de una partida, mostrar derrota
-      else if (origenConfirmExit === "juego") {
+      } else if (origenConfirmExit === "juego") {
         const estado = JuegoDamas.estado;
         estado.juegoTerminadoFlag = true;
         const ganadorInfo = document.getElementById("ganador-info");
@@ -1434,12 +1646,9 @@ const JuegoDamas = (() => {
 
     document.getElementById("btn-confirm-no").addEventListener("click", () => {
       document.getElementById("modal-confirm-exit").style.display = "none";
-
-      // Si veníamos de la configuración, volver a ella
       if (origenConfirmExit === "config") {
         document.getElementById("modal-config-damas").style.display = "flex";
       }
-      // Si veníamos de la partida, simplemente cerrar (no hacer nada)
     });
 
     // Evento para el botón "Salir" de la configuración inicial
@@ -1452,13 +1661,43 @@ const JuegoDamas = (() => {
       });
 
     // Evento específico para cuando se hace click en "Salir" durante la partida
-    // (esto establece el origen para que el modal de confirmación sepa qué hacer)
     document.getElementById("salirDamas").addEventListener("click", () => {
       origenConfirmExit = "juego";
       document.getElementById("modal-confirm-exit").style.display = "flex";
     });
 
-    // Botón de reinicio
+    // EVENTO PARA EL BOTÓN JUGAR
+    document
+      .getElementById("boton-jugar-config")
+      .addEventListener("click", () => {
+        const estado = estadoGlobalDamas;
+
+        if (!estado.sorteoRealizado) {
+          if (typeof window.mostrarAvisoDamas === "function") {
+            window.mostrarAvisoDamas(t("damas.warning.mustShuffle"));
+          } else {
+            alert(t("damas.warning.mustShuffle")); // Fallback por si acaso
+          }
+          return;
+        }
+
+        estado.nivelIA = document.getElementById("nivel-ia").value;
+
+        document.getElementById("modal-config-damas").style.display = "none";
+        document.getElementById("juego-damas-contenedor").style.display =
+          "block";
+
+        dibujarTableroDamas();
+
+        // Iniciar temporizador al iniciar partida
+        reiniciarTemporizador();
+        iniciarTemporizador();
+
+        if (estado.turnoActualDamas === "ia") {
+          setTimeout(movimientoIA_Damas, 500);
+        }
+      });
+
     document
       .getElementById("boton-reinicio-damas")
       ?.addEventListener("click", resetGameDamasUltra);
@@ -1501,27 +1740,6 @@ document
 
 document.getElementById("check-sugerencias").addEventListener("change", (e) => {
   JuegoDamas.estado.mostrarSugerencias = e.target.checked;
-});
-
-document.getElementById("boton-jugar-config").addEventListener("click", () => {
-  const estado = JuegoDamas.estado;
-
-  if (!estado.sorteoRealizado) {
-    mostrarAvisoDamas(t("damas.warning.mustShuffle"));
-    return;
-  }
-
-  estado.nivelIA = document.getElementById("nivel-ia").value;
-
-  document.getElementById("modal-config-damas").style.display = "none";
-
-  document.getElementById("juego-damas-contenedor").style.display = "block";
-
-  JuegoDamas.dibujarTableroDamas();
-
-  if (estado.turnoActualDamas === "ia") {
-    setTimeout(JuegoDamas.movimientoIA_Damas, 500);
-  }
 });
 
 let ultimoClickTiempo = 0;

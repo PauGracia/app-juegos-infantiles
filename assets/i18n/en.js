@@ -345,7 +345,7 @@ window.translationsEN = {
 
   "palabras.results.wordHelped": "with help",
   "palabras.results.wordNotHelped": "without help",
-
+  "damas.timeLeft": "Time left:",
   "palabras.buttons.finish": "Finish",
   "palabras.buttons.check": "Check",
   "palabras.buttons.next": "Next",

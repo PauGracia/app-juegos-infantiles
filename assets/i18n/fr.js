@@ -345,7 +345,7 @@ window.translationsFR = {
 
   "palabras.info.checks": "Vérifications :",
   "palabras.info.helps": "Aides :",
-
+  "damas.timeLeft": "Temps restant:",
   "palabras.results.title": "Résultat final",
   "palabras.results.correct": "Réussites :",
   "palabras.results.checks": "Vérifications :",
