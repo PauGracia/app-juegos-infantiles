@@ -675,7 +675,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       ah_palabraSecreta = palabra;
 
-      ah_progreso = Array(ah_palabraSecreta.length).fill("_");
+      ah_progreso = ah_palabraSecreta.split("").map((char) => {
+        // Si es guion, mostrarlo directamente; si no, ocultar con "_"
+        return char === "-" ? "-" : "_";
+      });
+
       ah_errores = 0;
 
       ah_resetearSVG();
@@ -699,8 +703,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       for (let i = 0; i < ah_palabraSecreta.length; i++) {
         const span = document.createElement("span");
-        span.textContent = ah_progreso[i] === "_" ? "_" : ah_progreso[i];
-        span.className = ah_progreso[i] === "_" ? "ah-guion" : "ah-letra";
+        const char = ah_palabraSecreta[i];
+
+        span.textContent = ah_progreso[i];
+
+        if (char === "-") {
+          span.className = "ah-guion-pre";
+        } else if (ah_progreso[i] === "_") {
+          span.className = "ah-guion";
+        } else {
+          span.className = "ah-letra";
+        }
+
         palabraEl.appendChild(span);
       }
     }

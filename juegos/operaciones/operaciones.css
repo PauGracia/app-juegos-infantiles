@@ -645,6 +645,27 @@ body {
   top: 0.05em;
 }
 
+.btn-icon-blancos {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em; /* separación icono-texto */
+}
+
+/* Tamaño del icono = tamaño del texto */
+.btn-icon-blancos::before {
+  content: "";
+  width: 1em;
+  height: 1em;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  position: relative;
+  top: 0.05em;
+  filter: brightness(0) invert(1);
+}
+
 /* Iconos específicos */
 .btn-normal::before {
   background-image: url("../../assets/img/iconos/play.png");

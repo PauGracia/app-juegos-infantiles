@@ -193,6 +193,19 @@ html {
   position: relative;
 }
 
+.ah-guion-pre {
+  color: #ff6347;
+  font-weight: bold;
+}
+
+#btnSalirFinal {
+  background: linear-gradient(135deg, #ff6347, #e62a09);
+}
+
+#btnReiniciar {
+  background: linear-gradient(45deg, #48bb78, #38a169);
+}
+
 /*.palabra > span.ah-letra-no::after {
   content: "";
   position: absolute;
@@ -486,11 +499,6 @@ html {
 
   border: 2px solid white;
   margin: 10px auto;
-}
-
-#modal-final-contenido button,
-#btnModalInfoAceptar {
-  background: linear-gradient(45deg, #48bb78, #38a169);
 }
 
 #modal-final-contenido button:last-child {
@@ -942,6 +950,7 @@ html {
   background-position: center;
   flex-shrink: 0;
   vertical-align: middle;
+  filter: brightness(0) invert(1);
 }
 
 /* Iconos específicos */
@@ -1101,35 +1110,35 @@ html {
   }
 
   #modal-contenido select {
-    font-size: 1em !important;
-    padding: 14px 16px !important;
-    height: auto !important;
-    min-height: 52px !important;
-    line-height: 1.4 !important;
-    white-space: normal !important;
-    word-wrap: break-word !important;
-    overflow-wrap: break-word !important;
-    text-overflow: ellipsis !important;
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
-    appearance: none !important;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
-    background-repeat: no-repeat !important;
-    background-position: right 16px center !important;
-    background-size: 16px !important;
-    padding-right: 45px !important;
+    font-size: 1em;
+    padding: 14px 16px;
+    height: auto;
+    min-height: 52px;
+    line-height: 1.4;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+    padding-right: 45px;
   }
 
   /* Opciones del select en móviles */
   #modal-contenido select option {
-    font-size: 1em !important;
-    padding: 12px 8px !important;
-    white-space: normal !important;
-    word-wrap: break-word !important;
-    line-height: 1.4 !important;
-    min-height: 44px !important;
-    display: flex !important;
-    align-items: center !important;
+    font-size: 1em;
+    padding: 12px 8px;
+    white-space: normal;
+    word-wrap: break-word;
+    line-height: 1.4;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -1232,17 +1241,17 @@ html {
   }
 
   #modal-contenido select {
-    font-size: 0.95em !important;
-    padding: 12px 14px !important;
-    min-height: 48px !important;
-    background-position: right 12px center !important;
-    padding-right: 40px !important;
+    font-size: 0.95em;
+    padding: 12px 14px;
+    min-height: 48px;
+    background-position: right 12px center;
+    padding-right: 40px;
   }
 
   #modal-contenido select option {
-    font-size: 0.95em !important;
-    padding: 10px 6px !important;
-    min-height: 40px !important;
+    font-size: 0.95em;
+    padding: 10px 6px;
+    min-height: 40px;
   }
 
   .modal-contentPalabras {
@@ -1289,6 +1298,15 @@ html {
   .btn-icon::before {
     width: 1.1em;
     height: 1.1em;
+  }
+
+  #modal-contenido h2 {
+    margin-bottom: 12px;
+  }
+
+  #modal-contenido input,
+  #modal-contenido select {
+    margin-bottom: 0;
   }
 }
 

@@ -380,9 +380,8 @@ body {
   background-position: center;
 
   flex-shrink: 0;
-
-  /* alineación óptica automática */
   vertical-align: middle;
+  filter: brightness(0) invert(1);
 }
 
 .btn-instrucciones::before {

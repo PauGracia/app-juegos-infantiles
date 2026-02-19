@@ -865,6 +865,7 @@
   background-position: center;
   flex-shrink: 0;
   vertical-align: middle;
+  filter: brightness(0) invert(1);
 }
 
 /* Icono específico para botón jugar */
