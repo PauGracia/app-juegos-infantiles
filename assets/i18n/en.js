@@ -319,6 +319,7 @@ window.translationsEN = {
 
   "damas.config.result.white": "You play with WHITE",
   "damas.config.result.black": "You play with BLACK",
+  "palabras.config.instructions": "How to play",
   "palabras.instructions.title": "How to play",
   "palabras.instructions.text":
     "- Look at the image.\n- Type the word letter by letter.\n- Press Check.\n- After 3 mistakes, the word is revealed.",
