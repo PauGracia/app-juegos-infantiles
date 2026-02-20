@@ -18,6 +18,23 @@
   white-space: pre-line;
 }
 
+.modal-contenido,
+.info-panel-damas,
+.boton-damas,
+.titulo-damas,
+.config-bloque,
+.resultado-sorteo {
+  user-select: none;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.texto-instrucciones-damas {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
 /* -------------------- RESET Y BASE -------------------- */
 * {
   margin: 0;
@@ -766,7 +783,7 @@
 }
 
 /* ================================
-   Configuración – Select Nivel IA
+   Configuración – Select Nivel IA (CORREGIDO)
    ================================ */
 
 .config-item {
@@ -789,15 +806,23 @@
     sans-serif;
 }
 
+/* Estilo del botón principal (cerrado) */
 .select-selected {
   background: linear-gradient(145deg, #3498db, #2980b9);
   color: #fff;
   padding: 12px 16px;
-  border-radius: 12px;
+  border-radius: 12px; /* Solo border-radius superior cuando está abierto */
   cursor: pointer;
   user-select: none;
   font-weight: 600;
   font-size: 16px;
+  transition: border-radius 0.2s ease;
+}
+
+/* Cuando el selector está abierto, quitamos el border-radius inferior */
+.select-selected.select-arrow-active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .select-selected::after {
@@ -809,41 +834,63 @@
   pointer-events: none;
   color: white;
   font-size: 16px;
+  transition: transform 0.2s ease;
 }
 
+/* Flecha rotada cuando está abierto */
+.select-selected.select-arrow-active::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Contenedor de opciones (desplegable) */
 .select-items {
   position: absolute;
   background: #3498db;
   top: 100%;
   left: 0;
   right: 0;
-  border-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  border-top-left-radius: 0; /* Sin borde superior para unirlo al botón */
+  border-top-right-radius: 0;
   z-index: 99;
   max-height: 200px;
   overflow-y: auto;
   display: block;
   font-size: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Cada opción individual */
 .select-items div {
   padding: 10px 16px;
   cursor: pointer;
   color: white;
   font-size: 16px;
+  transition: background 0.2s ease;
 }
 
+/* Hover en opciones */
 .select-items div:hover {
   background: #2874a6;
 }
 
+/* Primera opción (sin borde superior redondeado) */
+.select-items div:first-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* Última opción (con borde inferior redondeado) */
+.select-items div:last-child {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+/* Clase para ocultar */
 .select-hide {
   display: none;
 }
-
-.select-arrow-active::after {
-  transform: translateY(-50%) rotate(180deg);
-}
-
 /* === ESTILOS PARA BOTONES CON ICONOS EN MODAL CONFIGURACIÓN === */
 #boton-jugar-config,
 #boton-salir-config,

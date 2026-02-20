@@ -657,6 +657,12 @@ const JuegoDamas = (() => {
 
     if (animacionEnCurso) return;
 
+    document.querySelectorAll(".sugerencia-movimiento").forEach((s) => {
+      s.style.display = "none";
+      s.style.opacity = "0";
+      s.style.pointerEvents = "none";
+    });
+
     const { desde, hacia, capturas, reyDespues } = mov;
     const pieza = estadoGlobalDamas.matrizDamas[desde.r][desde.c];
 
@@ -717,6 +723,12 @@ const JuegoDamas = (() => {
           estadoGlobalDamas.matrizDamas[cap.r][cap.c] = null;
         });
       }
+
+      document.querySelectorAll(".sugerencia-movimiento").forEach((s) => {
+        s.style.display = "";
+        s.style.opacity = "";
+        s.style.pointerEvents = "";
+      });
 
       // Limpiar animación
       animacionEnCurso = false;
@@ -812,28 +824,6 @@ const JuegoDamas = (() => {
           return true;
         }
       }
-    }
-
-    return false;
-  }
-
-  function esPosicionPeligrosa(pos, ladoIA) {
-    const { r, c } = pos;
-
-    // Las esquinas pueden ser trampas para reyes
-    if (
-      (r === 0 && c === 0) ||
-      (r === 0 && c === 7) ||
-      (r === 7 && c === 0) ||
-      (r === 7 && c === 7)
-    ) {
-      return true;
-    }
-
-    // Posiciones en los bordes laterales pueden ser peligrosas
-    if (c === 0 || c === 7) {
-      // Solo una dirección de ataque posible
-      return true;
     }
 
     return false;
@@ -984,142 +974,216 @@ const JuegoDamas = (() => {
   }
 
   // ======================================================================
-  // IA MEJORADA PARA NIVEL DIFÍCIL
+  // IA MEJORADA PARA NIVEL DIFÍCIL - VERSIÓN 3.0 (SEGURA)
   // ======================================================================
 
   function evaluarMovimientoIA_Mejorado(mov) {
-    let score = 0;
     const esTop = estadoGlobalDamas.ladoHumanoAsignado === "top";
     const ladoIA = esTop ? "top" : "bottom";
 
-    if (mov.capturas.length > 0) {
-      score += mov.capturas.length * 1000;
+    // Obtener pieza original
+    const piezaOriginal =
+      estadoGlobalDamas.matrizDamas[mov.desde.r][mov.desde.c];
 
+    // Simular el movimiento para evaluar consecuencias
+    const estadoDespues = simularMovimiento(mov);
+    const posDestino = mov.hacia;
+
+    let score = 0;
+
+    if (estaEnPeligroInmediato(estadoDespues, posDestino, ladoIA)) {
+      // Si nos van a capturar en el próximo turno, penalizar MUY fuerte
+      if (mov.capturas.length === 0) {
+        score -= 10000; // Penalización masiva
+        console.log(
+          `⚠️ Movimiento PELIGROSO: pieza en ${posDestino.r},${posDestino.c} será capturada`,
+        );
+      } else {
+        // Si capturamos pero quedamos expuestos, aún así penalizar
+        score -= 2000;
+      }
+    }
+
+    if (mov.capturas.length > 0) {
+      // Base por capturar (reducido para priorizar seguridad)
+      score += mov.capturas.length * 800;
+
+      // Bonus extra por capturar reyes
       const reyesCapturados = mov.capturas.filter((cap) => {
         const pieza = estadoGlobalDamas.matrizDamas[cap.r][cap.c];
         return pieza && pieza.rey;
       }).length;
-      score += reyesCapturados * 2000;
+      score += reyesCapturados * 1500;
 
+      // Bonus por capturas múltiples
       if (mov.capturas.length > 1) {
-        score += (mov.capturas.length - 1) * 500;
+        score += (mov.capturas.length - 1) * 300;
+      }
+
+      // Verificar si después de capturar, la pieza queda en peligro
+      const piezaDespues = estadoDespues[posDestino.r][posDestino.c];
+      if (
+        piezaDespues &&
+        estaEnPeligroInmediato(estadoDespues, posDestino, ladoIA)
+      ) {
+        score -= 1500; // Penalizar si quedamos expuestos tras capturar
       }
     }
 
     if (mov.reyDespues) {
-      score += 450;
+      score += 800;
+
+      // Verificar si la coronación es segura
+      if (!estaEnPeligroInmediato(estadoDespues, posDestino, ladoIA)) {
+        score += 400; // Bonus por coronación segura
+      }
     }
 
-    if (mov.capturas.length === 0) {
-      if (!mov.reyDespues) {
-        const pieza = estadoGlobalDamas.matrizDamas[mov.desde.r][mov.desde.c];
-        if (!pieza.rey) {
-          const filaDestino = mov.hacia.r;
+    if (mov.capturas.length === 0 && !mov.reyDespues && !piezaOriginal.rey) {
+      const filaDestino = mov.hacia.r;
+      let progreso = 0;
 
-          if (ladoIA === "top") {
-            const progreso = filaDestino;
-            score += progreso * 8;
+      if (ladoIA === "top") {
+        progreso = filaDestino; // 0-7
+      } else {
+        progreso = 7 - filaDestino;
+      }
 
-            if (filaDestino >= 5) score += 50;
-            if (filaDestino === 6) score += 100;
-            if (filaDestino === 7) score += 200;
-          } else {
-            const progreso = 7 - filaDestino;
-            score += progreso * 8;
+      // Solo dar bonus por progreso si es seguro
+      if (!estaEnPeligroInmediato(estadoDespues, posDestino, ladoIA)) {
+        score += progreso * 10;
 
-            if (filaDestino <= 2) score += 50;
-            if (filaDestino === 1) score += 100;
-            if (filaDestino === 0) score += 200;
+        // Bonificación por acercarse a coronar (solo si es seguro)
+        if (progreso >= 5) score += 40;
+        if (progreso === 6) score += 80;
+        if (progreso === 7) score += 200;
+      } else {
+        // Penalizar avance peligroso
+        score -= progreso * 15;
+      }
+    }
+    // ======================================================================
+    // FUNCIÓN PARA EVALUAR CONTROL DEL CENTRO
+    // ======================================================================
+
+    /**
+     * Evalúa el control del centro del tablero
+     * @param {Object} pos - Posición {r, c}
+     * @param {boolean} esRey - Si la pieza es rey
+     * @returns {number} - Puntuación de control del centro
+     */
+    function evaluarControlCentro(pos, esRey) {
+      const { r, c } = pos;
+
+      // Centro ampliado (casillas 2-5)
+      if (r >= 2 && r <= 5 && c >= 2 && c <= 5) {
+        // Centro exacto (3-4) vale más
+        if ((r === 3 || r === 4) && (c === 3 || c === 4)) {
+          return esRey ? 25 : 35; // Las piezas normales controlan mejor el centro
+        }
+        return esRey ? 15 : 20;
+      }
+      return 0;
+    }
+
+    // ======================================================================
+    // FUNCIÓN PARA CONTAR FICHAS ENEMIGAS EXPUESTAS
+    // ======================================================================
+
+    /**
+     * Cuenta las fichas del contrario que están en peligro de ser capturadas
+     * @param {Array} matriz - Estado del tablero a evaluar
+     * @param {string} ladoIA - Lado de la IA ("top" o "bottom")
+     * @returns {number} - Número de fichas enemigas expuestas
+     */
+    function contarFichasExpuestasContrario(matriz, ladoIA) {
+      let contador = 0;
+      const ladoHumano = ladoIA === "top" ? "bottom" : "top";
+
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          const ficha = matriz[r][c];
+          if (ficha && ficha.dueño === ladoHumano) {
+            // Verificar si esta ficha puede ser capturada
+            if (estaEnPeligroInmediato(matriz, { r, c }, ladoHumano)) {
+              contador++;
+            }
           }
         }
       }
+      return contador;
     }
 
-    const copia = simularMovimiento(mov);
-    const posicionDestino = mov.hacia;
+    // ======================================================================
+    // FUNCIÓN PARA CONTAR FICHAS ENEMIGAS EXPUESTAS
+    // ======================================================================
 
-    if (estaEnPeligroInmediato(copia, posicionDestino, ladoIA)) {
-      if (mov.capturas.length === 0) {
-        score -= 600;
-      } else {
-        score -= 100;
-      }
-    }
+    /**
+     * @param {Array} matriz
+     * @param {string} ladoIA
+     * @returns {number}
+     */
+    function contarFichasExpuestasContrario(matriz, ladoIA) {
+      let contador = 0;
+      const ladoHumano = ladoIA === "top" ? "bottom" : "top";
 
-    if (mov.capturas.length === 0) {
-      const piezaOriginal =
-        estadoGlobalDamas.matrizDamas[mov.desde.r][mov.desde.c];
-      if (piezaOriginal.rey) {
-        score += 50;
-
-        if (posicionDestino.c === 0 || posicionDestino.c === 7) {
-          score -= 30;
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          const ficha = matriz[r][c];
+          if (ficha && ficha.dueño === ladoHumano) {
+            // Verificar si esta ficha puede ser capturada
+            if (estaEnPeligroInmediato(matriz, { r, c }, ladoHumano)) {
+              contador++;
+            }
+          }
         }
-
-        const distanciaCentro = Math.abs(posicionDestino.c - 3.5);
-        score -= distanciaCentro * 5;
       }
+      return contador;
+    }
+
+    // Contar cuántas fichas enemigas están en peligro DESPUÉS de nuestro movimiento
+    const fichasEnPeligro = contarFichasExpuestasContrario(
+      estadoDespues,
+      ladoIA,
+    );
+    score += fichasEnPeligro * 60; // Bueno si dejamos al rival expuesto
+
+    const centroBonus = evaluarControlCentro(
+      posDestino,
+      piezaOriginal?.rey || false,
+    );
+    if (!estaEnPeligroInmediato(estadoDespues, posDestino, ladoIA)) {
+      score += centroBonus;
+    } else {
+      // No dar bonus por centro si es peligroso
+      score -= 100;
     }
 
     const fichasAliadasCercanas = contarFichasAliadasCercanas(
-      copia,
-      posicionDestino,
+      estadoDespues,
+      posDestino,
       ladoIA,
     );
-    score += fichasAliadasCercanas * 15;
 
-    if (mov.reyDespues) {
-      const movimientosFuturos = calcularMovimientosDesdeMatriz(
-        copia,
-        posicionDestino.r,
-        posicionDestino.c,
-      );
-      const capturasFuturas = movimientosFuturos.filter(
-        (m) => m.capturas.length > 0,
-      ).length;
-      score += capturasFuturas * 100;
+    // Si tenemos apoyo, es más seguro
+    if (fichasAliadasCercanas > 0) {
+      score += fichasAliadasCercanas * 30;
     }
 
-    if (mov.capturas.length === 0) {
-      const piezasExpuestas = contarPiezasExpuestas(copia, ladoIA);
-      score -= piezasExpuestas * 80;
-    }
-
-    if (creaAmenazaDoble(copia, posicionDestino, ladoIA)) {
-      score += 120;
+    if (!estaEnPeligroInmediato(estadoDespues, posDestino, ladoIA)) {
+      if (creaAmenazaDoble(estadoDespues, posDestino, ladoIA)) {
+        score += 300;
+      }
     }
 
     if (
       mov.capturas.length === 0 &&
-      bloqueaFichasPropias(copia, posicionDestino, mov.desde, ladoIA)
+      bloqueaFichasPropias(estadoDespues, posDestino, mov.desde, ladoIA)
     ) {
-      score -= 70;
+      score -= 150;
     }
 
     return score;
-  }
-
-  function evaluarMovimientoIA(mov) {
-    return evaluarMovimientoIA_Mejorado(mov);
-  }
-
-  function piezaQuedaEnPeligro(matriz, pos) {
-    for (let r = 0; r < 8; r++)
-      for (let c = 0; c < 8; c++) {
-        const p = matriz[r][c];
-        if (!p || p.dueño === estadoGlobalDamas.ladoHumanoAsignado) continue;
-
-        const caps = calcularMovimientosDesdeMatriz(matriz, r, c);
-
-        if (
-          caps.some((m) =>
-            m.capturas.some((cap) => cap.r === pos.r && cap.c === pos.c),
-          )
-        ) {
-          return true;
-        }
-      }
-    return false;
   }
 
   // ======================================================================
@@ -1431,15 +1495,20 @@ const JuegoDamas = (() => {
   function movimientoIA_Damas() {
     if (estadoGlobalDamas.juegoTerminadoFlag) return;
 
-    // ===== NUEVO: VERIFICAR QUE LA IA PUEDA MOVER =====
+    // Verificar ahogado
     if (!tieneMovimientosJugador("ia")) {
       console.log("♨️ IA AHOGADA - Gana el humano");
       mostrarModalFin(true);
       return;
     }
 
-    const movs = [];
+    // DECLARAR ladoIA
+    const ladoIA =
+      estadoGlobalDamas.ladoHumanoAsignado === "top" ? "bottom" : "top";
+
+    const movimientos = [];
     const capturasDisponibles = [];
+    const movimientosSeguros = [];
 
     // Recolectar todos los movimientos posibles
     for (let r = 0; r < 8; r++) {
@@ -1447,46 +1516,80 @@ const JuegoDamas = (() => {
         const p = estadoGlobalDamas.matrizDamas[r][c];
         if (!p || p.dueño === estadoGlobalDamas.ladoHumanoAsignado) continue;
 
-        const movimientosDesdeCasilla = calcularMovimientosDesdeDamas(r, c);
-        movimientosDesdeCasilla.forEach((m) => {
+        const movsDesdeCasilla = calcularMovimientosDesdeDamas(r, c);
+
+        movsDesdeCasilla.forEach((m) => {
+          // Clasificar movimientos
           if (m.capturas.length > 0) {
             capturasDisponibles.push(m);
           }
-          movs.push(m);
+          movimientos.push(m);
+
+          // Evaluar si es seguro (no ser capturado después)
+          const estadoSimulado = simularMovimiento(m);
+          if (!estaEnPeligroInmediato(estadoSimulado, m.hacia, ladoIA)) {
+            movimientosSeguros.push(m);
+          }
         });
       }
     }
 
-    if (!movs.length) return;
+    if (!movimientos.length) return;
 
     let choice;
 
-    const movimientosPermitidos =
-      capturasDisponibles.length > 0 ? capturasDisponibles : movs;
+    const capturasSeguras = capturasDisponibles.filter((m) => {
+      const estadoSimulado = simularMovimiento(m);
+      return !estaEnPeligroInmediato(estadoSimulado, m.hacia, ladoIA);
+    });
 
-    if (estadoGlobalDamas.nivelIA === "dificil") {
-      const movimientosEvaluados = movimientosPermitidos.map((m) => ({
+    if (capturasSeguras.length > 0) {
+      console.log("🎯 Prioridad 1: Capturas seguras");
+      const movimientosEvaluados = capturasSeguras.map((m) => ({
         m,
         score: evaluarMovimientoIA_Mejorado(m),
       }));
-
       movimientosEvaluados.sort((a, b) => b.score - a.score);
-      const mejores = movimientosEvaluados.slice(0, 3);
+      choice = movimientosEvaluados[0].m;
+    } else if (capturasDisponibles.length > 0) {
+      console.log("⚡ Prioridad 2: Capturas (con riesgo)");
+      const movimientosEvaluados = capturasDisponibles.map((m) => ({
+        m,
+        score: evaluarMovimientoIA_Mejorado(m),
+      }));
+      movimientosEvaluados.sort((a, b) => b.score - a.score);
+      choice = movimientosEvaluados[0].m;
+    } else if (movimientosSeguros.length > 0) {
+      console.log("🛡️ Prioridad 3: Movimientos seguros");
+      const movimientosEvaluados = movimientosSeguros.map((m) => ({
+        m,
+        score: evaluarMovimientoIA_Mejorado(m),
+      }));
+      movimientosEvaluados.sort((a, b) => b.score - a.score);
 
-      if (Math.random() < 0.8 || mejores.length === 1) {
+      // Elegir entre top 3 con probabilidad
+      const mejores = movimientosEvaluados.slice(0, 3);
+      if (mejores.length === 1 || Math.random() < 0.7) {
         choice = mejores[0].m;
       } else {
-        const indiceAleatorio = Math.floor(
-          Math.random() * Math.min(3, mejores.length),
-        );
-        choice = mejores[indiceAleatorio].m;
+        const idx = Math.floor(Math.random() * Math.min(2, mejores.length));
+        choice = mejores[idx].m;
       }
     } else {
-      choice =
-        movimientosPermitidos[
-          Math.floor(Math.random() * movimientosPermitidos.length)
-        ];
+      console.log("⚠️ Prioridad 4: Último recurso");
+      const movimientosEvaluados = movimientos.map((m) => ({
+        m,
+        score: evaluarMovimientoIA_Mejorado(m),
+      }));
+      movimientosEvaluados.sort((a, b) => b.score - a.score);
+      choice = movimientosEvaluados[0].m;
     }
+
+    // Mostrar decisión en consola
+    const scoreElegido = evaluarMovimientoIA_Mejorado(choice);
+    console.log(
+      `🤖 IA elige: [${choice.desde.r},${choice.desde.c}] → [${choice.hacia.r},${choice.hacia.c}] | Score: ${scoreElegido} | ${choice.capturas.length > 0 ? "🔥" : "👟"}`,
+    );
 
     estadoGlobalDamas.seleccionActualDamas = choice.desde;
     dibujarTableroDamas();
