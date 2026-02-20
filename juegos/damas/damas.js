@@ -65,8 +65,7 @@ const sonidosDamas = (() => {
       // Configurar volumen y precargar
       audio.src = ruta;
       audio.load(); // Inicia la precarga
-      audio.volume = key === "movimiento" ? 0.8 : key === "comer" ? 0.9 : 1;
-
+      audio.volume = key === "movimiento" ? 1 : key === "comer" ? 0.9 : 1;
       sonidos[key] = audio;
     });
   }
@@ -397,59 +396,107 @@ const JuegoDamas = (() => {
   }
 
   // ======================================================================
-  // SELECCIÓN Y MOVIMIENTOS
+  // SELECTOR PERSONALIZADO SIMPLIFICADO
   // ======================================================================
   function initCustomSelect() {
-    const customSelects = document.querySelectorAll(".custom-select");
+    const container = document.getElementById("nivel-ia-container");
+    const select = document.getElementById("nivel-ia");
+    const selected = document.getElementById("nivel-ia-selected");
+    const optionsContainer = document.getElementById("nivel-ia-options");
 
-    customSelects.forEach((container) => {
-      const select = container.querySelector("select");
-      const selected = container.querySelector(".select-selected");
-      const optionsContainer = container.querySelector(".select-items");
+    if (!container || !select || !selected || !optionsContainer) return;
 
-      // Inicializar el texto del selected
+    // Función para actualizar el selector (usando traducciones actuales)
+    function actualizarSelector() {
+      // Actualizar texto seleccionado
+      selected.textContent = select.options[select.selectedIndex]?.text || "";
 
-      if (!select || !selected || !optionsContainer) return;
-      selected.textContent = select.options[select.selectedIndex].text;
-
-      // Llenar las opciones
+      // Recrear opciones
       optionsContainer.innerHTML = "";
-      Array.from(select.options).forEach((opt, idx) => {
+      Array.from(select.options).forEach((opt, index) => {
         const div = document.createElement("div");
         div.textContent = opt.text;
-        div.addEventListener("click", () => {
-          select.selectedIndex = idx;
+        div.onclick = (e) => {
+          e.stopPropagation();
+          select.selectedIndex = index;
           selected.textContent = opt.text;
           optionsContainer.classList.add("select-hide");
-        });
+          selected.classList.remove("select-arrow-active");
+        };
         optionsContainer.appendChild(div);
       });
+    }
 
-      // Abrir/cerrar al click
-      selected.addEventListener("click", (e) => {
-        e.stopPropagation();
-        closeAllSelects(selected);
-        optionsContainer.classList.toggle("select-hide");
-        selected.classList.toggle("select-arrow-active");
-      });
+    // Eventos (solo una vez)
+    selected.onclick = (e) => {
+      e.stopPropagation();
+      optionsContainer.classList.toggle("select-hide");
+      selected.classList.toggle("select-arrow-active");
+    };
+
+    // Guardar función para actualizar después
+    container.actualizarSelector = actualizarSelector;
+
+    // Cerrar al hacer click fuera
+    document.addEventListener("click", () => {
+      optionsContainer.classList.add("select-hide");
+      selected.classList.remove("select-arrow-active");
+    });
+  }
+
+  // Función initLanguage simplificada (ASINCRONA)
+  function initLanguage() {
+    // El idioma ya está en localStorage por i18n.js
+    const lang = localStorage.getItem("appLang") || "es";
+
+    // Las traducciones ya están en window.translations (cargadas por i18n.js)
+    const translations = window.translations;
+    if (!translations) {
+      console.warn("Traducciones no disponibles");
+      return;
+    }
+
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      if (translations[key]) {
+        el.textContent = translations[key];
+      }
     });
 
-    function closeAllSelects(except) {
-      document.querySelectorAll(".select-items").forEach((el) => {
-        if (el.parentElement.querySelector(".select-selected") !== except) {
-          el.classList.add("select-hide");
-        }
-      });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-placeholder");
+      if (translations[key]) {
+        el.placeholder = translations[key];
+      }
+    });
 
-      document.querySelectorAll(".select-selected").forEach((el) => {
-        if (el !== except) {
-          el.classList.remove("select-arrow-active");
+    const nivelSelect = document.getElementById("nivel-ia");
+    if (nivelSelect) {
+      Array.from(nivelSelect.options).forEach((option) => {
+        const key = option.getAttribute("data-i18n");
+        if (key && translations[key]) {
+          option.text = translations[key];
         }
       });
     }
 
-    // Cerrar al hacer click fuera
-    document.addEventListener("click", closeAllSelects);
+    const container = document.getElementById("nivel-ia-container");
+    if (container && container.actualizarSelector) {
+      container.actualizarSelector();
+    }
+
+    const resultadoSorteo = document.getElementById("resultado-sorteo");
+    if (
+      resultadoSorteo &&
+      JuegoDamas &&
+      JuegoDamas.estado &&
+      JuegoDamas.estado.sorteoRealizado
+    ) {
+      resultadoSorteo.textContent =
+        JuegoDamas.estado.colorHumano === "blancas"
+          ? translations["damas.config.result.white"]
+          : translations["damas.config.result.black"];
+    }
   }
 
   // Inicializar al cargar la página
@@ -1811,14 +1858,16 @@ const JuegoDamas = (() => {
     });
 
   // ======================================================================
-  // INICIALIZACIÓN - VERSIÓN SIMPLIFICADA
-  // ======================================================================
-
-  // ======================================================================
   // INICIALIZACIÓN - VERSIÓN SIMPLIFICADA (DENTRO DE JuegoDamas)
   // ======================================================================
   function init() {
+    // Inicializar selector personalizado
+    initCustomSelect();
+
+    // Aplicar idioma actual
     initLanguage();
+
+    // Resto del código...
     document.getElementById("salirDamas").innerText = t("damas.exit");
 
     // Eventos del modal de fin
@@ -1869,12 +1918,6 @@ const JuegoDamas = (() => {
         document.getElementById("modal-confirm-exit").style.display = "flex";
       });
 
-    // Evento específico para cuando se hace click en "Salir" durante la partida
-    document.getElementById("salirDamas").addEventListener("click", () => {
-      origenConfirmExit = "juego";
-      document.getElementById("modal-confirm-exit").style.display = "flex";
-    });
-
     // EVENTO PARA EL BOTÓN JUGAR
     document
       .getElementById("boton-jugar-config")
@@ -1885,7 +1928,7 @@ const JuegoDamas = (() => {
           if (typeof window.mostrarAvisoDamas === "function") {
             window.mostrarAvisoDamas(t("damas.warning.mustShuffle"));
           } else {
-            alert(t("damas.warning.mustShuffle")); // Fallback por si acaso
+            alert(t("damas.warning.mustShuffle"));
           }
           return;
         }
@@ -1914,6 +1957,12 @@ const JuegoDamas = (() => {
     resetGameDamasUltra();
   }
 
+  // Escuchar cambios de idioma (importante)
+  document.addEventListener("languageChanged", function () {
+    if (typeof initLanguage === "function") {
+      initLanguage();
+    }
+  });
   document.addEventListener("DOMContentLoaded", init);
 
   return {
