@@ -974,7 +974,7 @@ const JuegoDamas = (() => {
   }
 
   // ======================================================================
-  // IA MEJORADA PARA NIVEL DIFÍCIL - VERSIÓN 3.0 (SEGURA)
+  // IA MEJORADA PARA NIVEL DIFÍCIL - VERSIÓN 3.0
   // ======================================================================
 
   function evaluarMovimientoIA_Mejorado(mov) {
@@ -992,14 +992,18 @@ const JuegoDamas = (() => {
     let score = 0;
 
     if (estaEnPeligroInmediato(estadoDespues, posDestino, ladoIA)) {
-      // Si nos van a capturar en el próximo turno, penalizar MUY fuerte
       if (mov.capturas.length === 0) {
         score -= 10000; // Penalización masiva
-        console.log(
-          `⚠️ Movimiento PELIGROSO: pieza en ${posDestino.r},${posDestino.c} será capturada`,
+
+        // Añadir penalización extra si además expone otras fichas
+        const fichasExpuestas = contarFichasPropiasEnPeligro(
+          estadoDespues,
+          ladoIA,
         );
+        if (fichasExpuestas > 1) {
+          score -= 5000; // Penalización extra por exposición en cadena
+        }
       } else {
-        // Si capturamos pero quedamos expuestos, aún así penalizar
         score -= 2000;
       }
     }
@@ -1061,7 +1065,27 @@ const JuegoDamas = (() => {
         // Penalizar avance peligroso
         score -= progreso * 15;
       }
+
+      // Contar fichas propias en peligro DESPUÉS del movimiento
+      const fichasPropiasEnPeligro = contarFichasPropiasEnPeligro(
+        estadoDespues,
+        ladoIA,
+      );
+      if (fichasPropiasEnPeligro > 0) {
+        // Penalizar según cuántas fichas queden expuestas
+        // Si es 1, penalización moderada; si son varias, penalización masiva
+        const penalizacion =
+          fichasPropiasEnPeligro * (fichasPropiasEnPeligro === 1 ? 500 : 2000);
+        score -= penalizacion;
+
+        if (fichasPropiasEnPeligro > 1) {
+          console.log(
+            `⚠️ Movimiento PELIGROSO: expone ${fichasPropiasEnPeligro} fichas`,
+          );
+        }
+      }
     }
+
     // ======================================================================
     // FUNCIÓN PARA EVALUAR CONTROL DEL CENTRO
     // ======================================================================
@@ -1106,6 +1130,32 @@ const JuegoDamas = (() => {
           if (ficha && ficha.dueño === ladoHumano) {
             // Verificar si esta ficha puede ser capturada
             if (estaEnPeligroInmediato(matriz, { r, c }, ladoHumano)) {
+              contador++;
+            }
+          }
+        }
+      }
+      return contador;
+    }
+
+    // ======================================================================
+    // FUNCIÓN PARA EVALUAR CUÁNTAS FICHAS SE PIERDEN EN UN MOVIMIENTO
+    // ======================================================================
+
+    /**
+     * Evalúa cuántas fichas propias quedarían expuestas o se perderían
+     * @param {Array} matriz - Estado del tablero después del movimiento
+     * @param {string} ladoIA - Lado de la IA
+     * @returns {number} - Número de fichas en peligro
+     */
+    function contarFichasPropiasEnPeligro(matriz, ladoIA) {
+      let contador = 0;
+
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          const ficha = matriz[r][c];
+          if (ficha && ficha.dueño === ladoIA) {
+            if (estaEnPeligroInmediato(matriz, { r, c }, ladoIA)) {
               contador++;
             }
           }
@@ -1576,12 +1626,26 @@ const JuegoDamas = (() => {
         choice = mejores[idx].m;
       }
     } else {
-      console.log("⚠️ Prioridad 4: Último recurso");
-      const movimientosEvaluados = movimientos.map((m) => ({
-        m,
-        score: evaluarMovimientoIA_Mejorado(m),
-      }));
+      console.log("⚠️ Prioridad 4: Minimizar daños");
+
+      // Evaluar todos los movimientos con énfasis en minimizar pérdidas
+      const movimientosEvaluados = movimientos.map((m) => {
+        const score = evaluarMovimientoIA_Mejorado(m);
+        return { m, score };
+      });
+
+      // Ordenar por score (mayor primero, que significa menos malo)
       movimientosEvaluados.sort((a, b) => b.score - a.score);
+
+      // Mostrar top 3 para debug
+      console.log("  Opciones desesperadas:");
+      movimientosEvaluados.slice(0, 3).forEach((item, i) => {
+        console.log(
+          `    ${i + 1}. Score: ${item.score} - De: ${item.m.desde.r},${item.m.desde.c} A: ${item.m.hacia.r},${item.m.hacia.c}`,
+        );
+      });
+
+      // Elegir el mejor (menos malo) - sin aleatoriedad cuando estamos desesperados
       choice = movimientosEvaluados[0].m;
     }
 
