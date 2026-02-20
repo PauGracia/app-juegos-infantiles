@@ -459,6 +459,12 @@ const JuegoDamas = (() => {
     if (estadoGlobalDamas.juegoTerminadoFlag) return;
     if (estadoGlobalDamas.turnoActualDamas !== "humano") return;
 
+    if (!tieneMovimientosJugador("humano")) {
+      console.log("♨️ Humano AHOGADO - Gana la IA");
+      mostrarModalFin(false);
+      return;
+    }
+
     const seleccion = estadoGlobalDamas.seleccionActualDamas;
 
     if (seleccion) {
@@ -475,7 +481,6 @@ const JuegoDamas = (() => {
 
     const ficha = estadoGlobalDamas.matrizDamas[r][c];
 
-    // Si se hace click en una ficha humana seleccionar
     if (ficha && ficha.dueño === estadoGlobalDamas.ladoHumanoAsignado) {
       estadoGlobalDamas.seleccionActualDamas = { r, c };
 
@@ -499,7 +504,6 @@ const JuegoDamas = (() => {
       return;
     }
 
-    // Click en vacío sin movimiento válido limpiar selección
     estadoGlobalDamas.seleccionActualDamas = null;
     estadoGlobalDamas.movimientosDisponiblesDamas = [];
     dibujarTableroDamas();
@@ -1302,7 +1306,7 @@ const JuegoDamas = (() => {
 
     // Si el juego terminó, NO continuar con el cambio de turno
     if (estadoGlobalDamas.juegoTerminadoFlag) {
-      detenerTemporizador(); // Asegurar que el temporizador se detiene
+      detenerTemporizador();
       return;
     }
 
@@ -1310,6 +1314,21 @@ const JuegoDamas = (() => {
     estadoGlobalDamas.turnoActualDamas =
       estadoGlobalDamas.turnoActualDamas === "humano" ? "ia" : "humano";
     actualizarPanelInfoDamas();
+
+    const jugadorActual = estadoGlobalDamas.turnoActualDamas;
+    if (!tieneMovimientosJugador(jugadorActual)) {
+      console.log(`♨️ ¡AHOGADO! ${jugadorActual} no puede mover - Pierde`);
+
+      // El jugador que no puede mover PIERDE
+      if (jugadorActual === "humano") {
+        // El humano no puede mover -> gana la IA
+        mostrarModalFin(false);
+      } else {
+        // La IA no puede mover -> gana el humano
+        mostrarModalFin(true);
+      }
+      return;
+    }
 
     // Control del temporizador según el turno
     if (estadoGlobalDamas.turnoActualDamas === "humano") {
@@ -1324,6 +1343,38 @@ const JuegoDamas = (() => {
     }
   }
 
+  // ======================================================================
+  // FUNCIÓN PARA DETECTAR SI UN JUGADOR TIENE MOVIMIENTOS
+  // ======================================================================
+
+  /**
+   * Verifica si un jugador tiene al menos un movimiento válido
+   * @param {string} jugador - "humano" o "ia"
+   * @returns {boolean} - true si tiene movimientos, false si está bloqueado
+   */
+  function tieneMovimientosJugador(jugador) {
+    for (let r = 0; r < 8; r++) {
+      for (let c = 0; c < 8; c++) {
+        const pieza = estadoGlobalDamas.matrizDamas[r][c];
+        if (!pieza) continue;
+
+        // Determinar si la pieza es del jugador que estamos verificando
+        const esDelJugador =
+          jugador === "humano"
+            ? pieza.dueño === estadoGlobalDamas.ladoHumanoAsignado
+            : pieza.dueño !== estadoGlobalDamas.ladoHumanoAsignado;
+
+        if (esDelJugador) {
+          const movimientos = calcularMovimientosDesdeDamas(r, c);
+          if (movimientos.length > 0) {
+            return true; // Encontró al menos un movimiento
+          }
+        }
+      }
+    }
+    return false; // Ninguna pieza tiene movimientos
+  }
+
   function evaluarGanadorDamas() {
     let humano = 0,
       ia = 0;
@@ -1336,22 +1387,10 @@ const JuegoDamas = (() => {
 
     if (humano === 0) {
       estadoGlobalDamas.juegoTerminadoFlag = true;
-      document.getElementById("ganador-info").textContent = t("damas.ai");
-      const mensajeEstado = document.getElementById("mensaje-estado-damas");
-      if (mensajeEstado) {
-        mensajeEstado.textContent = t("damas.youLose");
-      }
-
-      mostrarModalFin(false);
+      mostrarModalFin(false); // Gana la IA
     } else if (ia === 0) {
       estadoGlobalDamas.juegoTerminadoFlag = true;
-      document.getElementById("ganador-info").textContent = t("damas.you");
-      const mensajeEstado = document.getElementById("mensaje-estado-damas");
-      if (mensajeEstado) {
-        mensajeEstado.textContent = t("damas.youWin");
-      }
-
-      mostrarModalFin(true);
+      mostrarModalFin(true); // Gana el humano
     }
   }
 
@@ -1392,11 +1431,17 @@ const JuegoDamas = (() => {
   function movimientoIA_Damas() {
     if (estadoGlobalDamas.juegoTerminadoFlag) return;
 
-    const movs = [];
+    // ===== NUEVO: VERIFICAR QUE LA IA PUEDA MOVER =====
+    if (!tieneMovimientosJugador("ia")) {
+      console.log("♨️ IA AHOGADA - Gana el humano");
+      mostrarModalFin(true);
+      return;
+    }
 
-    // Primero, verificar si hay capturas disponibles para la IA
+    const movs = [];
     const capturasDisponibles = [];
 
+    // Recolectar todos los movimientos posibles
     for (let r = 0; r < 8; r++) {
       for (let c = 0; c < 8; c++) {
         const p = estadoGlobalDamas.matrizDamas[r][c];
@@ -1425,9 +1470,8 @@ const JuegoDamas = (() => {
         score: evaluarMovimientoIA_Mejorado(m),
       }));
 
-      // Ordenar por score (mayor primero)
       movimientosEvaluados.sort((a, b) => b.score - a.score);
-      const mejores = movimientosEvaluados.slice(0, 3); // Tomar los 3 mejores
+      const mejores = movimientosEvaluados.slice(0, 3);
 
       if (Math.random() < 0.8 || mejores.length === 1) {
         choice = mejores[0].m;
@@ -1438,8 +1482,6 @@ const JuegoDamas = (() => {
         choice = mejores[indiceAleatorio].m;
       }
     } else {
-      // Nivel normal
-
       choice =
         movimientosPermitidos[
           Math.floor(Math.random() * movimientosPermitidos.length)

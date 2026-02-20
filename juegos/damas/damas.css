@@ -1288,7 +1288,7 @@
 
   #boton-jugar-config,
   #boton-salir-config {
-    gap: 6px !important;
+    gap: 6px;
   }
 
   #boton-jugar-config::before,
