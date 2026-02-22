@@ -30,6 +30,7 @@ input {
   padding: 12px;
   color: #2d3748;
   align-items: center;
+  overflow: hidden;
 }
 
 /* Contenedor principal centrado */

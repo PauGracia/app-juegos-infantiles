@@ -342,12 +342,13 @@ body {
 .modal-contentMemori .botones button {
   flex: 1;
   min-height: 50px;
-  padding: 12px 0;
+  padding: 12px 10px;
   font-size: 16px;
   font-weight: 700;
   border-radius: 10px;
   box-sizing: border-box;
   text-align: center;
+  min-width: 30%;
 }
 
 /* Estilos individuales por color */
@@ -743,6 +744,10 @@ body {
 
 #modoDesafio::before {
   background-image: url("../../assets/img/iconos/play-mas.png");
+}
+
+#reiniciar::before {
+  background-image: url("../../assets/img/iconos/reniciar.png");
 }
 
 #rankingInicio::before,
@@ -1178,6 +1183,11 @@ body {
     padding: 10px;
     font-size: 14px;
   }
+
+  .modal-contentMemori .botones button {
+    padding: 10px 0;
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 380px) {
@@ -1219,5 +1229,10 @@ body {
   .modal-contentMemori button::before {
     width: 18px;
     height: 18px;
+  }
+
+  .modal-contentMemori .botones button {
+    padding: 10px 0;
+    font-size: 12px;
   }
 }

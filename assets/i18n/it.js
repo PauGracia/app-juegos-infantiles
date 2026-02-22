@@ -139,7 +139,7 @@ window.translationsIT = {
 
   "memori.invalidName": "Il nome deve avere tra 3 e 10 caratteri",
   "memori.warning": "⚠️ Avviso",
-  "ranking.title": "Classifica",
+  "ranking.title": "🏆 Classifica",
   "ranking.sort.language": "Ordina per lingua",
   "memori.levelModalTitle": "Livello {{level}}",
   "memori.levelModalInfo": "{{pairs}} coppie - {{time}} minuti",

@@ -152,7 +152,7 @@ window.translationsCA = {
 
   "memori.invalidName": "El nom ha de tenir entre 3 i 10 caràcters",
   "memori.warning": "⚠️ Avís",
-  "ranking.title": "Ranking",
+  "ranking.title": "🏆 Ranking",
   "memori.levelModalTitle": "Nivell {{level}}",
   "memori.levelModalInfo": "{{pairs}} parelles - {{time}} minuts",
   "ranking.sort.language": "Ordenar per idioma",

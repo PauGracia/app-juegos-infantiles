@@ -151,7 +151,7 @@ window.translationsEN = {
 
   "memori.invalidName": "Name must be between 3 and 10 characters",
   "memori.warning": "⚠️ Warning",
-  "ranking.title": "Ranking",
+  "ranking.title": "🏆 Ranking",
   "memori.levelModalTitle": "Level {{level}}",
   "memori.levelModalInfo": "{{pairs}} pairs - {{time}} minutes",
   "ranking.sort.language": "Sort by language",
