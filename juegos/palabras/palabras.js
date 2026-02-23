@@ -48,27 +48,145 @@ document.addEventListener("DOMContentLoaded", () => {
   let estabaEnModalFinal = false;
 
   // -----------------------------
-  // SONIDOS
+  // SONIDOS - VERSIÓN SIMPLE Y COMPROBADA
   // -----------------------------
-  const sonidos = {
-    acierto: new Audio("sounds/acierto.mp3"),
-    fallo: new Audio("sounds/fallo.mp3"),
-    ganar: new Audio("sounds/ganar.mp3"),
-  };
+  const sonidosPalabras = (() => {
+    // Lista de todos los sonidos necesarios
+    const archivosSonidos = {
+      acierto: "sounds/acierto.mp3",
+      fallo: "sounds/fallo.mp3",
+      ganar: "sounds/ganar.mp3",
+    };
 
+    // Objeto para almacenar los Audio elements precargados
+    const sonidos = {};
+
+    // Estado de carga
+    let sonidosCargados = 0;
+    const totalSonidos = Object.keys(archivosSonidos).length;
+    let precargaCompleta = false;
+
+    /**
+     * Precarga todos los sonidos al iniciar
+     */
+    function precargarSonidos() {
+      console.log("🎵 Precargando sonidos...");
+
+      Object.entries(archivosSonidos).forEach(([key, ruta]) => {
+        const audio = new Audio();
+
+        // Eventos para monitorear la carga
+        audio.addEventListener(
+          "canplaythrough",
+          () => {
+            sonidosCargados++;
+            console.log(
+              `✅ Sonido cargado: ${key} (${sonidosCargados}/${totalSonidos})`,
+            );
+
+            if (sonidosCargados === totalSonidos) {
+              precargaCompleta = true;
+              console.log("🎵 Todos los sonidos precargados correctamente");
+            }
+          },
+          { once: true },
+        );
+
+        audio.addEventListener("error", (e) => {
+          console.error(`❌ Error cargando sonido: ${key}`, e);
+        });
+
+        // Configurar y precargar
+        audio.src = ruta;
+        audio.load(); // Inicia la precarga
+        audio.volume = 1; // Volumen al máximo para todos
+        sonidos[key] = audio;
+      });
+    }
+
+    /**
+     * Reproduce un sonido de forma optimizada
+     */
+    function playSonido(key) {
+      const audio = sonidos[key];
+      if (!audio) {
+        console.warn(`Sonido no encontrado: ${key}`);
+        return;
+      }
+
+      try {
+        // Resetear al principio
+        audio.currentTime = 0;
+
+        // Intentar reproducir
+        const playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            // Ignorar errores de autoplay (se solucionan con la interacción del usuario)
+            if (error.name !== "NotAllowedError") {
+              console.warn(`Error reproduciendo ${key}:`, error);
+            }
+          });
+        }
+      } catch (error) {
+        console.warn(`Error en reproducción de ${key}:`, error);
+      }
+    }
+
+    // Iniciar precarga inmediatamente
+    precargarSonidos();
+
+    // Desbloquear audio en la primera interacción del usuario
+    const desbloquearAudio = () => {
+      try {
+        // Intentar crear un contexto de audio silencioso
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+          const ctx = new AudioContext();
+          if (ctx.state === "suspended") {
+            ctx
+              .resume()
+              .then(() => {
+                console.log("🔊 AudioContext desbloqueado");
+              })
+              .catch(() => {});
+          }
+        }
+      } catch (e) {
+        // Fallback: reproducir un sonido a volumen 0
+        if (sonidos.acierto) {
+          const audioSilencioso = sonidos.acierto.cloneNode();
+          audioSilencioso.volume = 0;
+          audioSilencioso.play().catch(() => {});
+        }
+      }
+
+      // Remover listeners
+      document.removeEventListener("click", desbloquearAudio);
+      document.removeEventListener("touchstart", desbloquearAudio);
+    };
+
+    // Añadir listeners para la primera interacción
+    document.addEventListener("click", desbloquearAudio, { once: true });
+    document.addEventListener("touchstart", desbloquearAudio, { once: true });
+
+    // API pública
+    return {
+      acierto: () => playSonido("acierto"),
+      fallo: () => playSonido("fallo"),
+      ganar: () => playSonido("ganar"),
+      // Método de utilidad para verificar estado
+      estaPrecargado: () => precargaCompleta,
+    };
+  })();
+
+  // Constante para el retraso de feedback visual
   const RETRASO_FEEDBACK = 150;
 
   // -----------------------------
   // FUNCIONES AUXILIARES
   // -----------------------------
-  function reproducirSonido(nombre) {
-    const sonido = sonidos[nombre];
-    if (!sonido) return;
-    sonido.currentTime = 0;
-    sonido.play().catch(() => {});
-  }
-
-  Object.values(sonidos).forEach((s) => s.load());
 
   function normalizar(texto) {
     return texto
@@ -241,7 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (resultadoCorrecto) {
       aciertos++;
       palabraFinalizada = true;
-      reproducirSonido("acierto");
+      sonidosPalabras.acierto();
 
       setTimeout(() => {
         contenedor.style.borderColor = "green";
@@ -259,7 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       return;
     } else {
-      reproducirSonido("fallo");
+      sonidosPalabras.fallo();
 
       for (let i = 0; i < palabraObjetivo.length; i++) {
         if (!inputs[i].disabled) {
@@ -324,7 +442,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function mostrarResultadoFinal() {
-    reproducirSonido("ganar");
+    sonidosPalabras.ganar();
 
     modalConfirmExit.style.display = "none";
 

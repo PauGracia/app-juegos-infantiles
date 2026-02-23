@@ -147,8 +147,6 @@ const sonidosDamas = (() => {
   };
 })();
 
-// ELIMINA el bloque anterior de sonidos (el que tenía el document.addEventListener para precarga silenciosa)
-
 // ================================
 // CONSTANTES DEL JUEGO
 // ================================

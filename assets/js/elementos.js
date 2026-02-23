@@ -180,7 +180,7 @@ const elementos = [
   },
   {
     id: 28,
-    palabras: ["balanza", "balanca", "scale", "balance", "bilancia", "balanca"],
+    palabras: ["balanza", "balança", "scale", "balance", "bilancia", "balanca"],
     imagen: "../../assets/img/iconos/igualdad.png",
   },
   {
