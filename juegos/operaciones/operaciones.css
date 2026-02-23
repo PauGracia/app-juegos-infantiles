@@ -42,7 +42,18 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family:
+    "ChalkRegular",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -89,7 +100,7 @@ body {
   backdrop-filter: blur(5px);
 }
 
-/* Tarjetas de operaciones modernizadas */
+/* Tarjetas de operaciones */
 .operacion {
   font-family: "Courier New", "Roboto Mono", monospace;
   font-size: 28px;
@@ -263,7 +274,7 @@ body {
   width: 220px;
   padding: 15px 25px;
   border-radius: 12px;
-  border: 2px solid #2e7d5b;
+  border: 2px solid #d32f2f;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -283,7 +294,7 @@ body {
 /* MODALES - MANTENIENDO LA ESTRUCTURA ORIGINAL */
 /* ========================================== */
 
-/* Contenedor del modal operaciones - IMPORTANTE: NO CAMBIAR display */
+/* Contenedor del modal operaciones*/
 .modal-operaciones {
   position: fixed;
   top: 0;
@@ -399,13 +410,14 @@ body {
 
 .modal-content button {
   margin-top: 25px;
-  font-family: inherit;
+
   background: linear-gradient(145deg, #f1f1e8, #e8e8d8);
   color: #333;
   font-size: 16px;
   font-weight: 600;
   border: 3px solid #2e7d5b;
-  width: 200px;
+  width: 250px;
+  height: 50px;
   padding: 12px 20px;
   margin: 8px;
   border-radius: 10px;
@@ -570,7 +582,7 @@ body {
   padding: 30px 40px;
   border-radius: 20px;
   text-align: center;
-  font-family: inherit;
+
   max-width: 380px;
   width: 85%;
   box-shadow:
@@ -680,6 +692,10 @@ body {
 }
 
 .btn-salir::before {
+  background-image: url("../../assets/img/iconos/salida.png");
+}
+
+#btn-salir-final-modal.btn-exit-final::before {
   background-image: url("../../assets/img/iconos/salida.png");
 }
 
@@ -859,7 +875,7 @@ body {
 
 #modal-final button {
   margin-top: 20px;
-  font-family: inherit;
+
   background: linear-gradient(145deg, #ffffd2, #f5f5c8);
   color: #333;
   font-size: 16px;

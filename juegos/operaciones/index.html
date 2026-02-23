@@ -222,7 +222,6 @@
     <div class="modal-aviso oculto" id="modal-final">
       <div class="modal-aviso-content">
         <h2 data-i18n="operaciones.gameFinished">Juego terminado</h2>
-        🎉
 
         <p id="resumen-general"></p>
         <div id="estadisticas-operaciones"></div>
@@ -244,7 +243,11 @@
         </div>
 
         <!--<button data-i18n="common.restart">Reiniciar</button>-->
-        <button class="btn-exit-final" data-i18n="common.exitMenu"></button>
+        <button
+          class="btn-icon btn-salir btn-exit-final"
+          id="btn-salir-final-modal"
+          data-i18n="common.exitMenu"
+        ></button>
       </div>
     </div>
 
