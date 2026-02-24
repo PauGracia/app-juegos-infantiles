@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
       acierto: "sounds/acierto.mp3",
       fallo: "sounds/fallo.mp3",
       ganar: "sounds/ganar.mp3",
+      azul: "sounds/azul.mp3",
     };
 
     // Objeto para almacenar los Audio elements precargados
@@ -176,6 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
       acierto: () => playSonido("acierto"),
       fallo: () => playSonido("fallo"),
       ganar: () => playSonido("ganar"),
+      azul: () => playSonido("azul"),
       // Método de utilidad para verificar estado
       estaPrecargado: () => precargaCompleta,
     };
@@ -377,7 +379,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       return;
     } else {
-      sonidosPalabras.fallo();
+      // Verificar si se va a revelar la palabra
+      const vaARevelar = ayudaActivada && comprobacionesEstaPalabra >= 3;
+
+      // Si NO se va a revelar, reproducir sonido de fallo
+      if (!vaARevelar) {
+        sonidosPalabras.fallo();
+      }
 
       for (let i = 0; i < palabraObjetivo.length; i++) {
         if (!inputs[i].disabled) {
@@ -397,7 +405,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      if (ayudaActivada && comprobacionesEstaPalabra >= 3) {
+      if (vaARevelar) {
         revelarPalabra(inputs);
       }
     }
@@ -406,6 +414,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function revelarPalabra(inputs) {
+    sonidosPalabras.azul();
+
     for (let i = 0; i < palabraObjetivo.length; i++) {
       inputs[i].value = palabraObjetivo[i];
       inputs[i].className = "";

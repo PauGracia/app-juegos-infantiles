@@ -995,7 +995,10 @@ function comprobarRespuestas() {
   }
 
   // ───── MODO NORMAL ─────
-  generarResumenFinal();
+
+  setTimeout(() => {
+    generarResumenFinal();
+  }, 1500);
 }
 
 function generarResumenFinal() {
