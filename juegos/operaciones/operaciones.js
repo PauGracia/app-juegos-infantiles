@@ -395,6 +395,12 @@ function lanzarNivelDesafio() {
   document.getElementById("pizarra").innerHTML = "";
   document.getElementById("cronometro").classList.remove("oculto");
 
+  // RESETEAR SCROLL AL INICIO DE CADA NIVEL
+  window.scrollTo({
+    top: 0,
+    behavior: "instant",
+  });
+
   const reglas = reglasNivel(nivelDesafio);
   comprobacionBloqueada = false;
 
