@@ -9,6 +9,23 @@ const MAX_OPERANDO = 1000;
 
 const MIN_TIEMPO = 5; // si lo usas luego
 
+// Prevenir que el navegador recuerde la posición del scroll
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
+// Forzar scroll al inicio al cargar la página
+window.scrollTo(0, 0);
+
+document.addEventListener("DOMContentLoaded", function () {
+  window.scrollTo(0, 0);
+
+  // También asegurar que ningún input tenga foco automático
+  if (document.activeElement && document.activeElement.blur) {
+    document.activeElement.blur();
+  }
+});
+
 // =============================
 // INICIALIZACIÓN DE IDIOMA
 // =============================
@@ -643,7 +660,10 @@ function iniciar() {
     document.getElementById("modal-operaciones").style.display = "none";
     generarNivel1(cantidad, max);
     requestAnimationFrame(() => {
-      document.querySelector(".body-operaciones").scrollTop = 0;
+      window.scrollTo({
+        top: 0,
+        behavior: "instant",
+      });
     });
   } else {
     // Nivel 2: validar que haya al menos un tipo de operación seleccionada
@@ -663,7 +683,10 @@ function iniciar() {
     document.getElementById("modal-operaciones").style.display = "none";
     generarNivel2(cantidad);
     requestAnimationFrame(() => {
-      document.querySelector(".body-operaciones").scrollTop = 0;
+      window.scrollTo({
+        top: 0,
+        behavior: "instant",
+      });
     });
   }
 
