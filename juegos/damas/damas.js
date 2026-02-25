@@ -1590,16 +1590,64 @@ const JuegoDamas = (() => {
   function movimientoIA_Damas() {
     if (estadoGlobalDamas.juegoTerminadoFlag) return;
 
-    // Verificar ahogado
     if (!tieneMovimientosJugador("ia")) {
       console.log("♨️ IA AHOGADA - Gana el humano");
       mostrarModalFin(true);
       return;
     }
 
-    // DECLARAR ladoIA
     const ladoIA =
       estadoGlobalDamas.ladoHumanoAsignado === "top" ? "bottom" : "top";
+
+    // DECISIÓN SEGÚN EL NIVEL
+    if (estadoGlobalDamas.nivelIA === "dificil") {
+      movimientoIA_Dificil(ladoIA);
+    } else {
+      movimientoIA_Normal(ladoIA);
+    }
+  }
+
+  function movimientoIA_Normal(ladoIA) {
+    console.log("🤖 IA Nivel: NORMAL");
+
+    // Implementación SIMPLE para nivel normal
+    // Por ejemplo: movimiento aleatorio entre los disponibles
+    const movimientos = [];
+
+    for (let r = 0; r < 8; r++) {
+      for (let c = 0; c < 8; c++) {
+        const p = estadoGlobalDamas.matrizDamas[r][c];
+        if (!p || p.dueño === estadoGlobalDamas.ladoHumanoAsignado) continue;
+
+        const movs = calcularMovimientosDesdeDamas(r, c);
+        movimientos.push(...movs);
+      }
+    }
+
+    if (movimientos.length === 0) return;
+
+    // Priorizar capturas (pero sin evaluación compleja)
+    const capturas = movimientos.filter((m) => m.capturas.length > 0);
+    let choice;
+
+    if (capturas.length > 0) {
+      // Elegir una captura aleatoria
+      choice = capturas[Math.floor(Math.random() * capturas.length)];
+      console.log("  → Captura aleatoria");
+    } else {
+      // Elegir movimiento aleatorio
+      choice = movimientos[Math.floor(Math.random() * movimientos.length)];
+      console.log("  → Movimiento aleatorio");
+    }
+
+    estadoGlobalDamas.seleccionActualDamas = choice.desde;
+    dibujarTableroDamas();
+
+    setTimeout(() => ejecutarMovimientoDamas(choice), 900);
+  }
+
+  function movimientoIA_Dificil(ladoIA) {
+    console.log("🤖 IA Nivel: DIFÍCIL");
 
     const movimientos = [];
     const capturasDisponibles = [];
@@ -1883,6 +1931,7 @@ const JuegoDamas = (() => {
 
     // Eventos del botón "Salir" durante la partida
     document.getElementById("salirDamas").addEventListener("click", () => {
+      origenConfirmExit = "juego";
       document.getElementById("modal-confirm-exit").style.display = "flex";
     });
 
@@ -1898,6 +1947,7 @@ const JuegoDamas = (() => {
         if (ganadorInfo) ganadorInfo.textContent = t("damas.ai");
         mostrarModalFin(false);
       }
+      origenConfirmExit = null;
     });
 
     document.getElementById("btn-confirm-no").addEventListener("click", () => {
@@ -1905,6 +1955,7 @@ const JuegoDamas = (() => {
       if (origenConfirmExit === "config") {
         document.getElementById("modal-config-damas").style.display = "flex";
       }
+      origenConfirmExit = null;
     });
 
     // Evento para el botón "Salir" de la configuración inicial

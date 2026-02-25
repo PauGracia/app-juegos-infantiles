@@ -1225,7 +1225,7 @@ body {
     padding-top: 5px;
   }
   .titulo-operaciones {
-    font-size: 2rem;
+    font-size: 1.8rem;
     padding: 10px 15px;
     margin: 15px 10px;
     margin-top: 60px;
@@ -1290,7 +1290,7 @@ body {
 
 @media (max-width: 380px) {
   .titulo-operaciones {
-    font-size: 2rem;
+    font-size: 1.6rem;
     padding: 10px 15px;
     margin: 15px 10px;
     margin-top: 60px;

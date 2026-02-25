@@ -1,8 +1,8 @@
 window.translationsEN = {
   "menu.title": "Educational Games for Kids",
   "menu.operaciones": "Basic Operations",
-  "menu.palabras": "Write the Words",
-  "menu.memori": "Matching Pairs",
+  "menu.palabras": "What is it called",
+  "menu.memori": "Match",
   "menu.ahorcado": "Hangman Game",
   "menu.damas": "Checkers Game",
   "ahorcado.winMessage": "Correct word!",

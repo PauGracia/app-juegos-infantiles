@@ -1,8 +1,8 @@
 window.translationsFR = {
   "menu.title": "Jeux Éducatifs pour Enfants",
   "menu.operaciones": "Opérations de Base",
-  "menu.palabras": "Écris les Mots",
-  "menu.memori": "Jeu des Paires",
+  "menu.palabras": "Comment ça s'appelle",
+  "menu.memori": "Associer",
   "menu.ahorcado": "Jeu du Pendu",
   "menu.damas": "Jeu de Dames",
   "ahorcado.winMessage": "Mot correct !",

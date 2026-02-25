@@ -1,8 +1,8 @@
 window.translationsIT = {
   "menu.title": "Giochi Educativi per Bambini",
   "menu.operaciones": "Operazioni di Base",
-  "menu.palabras": "Scrivi le Parole",
-  "menu.memori": "A Coppie",
+  "menu.palabras": "Come si chiama",
+  "menu.memori": "Abbinare",
   "menu.ahorcado": "Gioco dell'Impiccato",
   "menu.damas": "Gioco della Dama",
   "operations.confirmExit": "Sei sicuro di voler uscire dal gioco?",

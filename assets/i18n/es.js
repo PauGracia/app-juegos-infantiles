@@ -1,8 +1,8 @@
 window.translationsES = {
   "menu.title": "Juegos Educativos Infantiles",
   "menu.operaciones": "Operaciones Básicas",
-  "menu.palabras": "Escribe las Palabras",
-  "menu.memori": "En Pareja",
+  "menu.palabras": "Como se LLama",
+  "menu.memori": "Emparejar",
   "menu.ahorcado": "Juego Ahorcado",
   "menu.damas": "Juego de Damas",
   "operaciones.confirmExit": "¿Seguro que quieres salir del juego?",

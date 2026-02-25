@@ -1,8 +1,8 @@
 window.translationsPT = {
   "menu.title": "Jogos Educativos Infantis",
   "menu.operaciones": "Operações Básicas",
-  "menu.palabras": "Escreva as Palavras",
-  "menu.memori": "Em Pares",
+  "menu.palabras": "Como se chama",
+  "menu.memori": "Emparelhar",
   "menu.ahorcado": "Jogo da Forca",
   "menu.damas": "Jogo de Damas",
   "ahorcado.winMessage": "Palavra correta!",

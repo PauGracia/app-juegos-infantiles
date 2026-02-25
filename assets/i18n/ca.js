@@ -1,8 +1,8 @@
 window.translationsCA = {
   "menu.title": "Jocs Educatius Infantils",
   "menu.operaciones": "Operacions Bàsiques",
-  "menu.palabras": "Escriu les Paraules",
-  "menu.memori": "En Parella",
+  "menu.palabras": "Com es diu",
+  "menu.memori": "Emparellar",
   "menu.ahorcado": "Joc del Penjat",
   "menu.damas": "Joc de Dames",
   "operations.confirmExit": "Estàs segur que vols sortir del joc?",
