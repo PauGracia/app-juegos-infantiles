@@ -11,7 +11,7 @@ window.translationsFR = {
   "damas.yourSide": "Tour:",
   "damas.turn": "Tour:",
   "operations.confirmExit": "Êtes-vous sûr de vouloir quitter le jeu ?",
-
+  "ahorcado.record": "Enregistrer le record",
   "damas.winner": "Gagnant:",
   "damas.forcedCaptures": "Captures obligatoires:",
   "damas.yourCaptures": "Captures TOI:",
@@ -24,7 +24,7 @@ window.translationsFR = {
   "common.info.No.U": "Erreur : champ utilisateur introuvable.",
   "common.info.3.12": "Le nom doit comporter entre 3 et 12 caractères.",
   "common.info.ingresa": "Veuillez saisir un nom d'utilisateur.",
-  "ahorcado.saveRecord": "Enregistrer le score local",
+  "ahorcado.saveRecord": "Enregistrer le score",
   "ahorcado.allWordsCompleted": "🏆 Vous avez complété TOUTES les mots !",
   "ahorcado.extraHelpMessage": "💡 Vous avez gagné une aide supplémentaire!",
   "damas.instructionsText":

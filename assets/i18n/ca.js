@@ -6,11 +6,11 @@ window.translationsCA = {
   "menu.ahorcado": "Joc del Penjat",
   "menu.damas": "Joc de Dames",
   "operations.confirmExit": "Estàs segur que vols sortir del joc?",
-
+  "ahorcado.record": "Desar rècord",
   "common.info.No.U": "Error: No s'ha trobat el camp usuari.",
   "common.info.3.12": "El nom ha de tenir entre 3 i 12 caràcters.",
   "common.info.ingresa": "Si us plau, introdueix un nom d'usuari.",
-  "ahorcado.saveRecord": "Guardar rècord local",
+  "ahorcado.saveRecord": "Guardar rècord",
   "ahorcado.allWordsCompleted": "🏆 Has completat TOTES les paraules!",
   "ahorcado.extraHelpMessage": "💡 Has guanyat una ajuda extra!",
   "footer.rights": "Tots els drets reservats.",

@@ -12,7 +12,7 @@ window.translationsPT = {
   "damas.yourSide": "Turno:",
   "damas.turn": "Turno:",
   "operations.confirmExit": "Tem certeza de que deseja sair do jogo?",
-
+  "ahorcado.record": "Guardar record",
   "damas.winner": "Vencedor:",
   "damas.forcedCaptures": "Capturas obrigatórias:",
   "damas.yourCaptures": "Suas capturas:",
@@ -26,7 +26,7 @@ window.translationsPT = {
   "common.info.No.U": "Erro: Não foi encontrado o campo usuário.",
   "common.info.3.12": "O nome deve ter entre 3 e 12 caracteres.",
   "common.info.ingresa": "Por favor, insira um nome de usuário.",
-  "ahorcado.saveRecord": "Salvar recorde local",
+  "ahorcado.saveRecord": "Guardar record",
   "ahorcado.allWordsCompleted": "🏆 Você completou TODAS as palavras!",
   "ahorcado.extraHelpMessage": "💡 Você ganhou uma ajuda extra!",
   "damas.instructionsText":

@@ -24,12 +24,12 @@ window.translationsEN = {
   "common.info.No.U": "Error: User field not found.",
   "common.info.3.12": "Name must be between 3 and 12 characters.",
   "common.info.ingresa": "Please enter a username.",
-  "ahorcado.saveRecord": "Save local record",
+  "ahorcado.saveRecord": "Save record",
   "ahorcado.allWordsCompleted": "🏆 You have completed ALL the words!",
   "ahorcado.extraHelpMessage": "💡 You earned an extra hint!",
   "damas.instructionsText":
     "• The goal is to capture all opponent's pieces.\n\n• Pieces move diagonally forward.\n\n• Captures are mandatory if available.\n\n• If a piece reaches the opposite end, it becomes a king.\n\n• Kings can move in all diagonal directions.",
-
+  "ahorcado.record": "Save record",
   "damas.you": "YOU",
   "damas.ai": "COMPUTER",
   "damas.white": "White",

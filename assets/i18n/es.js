@@ -6,7 +6,7 @@ window.translationsES = {
   "menu.ahorcado": "Juego del Ahorcado",
   "menu.damas": "Juego de Damas",
   "operaciones.confirmExit": "¿Seguro que quieres salir del juego?",
-
+  "ahorcado.record": "Guardar récord",
   "footer.rights": "Todos los derechos reservados.",
   "damas.yourPieces": "Tus piezas:",
   "damas.yourSide": "Turno:",
@@ -209,7 +209,7 @@ window.translationsES = {
   "common.info.No.U": "Error: No se encontró el campo usuario.",
   "common.info.3.12": "El nombre debe tener entre 3 y 12 caracteres.",
   "common.info.ingresa": "Por favor ingresa un nombre de usuario.",
-  "ahorcado.saveRecord": "Guardar récord local",
+  "ahorcado.saveRecord": "Guardar récord",
 
   "ahorcado.playAgain": "Volver a jugar",
   "ahorcado.saveLocalRecord": "Guardar récord",

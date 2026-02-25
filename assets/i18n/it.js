@@ -20,7 +20,7 @@ window.translationsIT = {
   "damas.howToPlay": "Come giocare a Dama",
   "damas.instructionsText":
     "• L'obiettivo è catturare tutte le pedine dell'avversario.\n\n• Le pedine si muovono in diagonale in avanti.\n\n• Le catture sono obbligatorie se possibili.\n\n• Se una pedina raggiunge l'estremità opposta, diventa dama.\n\n• Le dame possono muoversi in tutte le diagonali.",
-
+  "ahorcado.record": "Salva record",
   "damas.you": "TU",
   "damas.ai": "COMPUTER",
   "damas.white": "Bianche",
@@ -315,7 +315,7 @@ window.translationsIT = {
   "common.info.No.U": "Errore: campo utente non trovato.",
   "common.info.3.12": "Il nome deve avere tra 3 e 12 caratteri.",
   "common.info.ingresa": "Per favore inserisci un nome utente.",
-  "ahorcado.saveRecord": "Salva record locale",
+  "ahorcado.saveRecord": "Salva record",
   "ahorcado.allWordsCompleted": "🏆 Hai completato TUTTE le parole!",
   "ahorcado.extraHelpMessage": "💡 Hai guadagnato un aiuto extra!",
   "damas.warning.mustShuffle": "Devi effettuare il sorteggio prima di giocare",

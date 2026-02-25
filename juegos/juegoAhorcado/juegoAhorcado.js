@@ -664,14 +664,14 @@ document.addEventListener("DOMContentLoaded", () => {
           btnGuardarRecord.disabled = false;
           btnGuardarRecord.textContent = getTranslation(
             "ahorcado.saveRecord",
-            "Guardar récord local",
+            "Guardar récord",
           );
           btnGuardarRecord.style.opacity = "1";
         } else {
           btnGuardarRecord.disabled = true;
           btnGuardarRecord.textContent = getTranslation(
             "ahorcado.saveRecord",
-            "Guardar récord local",
+            "Guardar récord",
           );
           btnGuardarRecord.style.opacity = "0.7";
         }
@@ -926,7 +926,7 @@ document.addEventListener("DOMContentLoaded", () => {
           btnGuardarRecord.disabled = false;
           btnGuardarRecord.textContent = getTranslation(
             "ahorcado.saveRecord",
-            "Guardar récord local",
+            "Guardar récord",
           );
           btnGuardarRecord.style.opacity = "1";
         } else {
