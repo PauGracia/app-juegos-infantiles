@@ -419,14 +419,37 @@ function lanzarNivelDesafio() {
       let op = reglas.ops[Math.floor(Math.random() * reglas.ops.length)];
       let a, b;
 
-      if (op === "/") {
-        b = random(reglas.max, false) || 1;
-        a = random(reglas.max, false);
-        a = Math.floor(a / b) * b;
-      } else {
-        a = random(reglas.max, reglas.negativos);
-        b = random(reglas.max, reglas.negativos);
-        if (op === "-" && !reglas.negativos && b > a) [a, b] = [b, a];
+      switch (op) {
+        case "/":
+          // División: divisor entre 1 y 4, nunca 0
+          b = Math.floor(Math.random() * 4) + 1;
+          a = random(reglas.max, false);
+          a = Math.floor(a / b) * b;
+          if (a === 0) a = b * (Math.floor(Math.random() * 3) + 1);
+          break;
+
+        case "*":
+          // Multiplicación: un factor limitado por reglas.max, el otro entre 1-10
+          if (Math.random() < 0.5) {
+            a = random(reglas.max, reglas.negativos);
+            b = Math.floor(Math.random() * 10) + 1;
+          } else {
+            b = random(reglas.max, reglas.negativos);
+            a = Math.floor(Math.random() * 10) + 1;
+          }
+
+          if (reglas.negativos && Math.random() < 0.3) {
+            if (Math.random() < 0.5) a = -a;
+            else b = -b;
+          }
+          break;
+
+        case "+":
+        case "-":
+        default:
+          a = random(reglas.max, reglas.negativos);
+          b = random(reglas.max, reglas.negativos);
+          if (op === "-" && !reglas.negativos && b > a) [a, b] = [b, a];
       }
 
       crearOperacion(a, b, op);
@@ -519,14 +542,42 @@ function generarOperacionesNivel(nivel) {
     let op = reglas.ops[Math.floor(Math.random() * reglas.ops.length)];
     let a, b;
 
-    if (op === "/") {
-      b = random(reglas.max, false) || 1;
-      a = random(reglas.max, false);
-      a = Math.floor(a / b) * b;
-    } else {
-      a = random(reglas.max, reglas.negativos);
-      b = random(reglas.max, reglas.negativos);
-      if (op === "-" && !reglas.negativos && b > a) [a, b] = [b, a];
+    switch (op) {
+      case "/":
+        // División: divisor nunca > 4 y nunca 0, dividendo múltiplo del divisor
+        b = Math.floor(Math.random() * 4) + 1; // divisor entre 1 y 4
+        // El dividendo será un múltiplo de b, como máximo reglas.max
+        const maxMultiplo = Math.floor(reglas.max / b) * b;
+        a = random(reglas.max, false);
+        // Ajustar a para que sea múltiplo de b
+        a = Math.floor(a / b) * b;
+        // Asegurar que a no sea 0 (evitar división 0/b = 0, que es muy fácil)
+        if (a === 0) a = b * (Math.floor(Math.random() * 3) + 1);
+        break;
+
+      case "*":
+        // Multiplicación: un factor limitado por reglas.max, el otro nunca > 10
+        if (Math.random() < 0.5) {
+          a = random(reglas.max, reglas.negativos);
+          b = Math.floor(Math.random() * 10) + 1; // segundo factor entre 1 y 10
+        } else {
+          b = random(reglas.max, reglas.negativos);
+          a = Math.floor(Math.random() * 10) + 1; // primer factor entre 1 y 10
+        }
+
+        // Si se permiten negativos, ajustar aleatoriamente
+        if (reglas.negativos && Math.random() < 0.3) {
+          if (Math.random() < 0.5) a = -a;
+          else b = -b;
+        }
+        break;
+
+      case "+":
+      case "-":
+      default:
+        a = random(reglas.max, reglas.negativos);
+        b = random(reglas.max, reglas.negativos);
+        if (op === "-" && !reglas.negativos && b > a) [a, b] = [b, a];
     }
 
     operacionesTemp.push({ a, b, op });
