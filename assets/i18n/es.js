@@ -3,7 +3,7 @@ window.translationsES = {
   "menu.operaciones": "Operaciones Básicas",
   "menu.palabras": "Como se LLama",
   "menu.memori": "Emparejar",
-  "menu.ahorcado": "Juego Ahorcado",
+  "menu.ahorcado": "Juego del Ahorcado",
   "menu.damas": "Juego de Damas",
   "operaciones.confirmExit": "¿Seguro que quieres salir del juego?",
 

@@ -10,8 +10,18 @@ function actualizarEtiquetasSelectIdioma() {
   });
 }
 
-document.addEventListener("languageChanged", () => {
+document.addEventListener("languageChanged", (e) => {
   actualizarEtiquetasSelectIdioma();
+
+  // Solo sincronizar si el usuario NO eligió idioma del juego
+  if (!localStorage.getItem("gameLang")) {
+    const select = document.getElementById("idioma-juego");
+    if (select) {
+      select.value = e.detail.lang;
+      ah_idiomaJuego = e.detail.lang;
+    }
+  }
+
   actualizarTextosJuego();
 });
 
@@ -33,23 +43,30 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   (function () {
     // ================================
-    // INICIALIZAR IDIOMA DEL SELECT (VERSIÓN SIMPLIFICADA)
+    // INICIALIZAR IDIOMA DEL SELECT
     // ================================
     function inicializarSelectIdioma() {
       const select = document.getElementById("idioma-juego");
       if (!select) return;
 
-      const savedGameLang = localStorage.getItem("gameLang") || "es";
-      select.value = savedGameLang;
+      let idiomaInicial = localStorage.getItem("gameLang");
+
+      if (!idiomaInicial) {
+        idiomaInicial =
+          localStorage.getItem("uiLang") ||
+          document.documentElement.lang ||
+          "es";
+      }
+
+      select.value = idiomaInicial;
+
+      ah_idiomaJuego = idiomaInicial;
 
       select.addEventListener("change", (e) => {
         ah_idiomaJuego = e.target.value;
         localStorage.setItem("gameLang", ah_idiomaJuego);
       });
     }
-
-    // Llamar a la inicialización
-    document.addEventListener("DOMContentLoaded", inicializarSelectIdioma);
 
     // Elementos del DOM
     const palabraEl = document.getElementById("palabra");
@@ -467,11 +484,16 @@ document.addEventListener("DOMContentLoaded", () => {
         ah_mostrarPalabra();
 
         if (!ah_progreso.includes("_")) {
+          ah_partidaPalabrasAcertadas++;
+          const ganaAyuda = ah_partidaPalabrasAcertadas % 10 === 0;
+          if (ganaAyuda) {
+            ah_ayudas++;
+          }
           ah_bloqueado = true;
           deshabilitarTeclado();
 
           ah_puntos++;
-          ah_partidaPalabrasAcertadas++;
+
           animarMarcador();
           ah_actualizarMarcador();
 
@@ -479,6 +501,23 @@ document.addEventListener("DOMContentLoaded", () => {
             "ahorcado.winMessage",
             "¡Palabra acertada!",
           );
+          setTimeout(() => {
+            reproducirSonido(sonidos.nuevaPalabra);
+            mostrarMensajeTemporal(`${winMessage} ${nextWord}`, 2200);
+          }, 500);
+
+          // Anunciar ayuda extra DESPUÉS
+          if (ganaAyuda) {
+            setTimeout(() => {
+              mostrarMensajeTemporal(
+                getTranslation(
+                  "ahorcado.extraHelpMessage",
+                  "💡 ¡Has ganado una ayuda extra!",
+                ),
+                2000,
+              );
+            }, 3000); // cuando el otro ya terminó
+          }
           const nextWord = getTranslation(
             "ahorcado.nextWord",
             "¡Siguiente palabra!",
@@ -815,17 +854,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!ah_progreso.includes("_")) {
         ah_puntos++;
         ah_palabrasAcertadas++;
-
-        if (ah_palabrasAcertadas % 10 === 0) {
-          ah_ayudas++;
-          mostrarMensajeTemporal(
-            getTranslation(
-              "ahorcado.extraHelpMessage",
-              "💡 ¡Has ganado una ayuda extra!",
-            ),
-            2000,
-          );
-        }
 
         ah_actualizarMarcador();
         setTimeout(ah_nuevaPalabra, 1200);

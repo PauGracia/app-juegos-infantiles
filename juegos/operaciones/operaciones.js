@@ -939,6 +939,14 @@ function crearOperacion(a, b, op) {
     }
   });
 
+  // Borrar contenido al hacer focus si no está deshabilitado
+  input.addEventListener("focus", function limpiarAlFocus() {
+    // Solo borrar si el input NO está deshabilitado
+    if (!this.disabled) {
+      this.value = "";
+    }
+  });
+
   pizarra.appendChild(div);
 }
 
