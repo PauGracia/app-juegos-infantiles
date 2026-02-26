@@ -440,13 +440,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function normalizarLetra(letra) {
       letra = letra.toUpperCase();
 
-      if (letra === "Ñ") return "Ñ";
-
+      // Mapa de vocales acentuadas (se normalizan)
       const mapaVocales = {
         Á: "A",
         À: "A",
         Ä: "A",
         Â: "A",
+        Ã: "A", // Añadido para portugués
         É: "E",
         È: "E",
         Ë: "E",
@@ -459,13 +459,31 @@ document.addEventListener("DOMContentLoaded", () => {
         Ò: "O",
         Ö: "O",
         Ô: "O",
+        Õ: "O", // Añadido para portugués
         Ú: "U",
         Ù: "U",
         Ü: "U",
         Û: "U",
       };
 
-      return mapaVocales[letra] || letra;
+      // Letras especiales que NO deben normalizarse
+      const letrasEspeciales = {
+        Ñ: "Ñ", // La Ñ se mantiene como Ñ
+        Ç: "Ç", // La Ç se mantiene como Ç
+      };
+
+      // Primero verificar si es una letra especial
+      if (letrasEspeciales[letra]) {
+        return letrasEspeciales[letra];
+      }
+
+      // Si es vocal acentuada, normalizar
+      if (mapaVocales[letra]) {
+        return mapaVocales[letra];
+      }
+
+      // Si no es ninguna de las anteriores, devolver la letra original
+      return letra;
     }
 
     function deshabilitarTeclado() {
@@ -773,8 +791,41 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function ah_crearBotones() {
-      const abecedario = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
       letrasEl.innerHTML = "";
+
+      // Definir el abecedario según el idioma
+      let abecedario = [];
+
+      switch (ah_idiomaJuego) {
+        case "es": // Español
+          abecedario = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
+          break;
+
+        case "ca": // Catalán
+          // Catalán: sin Ñ, con Ç después de la C
+          abecedario = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+          // Buscar el índice de la C y añadir Ç después
+          const indexC = abecedario.indexOf("C");
+          abecedario.splice(indexC + 1, 0, "Ç");
+          break;
+
+        case "pt": // Portugués
+          // Portugués: sin Ñ, con Ç después de la C (mismo orden)
+          abecedario = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+          const indexCPT = abecedario.indexOf("C");
+          abecedario.splice(indexCPT + 1, 0, "Ç");
+          break;
+
+        case "en": // Inglés
+        case "it": // Italiano
+        case "fr": // Francés
+          // Inglés, italiano y francés: 26 letras sin Ñ
+          abecedario = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+          break;
+
+        default:
+          abecedario = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
+      }
 
       // === BOTONES DE LETRAS ===
       abecedario.forEach((letra) => {

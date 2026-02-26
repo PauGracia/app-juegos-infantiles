@@ -3,6 +3,7 @@
 const palabras = {
   es: [
     // Animales
+    "araña",
     "gato",
     "perro",
     "caballo",
@@ -44,6 +45,8 @@ const palabras = {
     "koala",
 
     // Objetos
+    "pañuelo",
+    "muñeca",
     "mesa",
     "silla",
     "cama",
@@ -84,6 +87,7 @@ const palabras = {
     "juguete",
 
     // Lugares
+    "montaña",
     "casa",
     "pueblo",
     "ciudad",
@@ -126,6 +130,7 @@ const palabras = {
     "estadio",
 
     // Comida
+    "piña",
     "pan",
     "leche",
     "agua",
@@ -322,6 +327,7 @@ const palabras = {
     "koala",
 
     // Objectes
+    "nina",
     "taula",
     "cadira",
     "llit",
@@ -362,6 +368,7 @@ const palabras = {
     "joguina",
 
     // Llocs
+    "muntanya",
     "casa",
     "poble",
     "ciutat",
@@ -403,6 +410,7 @@ const palabras = {
     "estadi",
 
     // Menjar
+    "pinya",
     "pa",
     "llet",
     "aigua",
@@ -599,6 +607,7 @@ const palabras = {
     "koala",
 
     // Objects
+    "doll",
     "table",
     "chair",
     "bed",
@@ -639,6 +648,7 @@ const palabras = {
     "toy",
 
     // Places
+    "mountain",
     "house",
     "village",
     "city",
@@ -681,6 +691,7 @@ const palabras = {
     "stadium",
 
     // Food
+    "pineapple",
     "bread",
     "milk",
     "water",
@@ -875,6 +886,7 @@ const palabras = {
     "koala",
 
     // Objets
+    "poupée",
     "table",
     "chaise",
     "lit",
@@ -915,6 +927,7 @@ const palabras = {
     "jouet",
 
     // Lieux
+    "montagne",
     "maison",
     "village",
     "ville",
@@ -957,6 +970,7 @@ const palabras = {
     "stade",
 
     // Nourriture
+    "ananas",
     "pain",
     "lait",
     "eau",
@@ -1148,6 +1162,7 @@ const palabras = {
     "coala",
 
     // Objetos
+    "boneca",
     "mesa",
     "cadeira",
     "cama",
@@ -1187,6 +1202,7 @@ const palabras = {
     "brinquedo",
 
     // Lugares
+    "montanha",
     "casa",
     "vila",
     "cidade",
@@ -1229,6 +1245,7 @@ const palabras = {
     "estádio",
 
     // Comida
+    "abacaxi",
     "pão",
     "leite",
     "água",
@@ -1422,6 +1439,7 @@ const palabras = {
     "koala",
 
     // Oggetti
+    "proprietario",
     "tavolo",
     "sedia",
     "letto",
@@ -1462,6 +1480,7 @@ const palabras = {
     "giocattolo",
 
     // Luoghi
+    "montagna",
     "casa",
     "paese",
     "città",
@@ -1504,6 +1523,7 @@ const palabras = {
     "stadio",
 
     // Cibo
+    "signore",
     "pane",
     "latte",
     "acqua",
