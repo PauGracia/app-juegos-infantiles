@@ -91,52 +91,84 @@
       </div>
     </div>
     <div class="contenedor-juego mobile-container">
-      <div class="imagen-ahorcado">
-        <svg id="ahorcadoSVG" width="225" height="225" viewBox="0 0 300 300">
-          <!-- Poste -->
-          <line id="poste" class="parte" x1="50" y1="260" x2="200" y2="260" />
-          <line
-            id="vertical"
-            class="parte"
-            x1="100"
-            y1="260"
-            x2="100"
-            y2="40"
-          />
-          <line
-            id="horizontal"
-            class="parte"
-            x1="100"
-            y1="40"
-            x2="180"
-            y2="40"
-          />
-          <line id="cuerda" class="parte" x1="180" y1="40" x2="180" y2="70" />
+      <div class="imagen-contenedor">
+        <!-- Botón de pista redondo con lupa -->
+        <button id="btnPista" class="btn-pista-redondo" aria-label="Pista">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <path
+              fill="currentColor"
+              d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+            />
+            <path fill="currentColor" d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z" />
+          </svg>
+        </button>
+        <div class="imagen-ahorcado">
+          <svg id="ahorcadoSVG" width="225" height="225" viewBox="0 0 300 300">
+            <!-- Poste -->
+            <line id="poste" class="parte" x1="50" y1="260" x2="200" y2="260" />
+            <line
+              id="vertical"
+              class="parte"
+              x1="100"
+              y1="260"
+              x2="100"
+              y2="40"
+            />
+            <line
+              id="horizontal"
+              class="parte"
+              x1="100"
+              y1="40"
+              x2="180"
+              y2="40"
+            />
+            <line id="cuerda" class="parte" x1="180" y1="40" x2="180" y2="70" />
 
-          <!-- Muñeco -->
-          <circle id="cabeza" class="parte" cx="180" cy="90" r="20" />
-          <line id="cuerpo" class="parte" x1="180" y1="110" x2="180" y2="170" />
-          <line id="brazo1" class="parte" x1="180" y1="130" x2="150" y2="150" />
-          <line id="brazo2" class="parte" x1="180" y1="130" x2="210" y2="150" />
-          <line
-            id="pierna1"
-            class="parte"
-            x1="180"
-            y1="170"
-            x2="150"
-            y2="210"
-          />
-          <line
-            id="pierna2"
-            class="parte"
-            x1="180"
-            y1="170"
-            x2="210"
-            y2="210"
-          />
-        </svg>
+            <!-- Muñeco -->
+            <circle id="cabeza" class="parte" cx="180" cy="90" r="20" />
+            <line
+              id="cuerpo"
+              class="parte"
+              x1="180"
+              y1="110"
+              x2="180"
+              y2="170"
+            />
+            <line
+              id="brazo1"
+              class="parte"
+              x1="180"
+              y1="130"
+              x2="150"
+              y2="150"
+            />
+            <line
+              id="brazo2"
+              class="parte"
+              x1="180"
+              y1="130"
+              x2="210"
+              y2="150"
+            />
+            <line
+              id="pierna1"
+              class="parte"
+              x1="180"
+              y1="170"
+              x2="150"
+              y2="210"
+            />
+            <line
+              id="pierna2"
+              class="parte"
+              x1="180"
+              y1="170"
+              x2="210"
+              y2="210"
+            />
+          </svg>
+        </div>
       </div>
-
       <div class="palabra-contenedor">
         <div class="palabra" id="palabra"></div>
         <div class="letras" id="letras"></div>

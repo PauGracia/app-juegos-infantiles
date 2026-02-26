@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const AH_MAX_LETRAS = 15;
     let ah_palabrasUsadas = new Set();
     let ah_partidaPalabrasAcertadas = 0;
+    let ah_categoriaActual = "";
 
     // ================================
     // LISTENER DE CAMBIO DE IDIOMA
@@ -70,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const select = document.getElementById("idioma-juego");
       if (!select) return;
 
-      // PRIMERO: Usar el idioma de la interfaz
+      // Usar el idioma de la interfaz
       let idiomaInicial =
         localStorage.getItem("uiLang") || document.documentElement.lang || "es";
 
@@ -89,6 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
         select.addEventListener("change", (e) => {
           ah_idiomaJuego = e.target.value;
           localStorage.setItem("gameLang", ah_idiomaJuego);
+          if (btnPista) {
+            btnPista.disabled = ah_bloqueado || !ah_categoriaActual;
+          }
         });
         selectListenerAdded = true;
       }
@@ -107,6 +111,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnVerRankingFinal = document.getElementById("btnVerRankingFinal");
     const btnExportarRanking = document.getElementById("btnExportarRanking");
 
+    // Después de definir los elementos del DOM, añade (aproximadamente línea 70):
+    const btnPista = document.getElementById("btnPista");
+
+    // Añade esta nueva función para manejar la pista:
+    function usarPista() {
+      if (ah_bloqueado || !ah_categoriaActual) return;
+
+      // Obtener la categoría traducida
+      const categoriaTraducida = getTranslation(
+        `categoria.${ah_categoriaActual}`,
+        ah_categoriaActual,
+      );
+
+      // Mostrar la pista usando la función existente de mensajes temporales
+      mostrarMensajeTemporal(`${categoriaTraducida}`, 3000);
+      // Descomenta si tienes un sonido de pista SONIDO
+    }
     // ================================
     // FUNCIÓN PARA MOSTRAR MODAL DE CONFIRMACIÓN
     // ================================
@@ -438,52 +459,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function normalizarLetra(letra) {
-      letra = letra.toUpperCase();
+      if (!letra) return "";
 
-      // Mapa de vocales acentuadas (se normalizan)
-      const mapaVocales = {
-        Á: "A",
-        À: "A",
-        Ä: "A",
-        Â: "A",
-        Ã: "A", // Añadido para portugués
-        É: "E",
-        È: "E",
-        Ë: "E",
-        Ê: "E",
-        Í: "I",
-        Ì: "I",
-        Ï: "I",
-        Î: "I",
-        Ó: "O",
-        Ò: "O",
-        Ö: "O",
-        Ô: "O",
-        Õ: "O", // Añadido para portugués
-        Ú: "U",
-        Ù: "U",
-        Ü: "U",
-        Û: "U",
-      };
+      const letraNormalizada = letra
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
 
-      // Letras especiales que NO deben normalizarse
-      const letrasEspeciales = {
-        Ñ: "Ñ", // La Ñ se mantiene como Ñ
-        Ç: "Ç", // La Ç se mantiene como Ç
-      };
-
-      // Primero verificar si es una letra especial
-      if (letrasEspeciales[letra]) {
-        return letrasEspeciales[letra];
-      }
-
-      // Si es vocal acentuada, normalizar
-      if (mapaVocales[letra]) {
-        return mapaVocales[letra];
-      }
-
-      // Si no es ninguna de las anteriores, devolver la letra original
-      return letra;
+      // Convertir a mayúsculas
+      return letraNormalizada.toUpperCase();
     }
 
     function deshabilitarTeclado() {
@@ -503,7 +486,10 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.disabled = true;
       const letraNormalizada = normalizarLetra(letra);
 
-      if (normalizarLetra(ah_palabraSecreta).includes(letraNormalizada)) {
+      // Normalizar la palabra completa para la comparación
+      const palabraNormalizada = normalizarLetra(ah_palabraSecreta);
+
+      if (palabraNormalizada.includes(letraNormalizada)) {
         reproducirSonido(sonidos.bien);
         btn.style.background = "green";
 
@@ -691,7 +677,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ah_bloqueado = false;
       const btnGuardarRecord = document.getElementById("btnGuardarRecord");
       if (btnGuardarRecord) {
-        // Solo habilitar si ya tiene 3 o más palabras acertadas
         if (ah_partidaPalabrasAcertadas >= 3) {
           btnGuardarRecord.disabled = false;
           btnGuardarRecord.textContent = getTranslation(
@@ -714,8 +699,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // Filtrar palabras válidas (≤15 letras y no usadas)
       const palabrasDisponibles = lista.filter(
         (p) =>
-          p.length <= AH_MAX_LETRAS &&
-          !ah_palabrasUsadas.has(normalizarLetra(p.toUpperCase())),
+          p.palabra.length <= AH_MAX_LETRAS &&
+          !ah_palabrasUsadas.has(normalizarLetra(p.palabra)),
       );
 
       // Si no quedan palabras final del juego
@@ -736,18 +721,26 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Elegir palabra aleatoria válida
-      const palabra =
+      const palabraObj =
         palabrasDisponibles[
           Math.floor(Math.random() * palabrasDisponibles.length)
-        ].toUpperCase();
+        ];
 
-      // Marcar como usada
-      ah_palabrasUsadas.add(palabra);
+      // Guardar la palabra ORIGINAL en MAYÚSCULAS para mostrarla
+      const palabraOriginal = palabraObj.palabra.toUpperCase();
+      ah_categoriaActual = palabraObj.categoria;
 
-      ah_palabraSecreta = palabra;
+      // Normalizar para el sistema de palabras usadas y comparaciones
+      const palabraNormalizada = normalizarLetra(palabraOriginal);
 
+      // Marcar como usada (versión normalizada)
+      ah_palabrasUsadas.add(palabraNormalizada);
+
+      // Guardar la palabra original con mayúsculas (para mostrar)
+      ah_palabraSecreta = palabraOriginal;
+
+      // Crear progreso con la palabra original
       ah_progreso = ah_palabraSecreta.split("").map((char) => {
-        // Si es guion, mostrarlo directamente; si no, ocultar con "_"
         return char === "-" ? "-" : "_";
       });
 
@@ -757,6 +750,28 @@ document.addEventListener("DOMContentLoaded", () => {
       letrasEl.innerHTML = "";
       ah_mostrarPalabra();
       ah_crearBotones();
+
+      actualizarPistaCategoria();
+    }
+
+    function actualizarPistaCategoria() {
+      const pistaElement = document.getElementById("pista-categoria");
+      if (!pistaElement) return;
+
+      if (ah_categoriaActual) {
+        const categoriaTraducida = getTranslation(
+          `categoria.${ah_categoriaActual}`,
+          ah_categoriaActual,
+        );
+        pistaElement.innerHTML = `${getTranslation("ahorcado.clue", "Pista:")} <span class="categoria-valor">${categoriaTraducida}</span>`;
+        pistaElement.style.display = "block";
+      } else {
+        pistaElement.style.display = "none";
+      }
+      if (btnPista) {
+        // Habilitar el botón si hay categoría y el juego no está bloqueado (sin límite de uso)
+        btnPista.disabled = ah_bloqueado || !ah_categoriaActual;
+      }
     }
 
     function ah_mostrarPalabra() {
@@ -775,15 +790,18 @@ document.addEventListener("DOMContentLoaded", () => {
       for (let i = 0; i < ah_palabraSecreta.length; i++) {
         const span = document.createElement("span");
         const char = ah_palabraSecreta[i];
+        const progresoChar = ah_progreso[i];
 
-        span.textContent = ah_progreso[i];
+        span.textContent = progresoChar;
 
         if (char === "-") {
           span.className = "ah-guion-pre";
-        } else if (ah_progreso[i] === "_") {
+        } else if (progresoChar === "_") {
           span.className = "ah-guion";
         } else {
           span.className = "ah-letra";
+          // Asegurar que la letra se muestra en mayúscula
+          span.textContent = progresoChar;
         }
 
         palabraEl.appendChild(span);
@@ -895,10 +913,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const letraNormalizada = normalizarLetra(letra);
 
       for (let i = 0; i < ah_palabraSecreta.length; i++) {
-        if (ah_palabraSecreta[i] === letra) {
-          ah_progreso[i] = letra;
+        if (normalizarLetra(ah_palabraSecreta[i]) === letraNormalizada) {
+          ah_progreso[i] = ah_palabraSecreta[i];
         }
       }
+
       // Marcar botón como acertado
       const botones = letrasEl.querySelectorAll(".letra-btn");
 
@@ -1234,6 +1253,12 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
 
       // Re-inicializar el select del idioma
       inicializarSelectIdioma();
+      if (btnPista) btnPista.disabled = false;
+
+      // Resetear pista
+      if (btnPista) {
+        btnPista.disabled = true; // Al reiniciar, no hay palabra, así que deshabilitado
+      }
     }
 
     // ================================
@@ -1278,9 +1303,60 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
         e.preventDefault();
       }
     });
+
+    // ================================
+    // EVENTO PARA EL BOTÓN DE PISTA
+    // ================================
+
+    if (btnPista) {
+      if (isTouchDevice) {
+        btnPista.addEventListener(
+          "touchstart",
+          (e) => {
+            e.preventDefault();
+            if (!btnPista.disabled) {
+              btnPista.style.transform = "scale(0.95)";
+            }
+          },
+          { passive: false },
+        );
+
+        btnPista.addEventListener(
+          "touchend",
+          (e) => {
+            e.preventDefault();
+            btnPista.style.transform = "";
+            if (!btnPista.disabled) {
+              usarPista();
+            }
+          },
+          { passive: false },
+        );
+
+        // Cancelar si el dedo se mueve fuera del botón
+        btnPista.addEventListener(
+          "touchmove",
+          (e) => {
+            e.preventDefault();
+            btnPista.style.transform = "";
+          },
+          { passive: false },
+        );
+
+        btnPista.addEventListener(
+          "touchcancel",
+          (e) => {
+            e.preventDefault();
+            btnPista.style.transform = "";
+          },
+          { passive: false },
+        );
+      } else {
+        btnPista.addEventListener("click", usarPista);
+      }
+    }
   })();
 
-  // Funciones modal globales
   // Funciones modal globales
   window.mostrarModalInfo = function (titulo, mensaje = "") {
     const modalTitulo = document.getElementById("modal-info-titulo");

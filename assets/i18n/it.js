@@ -329,7 +329,13 @@ window.translationsIT = {
   "palabras.config.help": "Attiva aiuto",
   "palabras.config.helpDescription":
     "Mostra aiuti automatici dopo diversi tentativi",
-
+  "categoria.animal": "Animale",
+  "categoria.objeto": "Oggetto",
+  "categoria.lugar": "Luogo",
+  "categoria.comida": "Cibo",
+  "categoria.profesion": "Professione",
+  "categoria.abstracto": "Concetto astratto",
+  "categoria.deporte": "Sport",
   "palabras.info.checks": "Verifiche:",
   "palabras.info.helps": "Aiuti:",
 

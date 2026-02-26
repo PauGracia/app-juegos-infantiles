@@ -29,7 +29,13 @@ window.translationsFR = {
   "ahorcado.extraHelpMessage": "💡 Vous avez gagné une aide supplémentaire!",
   "damas.instructionsText":
     "• Le but est de capturer toutes les pièces de l'adversaire.\n\n• Les pièces se déplacent en diagonale vers l'avant.\n\n• Les captures sont obligatoires si elles existent.\n\n• Si une pièce atteint l'extrémité opposée, elle devient une dame.\n\n• Les dames peuvent se déplacer dans toutes les diagonales.",
-
+  "categoria.animal": "Animal",
+  "categoria.objeto": "Objet",
+  "categoria.lugar": "Lieu",
+  "categoria.comida": "Nourriture",
+  "categoria.profesion": "Profession",
+  "categoria.abstracto": "Concept abstrait",
+  "categoria.deporte": "Sport",
   "damas.you": "TOI",
   "common.yes": "Oui",
   "common.no": "Non",

@@ -31,7 +31,13 @@ window.translationsPT = {
   "ahorcado.extraHelpMessage": "💡 Você ganhou uma ajuda extra!",
   "damas.instructionsText":
     "• O objetivo é capturar todas as peças do adversário.\n\n• As peças se movem em diagonal para frente.\n\n• As capturas são obrigatórias se houver.\n\n• Se uma peça chegar ao lado oposto, ela se torna dama.\n\n• As damas podem se mover em todas as diagonais.",
-
+  "categoria.animal": "Animal",
+  "categoria.objeto": "Objeto",
+  "categoria.lugar": "Lugar",
+  "categoria.comida": "Comida",
+  "categoria.profesion": "Profissão",
+  "categoria.abstracto": "Conceito abstrato",
+  "categoria.deporte": "Esporte",
   "damas.you": "VOCÊ",
   "damas.ai": "COMPUTADOR",
   "damas.white": "Brancas",

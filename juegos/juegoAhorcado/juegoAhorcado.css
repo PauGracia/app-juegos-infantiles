@@ -88,6 +88,7 @@ html {
 }
 
 .contenedor-juego {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -101,6 +102,22 @@ html {
   max-width: 1200px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
+}
+
+.imagen-contenedor {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ajusta el botón para que esté sobre la imagen */
+.imagen-contenedor .btn-pista-redondo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 20;
+  /* Resto de estilos se mantienen */
 }
 
 .imagen-ahorcado {
@@ -1026,10 +1043,30 @@ html {
     font-size: 0.4em;
   }
 
+  .imagen-contenedor {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 10px;
+  }
+
   .imagen-ahorcado {
     width: 200px;
     height: 200px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .imagen-contenedor .btn-pista-redondo {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    z-index: 20;
+    /* Aseguramos que no se desplace */
+    transform: none;
   }
 
   .palabra-contenedor {
@@ -1037,6 +1074,7 @@ html {
     gap: 15px;
     margin: 0;
     padding: 0;
+    margin-top: 0;
   }
 
   .palabra {
@@ -1166,8 +1204,20 @@ html {
   }
 
   .imagen-ahorcado {
-    width: 180px;
-    height: 180px;
+    width: 160px;
+    height: 160px;
+  }
+
+  .imagen-contenedor .btn-pista-redondo {
+    width: 38px;
+    height: 38px;
+    top: 3px;
+    left: 3px;
+  }
+
+  .imagen-contenedor .btn-pista-redondo svg {
+    width: 22px;
+    height: 22px;
   }
 
   .palabra {
@@ -1323,5 +1373,95 @@ html {
   .modal-ranking-contenido {
     max-height: 75vh;
     padding: 20px;
+  }
+}
+
+/* Botón de pista redondo con lupa */
+.btn-pista-redondo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+  z-index: 10;
+  padding: 0;
+  color: white;
+}
+
+.btn-pista-redondo:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.btn-pista-redondo:active {
+  transform: scale(0.95);
+}
+
+.btn-pista-redondo svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* En móviles, el botón puede ser un poco más pequeño */
+@media (max-width: 768px) {
+  .btn-pista-redondo {
+    width: 42px;
+    height: 42px;
+    top: 8px;
+    left: 8px;
+  }
+
+  .btn-pista-redondo svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 480px) {
+  .btn-pista-redondo {
+    width: 38px;
+    height: 38px;
+    top: 5px;
+    left: 5px;
+  }
+
+  .btn-pista-redondo svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Estilo para cuando el botón está deshabilitado */
+.btn-pista-redondo:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Animación de pulso para cuando se puede usar la pista */
+.btn-pista-redondo:not(:disabled) {
+  animation: pulse-pista 2s infinite;
+}
+
+@keyframes pulse-pista {
+  0% {
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 25px rgba(102, 126, 234, 0.8);
+  }
+  100% {
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
   }
 }
