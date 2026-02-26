@@ -10,21 +10,6 @@ function actualizarEtiquetasSelectIdioma() {
   });
 }
 
-document.addEventListener("languageChanged", (e) => {
-  actualizarEtiquetasSelectIdioma();
-
-  // Solo sincronizar si el usuario NO eligió idioma del juego
-  if (!localStorage.getItem("gameLang")) {
-    const select = document.getElementById("idioma-juego");
-    if (select) {
-      select.value = e.detail.lang;
-      ah_idiomaJuego = e.detail.lang;
-    }
-  }
-
-  actualizarTextosJuego();
-});
-
 function actualizarTextosJuego() {
   if (typeof window.ah_refrescarUI === "function") {
     window.ah_refrescarUI();
@@ -42,31 +27,74 @@ document.addEventListener("DOMContentLoaded", () => {
     return window.translations?.[key] || fallback || key;
   };
   (function () {
+    // Variables de estado
+    let ah_idiomaJuego = "es";
+    let ah_ayudas = 2;
+    let ah_palabrasAcertadas = 0;
+    let ah_palabraSecreta;
+    let ah_progreso;
+    let ah_errores = 0;
+    let ah_usuario = "";
+    let ah_puntos = 0;
+    let ah_bloqueado = false;
+    const AH_MAX_LETRAS = 15;
+    let ah_palabrasUsadas = new Set();
+    let ah_partidaPalabrasAcertadas = 0;
+
+    // ================================
+    // LISTENER DE CAMBIO DE IDIOMA
+    // ================================
+    document.addEventListener("languageChanged", (e) => {
+      // Actualizar las etiquetas del select
+      actualizarEtiquetasSelectIdioma();
+
+      // Solo sincronizar si el usuario NO eligió idioma del juego
+      if (!localStorage.getItem("gameLang")) {
+        const select = document.getElementById("idioma-juego");
+        if (select) {
+          select.value = e.detail.lang;
+          ah_idiomaJuego = e.detail.lang;
+        }
+      }
+
+      actualizarTextosJuego();
+    });
+
     // ================================
     // INICIALIZAR IDIOMA DEL SELECT
     // ================================
+
+    let selectListenerAdded = false;
+
     function inicializarSelectIdioma() {
       const select = document.getElementById("idioma-juego");
       if (!select) return;
 
-      let idiomaInicial = localStorage.getItem("gameLang");
+      // PRIMERO: Usar el idioma de la interfaz
+      let idiomaInicial =
+        localStorage.getItem("uiLang") || document.documentElement.lang || "es";
 
-      if (!idiomaInicial) {
-        idiomaInicial =
-          localStorage.getItem("uiLang") ||
-          document.documentElement.lang ||
-          "es";
+      // Validar que el idioma sea soportado
+      const opcionesValidas = ["es", "ca", "en", "it", "pt", "fr"];
+      if (!opcionesValidas.includes(idiomaInicial)) {
+        idiomaInicial = "es";
       }
 
+      // Asignar valor al select
       select.value = idiomaInicial;
-
       ah_idiomaJuego = idiomaInicial;
 
-      select.addEventListener("change", (e) => {
-        ah_idiomaJuego = e.target.value;
-        localStorage.setItem("gameLang", ah_idiomaJuego);
-      });
+      // Solo agregar el listener si no lo hemos hecho antes
+      if (!selectListenerAdded) {
+        select.addEventListener("change", (e) => {
+          ah_idiomaJuego = e.target.value;
+          localStorage.setItem("gameLang", ah_idiomaJuego);
+        });
+        selectListenerAdded = true;
+      }
     }
+
+    inicializarSelectIdioma();
 
     // Elementos del DOM
     const palabraEl = document.getElementById("palabra");
@@ -334,20 +362,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       audioDesbloqueado = true;
     }
-
-    // Variables de estado
-    let ah_ayudas = 2;
-    let ah_palabrasAcertadas = 0;
-    let ah_palabraSecreta;
-    let ah_progreso;
-    let ah_errores = 0;
-    let ah_usuario = "";
-    let ah_puntos = 0;
-    let ah_idiomaJuego = "es";
-    let ah_bloqueado = false;
-    const AH_MAX_LETRAS = 15;
-    let ah_palabrasUsadas = new Set();
-    let ah_partidaPalabrasAcertadas = 0;
 
     const ah_partesSVG = [
       "poste",

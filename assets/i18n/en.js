@@ -58,7 +58,7 @@ window.translationsEN = {
   "palabras.config.gameLanguage": "Game language:",
   "palabras.config.wordLanguage": "Word language:",
   "language.es": "Spanish",
-  "language.ca": "Català",
+  "language.ca": "Catalan",
   "language.en": "English",
   "language.fr": "french",
   "language.pt": "Portuguese",
