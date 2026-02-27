@@ -394,8 +394,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ------------------ JUEGO NORMAL ------------------
     function iniciarJuegoNormal() {
-      if (!elementos || elementos.length === 0)
-        return alert(t("memori.noElements"));
+      if (!elementos || elementos.length === 0) {
+        mostrarModalAviso(t("memori.noElements"));
+        return;
+      }
 
       // Limpiar cualquier intervalo de tiempo si existiera
       if (intervaloTiempo) {
@@ -601,7 +603,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (nivelActual >= niveles.length) {
-        alert(t("memori.completedAllLevels"));
+        mostrarModalAviso(t("memori.completedAllLevels"));
         nivelEnCurso = niveles[nivelActual - 1];
         return;
       }
@@ -694,7 +696,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (!elementos || elementos.length < parejasDelNivel) {
-          alert(t("memori.notEnoughElements"));
+          mostrarModalAviso(t("memori.notEnoughElements"));
           return;
         }
 
