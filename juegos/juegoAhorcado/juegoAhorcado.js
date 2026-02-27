@@ -118,6 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function usarPista() {
       if (ah_bloqueado || !ah_categoriaActual) return;
 
+      reproducirSonido(sonidos.click);
+
       // Obtener la categoría traducida
       const categoriaTraducida = getTranslation(
         `categoria.${ah_categoriaActual}`,
@@ -239,6 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
       mal: new Audio("sounds/letra-mal.mp3"),
       nuevaPalabra: new Audio("sounds/nueva-palabra.mp3"),
       fin: new Audio("sounds/fin.mp3"),
+      click: new Audio("sounds/click.mp3"),
     };
 
     Object.values(sonidos).forEach((audio) => {
