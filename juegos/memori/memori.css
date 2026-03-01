@@ -534,7 +534,7 @@ body {
   border: 4px solid #2d3748;
   color: #2d3748;
   font-size: 18px;
-  width: 150px;
+  width: 190px;
   padding: 15px;
   border-radius: 12px;
   text-align: left;
@@ -914,6 +914,7 @@ body {
 
   .tablero {
     margin: 20px auto 0 auto;
+    margin-left: 275px;
   }
 
   #marcador,
@@ -927,6 +928,7 @@ body {
     margin-left: auto;
     width: 125px;
     margin-bottom: 20px;
+    margin-bottom: 100px;
   }
 
   .carta {
@@ -937,9 +939,10 @@ body {
   #ranking {
     position: static;
     font-size: 14px;
-    width: 125px;
+    width: 190px;
     padding: 12px;
     border-radius: 10px;
+    margin-bottom: 100px;
   }
   #ranking h3 {
     font-size: 16px;
@@ -957,7 +960,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    width: auto;
+
     min-width: 100px;
     font-size: 18px;
     padding: 10px 15px;
@@ -1008,7 +1011,7 @@ body {
   #ranking {
     position: static;
     font-size: 16px;
-    width: 150px;
+    width: 190px;
     padding: 12px;
     border-radius: 10px;
   }
@@ -1020,18 +1023,6 @@ body {
   #ranking li {
     font-size: 14px;
     margin-bottom: 4px;
-  }
-
-  #salir-juego-memori {
-    position: static;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: auto;
-    min-width: 120px;
-    font-size: 16px;
-    padding: 10px 15px;
   }
 }
 
@@ -1121,7 +1112,7 @@ body {
     margin-top: 5px;
     margin-bottom: 20px;
     margin-left: 10px;
-    width: 190px;
+    width: 180px;
   }
 
   #salir-juego-memori {
@@ -1211,7 +1202,7 @@ body {
     margin-top: 5px;
     margin-bottom: 20px;
     margin-left: 10px;
-    width: 190px;
+    width: 180px;
   }
 
   #salir-juego-memori {

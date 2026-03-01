@@ -1974,11 +1974,7 @@ const JuegoDamas = (() => {
         const estado = estadoGlobalDamas;
 
         if (!estado.sorteoRealizado) {
-          if (typeof window.mostrarAvisoDamas === "function") {
-            window.mostrarAvisoDamas(t("damas.warning.mustShuffle"));
-          } else {
-            alert(t("damas.warning.mustShuffle"));
-          }
+          mostrarAvisoDamas(t("damas.warning.mustShuffle"));
           return;
         }
 
