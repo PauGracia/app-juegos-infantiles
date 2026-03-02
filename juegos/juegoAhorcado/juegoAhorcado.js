@@ -1256,7 +1256,12 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
 
       // Re-inicializar el select del idioma
       inicializarSelectIdioma();
-      if (btnPista) btnPista.disabled = false;
+      document.addEventListener("languageChanged", () => {
+        const btnPista = document.getElementById("btnPista");
+        if (btnPista) {
+          btnPista.disabled = false;
+        }
+      });
 
       // Resetear pista
       if (btnPista) {
