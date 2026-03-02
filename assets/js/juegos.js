@@ -1,13 +1,26 @@
 let confirmAction = null;
 let modalAnterior = null;
+let isExpanded = false; // Mover isExpanded al ámbito global
+let animationFrame;
+let footerAnimationInProgress = false;
 
-function resetFooter() {
+function resetFooter(force = false) {
   const footer = document.querySelector("footer");
+  if (!footer) return;
+
   const footerTop = footer.querySelector(".footer-top");
+  if (!footerTop) return;
+
+  // Cancelar cualquier animación en curso
+  if (animationFrame) {
+    cancelAnimationFrame(animationFrame);
+    animationFrame = null;
+  }
 
   footer.classList.remove("expanded");
   footer.style.height = `${footerTop.offsetHeight}px`;
   isExpanded = false;
+  footerAnimationInProgress = false;
 
   // Ajustar padding del body
   const bodyIndex = document.getElementById("body-index");
@@ -67,21 +80,80 @@ function cerrarModalConfirmacion() {
 }
 
 // Función para abrir y cerrar modales de configuración
+// En abrirModalSettings
 function abrirModalSettings(modalId) {
   document.getElementById("settings-menu").style.display = "none";
   document.body.classList.add("modal-open");
 
-  document.querySelectorAll(".modal-settings").forEach((modal) => {
-    modal.style.display = modal.id === modalId ? "flex" : "none";
-  });
+  // Cerrar todos los modales primero
+  document
+    .querySelectorAll(".modal-settings, .modal-terminos")
+    .forEach((modal) => {
+      modal.style.display = "none";
+    });
+
+  // Abrir el modal específico
+  const modalToOpen = document.getElementById(modalId);
+  if (modalToOpen) {
+    modalToOpen.style.display = "flex";
+  }
 }
 
-function cerrarModalSettings() {
-  document.querySelectorAll(".modal-settings").forEach((modal) => {
-    modal.style.display = "none";
+// En los event listeners de cierre
+document
+  .querySelectorAll(".modal-settings, .modal-terminos")
+  .forEach((modal) => {
+    modal.addEventListener("click", function (e) {
+      if (e.target === this) {
+        cerrarModalSettings();
+      }
+    });
   });
+
+function cerrarModalSettings() {
+  // Cerrar todos los modales
+  document
+    .querySelectorAll(".modal-settings, .modal-terminos")
+    .forEach((modal) => {
+      modal.style.display = "none";
+    });
   document.body.classList.remove("modal-open");
-  resetFooter();
+
+  // Resetear el footer de forma forzada y sin animaciones
+  forceResetFooter();
+}
+
+function forceResetFooter() {
+  const footer = document.querySelector("footer");
+  if (!footer) return;
+
+  const footerTop = footer.querySelector(".footer-top");
+  if (!footerTop) return;
+
+  // Cancelar cualquier animación en curso
+  if (animationFrame) {
+    cancelAnimationFrame(animationFrame);
+    animationFrame = null;
+  }
+
+  // Forzar el footer a su estado contraído
+  footer.classList.remove("expanded");
+  footer.style.height = `${footerTop.offsetHeight}px`;
+  footer.style.transition = "none"; // Quitar transición temporalmente
+
+  isExpanded = false;
+  footerAnimationInProgress = false;
+
+  // Ajustar padding del body
+  const bodyIndex = document.getElementById("body-index");
+  if (bodyIndex) {
+    bodyIndex.style.paddingBottom = `${footerTop.offsetHeight}px`;
+  }
+
+  // Restaurar transición después de un pequeño retraso
+  setTimeout(() => {
+    footer.style.transition = "";
+  }, 50);
 }
 
 function mostrarToastIdioma(texto) {
@@ -145,13 +217,21 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Controlar modal atribuciones
-
 const footerAttributions = document.getElementById("footer-attributions");
 
 if (footerAttributions) {
   footerAttributions.addEventListener("click", (e) => {
     e.preventDefault();
     abrirModalSettings("modal-attributions");
+  });
+}
+
+// Controlar modal términos
+const footerTerms = document.getElementById("footer-terms");
+if (footerTerms) {
+  footerTerms.addEventListener("click", (e) => {
+    e.preventDefault();
+    abrirModalSettings("modal-terms");
   });
 }
 
@@ -162,10 +242,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const footerTop = footer.querySelector(".footer-top");
   const footerBottom = footer.querySelector(".footer-bottom");
 
-  let isExpanded = false;
-  let animationFrame;
-
   const isMobile = window.matchMedia("(hover: none)").matches;
+
+  // Variables para control de eventos
+  let lastScrollTop = 0;
+  let scrollTimeout;
 
   function getExpandedHeight() {
     return footerTop.offsetHeight + footerBottom.scrollHeight;
@@ -176,8 +257,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function animateHeight(from, to, duration = 350, callback) {
+    // Si hay una animación en curso, la cancelamos
+    if (animationFrame) {
+      cancelAnimationFrame(animationFrame);
+    }
+
+    footerAnimationInProgress = true;
     const startTime = performance.now();
-    cancelAnimationFrame(animationFrame);
 
     function step(currentTime) {
       const elapsed = currentTime - startTime;
@@ -186,10 +272,12 @@ document.addEventListener("DOMContentLoaded", () => {
       footer.style.height = `${newHeight}px`;
       updateBodyPadding(newHeight);
 
-      if (progress < 1) {
+      if (progress < 1 && !document.body.classList.contains("modal-open")) {
         animationFrame = requestAnimationFrame(step);
-      } else if (callback) {
-        callback();
+      } else {
+        animationFrame = null;
+        footerAnimationInProgress = false;
+        if (callback) callback();
       }
     }
 
@@ -197,36 +285,73 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function expandFooter() {
-    if (isExpanded) return;
+    // No expandir si hay un modal abierto
+    if (document.body.classList.contains("modal-open")) {
+      return;
+    }
+
+    if (isExpanded || footerAnimationInProgress) return;
+
     isExpanded = true;
     footer.classList.add("expanded");
     animateHeight(footer.offsetHeight, getExpandedHeight(), 350);
   }
 
   function collapseFooter() {
-    if (!isExpanded) return;
+    // No contraer si hay un modal abierto
+    if (document.body.classList.contains("modal-open")) {
+      return;
+    }
+
+    if (!isExpanded || footerAnimationInProgress) return;
+
     isExpanded = false;
     animateHeight(footer.offsetHeight, footerTop.offsetHeight, 350, () => {
       footer.classList.remove("expanded");
     });
   }
 
-  // Scroll desktop y móvil
+  // Scroll desktop con throttle
   window.addEventListener("scroll", () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    if (!isMobile) {
-      if (scrollTop > 20) expandFooter();
-      else collapseFooter();
-    }
+    if (document.body.classList.contains("modal-open")) return;
+
+    // Throttle para mejorar rendimiento
+    if (scrollTimeout) return;
+
+    scrollTimeout = setTimeout(() => {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+
+      if (!isMobile) {
+        if (scrollTop > 20 && !document.body.classList.contains("modal-open")) {
+          expandFooter();
+        } else if (
+          scrollTop < 20 &&
+          !document.body.classList.contains("modal-open")
+        ) {
+          collapseFooter();
+        }
+      }
+
+      scrollTimeout = null;
+    }, 50);
   });
 
   // Hover desktop
   if (!isMobile) {
-    footer.addEventListener("mouseenter", expandFooter);
+    footer.addEventListener("mouseenter", () => {
+      if (document.body.classList.contains("modal-open")) return;
+      expandFooter();
+    });
+
     footer.addEventListener("mouseleave", () => {
+      if (document.body.classList.contains("modal-open")) return;
+
       const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop;
-      if (scrollTop < 20) collapseFooter();
+      if (scrollTop < 20) {
+        collapseFooter();
+      }
     });
   }
 
@@ -241,8 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Inicializamos altura
-  footer.style.height = `${footerTop.offsetHeight}px`;
-  updateBodyPadding(footerTop.offsetHeight);
+  resetFooter(true);
 
   document.querySelectorAll("[data-lang]").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -355,19 +479,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnDeleteAllGames = document.getElementById("btn-delete-all-games");
   if (btnDeleteAllGames) {
     btnDeleteAllGames.addEventListener("click", function () {
-      // Lista completa de todos los rankings de todos los juegos
       const todosLosRankings = [
-        // Memori
         "ranking_memori",
         "ranking_desafio",
-        // Ahorcado
         "rankingAhorcado",
-        // Operaciones (cuando esté implementado)
-        // "rankingOperaciones",
-        // Palabras (cuando esté implementado)
-        // "rankingPalabras",
-        // Damas (cuando esté implementado)
-        // "rankingDamas"
       ];
 
       abrirModalConfirmacion(
@@ -410,23 +525,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Abrir modal de términos
-  document.getElementById("footer-terms").addEventListener("click", (e) => {
-    e.preventDefault();
-    document.getElementById("modal-terms").classList.add("activo");
-  });
-
-  // Cerrar modal
-  document
-    .querySelector("#modal-terms .cerrar-modal")
-    .addEventListener("click", () => {
-      document.getElementById("modal-terms").classList.remove("activo");
+  // Añade esto dentro del DOMContentLoaded
+  const closeTermsBtn = document.querySelector("#modal-terms .close-btn");
+  if (closeTermsBtn) {
+    closeTermsBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      cerrarModalSettings();
     });
+  }
 
-  // Cerrar al hacer clic fuera del modal
-  document.getElementById("modal-terms").addEventListener("click", (e) => {
-    if (e.target === document.getElementById("modal-terms")) {
-      e.target.classList.remove("activo");
-    }
-  });
+  // También para el botón "Cerrar" específico si tiene otra clase
+  const cerrarModalTermsBtn = document.querySelector(
+    "#modal-terms .cerrar-modal",
+  );
+  if (cerrarModalTermsBtn) {
+    cerrarModalTermsBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      cerrarModalSettings();
+    });
+  }
 });
