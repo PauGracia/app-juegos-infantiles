@@ -1,4 +1,20 @@
 let confirmAction = null;
+let modalAnterior = null;
+
+function resetFooter() {
+  const footer = document.querySelector("footer");
+  const footerTop = footer.querySelector(".footer-top");
+
+  footer.classList.remove("expanded");
+  footer.style.height = `${footerTop.offsetHeight}px`;
+  isExpanded = false;
+
+  // Ajustar padding del body
+  const bodyIndex = document.getElementById("body-index");
+  if (bodyIndex) {
+    bodyIndex.style.paddingBottom = `${footerTop.offsetHeight}px`;
+  }
+}
 
 // Abrir/cerrar menú de configuración
 document.getElementById("settings-btn").addEventListener("click", function (e) {
@@ -25,6 +41,9 @@ function abrirModalConfirmacion(mensaje, accion) {
   const modal = document.getElementById("modal-confirm-delete");
   const messageEl = document.getElementById("confirm-message");
 
+  // Guardamos el modal actualmente abierto
+  modalAnterior = document.querySelector(".modal-settings[style*='flex']");
+
   messageEl.textContent = mensaje;
   confirmAction = accion;
 
@@ -33,7 +52,18 @@ function abrirModalConfirmacion(mensaje, accion) {
 
 function cerrarModalConfirmacion() {
   confirmAction = null;
-  cerrarModalSettings();
+
+  // Cerrar solo el modal de confirmación
+  document.getElementById("modal-confirm-delete").style.display = "none";
+
+  // Volver al modal anterior (historial)
+  if (modalAnterior) {
+    modalAnterior.style.display = "flex";
+  } else {
+    document.body.classList.remove("modal-open");
+  }
+
+  modalAnterior = null;
 }
 
 // Función para abrir y cerrar modales de configuración
@@ -51,6 +81,7 @@ function cerrarModalSettings() {
     modal.style.display = "none";
   });
   document.body.classList.remove("modal-open");
+  resetFooter();
 }
 
 function mostrarToastIdioma(texto) {
@@ -201,7 +232,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Toque móvil: expandir/contraer con tap
   if (isMobile) {
-    footer.addEventListener("click", () => {
+    footer.addEventListener("click", (e) => {
+      if (document.body.classList.contains("modal-open")) return;
+
       if (isExpanded) collapseFooter();
       else expandFooter();
     });
@@ -361,7 +394,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnConfirmCancel = document.getElementById("btn-confirm-cancel");
 
   if (btnConfirmAccept) {
-    btnConfirmAccept.addEventListener("click", () => {
+    btnConfirmAccept.addEventListener("click", (e) => {
+      e.stopPropagation();
       if (typeof confirmAction === "function") {
         confirmAction();
       }
@@ -370,7 +404,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (btnConfirmCancel) {
-    btnConfirmCancel.addEventListener("click", cerrarModalConfirmacion);
+    btnConfirmCancel.addEventListener("click", (e) => {
+      e.stopPropagation();
+      cerrarModalConfirmacion();
+    });
   }
 
   // Abrir modal de términos

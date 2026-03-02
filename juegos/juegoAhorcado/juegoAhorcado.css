@@ -1304,6 +1304,7 @@ html {
 
   .btn-modal {
     width: 100%;
+    min-height: 45px;
     max-width: 220px;
     margin: 0 auto;
     padding: 10px 20px;
