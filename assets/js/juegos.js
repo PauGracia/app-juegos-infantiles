@@ -1,8 +1,9 @@
 let confirmAction = null;
 let modalAnterior = null;
-let isExpanded = false; // Mover isExpanded al ámbito global
+let isExpanded = false;
 let animationFrame;
 let footerAnimationInProgress = false;
+let isClosingModal = false;
 
 function resetFooter(force = false) {
   const footer = document.querySelector("footer");
@@ -111,6 +112,7 @@ document
   });
 
 function cerrarModalSettings() {
+  isClosingModal = true;
   // Cerrar todos los modales
   document
     .querySelectorAll(".modal-settings, .modal-terminos")
@@ -121,6 +123,10 @@ function cerrarModalSettings() {
 
   // Resetear el footer de forma forzada y sin animaciones
   forceResetFooter();
+
+  setTimeout(() => {
+    isClosingModal = false;
+  }, 300);
 }
 
 function forceResetFooter() {
@@ -136,10 +142,11 @@ function forceResetFooter() {
     animationFrame = null;
   }
 
-  // Forzar el footer a su estado contraído
+  // Remover clases y estilos
   footer.classList.remove("expanded");
   footer.style.height = `${footerTop.offsetHeight}px`;
-  footer.style.transition = "none"; // Quitar transición temporalmente
+  footer.style.transition = "none";
+  footer.style.pointerEvents = "auto";
 
   isExpanded = false;
   footerAnimationInProgress = false;
@@ -153,7 +160,7 @@ function forceResetFooter() {
   // Restaurar transición después de un pequeño retraso
   setTimeout(() => {
     footer.style.transition = "";
-  }, 50);
+  }, 100);
 }
 
 function mostrarToastIdioma(texto) {
@@ -358,12 +365,36 @@ document.addEventListener("DOMContentLoaded", () => {
   // Toque móvil: expandir/contraer con tap
   if (isMobile) {
     footer.addEventListener("click", (e) => {
-      if (document.body.classList.contains("modal-open")) return;
+      if (
+        document.body.classList.contains("modal-open") ||
+        isClosingModal ||
+        e.target.closest(".modal-settings, .modal-terminos")
+      ) {
+        return;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
 
       if (isExpanded) collapseFooter();
       else expandFooter();
     });
   }
+
+  document.addEventListener(
+    "click",
+    (e) => {
+      // Si el clic es en un botón con data-close-modal o close-btn
+      if (
+        e.target.closest("[data-close-modal]") ||
+        e.target.closest(".close-btn")
+      ) {
+        // Marcar que estamos procesando un cierre
+        isClosingModal = true;
+      }
+    },
+    true,
+  ); // Usar captura para asegurar que se ejecuta primero
 
   // Inicializamos altura
   resetFooter(true);
@@ -544,4 +575,38 @@ document.addEventListener("DOMContentLoaded", () => {
       cerrarModalSettings();
     });
   }
+
+  function configurarBotonesCierre() {
+    // Botones con data-close-modal (los del modal principal)
+    document.querySelectorAll("[data-close-modal]").forEach((btn) => {
+      // Remover listeners anteriores para evitar duplicados
+      btn.removeEventListener("click", handleCloseModal);
+      btn.addEventListener("click", handleCloseModal);
+    });
+
+    // Botones específicos de cierre de modales de settings
+    document.querySelectorAll(".modal-settings .close-btn").forEach((btn) => {
+      btn.removeEventListener("click", handleCloseModal);
+      btn.addEventListener("click", handleCloseModal);
+    });
+  }
+
+  function handleCloseModal(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Verificar si estamos dentro de un modal de confirmación
+    const isInConfirmModal = e.target.closest("#modal-confirm-delete");
+
+    if (isInConfirmModal) {
+      // Si es el modal de confirmación, cerrar solo ese modal
+      cerrarModalConfirmacion();
+    } else {
+      // Si es otro modal, cerrar todos
+      cerrarModalSettings();
+    }
+  }
+
+  // Llamar a la función después de configurar todo
+  configurarBotonesCierre();
 });
