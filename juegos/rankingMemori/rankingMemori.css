@@ -570,7 +570,7 @@ body {
   .ranking-main {
     padding: 15px;
     flex: none;
-    height: calc(88vh - 260px);
+    height: calc(95vh - 260px);
     padding: 12px;
   }
 

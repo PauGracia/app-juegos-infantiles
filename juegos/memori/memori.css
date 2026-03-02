@@ -1066,7 +1066,7 @@ body {
     gap: 10px;
   }
   #titulo-memori {
-    font-size: 26px;
+    font-size: 34px;
     margin-bottom: 30px;
   }
   #titulo-memori::after {
@@ -1087,7 +1087,7 @@ body {
     width: auto;
     margin: 0 auto;
     gap: 2px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     margin-top: 20px;
   }
   .carta {
@@ -1194,7 +1194,7 @@ body {
     gap: 5px;
   }
   #titulo-memori {
-    font-size: 26px;
+    font-size: 30px;
     margin-bottom: 15px;
   }
   #titulo-memori::after {
@@ -1215,7 +1215,7 @@ body {
     width: auto;
     margin: 0 auto;
     gap: 1px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     margin-top: 10px;
   }
   .carta {

@@ -363,4 +363,27 @@ window.translationsCA = {
     "Escriu el nom correcte de la imatge.\n\nPots comprovar la paraula tantes vegades com vulguis.\n\nSi l'ajuda està activada, apareixerà automàticament després de diversos intents.\n\nTotes les paraules compten com a encert, però es registren les comprovacions i l'ús de l'ajuda.",
 
   "damas.warning.mustShuffle": "Has de barrejar els colors abans de jugar",
+  "terms.title": "Termes d'ús",
+  "terms.acceptance":
+    "En utilitzar aquesta aplicació, acceptes els següents termes i condicions.",
+  "terms.educationalTitle": "1. Ús educatiu",
+  "terms.educational":
+    "Aquesta aplicació està dissenyada exclusivament per a fins educatius i d'entreteniment infantil. El seu contingut és apropiat per a totes les edats i fomenta el desenvolupament cognitiu a través del joc.",
+  "terms.localTitle": "2. Funcionament local",
+  "terms.local":
+    "L'aplicació funciona completament en el teu dispositiu. No es realitzen connexions a servidors externs, no es recopilen dades personals i no es requereix cap registre per al seu ús.",
+  "terms.licenseTitle": "3. Llicència d'ús",
+  "terms.license":
+    "Aquesta aplicació és d'ús gratuït. No està permesa la seva modificació, distribució comercial o reproducció total o parcial sense autorització expressa.",
+  "terms.contentTitle": "4. Propietat del contingut",
+  "terms.content":
+    "Tots els elements gràfics, sons, icones i codi són propietat dels seus respectius autors (veure secció d'Atribucions) i s'utilitzen sota llicències que permeten el seu ús en aquest context educatiu.",
+  "terms.responsibilityTitle": "5. Responsabilitat",
+  "terms.responsibility":
+    "Els creadors d'aquesta aplicació no es fan responsables del mal ús que se'n pugui fer, ni dels danys que poguessin derivar-se de la seva utilització. L'aplicació es proporciona 'tal qual', sense garanties de cap tipus.",
+  "terms.changesTitle": "6. Modificacions",
+  "terms.changes":
+    "Ens reservem el dret d'actualitzar o modificar aquests termes en qualsevol moment. Els canvis seran notificats dins de la pròpia aplicació.",
+  "terms.contact":
+    "Si tens preguntes sobre aquests termes, pots contactar a través dels mitjans disponibles a l'aplicació.",
 };

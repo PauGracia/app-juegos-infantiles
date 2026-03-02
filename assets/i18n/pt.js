@@ -356,4 +356,27 @@ window.translationsPT = {
   "palabras.instructions.title": "Como jogar",
   "palabras.instructions.text":
     "Escreve o nome correto da imagem.\n\nPodes verificar a palavra quantas vezes quiseres.\n\nSe a ajuda estiver ativada, aparecerá automaticamente após várias tentativas.\n\nTodas as palavras contam como acerto, mas as verificações e o uso da ajuda são registados.",
+  "terms.title": "Termos de uso",
+  "terms.acceptance":
+    "Ao utilizar esta aplicação, aceita os seguintes termos e condições.",
+  "terms.educationalTitle": "1. Uso educativo",
+  "terms.educational":
+    "Esta aplicação foi concebida exclusivamente para fins educativos e de entretenimento infantil. O seu conteúdo é adequado para todas as idades e promove o desenvolvimento cognitivo através do jogo.",
+  "terms.localTitle": "2. Funcionamento local",
+  "terms.local":
+    "A aplicação funciona completamente no seu dispositivo. Não são estabelecidas ligações a servidores externos, não são recolhidos dados pessoais e não é necessário qualquer registo para a sua utilização.",
+  "terms.licenseTitle": "3. Licença de uso",
+  "terms.license":
+    "Esta aplicação é de uso gratuito. Não é permitida a sua modificação, distribuição comercial ou reprodução total ou parcial sem autorização expressa.",
+  "terms.contentTitle": "4. Propriedade do conteúdo",
+  "terms.content":
+    "Todos os elementos gráficos, sons, ícones e código são propriedade dos seus respetivos autores (ver secção de Atribuições) e são utilizados sob licenças que permitem a sua utilização neste contexto educativo.",
+  "terms.responsibilityTitle": "5. Responsabilidade",
+  "terms.responsibility":
+    "Os criadores desta aplicação não se responsabilizam por qualquer uso indevido que possa ser feito da mesma, nem por quaisquer danos que possam decorrer da sua utilização. A aplicação é fornecida 'como está', sem garantias de qualquer tipo.",
+  "terms.changesTitle": "6. Modificações",
+  "terms.changes":
+    "Reservamo-nos o direito de atualizar ou modificar estes termos em qualquer altura. As alterações serão notificadas dentro da própria aplicação.",
+  "terms.contact":
+    "Se tiver dúvidas sobre estes termos, pode contactar-nos através dos meios disponíveis na aplicação.",
 };

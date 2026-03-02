@@ -364,4 +364,27 @@ window.translationsEN = {
 
   "damas.warning.title": "Warning",
   "damas.warning.mustShuffle": "You must shuffle colors before playing",
+  "terms.title": "Terms of Use",
+  "terms.acceptance":
+    "By using this application, you agree to the following terms and conditions.",
+  "terms.educationalTitle": "1. Educational Use",
+  "terms.educational":
+    "This application is designed exclusively for educational and children's entertainment purposes. Its content is appropriate for all ages and promotes cognitive development through play.",
+  "terms.localTitle": "2. Local Operation",
+  "terms.local":
+    "The application runs completely on your device. No connections are made to external servers, no personal data is collected, and no registration is required for its use.",
+  "terms.licenseTitle": "3. License of Use",
+  "terms.license":
+    "This application is free to use. Its modification, commercial distribution, or total or partial reproduction without express authorization is not permitted.",
+  "terms.contentTitle": "4. Content Ownership",
+  "terms.content":
+    "All graphic elements, sounds, icons, and code are the property of their respective authors (see Attributions section) and are used under licenses that allow their use in this educational context.",
+  "terms.responsibilityTitle": "5. Responsibility",
+  "terms.responsibility":
+    "The creators of this application are not responsible for any misuse that may be made of it, nor for any damages that may arise from its use. The application is provided 'as is', without any warranties.",
+  "terms.changesTitle": "6. Modifications",
+  "terms.changes":
+    "We reserve the right to update or modify these terms at any time. Changes will be notified within the application itself.",
+  "terms.contact":
+    "If you have questions about these terms, you can contact us through the means available in the application.",
 };

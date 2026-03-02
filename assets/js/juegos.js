@@ -372,4 +372,24 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnConfirmCancel) {
     btnConfirmCancel.addEventListener("click", cerrarModalConfirmacion);
   }
+
+  // Abrir modal de términos
+  document.getElementById("footer-terms").addEventListener("click", (e) => {
+    e.preventDefault();
+    document.getElementById("modal-terms").classList.add("activo");
+  });
+
+  // Cerrar modal
+  document
+    .querySelector("#modal-terms .cerrar-modal")
+    .addEventListener("click", () => {
+      document.getElementById("modal-terms").classList.remove("activo");
+    });
+
+  // Cerrar al hacer clic fuera del modal
+  document.getElementById("modal-terms").addEventListener("click", (e) => {
+    if (e.target === document.getElementById("modal-terms")) {
+      e.target.classList.remove("activo");
+    }
+  });
 });

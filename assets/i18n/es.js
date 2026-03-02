@@ -368,4 +368,27 @@ window.translationsES = {
 
   "damas.warning.title": "Aviso",
   "damas.warning.mustShuffle": "Debes realizar el sorteo antes de jugar",
+  "terms.title": "Términos de uso",
+  "terms.acceptance":
+    "Al utilizar esta aplicación, aceptas los siguientes términos y condiciones.",
+  "terms.educationalTitle": "1. Uso educativo",
+  "terms.educational":
+    "Esta aplicación está diseñada exclusivamente para fines educativos y de entretenimiento infantil. Su contenido es apropiado para todas las edades y fomenta el desarrollo cognitivo a través del juego.",
+  "terms.localTitle": "2. Funcionamiento local",
+  "terms.local":
+    "La aplicación funciona completamente en tu dispositivo. No se realizan conexiones a servidores externos, no se recopilan datos personales y no se requiere registro alguno para su uso.",
+  "terms.licenseTitle": "3. Licencia de uso",
+  "terms.license":
+    "Esta aplicación es de uso gratuito. No está permitida su modificación, distribución comercial o reproducción total o parcial sin autorización expresa.",
+  "terms.contentTitle": "4. Propiedad del contenido",
+  "terms.content":
+    "Todos los elementos gráficos, sonidos, iconos y código son propiedad de sus respectivos autores (ver sección de Atribuciones) y se utilizan bajo licencias que permiten su uso en este contexto educativo.",
+  "terms.responsibilityTitle": "5. Responsabilidad",
+  "terms.responsibility":
+    "Los creadores de esta aplicación no se hacen responsables del mal uso que pueda hacerse de la misma, ni de los daños que pudieran derivarse de su utilización. La aplicación se proporciona 'tal cual', sin garantías de ningún tipo.",
+  "terms.changesTitle": "6. Modificaciones",
+  "terms.changes":
+    "Nos reservamos el derecho de actualizar o modificar estos términos en cualquier momento. Los cambios serán notificados dentro de la propia aplicación.",
+  "terms.contact":
+    "Si tienes preguntas sobre estos términos, puedes contactar a través de los medios disponibles en la aplicación.",
 };

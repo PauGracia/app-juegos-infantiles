@@ -1018,7 +1018,7 @@ html {
     max-width: 98%;
     min-height: auto;
     overflow: visible;
-    justify-content: flex-start;
+    justify-content: space-around;
   }
 
   .titulo-ahorcado {
@@ -1204,8 +1204,8 @@ html {
   }
 
   .imagen-ahorcado {
-    width: 160px;
-    height: 160px;
+    width: 180px;
+    height: 180px;
   }
 
   .imagen-contenedor .btn-pista-redondo {

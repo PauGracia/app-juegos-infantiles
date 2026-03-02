@@ -369,8 +369,31 @@ window.translationsFR = {
   "palabras.buttons.next": "Suivant",
   "palabras.buttons.restart": "Redémarrer",
   "palabras.buttons.exit": "Quitter",
-
+  "footer.attributions": "Attributions",
   "palabras.instructions.title": "Comment jouer",
   "palabras.instructions.text":
     "Écris le nom correct de l'image.\n\nTu peux vérifier le mot autant de fois que tu le souhaites.\n\nSi l'aide est activée, elle apparaîtra automatiquement après plusieurs tentatives.\n\nTous les mots comptent comme réussis, mais les vérifications et l'utilisation de l'aide sont enregistrées.",
+  "terms.title": "Conditions d'utilisation",
+  "terms.acceptance":
+    "En utilisant cette application, vous acceptez les conditions générales suivantes.",
+  "terms.educationalTitle": "1. Usage éducatif",
+  "terms.educational":
+    "Cette application est conçue exclusivement à des fins éducatives et de divertissement pour enfants. Son contenu est approprié pour tous les âges et favorise le développement cognitif par le jeu.",
+  "terms.localTitle": "2. Fonctionnement local",
+  "terms.local":
+    "L'application fonctionne entièrement sur votre appareil. Aucune connexion à des serveurs externes n'est établie, aucune donnée personnelle n'est collectée et aucun enregistrement n'est requis pour son utilisation.",
+  "terms.licenseTitle": "3. Licence d'utilisation",
+  "terms.license":
+    "Cette application est gratuite. Sa modification, sa distribution commerciale ou sa reproduction totale ou partielle sans autorisation expresse est interdite.",
+  "terms.contentTitle": "4. Propriété du contenu",
+  "terms.content":
+    "Tous les éléments graphiques, sons, icônes et codes sont la propriété de leurs auteurs respectifs (voir section Attributions) et sont utilisés sous des licences permettant leur utilisation dans ce contexte éducatif.",
+  "terms.responsibilityTitle": "5. Responsabilité",
+  "terms.responsibility":
+    "Les créateurs de cette application ne sont pas responsables d'une éventuelle mauvaise utilisation, ni des dommages qui pourraient résulter de son utilisation. L'application est fournie 'telle quelle', sans aucune garantie.",
+  "terms.changesTitle": "6. Modifications",
+  "terms.changes":
+    "Nous nous réservons le droit de mettre à jour ou de modifier ces conditions à tout moment. Les changements seront notifiés dans l'application elle-même.",
+  "terms.contact":
+    "Si vous avez des questions sur ces conditions, vous pouvez nous contacter via les moyens disponibles dans l'application.",
 };

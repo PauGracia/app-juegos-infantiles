@@ -309,6 +309,72 @@
           </div>
         </div>
 
+        <!-- Modal de términos de uso -->
+        <div id="modal-terms" class="modal-terminos">
+          <div class="modal-box">
+            <h2 data-i18n="terms.title">Términos de uso</h2>
+
+            <p data-i18n="terms.acceptance">
+              Al utilizar esta aplicación, aceptas los siguientes términos y
+              condiciones.
+            </p>
+
+            <h3 data-i18n="terms.educationalTitle">1. Uso educativo</h3>
+            <p data-i18n="terms.educational">
+              Esta aplicación está diseñada exclusivamente para fines educativos
+              y de entretenimiento infantil. Su contenido es apropiado para
+              todas las edades y fomenta el desarrollo cognitivo a través del
+              juego.
+            </p>
+
+            <h3 data-i18n="terms.localTitle">2. Funcionamiento local</h3>
+            <p data-i18n="terms.local">
+              La aplicación funciona completamente en tu dispositivo. No se
+              realizan conexiones a servidores externos, no se recopilan datos
+              personales y no se requiere registro alguno para su uso.
+            </p>
+
+            <h3 data-i18n="terms.licenseTitle">3. Licencia de uso</h3>
+            <p data-i18n="terms.license">
+              Esta aplicación es de uso gratuito. No está permitida su
+              modificación, distribución comercial o reproducción total o
+              parcial sin autorización expresa.
+            </p>
+
+            <h3 data-i18n="terms.contentTitle">4. Propiedad del contenido</h3>
+            <p data-i18n="terms.content">
+              Todos los elementos gráficos, sonidos, iconos y código son
+              propiedad de sus respectivos autores (ver sección de Atribuciones)
+              y se utilizan bajo licencias que permiten su uso en este contexto
+              educativo.
+            </p>
+
+            <h3 data-i18n="terms.responsibilityTitle">5. Responsabilidad</h3>
+            <p data-i18n="terms.responsibility">
+              Los creadores de esta aplicación no se hacen responsables del mal
+              uso que pueda hacerse de la misma, ni de los daños que pudieran
+              derivarse de su utilización. La aplicación se proporciona "tal
+              cual", sin garantías de ningún tipo.
+            </p>
+
+            <h3 data-i18n="terms.changesTitle">6. Modificaciones</h3>
+            <p data-i18n="terms.changes">
+              Nos reservamos el derecho de actualizar o modificar estos términos
+              en cualquier momento. Los cambios serán notificados dentro de la
+              propia aplicación.
+            </p>
+
+            <p data-i18n="terms.contact">
+              Si tienes preguntas sobre estos términos, puedes contactar a
+              través de los medios disponibles en la aplicación.
+            </p>
+
+            <button class="cerrar-modal" data-i18n="common.close">
+              Cerrar
+            </button>
+          </div>
+        </div>
+
         <!-- MODAL CONFIRMACIÓN BORRADO -->
         <div id="modal-confirm-delete" class="modal-settings">
           <div class="modal-box modal-confirm">
@@ -359,7 +425,7 @@
             >
 
             <span>•</span>
-            <a href="#" data-i18n="footer.terms">Términos</a>
+            <a href="#" id="footer-terms" data-i18n="footer.terms">Términos</a>
             <span>•</span>
             <a
               href="#"

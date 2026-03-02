@@ -360,4 +360,27 @@ window.translationsIT = {
   "palabras.instructions.title": "Come giocare",
   "palabras.instructions.text":
     "Scrivi il nome corretto dell'immagine.\n\nPuoi verificare la parola tutte le volte che vuoi.\n\nSe l'aiuto è attivato, apparirà automaticamente dopo diversi tentativi.\n\nTutte le parole contano come corrette, ma le verifiche e l'uso dell'aiuto vengono registrati.",
+  "terms.title": "Termini di utilizzo",
+  "terms.acceptance":
+    "Utilizzando questa applicazione, accetti i seguenti termini e condizioni.",
+  "terms.educationalTitle": "1. Uso educativo",
+  "terms.educational":
+    "Questa applicazione è progettata esclusivamente per scopi educativi e di intrattenimento per bambini. Il suo contenuto è appropriato per tutte le età e favorisce lo sviluppo cognitivo attraverso il gioco.",
+  "terms.localTitle": "2. Funzionamento locale",
+  "terms.local":
+    "L'applicazione funziona completamente sul tuo dispositivo. Non vengono effettuate connessioni a server esterni, non vengono raccolti dati personali e non è richiesta alcuna registrazione per il suo utilizzo.",
+  "terms.licenseTitle": "3. Licenza d'uso",
+  "terms.license":
+    "Questa applicazione è gratuita. Non è consentita la sua modifica, distribuzione commerciale o riproduzione totale o parziale senza autorizzazione espressa.",
+  "terms.contentTitle": "4. Proprietà del contenuto",
+  "terms.content":
+    "Tutti gli elementi grafici, suoni, icone e codice sono di proprietà dei rispettivi autori (vedi sezione Attribuzioni) e sono utilizzati sotto licenze che ne consentono l'uso in questo contesto educativo.",
+  "terms.responsibilityTitle": "5. Responsabilità",
+  "terms.responsibility":
+    "I creatori di questa applicazione non sono responsabili di eventuali usi impropri che possano essere fatti, né di eventuali danni derivanti dal suo utilizzo. L'applicazione è fornita 'così com'è', senza alcuna garanzia.",
+  "terms.changesTitle": "6. Modifiche",
+  "terms.changes":
+    "Ci riserviamo il diritto di aggiornare o modificare questi termini in qualsiasi momento. Le modifiche saranno notificate all'interno dell'applicazione stessa.",
+  "terms.contact":
+    "Se hai domande su questi termini, puoi contattarci attraverso i mezzi disponibili nell'applicazione.",
 };
