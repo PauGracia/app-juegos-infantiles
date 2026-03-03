@@ -16,8 +16,6 @@ input {
 
 :root {
   --ranking-max-width: 900px;
-  --element-width: min(100%, var(--ranking-max-width));
-  --button-width: 150px;
 }
 
 .body-ranking {
@@ -25,28 +23,31 @@ input {
   flex-direction: column;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100dvh;
+  height: 100dvh; /* CAMBIADO: usar height en lugar de min-height */
   margin: 0;
   padding: 12px;
   color: #2d3748;
   align-items: center;
-  overflow: hidden;
+  overflow: hidden; /* IMPORTANTE: evitar scroll en body */
 }
 
-/* Contenedor principal centrado */
+/* Contenedor principal */
 .ranking-container {
   width: 100%;
   max-width: var(--ranking-max-width);
   display: flex;
   flex-direction: column;
+  height: 100%; /* Ocupa el 100% de la altura del body */
   gap: 15px;
+  /* IMPORTANTE: evitar que se desborde */
+  min-height: 0;
 }
 
 /* -------- HEADER -------- */
 .ranking-header {
   text-align: center;
-  margin: 20px 0;
   width: 100%;
+  flex-shrink: 0; /* No se encoge */
 }
 
 .ranking-header h1 {
@@ -54,6 +55,7 @@ input {
   font-size: 2.2em;
   font-weight: 700;
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  margin: 10px 0;
 }
 
 /* -------- CONTROLES -------- */
@@ -67,6 +69,7 @@ input {
   align-items: center;
   width: 100%;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0; /* No se encoge */
 }
 
 .controles-left {
@@ -92,6 +95,14 @@ input {
   border: 2px solid #e2e8f0;
   width: 100%;
   max-width: 250px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+  padding-right: 45px;
 }
 
 .ranking-controles button {
@@ -106,6 +117,7 @@ input {
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
   min-height: 45px;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .ranking-controles select:focus,
@@ -119,11 +131,50 @@ input {
   transform: scale(0.97);
 }
 
-/* -------- LISTA -------- */
+/* -------- LISTA - CORREGIDA DEFINITIVAMENTE -------- */
 .ranking-lista {
   width: 100%;
-  overflow-y: auto; /* SOLO ESTO: scroll cuando sea necesario */
-  max-height: 60vh; /* Altura máxima para que aparezca scroll si hay muchos elementos */
+  flex: 1 1 auto;
+  overflow-y: auto;
+
+  min-height: 0;
+
+  padding-bottom: 5px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ranking-lista::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.ranking-lista::-webkit-scrollbar-track {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  border-radius: 10px;
+}
+
+.ranking-lista::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  backdrop-filter: blur(5px); /* Efecto cristal */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.ranking-lista::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.ranking-lista::-webkit-scrollbar-thumb:active {
+  background: rgba(255, 255, 255, 0.7);
 }
 
 #listaRanking {
@@ -134,7 +185,6 @@ input {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 30px;
 }
 
 .ranking-lista li {
@@ -144,10 +194,11 @@ input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%; /* Ocupa todo el ancho disponible */
+  width: 100%;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   animation: fadeIn 0.3s ease;
   min-height: 70px;
+  flex-shrink: 0; /* Evita que los items se encojan */
 }
 
 /* Contenedor izquierdo: número + nombre/fecha */
@@ -165,6 +216,7 @@ input {
   text-align: center;
   min-width: 40px;
   color: #667eea;
+  flex-shrink: 0;
 }
 
 .ranking-info {
@@ -191,12 +243,25 @@ input {
   white-space: nowrap;
 }
 
+/* Estilo para el idioma en el ranking */
+.ranking-usuario .ranking-idioma {
+  font-size: 0.85em;
+  color: #667eea;
+  font-weight: 600;
+  margin-left: 8px;
+  background: rgba(102, 126, 234, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
 /* Contenedor derecho: puntos */
 .ranking-right {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-left: 20px;
+  flex-shrink: 0;
 }
 
 .ranking-puntos {
@@ -218,50 +283,19 @@ input {
   margin-left: 2px;
 }
 
-/* Estilo para el idioma en el ranking */
-.ranking-usuario .ranking-idioma {
-  font-size: 0.85em;
-  color: #667eea;
-  font-weight: 600;
-  margin-left: 8px;
-  background: rgba(102, 126, 234, 0.1);
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-/* Para el select recortado en móviles*/
-.ranking-controles select {
-  padding: 12px 16px;
-  font-size: 1em;
-  border-radius: 12px;
-  border: 2px solid #e2e8f0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 16px center;
-  background-size: 16px;
-  padding-right: 45px;
-  white-space: normal;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  width: 100%;
-  box-sizing: border-box;
-  min-height: 46px; /* Altura mínima para asegurar que se vea */
-}
-
-/* -------- FOOTER FIXED -------- */
+/* -------- FOOTER - CORREGIDO -------- */
 .ranking-footer {
   width: 100%;
   display: flex;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   gap: 20px;
   justify-content: center;
   align-items: center;
   padding: 15px 0;
-  margin-top: 20px;
-  height: 60px;
+  flex-shrink: 0; /* No se encoge */
+  min-height: 70px;
+  background: transparent;
+  /* Margen superior para separar visualmente */
+  margin-top: 5px;
 }
 
 /* Botones del footer */
@@ -271,8 +305,6 @@ input {
   justify-content: center;
   min-height: 45px;
   min-width: 200px;
-  width: 200px;
-
   padding: 10px 20px;
   font-size: 1em;
   font-weight: 600;
@@ -280,91 +312,20 @@ input {
   border: none;
   cursor: pointer;
   color: white;
-
+  background: linear-gradient(45deg, #4299e1, #3182ce);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   transition: all 0.2s ease;
   white-space: normal;
   line-height: 1.2;
-  overflow: hidden;
-  text-overflow: ellipsis;
   text-align: center;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-/* Botón de peligro */
-.ranking-footer button.danger {
-  background: linear-gradient(45deg, #f56565, #e53e3e);
-}
-
-/* Efectos hover/active */
-.ranking-footer button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-}
-
-.ranking-footer button:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Modal overlay */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(45, 55, 72, 0.6); /* semi-transparente */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-/* Contenido del modal */
-.modal-content {
-  background: white;
-  border-radius: 16px;
-  padding: 24px 20px;
-  max-width: 400px;
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-}
-
-/* Botones dentro del modal */
-.modal-buttons {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-  gap: 12px;
-}
-
-.modal-buttons button {
-  flex: 1;
-  padding: 12px 0;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1em;
-  color: white;
-  background: linear-gradient(45deg, #667eea, #764ba2);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-}
-
-.modal-buttons button.danger {
-  background: linear-gradient(45deg, #f56565, #e53e3e);
-}
-
-/* === ESTILOS PARA BOTÓN VOLVER CON FLECHA === */
-.btn-volver {
   gap: 8px;
-  background: linear-gradient(45deg, #4299e1, #3182ce);
+  flex-shrink: 0;
+}
+
+/* Botón volver con flecha */
+.btn-volver {
   border: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 20px rgba(66, 153, 225, 0.4);
-  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
@@ -390,20 +351,63 @@ input {
 }
 
 .btn-volver:hover {
-  transform: translateY(-3px) !important;
-  box-shadow: 0 12px 30px rgba(66, 153, 225, 0.6) !important;
-  border-color: rgba(255, 255, 255, 0.5) !important;
-}
-
-.btn-volver:active {
-  transform: translateY(0) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(66, 153, 225, 0.6);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .flecha-izquierda {
   font-size: 1.3em;
   line-height: 1;
   display: inline-block;
-  transform: translateY(-1px);
+}
+
+/* Modal overlay */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(45, 55, 72, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  padding: 24px 20px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  gap: 12px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 12px 0;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1em;
+  color: white;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal-buttons button.danger {
+  background: linear-gradient(45deg, #f56565, #e53e3e);
 }
 
 /* -------- ANIMACIONES -------- */
@@ -418,74 +422,51 @@ input {
   }
 }
 
-/* -------- RESPONSIVE - SIMPLIFICADO -------- */
+/* -------- RESPONSIVE -------- */
 @media (max-width: 768px) {
   .ranking-controles {
-    flex-direction: row;
     flex-wrap: wrap;
-    gap: 10px;
   }
 
   .controles-left {
-    flex: 1;
     min-width: 250px;
     flex-wrap: wrap;
   }
 
-  .ranking-controles select {
-    flex: 1;
+  .ranking-controles select,
+  .ranking-controles input {
     min-width: 200px;
     max-width: none;
   }
 
-  .ranking-controles input {
-    flex: 1;
-    min-width: 150px;
-    max-width: none;
-  }
-
-  .ranking-controles button {
-    min-width: 120px;
-  }
-
-  /* Footer en tablets */
-  .ranking-footer {
-    gap: 15px;
-  }
-
-  /* Botones del footer */
   .ranking-footer button {
-    width: 180px;
+    min-width: 180px;
   }
 }
 
 @media (max-width: 480px) {
   .ranking-header h1 {
     font-size: 1.8em;
+    margin: 5px 0;
   }
 
   .ranking-controles {
     padding: 12px;
     flex-direction: column;
-    gap: 10px;
   }
 
   .controles-left {
-    flex-direction: row;
     width: 100%;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-direction: column;
   }
 
   .controles-left input,
   .controles-left select {
     width: 100%;
     min-width: 100%;
-    font-size: 0.95em;
   }
 
   .ranking-controles button {
-    min-width: 100%;
     width: 100%;
   }
 
@@ -494,59 +475,38 @@ input {
     min-width: 36px;
   }
 
-  .ranking-usuario {
-    font-size: 1em;
-  }
-
   .ranking-puntos {
     font-size: 1em;
     padding: 8px 12px;
-    min-width: 90px;
+    min-width: 80px;
   }
 
-  /* FOOTER EN MÓVILES */
   .ranking-footer {
-    flex-direction: row;
-    gap: 10px;
     padding: 10px 0;
-    margin-top: 15px;
+    min-height: 60px;
+    gap: 10px;
   }
 
   .ranking-footer button {
-    height: 30px;
-    width: 100px;
-    font-size: 1.1em;
-    padding: 4px 12px;
-    line-height: 1.1;
-    min-width: 150px;
-    margin: 5px;
-  }
-
-  .btn-volver {
-    gap: 6px !important;
-  }
-
-  .flecha-izquierda {
-    font-size: 1.2em;
+    min-width: 140px;
+    min-height: 40px;
+    padding: 8px 16px;
+    font-size: 0.95em;
   }
 }
 
 @media (max-width: 360px) {
-  .ranking-controles {
-    padding: 10px;
-  }
-
-  .controles-left input,
-  .controles-left select {
-    font-size: 0.9em;
-    padding: 10px 14px;
-  }
-
-  .ranking-footer {
-    gap: 8px;
-  }
-
   .ranking-header h1 {
     font-size: 1.6em;
+  }
+
+  .ranking-footer button {
+    min-width: 120px;
+    font-size: 0.9em;
+  }
+
+  .ranking-puntos {
+    min-width: 70px;
+    padding: 6px 10px;
   }
 }

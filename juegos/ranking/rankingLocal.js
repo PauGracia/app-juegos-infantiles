@@ -192,6 +192,13 @@ function initRanking() {
       `;
       lista.appendChild(li);
     });
+    // AÑADIR: elemento invisible al final para dar espacio
+    const spacer = document.createElement("li");
+    spacer.style.height = "20px";
+    spacer.style.background = "transparent";
+    spacer.style.boxShadow = "none";
+    spacer.style.pointerEvents = "none";
+    lista.appendChild(spacer);
   }
 
   // Eventos
