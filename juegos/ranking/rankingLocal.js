@@ -46,6 +46,64 @@ function obtenerNombreIdioma(codigo) {
   return codigo.toUpperCase();
 }
 
+// Funcion de prueba para ver como queda ranking
+function seedRankingAhorcado() {
+  if (localStorage.getItem("rankingAhorcado")) return; // No sobrescribir
+
+  const datosPrueba = [
+    {
+      usuario: "Lucía",
+      puntos: 120,
+      fecha: "2025-01-12T18:45:00",
+      idioma: "es",
+    },
+    {
+      usuario: "Alex",
+      puntos: 95,
+      fecha: "2025-01-10T17:20:00",
+      idioma: "en",
+    },
+    {
+      usuario: "Martí",
+      puntos: 140,
+      fecha: "2025-01-15T16:05:00",
+      idioma: "ca",
+    },
+    {
+      usuario: "Émilie",
+      puntos: 110,
+      fecha: "2025-01-11T19:30:00",
+      idioma: "fr",
+    },
+    {
+      usuario: "Giulia",
+      puntos: 85,
+      fecha: "2025-01-09T15:10:00",
+      idioma: "it",
+    },
+    {
+      usuario: "João",
+      puntos: 100,
+      fecha: "2025-01-14T20:00:00",
+      idioma: "pt",
+    },
+    {
+      usuario: "Pepin",
+      puntos: 33,
+      fecha: "2025-01-14T20:33:00",
+      idioma: "es",
+    },
+    {
+      usuario: "AntonioPolo",
+      puntos: 75,
+      fecha: "2025-01-14T12:00:00",
+      idioma: "ca",
+    },
+  ];
+
+  localStorage.setItem("rankingAhorcado", JSON.stringify(datosPrueba));
+}
+
 function initRanking() {
   const lista = document.getElementById("listaRanking");
 
@@ -164,6 +222,7 @@ function initRanking() {
     renderRanking();
   };
 
+  seedRankingAhorcado(); // LLamar funcuon de prueba del ranking
   cargarRanking();
 }
 
