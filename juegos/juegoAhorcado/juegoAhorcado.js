@@ -755,6 +755,9 @@ document.addEventListener("DOMContentLoaded", () => {
       ah_crearBotones();
 
       actualizarPistaCategoria();
+      if (btnPista) {
+        btnPista.disabled = false;
+      }
     }
 
     function actualizarPistaCategoria() {

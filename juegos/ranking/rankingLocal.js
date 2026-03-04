@@ -229,7 +229,7 @@ function initRanking() {
     renderRanking();
   };
 
-  seedRankingAhorcado(); // LLamar funcuon de prueba del ranking
+  //seedRankingAhorcado(); // LLamar funcuon de prueba del ranking
   cargarRanking();
 }
 
