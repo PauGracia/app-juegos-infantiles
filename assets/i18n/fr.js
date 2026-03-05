@@ -21,6 +21,8 @@ window.translationsFR = {
   "damas.howToPlay": "Comment jouer aux dames",
   "ahorcado.loseMessage": "Le mot était:",
   "ahorcado.nextWord": "Mot suivant !",
+  "operaciones.maxTimeExceeded":
+    "Le temps maximum autorisé est de 30 minutes (1800 secondes). Il a été automatiquement ajusté.",
   "common.info.No.U": "Erreur : champ utilisateur introuvable.",
   "common.info.3.12": "Le nom doit comporter entre 3 et 12 caractères.",
   "common.info.ingresa": "Veuillez saisir un nom d'utilisateur.",
@@ -30,6 +32,8 @@ window.translationsFR = {
   "damas.instructionsText":
     "• Le but est de capturer toutes les pièces de l'adversaire.\n\n• Les pièces se déplacent en diagonale vers l'avant.\n\n• Les captures sont obligatoires si elles existent.\n\n• Si une pièce atteint l'extrémité opposée, elle devient une dame.\n\n• Les dames peuvent se déplacer dans toutes les diagonales.",
   "categoria.animal": "Animal",
+  "common.confirmRestart": "Êtes-vous sûr de vouloir recommencer la partie ?",
+  "common.restartWarning": "Toute votre progression actuelle sera perdue",
   "categoria.objeto": "Objet",
   "categoria.lugar": "Lieu",
   "categoria.comida": "Nourriture",

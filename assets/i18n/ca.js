@@ -213,9 +213,13 @@ window.translationsCA = {
     "Pots guardar la teva puntuació des del menú final.",
   "ahorcado.instructions.viewRanking":
     "Pots veure el ranking des del menú inicial o final.",
+  "operaciones.maxTimeExceeded":
+    "El temps màxim permès és 30 minuts (1800 segons). S'ha ajustat automàticament.",
   "ahorcado.instructions.exportRanking":
     "També pots exportar el ranking en format JSON.",
   "footer.attributions": "Atribucions",
+  "common.confirmRestart": "Segur que vols reiniciar la partida?",
+  "common.restartWarning": "Es perdrà tot el teu progrés actual",
   "footer.attributionsTitle": "Atribucions",
   "footer.attributions.iconsTitle": "Icones:",
   "footer.attributions.iconsText": "Icones dissenyades per Freepik a",

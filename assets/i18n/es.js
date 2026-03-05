@@ -391,4 +391,8 @@ window.translationsES = {
     "Nos reservamos el derecho de actualizar o modificar estos términos en cualquier momento. Los cambios serán notificados dentro de la propia aplicación.",
   "terms.contact":
     "Si tienes preguntas sobre estos términos, puedes contactar a través de los medios disponibles en la aplicación.",
+  "common.confirmRestart": "¿Seguro que quieres reiniciar la partida?",
+  "common.restartWarning": "Se perderá todo tu progreso actual",
+  "operaciones.maxTimeExceeded":
+    "El tiempo máximo permitido es 30 minutos (1800 segundos). Se ha ajustado automáticamente.",
 };

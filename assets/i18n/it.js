@@ -327,9 +327,13 @@ window.translationsIT = {
   "common.confirmYes": "Sì",
   "common.confirmNo": "No",
   "palabras.config.help": "Attiva aiuto",
+  "operaciones.maxTimeExceeded":
+    "Il tempo massimo consentito è di 30 minuti (1800 secondi). È stato regolato automaticamente.",
   "palabras.config.helpDescription":
     "Mostra aiuti automatici dopo diversi tentativi",
   "categoria.animal": "Animale",
+  "common.confirmRestart": "Sei sicuro di voler riavviare la partita?",
+  "common.restartWarning": "Tutti i progressi attuali andranno persi",
   "categoria.objeto": "Oggetto",
   "categoria.lugar": "Luogo",
   "categoria.comida": "Cibo",

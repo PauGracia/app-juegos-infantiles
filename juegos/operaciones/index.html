@@ -125,7 +125,8 @@
               type="number"
               id="input-tiempo"
               placeholder="Deja en blanco para sin límite"
-              min="1"
+              min="60"
+              max="1800"
             />
           </div>
         </div>
@@ -191,17 +192,7 @@
 
     <div class="botones-operaciones">
       <button id="btn-comprobar" data-i18n="common.check">Comprobar</button>
-      <button data-i18n="common.restart">Reiniciar</button>
-    </div>
-
-    <div id="boton-salir-operaciones">
-      <button
-        class="btn-icon-blancos btn-salir btn-exit"
-        id="btn-salir-partida"
-        data-i18n="common.exit"
-      >
-        Salir
-      </button>
+      <button id="botonReniciar" data-i18n="common.restart">Reiniciar</button>
     </div>
 
     <!-- Modal confirmar salir del juego -->
@@ -214,6 +205,23 @@
         <div class="confirmacion-botones">
           <button id="btn-si" data-i18n="common.yes">Sí</button>
           <button id="btn-no" data-i18n="common.no">No</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal confirmar reiniciar -->
+    <div class="modal-aviso oculto" id="modal-confirmar-reiniciar">
+      <div class="modal-aviso-content">
+        <p data-i18n="common.confirmRestart">
+          ¿Seguro que quieres reiniciar la partida?
+        </p>
+        <p class="aviso-secundario" data-i18n="common.restartWarning">
+          Se perderá todo tu progreso actual
+        </p>
+
+        <div class="confirmacion-botones">
+          <button id="btn-reiniciar-si" data-i18n="common.yes">Sí</button>
+          <button id="btn-reiniciar-no" data-i18n="common.no">No</button>
         </div>
       </div>
     </div>

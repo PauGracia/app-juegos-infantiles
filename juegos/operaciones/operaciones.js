@@ -698,9 +698,20 @@ function iniciar() {
   }
 
   const tiempoInput = document.getElementById("input-tiempo").value;
-  tiempoLimiteModoNormal = parseInt(tiempoInput, 10);
 
-  if (isNaN(tiempoLimiteModoNormal) || tiempoLimiteModoNormal <= 0) {
+  // Validar que el tiempo no supere 30 minutos (1800 segundos)
+  if (tiempoInput && tiempoInput.trim() !== "") {
+    tiempoLimiteModoNormal = parseInt(tiempoInput, 10);
+
+    if (isNaN(tiempoLimiteModoNormal) || tiempoLimiteModoNormal <= 0) {
+      tiempoLimiteModoNormal = null;
+    } else if (tiempoLimiteModoNormal > 1800) {
+      // Si supera 30 minutos, mostrar aviso y limitar a 1800
+      mostrarModalAviso("operaciones.maxTimeExceeded");
+      tiempoLimiteModoNormal = 1800;
+      document.getElementById("input-tiempo").value = 1800;
+    }
+  } else {
     tiempoLimiteModoNormal = null;
   }
 
@@ -1313,6 +1324,38 @@ if (btnInstrucciones) {
   });
 }
 
+// =============================
+// CONFIRMACIÓN REINICIAR PARTIDA
+// =============================
+
+function abrirConfirmacionReiniciar() {
+  document
+    .getElementById("modal-confirmar-reiniciar")
+    .classList.remove("oculto");
+}
+
+function cerrarConfirmacionReiniciar() {
+  document.getElementById("modal-confirmar-reiniciar").classList.add("oculto");
+}
+
+function confirmarReinicio() {
+  cerrarConfirmacionReiniciar();
+  resetearTodo();
+  document.getElementById("modal-modo").style.display = "flex";
+}
+
+// Botones del modal de reinicio
+const btnReiniciarSi = document.getElementById("btn-reiniciar-si");
+const btnReiniciarNo = document.getElementById("btn-reiniciar-no");
+
+if (btnReiniciarSi) {
+  btnReiniciarSi.addEventListener("click", confirmarReinicio);
+}
+
+if (btnReiniciarNo) {
+  btnReiniciarNo.addEventListener("click", cerrarConfirmacionReiniciar);
+}
+
 // ─────────────────────────────
 // CONFIRMACIÓN SALIR DEL JUEGO
 // ─────────────────────────────
@@ -1370,9 +1413,11 @@ if (btnIniciar) {
 document
   .querySelectorAll("button[data-i18n='common.restart']")
   .forEach((btn) => {
-    btn.addEventListener("click", () => {
-      resetearTodo();
-      document.getElementById("modal-modo").style.display = "flex";
+    btn.removeEventListener("click", () => {});
+
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      abrirConfirmacionReiniciar();
     });
   });
 

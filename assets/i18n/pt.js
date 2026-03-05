@@ -92,7 +92,11 @@ window.translationsPT = {
   "operaciones.correctOperations": "Operações corretas",
   "palabras.errors.invalidAmount":
     "O número de palavras deve estar entre 1 e 50",
+  "operaciones.maxTimeExceeded":
+    "O tempo máximo permitido é de 30 minutos (1800 segundos). Foi ajustado automaticamente.",
   "footer.attributions": "Atribuições",
+  "common.confirmRestart": "Tem a certeza que quer reiniciar o jogo?",
+  "common.restartWarning": "Todo o seu progresso atual será perdido",
   "footer.attributionsTitle": "Atribuições",
   "footer.attributions.iconsTitle": "Ícones:",
   "footer.attributions.iconsText": "Ícones criados por Freepik em",

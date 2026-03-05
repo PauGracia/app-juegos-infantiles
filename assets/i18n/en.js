@@ -219,6 +219,10 @@ window.translationsEN = {
   "ahorcado.instructions.interfaceLanguage":
     "You can play this game in different languages to practice.",
   "footer.attributions": "Attributions",
+  "operaciones.maxTimeExceeded":
+    "The maximum allowed time is 30 minutes (1800 seconds). It has been automatically adjusted.",
+  "common.confirmRestart": "Are you sure you want to restart the game?",
+  "common.restartWarning": "All your current progress will be lost",
   "footer.attributionsTitle": "Attributions",
   "footer.attributions.iconsTitle": "Icons:",
   "footer.attributions.iconsText": "Icons made by Freepik from",
