@@ -249,6 +249,7 @@ body {
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
   caret-color: transparent;
+  -webkit-text-security: none !important;
 }
 
 .letras-palabras input:focus {
@@ -270,10 +271,16 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px white inset;
-  box-shadow: 0 0 0 30px white inset;
-  background-color: white;
-  background-clip: content-box;
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  box-shadow: 0 0 0 30px white inset !important;
+  background-color: white !important;
+  background-clip: content-box !important;
+  -webkit-text-fill-color: #2d3748 !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+input[autocomplete="off"] {
+  -webkit-autofill: none;
 }
 
 /* Prevenir cualquier estilo de autocompletado */

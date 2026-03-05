@@ -399,17 +399,15 @@ document.addEventListener("DOMContentLoaded", () => {
       input.dataset.index = i;
       input.style.backgroundColor = "white";
 
-      input.name = "letter-" + i + "-" + Math.random().toString(36).slice(2);
+      // Atributos específicos para evitar autocompletado
+      input.setAttribute("autocomplete", "off");
+      input.setAttribute("autocorrect", "off");
+      input.setAttribute("autocapitalize", "none");
+      input.setAttribute("spellcheck", "false");
+      input.setAttribute("inputmode", "text");
 
-      //const timestamp = Date.now();
-      //input.setAttribute("name", `letra_${i}_${timestamp}`);
-      //input.setAttribute("id", `input_letra_${i}_${timestamp}`);
-      input.setAttribute("autocomplete", "new-password");
-      input.autocomplete = "off";
-      input.autocorrect = "off";
-      input.autocapitalize = "none";
-      input.spellcheck = false;
-      input.setAttribute("inputmode", "latin");
+      //  Usar name muy genérico que no coincida con patrones de SMS
+      input.name = `l_${Date.now()}_${i}`;
 
       // Prevenir menú contextual
       input.addEventListener("contextmenu", (e) => {
@@ -428,6 +426,11 @@ document.addEventListener("DOMContentLoaded", () => {
           e.preventDefault();
         }
       });
+
+      // Forzar a Android a no mostrar sugerencias de SMS
+      input.setAttribute("data-1p-ignore", "true");
+      input.setAttribute("data-lpignore", "true");
+      input.setAttribute("data-form-type", "other");
 
       // Manejo del input (escribir)
       input.addEventListener("input", (e) => {
