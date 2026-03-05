@@ -134,7 +134,21 @@
       <div class="imagen-contenedor">
         <img id="imagen" class="imagen-palabras" src="" alt="" />
       </div>
-
+      <input
+        id="dummy-input"
+        type="text"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="none"
+        spellcheck="false"
+        style="
+          position: absolute;
+          opacity: 0;
+          height: 0;
+          width: 0;
+          pointer-events: none;
+        "
+      />
       <div class="letras-palabras" id="inputs"></div>
       <div class="botones-palabras">
         <button id="btnComprobar" data-i18n="palabras.buttons.check">

@@ -181,7 +181,7 @@ body {
   transform: translateX(-50%);
   width: 100px;
   height: 5px;
-  background: linear-gradient(90deg, #48bb78, #38a169);
+  background: linear-gradient(90deg, #667eea, #764ba2);
   border-radius: 3px;
 }
 
@@ -263,6 +263,34 @@ body {
 .letras-palabras input.letra-error:focus,
 .letras-palabras input.letra-ayuda:focus {
   caret-color: transparent;
+}
+
+/* Ocultar el fondo amarillo de autocompletado de Chrome/Android */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset;
+  box-shadow: 0 0 0 30px white inset;
+  background-color: white;
+  background-clip: content-box;
+}
+
+/* Prevenir cualquier estilo de autocompletado */
+input {
+  -webkit-text-fill-color: #2d3748;
+}
+
+/*Para inputs con error, mantener el color rojo incluso con autofill */
+input.letra-error:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px #fed7d7 inset;
+  -webkit-text-fill-color: #2d3748;
+}
+
+/* Para inputs correctos, mantener el color verde */
+input.letra-correcta:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px #c6f6d5 inset;
+  -webkit-text-fill-color: #22543d;
 }
 
 .letras-palabras input:disabled {
@@ -645,7 +673,7 @@ body {
 
 @media (max-width: 480px) {
   .letras-palabras {
-    margin: 20px;
+    margin: 40px;
   }
   .letras-palabras.palabra-larga input {
     width: 20px;
@@ -658,9 +686,7 @@ body {
   .letras-palabras.palabra-larga {
     gap: 4px;
   }
-}
 
-@media (max-width: 480px) {
   .letras-palabras.palabra-larga input {
     width: 18px;
     height: 18px;
@@ -671,6 +697,9 @@ body {
 
   .letras-palabras.palabra-larga {
     gap: 4px;
+  }
+  .titulo-operaciones {
+    margin-top: 20px;
   }
 }
 
@@ -750,12 +779,12 @@ body {
   }
 
   .titulo-operaciones {
-    display: none;
+    font-size: 30px;
   }
 
   .letras-palabras input {
-    width: 28px;
-    height: 28px;
+    width: 25px;
+    height: 25px;
     font-size: 20px;
     border-radius: 8px;
     border-width: 2px;

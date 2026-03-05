@@ -394,45 +394,93 @@ document.addEventListener("DOMContentLoaded", () => {
 
     for (let i = 0; i < palabraObjetivo.length; i++) {
       const input = document.createElement("input");
+      input.type = "text";
       input.maxLength = 1;
       input.dataset.index = i;
       input.style.backgroundColor = "white";
 
+      input.name = "letter-" + i + "-" + Math.random().toString(36).slice(2);
+
+      //const timestamp = Date.now();
+      //input.setAttribute("name", `letra_${i}_${timestamp}`);
+      //input.setAttribute("id", `input_letra_${i}_${timestamp}`);
+      input.setAttribute("autocomplete", "new-password");
+      input.autocomplete = "off";
+      input.autocorrect = "off";
+      input.autocapitalize = "none";
+      input.spellcheck = false;
+      input.setAttribute("inputmode", "latin");
+
+      // Prevenir menú contextual
+      input.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        return false;
+      });
+
+      // Prevenir copiar/cortar/pegar
+      input.addEventListener("copy", (e) => e.preventDefault());
+      input.addEventListener("cut", (e) => e.preventDefault());
+      input.addEventListener("paste", (e) => e.preventDefault());
+
+      // Prevenir cualquier evento de autocompletado
+      input.addEventListener("animationstart", (e) => {
+        if (e.animationName.includes("autofill")) {
+          e.preventDefault();
+        }
+      });
+
       // Manejo del input (escribir)
       input.addEventListener("input", (e) => {
-        // Auto-avance al siguiente input
         const next = inputsDiv.querySelector(`input[data-index='${i + 1}']`);
         if (next && e.target.value) {
           next.focus();
         }
+
+        if (input.classList.contains("letra-error")) {
+          input.classList.remove("letra-error");
+          input.style.backgroundColor = "white";
+        }
       });
 
-      // Manejo del click (siempre borrar el contenido al hacer click)
+      // Manejo del click
       input.addEventListener("click", (e) => {
-        // Siempre seleccionar todo el texto y borrar
-        e.target.value = "";
-        e.target.style.backgroundColor = "white";
-        e.target.classList.remove(
-          "letra-correcta",
-          "letra-error",
-          "letra-ayuda",
-        );
+        if (!input.disabled) {
+          const teniaError = input.classList.contains("letra-error");
+          const teniaCorrecta = input.classList.contains("letra-correcta");
+
+          e.target.value = "";
+
+          if (teniaCorrecta) {
+            input.classList.remove("letra-correcta");
+            input.style.backgroundColor = "white";
+          }
+
+          if (!teniaError && !teniaCorrecta) {
+            input.style.backgroundColor = "white";
+          }
+        }
       });
 
-      //Manejo del focus (seleccionar todo el texto)
+      // Manejo del focus (sin selección azul)
       input.addEventListener("focus", (e) => {
-        e.target.select();
+        setTimeout(() => {
+          if (e.target.value) {
+            e.target.setSelectionRange(
+              e.target.value.length,
+              e.target.value.length,
+            );
+          }
+        }, 0);
       });
 
       // Manejo de teclas especiales
       input.addEventListener("keydown", (e) => {
         if (e.key === "Backspace" && !e.target.value) {
-          // Si está vacío y pulsamos backspace, ir al input anterior
           e.preventDefault();
           const prev = inputsDiv.querySelector(`input[data-index='${i - 1}']`);
           if (prev) {
             prev.focus();
-            prev.value = ""; // Borrar el contenido del anterior
+            prev.value = "";
             prev.style.backgroundColor = "white";
             prev.classList.remove(
               "letra-correcta",
@@ -668,6 +716,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     mostrarImagen();
+    const dummy = document.getElementById("dummy-input");
+
+    dummy.focus();
+
+    setTimeout(() => {
+      dummy.blur();
+    }, 50);
   }
 
   // -----------------------------
