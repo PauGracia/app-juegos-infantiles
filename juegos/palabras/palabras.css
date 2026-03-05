@@ -17,6 +17,10 @@ body {
   overscroll-behavior: none;
   touch-action: none;
   font-family: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 /* Modal principal */
@@ -154,6 +158,8 @@ body {
   padding-bottom: 160px;
   box-sizing: border-box;
   background: linear-gradient(135deg, #f3e7b3 0%, #e7d27b 100%);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .titulo-operaciones {
@@ -233,6 +239,16 @@ body {
   transition: all 0.2s ease;
   user-select: none;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  /* Prevenir zoom automático en inputs */
+  font-size: 24px;
+  transform: scale(1);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  caret-color: transparent;
 }
 
 .letras-palabras input:focus {
@@ -240,12 +256,21 @@ body {
   border-color: #667eea;
   box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
   transform: translateY(-2px);
+  caret-color: transparent;
+}
+
+.letras-palabras input.letra-correcta:focus,
+.letras-palabras input.letra-error:focus,
+.letras-palabras input.letra-ayuda:focus {
+  caret-color: transparent;
 }
 
 .letras-palabras input:disabled {
   background: #f7fafc;
   border-color: #e2e8f0;
   color: #a0aec0;
+  -webkit-text-fill-color: #a0aec0; /* Para Safari */
+  opacity: 1;
 }
 
 /* Botones principales */
@@ -445,6 +470,13 @@ body {
   z-index: 50;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Clase para ocultar panel cuando el teclado está abierto */
+.panel-info.keyboard-open {
+  opacity: 0;
   pointer-events: none;
 }
 
@@ -651,8 +683,8 @@ body {
   }
 
   .imagen-contenedor {
-    max-width: 190px;
-    max-height: 190px;
+    max-width: 200px;
+    max-height: 200px;
     padding: 30px;
   }
 
@@ -682,6 +714,7 @@ body {
   .contenedor-imagenPalabra {
     justify-content: flex-start;
     padding-top: 10px;
+    padding-bottom: 20px;
   }
 
   /* Panel de información */
@@ -691,11 +724,28 @@ body {
     padding: 14px 16px;
   }
 
+  /* Hacer los inputs más pequeños para que quepan mejor */
+  .contenedor-imagenPalabra.keyboard-visible {
+    padding-bottom: 10px;
+  }
+
+  .contenedor-imagenPalabra.keyboard-visible .letras-palabras input {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .contenedor-imagenPalabra.keyboard-visible .imagen-contenedor {
+    padding: 15px;
+    max-width: 140px;
+    max-height: 140px;
+  }
+
   .imagen-contenedor {
     border: 6px solid #2d3748;
     padding: 20px;
-    max-width: 160px;
-    max-height: 160px;
+    max-width: 200px;
+    max-height: 200px;
     border-radius: 16px;
   }
 
@@ -704,9 +754,9 @@ body {
   }
 
   .letras-palabras input {
-    width: 25px;
-    height: 25px;
-    font-size: 16px;
+    width: 28px;
+    height: 28px;
+    font-size: 20px;
     border-radius: 8px;
     border-width: 2px;
   }

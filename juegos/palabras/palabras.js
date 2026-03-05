@@ -26,6 +26,92 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let idiomaPalabrasSeleccionado = parseInt(selectPalabrasIdioma.value);
 
+  // Añadir después de la inicialización de elementos DOM
+  // -----------------------------
+  // MANEJO DEL TECLADO EN ANDROID WEBVIEW
+  // -----------------------------
+  function setupKeyboardHandling() {
+    const panelInfo = document.getElementById("panel-info");
+    const contenedorJuego = document.querySelector(".contenedor-imagenPalabra");
+    const inputs = document.querySelectorAll(".letras-palabras input");
+
+    // Detectar cuando el input recibe foco (teclado se abre)
+    const handleInputFocus = () => {
+      panelInfo.classList.add("keyboard-open");
+      contenedorJuego.classList.add("keyboard-visible");
+
+      // Scroll suave hacia los inputs
+      setTimeout(() => {
+        const inputsContainer = document.querySelector(".letras-palabras");
+        if (inputsContainer) {
+          inputsContainer.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+      }, 300);
+    };
+
+    // Detectar cuando el input pierde foco (teclado se cierra)
+    const handleInputBlur = () => {
+      panelInfo.classList.remove("keyboard-open");
+      contenedorJuego.classList.remove("keyboard-visible");
+
+      // Restaurar scroll al centro
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 100);
+    };
+
+    // Aplicar event listeners a inputs dinámicos
+    const applyInputListeners = () => {
+      document.querySelectorAll(".letras-palabras input").forEach((input) => {
+        input.removeEventListener("focus", handleInputFocus);
+        input.removeEventListener("blur", handleInputBlur);
+        input.addEventListener("focus", handleInputFocus);
+        input.addEventListener("blur", handleInputBlur);
+      });
+    };
+
+    // Llamar cada vez que se muestre una nueva imagen
+    const originalMostrarImagen = window.mostrarImagen;
+    window.mostrarImagen = function () {
+      if (originalMostrarImagen) originalMostrarImagen();
+      setTimeout(applyInputListeners, 100);
+    };
+
+    // También aplicar al iniciar
+    applyInputListeners();
+
+    // Prevenir que el viewport se redimensione
+    const preventViewportResize = () => {
+      if (window.visualViewport) {
+        const handleResize = () => {
+          if (document.activeElement?.tagName === "INPUT") {
+            document.body.style.minHeight = `${window.visualViewport.height}px`;
+          } else {
+            document.body.style.minHeight = "";
+          }
+        };
+        window.visualViewport.addEventListener("resize", handleResize);
+      }
+    };
+
+    preventViewportResize();
+  }
+
+  // Llamar cuando el DOM esté listo y también después de iniciar juego
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(setupKeyboardHandling, 500);
+  });
+
+  // También llamar después de iniciar juego
+  const originalIniciarJuego = window.iniciarJuego;
+  window.iniciarJuego = function () {
+    if (originalIniciarJuego) originalIniciarJuego();
+    setTimeout(setupKeyboardHandling, 500);
+  };
+
   // -----------------------------
   // VARIABLES DEL JUEGO
   // -----------------------------
@@ -312,17 +398,56 @@ document.addEventListener("DOMContentLoaded", () => {
       input.dataset.index = i;
       input.style.backgroundColor = "white";
 
-      input.addEventListener("input", () => {
-        if (!comprobado) {
-          const next = inputsDiv.querySelector(`input[data-index='${i + 1}']`);
-          if (next && input.value) next.focus();
+      // Manejo del input (escribir)
+      input.addEventListener("input", (e) => {
+        // Auto-avance al siguiente input
+        const next = inputsDiv.querySelector(`input[data-index='${i + 1}']`);
+        if (next && e.target.value) {
+          next.focus();
         }
       });
 
-      input.addEventListener("click", () => {
-        if (comprobado) {
-          input.value = "";
-          input.style.backgroundColor = "white";
+      // Manejo del click (siempre borrar el contenido al hacer click)
+      input.addEventListener("click", (e) => {
+        // Siempre seleccionar todo el texto y borrar
+        e.target.value = "";
+        e.target.style.backgroundColor = "white";
+        e.target.classList.remove(
+          "letra-correcta",
+          "letra-error",
+          "letra-ayuda",
+        );
+      });
+
+      //Manejo del focus (seleccionar todo el texto)
+      input.addEventListener("focus", (e) => {
+        e.target.select();
+      });
+
+      // Manejo de teclas especiales
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && !e.target.value) {
+          // Si está vacío y pulsamos backspace, ir al input anterior
+          e.preventDefault();
+          const prev = inputsDiv.querySelector(`input[data-index='${i - 1}']`);
+          if (prev) {
+            prev.focus();
+            prev.value = ""; // Borrar el contenido del anterior
+            prev.style.backgroundColor = "white";
+            prev.classList.remove(
+              "letra-correcta",
+              "letra-error",
+              "letra-ayuda",
+            );
+          }
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          const prev = inputsDiv.querySelector(`input[data-index='${i - 1}']`);
+          if (prev) prev.focus();
+        } else if (e.key === "ArrowRight") {
+          e.preventDefault();
+          const next = inputsDiv.querySelector(`input[data-index='${i + 1}']`);
+          if (next) next.focus();
         }
       });
 
@@ -350,7 +475,6 @@ document.addEventListener("DOMContentLoaded", () => {
       comprobacionesTotales;
 
     const inputs = document.querySelectorAll("#inputs input");
-    if ([...inputs].some((input) => !input.value)) return;
 
     let resultado = "";
     inputs.forEach((input) => (resultado += normalizar(input.value)));
@@ -388,20 +512,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       for (let i = 0; i < palabraObjetivo.length; i++) {
-        if (!inputs[i].disabled) {
-          if (normalizar(inputs[i].value) !== palabraObjetivo[i]) {
-            inputs[i].classList.remove("letra-correcta");
-            inputs[i].classList.remove("letra-error");
-            void inputs[i].offsetWidth;
-            inputs[i].classList.add("letra-error");
-            inputs[i].style.backgroundColor = "#fed7d7";
-            inputs[i].disabled = false;
-          } else {
-            inputs[i].classList.remove("letra-error");
-            inputs[i].classList.add("letra-correcta");
-            inputs[i].style.backgroundColor = "#9f9";
-            inputs[i].disabled = true;
-          }
+        const valorInput = inputs[i] ? normalizar(inputs[i].value || "") : "";
+
+        if (valorInput === palabraObjetivo[i]) {
+          // Letra correcta
+          inputs[i].classList.remove("letra-error");
+          inputs[i].classList.add("letra-correcta");
+          inputs[i].style.backgroundColor = "#9f9";
+          inputs[i].disabled = true;
+        } else {
+          // Letra incorrecta o vacía - NO deshabilitar para permitir corrección
+          inputs[i].classList.remove("letra-correcta");
+          inputs[i].classList.remove("letra-error");
+          void inputs[i].offsetWidth;
+          inputs[i].classList.add("letra-error");
+          inputs[i].style.backgroundColor = "#fed7d7";
+          inputs[i].disabled = false; // Asegurar que no esté deshabilitado
         }
       }
 
