@@ -680,7 +680,7 @@ input.letra-correcta:-webkit-autofill {
 
 @media (max-width: 480px) {
   .letras-palabras {
-    margin: 40px;
+    margin: 30px;
   }
   .letras-palabras.palabra-larga input {
     width: 20px;
