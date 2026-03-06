@@ -461,7 +461,7 @@ body {
 #botonReniciar {
   background: linear-gradient(145deg, #d32f2f, #ee0404);
   color: white;
-  border-color: #ff0000;
+  border-color: #000000;
 }
 
 .modal-content #btn-instrucciones {
