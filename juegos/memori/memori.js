@@ -453,7 +453,10 @@ document.addEventListener("DOMContentLoaded", () => {
           primeraCarta = div;
         } else {
           if (primeraCarta.dataset.valor === div.dataset.valor) {
-            playSound(sonidos.pareja);
+            // Pequeño retraso para que el sonido de girar termine
+            setTimeout(() => {
+              playSound(sonidos.pareja);
+            }, 200);
 
             // Añadir clase emparejada a ambas cartas
             primeraCarta.classList.add("emparejada");
@@ -468,7 +471,9 @@ document.addEventListener("DOMContentLoaded", () => {
             primeraCarta = null;
             bloqueo = false;
           } else {
-            playSound(sonidos.error);
+            setTimeout(() => {
+              playSound(sonidos.error);
+            }, 200);
             bloqueo = true;
             puntuacion = Math.max(0, puntuacion - 5);
             actualizarMarcador();
@@ -596,7 +601,7 @@ document.addEventListener("DOMContentLoaded", () => {
         intervaloTiempo = null;
       }
 
-      // IMPORTANTE: Limpiar el timeout del nivel anterior si existe
+      // Limpiar el timeout del nivel anterior si existe
       if (timeoutNivelActual) {
         clearTimeout(timeoutNivelActual);
         timeoutNivelActual = null;
@@ -608,107 +613,113 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Eliminar modal existente si lo hay
-      const modalExistente = document.getElementById("modal-nivel");
-      if (modalExistente) {
-        modalExistente.remove();
-      }
+      // Pequeña pausa para que el sonido se escuche antes de cambiar la UI
+      setTimeout(() => {
+        // Eliminar modal existente si lo hay
+        const modalExistente = document.getElementById("modal-nivel");
+        if (modalExistente) {
+          modalExistente.remove();
+        }
 
-      parejasEncontradas = 0;
-      nivelActual++;
-      const nivel = niveles[nivelActual - 1];
-      nivelEnCurso = nivel;
-      parejasDelNivel = nivel.parejas;
-      columnasNivel = nivel.columnas;
-      tiempoRestante = nivel.tiempo;
+        parejasEncontradas = 0;
+        nivelActual++;
+        const nivel = niveles[nivelActual - 1];
+        nivelEnCurso = nivel;
+        parejasDelNivel = nivel.parejas;
+        columnasNivel = nivel.columnas;
+        tiempoRestante = nivel.tiempo;
 
-      // Función para actualizar el texto del modal
-      function actualizarModalTexto() {
-        if (!modalNivel) return;
+        // Función para actualizar el texto del modal
+        function actualizarModalTexto() {
+          if (!modalNivel) return;
 
-        const minutos = Math.floor(tiempoRestante / 60);
-        const segundos = tiempoRestante % 60;
-        const tiempoFormateado = `${minutos}:${
-          segundos < 10 ? "0" : ""
-        }${segundos}`;
+          const minutos = Math.floor(tiempoRestante / 60);
+          const segundos = tiempoRestante % 60;
+          const tiempoFormateado = `${minutos}:${
+            segundos < 10 ? "0" : ""
+          }${segundos}`;
 
-        const titulo = t("memori.levelModalTitle").replace(
-          "{{level}}",
-          nivel.nivel,
-        );
-        const info = t("memori.levelModalInfo")
-          .replace("{{pairs}}", nivel.parejas)
-          .replace("{{time}}", tiempoFormateado);
+          const titulo = t("memori.levelModalTitle").replace(
+            "{{level}}",
+            nivel.nivel,
+          );
+          const info = t("memori.levelModalInfo")
+            .replace("{{pairs}}", nivel.parejas)
+            .replace("{{time}}", tiempoFormateado);
 
-        modalNivel.querySelector("h2").textContent = titulo;
-        modalNivel.querySelector("p").textContent = info;
-        modalNivel.querySelector("button").textContent = t("common.start");
-      }
+          modalNivel.querySelector("h2").textContent = titulo;
+          modalNivel.querySelector("p").textContent = info;
+          modalNivel.querySelector("button").textContent = t("common.start");
+        }
 
-      // Crear modal nivel
-      const modalNivel = document.createElement("div");
-      modalNivel.classList.add("modal-memori", "mostrar");
-      modalNivel.setAttribute("id", "modal-nivel");
-      modalNivel.innerHTML = `
+        // Crear modal nivel
+        const modalNivel = document.createElement("div");
+        modalNivel.classList.add("modal-memori", "mostrar");
+        modalNivel.setAttribute("id", "modal-nivel");
+        modalNivel.innerHTML = `
     <div class="modal-contentMemori">
       <h2></h2>
       <p></p>
       <button id="iniciarNivel"></button>
     </div>
   `;
-      document.body.appendChild(modalNivel);
+        document.body.appendChild(modalNivel);
 
-      // Guardar el timeout en la variable global
-      timeoutNivelActual = setTimeout(() => {
-        console.warn("Tiempo de espera agotado en selección de nivel");
+        // Guardar el timeout en la variable global
+        timeoutNivelActual = setTimeout(() => {
+          console.warn("Tiempo de espera agotado en selección de nivel");
 
-        // Cerrar modal si sigue abierto
-        if (modalNivel.parentNode) {
-          modalNivel.remove();
-        }
+          // Cerrar modal si sigue abierto
+          if (modalNivel.parentNode) {
+            modalNivel.remove();
+          }
 
-        // Simular fin de tiempo
-        nivelMaximoAlcanzado = Math.max(nivelMaximoAlcanzado, nivelActual - 1);
-        mostrarModalTiempoAgotado();
+          // Simular fin de tiempo
+          nivelMaximoAlcanzado = Math.max(
+            nivelMaximoAlcanzado,
+            nivelActual - 1,
+          );
+          mostrarModalTiempoAgotado();
 
-        timeoutNivelActual = null; // Limpiar referencia
-      }, TIEMPO_MAX_ESPERA_NIVEL);
+          timeoutNivelActual = null; // Limpiar referencia
+        }, TIEMPO_MAX_ESPERA_NIVEL);
 
-      // Actualizar texto inicial
-      actualizarModalTexto();
-
-      const btnIniciar = modalNivel.querySelector("#iniciarNivel");
-
-      const languageHandler = () => {
+        // Actualizar texto inicial
         actualizarModalTexto();
-      };
 
-      // Escuchar cambios de idioma
-      document.addEventListener("languageChanged", languageHandler);
+        const btnIniciar = modalNivel.querySelector("#iniciarNivel");
 
-      const iniciarHandler = () => {
-        console.log("Botón Iniciar clickeado, nivel:", nivelActual);
+        const languageHandler = () => {
+          actualizarModalTexto();
+        };
 
-        // Cancelar timeout de espera
-        if (timeoutNivelActual) {
-          clearTimeout(timeoutNivelActual);
-          timeoutNivelActual = null;
-        }
+        // Escuchar cambios de idioma
+        document.addEventListener("languageChanged", languageHandler);
 
-        if (!elementos || elementos.length < parejasDelNivel) {
-          mostrarModalAviso(t("memori.notEnoughElements"));
-          return;
-        }
+        const iniciarHandler = () => {
+          console.log("Botón Iniciar clickeado, nivel:", nivelActual);
 
-        // Remover el event listener del cambio de idioma
-        document.removeEventListener("languageChanged", languageHandler);
-        modalNivel.remove();
-        console.log("Modal removido, cargando nivel...");
+          // Cancelar timeout de espera
+          if (timeoutNivelActual) {
+            clearTimeout(timeoutNivelActual);
+            timeoutNivelActual = null;
+          }
 
-        cargarNivelDesafio();
-      };
+          if (!elementos || elementos.length < parejasDelNivel) {
+            mostrarModalAviso(t("memori.notEnoughElements"));
+            return;
+          }
 
-      btnIniciar.addEventListener("click", iniciarHandler, { once: true });
+          // Remover el event listener del cambio de idioma
+          document.removeEventListener("languageChanged", languageHandler);
+          modalNivel.remove();
+          console.log("Modal removido, cargando nivel...");
+
+          cargarNivelDesafio();
+        };
+
+        btnIniciar.addEventListener("click", iniciarHandler, { once: true });
+      }, 150); // Pequeña pausa para que el sonido se escuche
     }
 
     function cargarNivelDesafio() {
@@ -783,7 +794,10 @@ document.addEventListener("DOMContentLoaded", () => {
           primeraCarta = div;
         } else {
           if (primeraCarta.dataset.valor === div.dataset.valor) {
-            playSound(sonidos.pareja);
+            // Pequeño retraso para que el sonido de girar termine
+            setTimeout(() => {
+              playSound(sonidos.pareja);
+            }, 200);
 
             // Añadir clase emparejada a ambas cartas
             primeraCarta.classList.add("emparejada");
@@ -811,10 +825,13 @@ document.addEventListener("DOMContentLoaded", () => {
               );
 
               if (nivelActual < niveles.length) {
-                playSound(sonidos.pasoNivel);
                 setTimeout(() => {
-                  siguienteNivel();
-                }, 400);
+                  playSound(sonidos.pasoNivel);
+
+                  setTimeout(() => {
+                    siguienteNivel();
+                  }, 300);
+                }, 200);
               } else {
                 desafioTerminado = true;
                 mostrarModalDesafioFinal();
@@ -824,7 +841,9 @@ document.addEventListener("DOMContentLoaded", () => {
             primeraCarta = null;
             bloqueo = false;
           } else {
-            playSound(sonidos.error);
+            setTimeout(() => {
+              playSound(sonidos.error);
+            }, 150);
             bloqueo = true;
             puntuacion = Math.max(0, puntuacion - 5);
 

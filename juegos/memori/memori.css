@@ -1244,6 +1244,7 @@ body {
     margin-left: 10px;
     width: auto;
     min-width: 100px;
+    min-height: 45px;
     padding: 8px 12px;
     font-size: 16px;
   }
