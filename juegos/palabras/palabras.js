@@ -133,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let cantidad = 3;
   let estabaEnModalFinal = false;
   let bolsaPalabras = []; // bolsa para palabras aleatorias
+  let palabraOriginal = "";
 
   // -----------------------------
   // SONIDOS - VERSIÓN SIMPLE Y COMPROBADA
@@ -384,10 +385,9 @@ document.addEventListener("DOMContentLoaded", () => {
     palabraUsadaConAyuda = false;
 
     objetoActual = seleccionados[actual];
-    palabraObjetivo = normalizar(
-      objetoActual.palabras[idiomaPalabrasSeleccionado].trim(),
-    );
-
+    palabraOriginal = objetoActual.palabras[idiomaPalabrasSeleccionado].trim();
+    palabraObjetivo = normalizar(palabraOriginal);
+    console.log("Original:", palabraOriginal);
     document.getElementById("imagen").src = objetoActual.imagen;
 
     const contenedor = document.querySelector(".imagen-contenedor");
@@ -401,7 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
       inputsDiv.classList.add("palabra-larga");
     }
 
-    for (let i = 0; i < palabraObjetivo.length; i++) {
+    for (let i = 0; i < palabraOriginal.length; i++) {
       const input = document.createElement("input");
       input.type = "text";
       input.maxLength = 1;
@@ -444,7 +444,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Manejo del input (escribir)
       input.addEventListener("input", (e) => {
         const next = inputsDiv.querySelector(`input[data-index='${i + 1}']`);
-        if (next && e.target.value) {
+        if (next && e.target.value && !comprobado) {
           next.focus();
         }
 
@@ -549,7 +549,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       setTimeout(() => {
         contenedor.style.borderColor = "green";
-        inputs.forEach((input) => {
+        inputs.forEach((input, i) => {
+          input.value = palabraOriginal[i];
           input.classList.remove("letra-error");
           input.classList.add("letra-correcta");
           input.style.backgroundColor = "#9f9";
@@ -603,7 +604,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sonidosPalabras.azul();
 
     for (let i = 0; i < palabraObjetivo.length; i++) {
-      inputs[i].value = palabraObjetivo[i];
+      inputs[i].value = palabraOriginal[i];
       inputs[i].className = "";
       inputs[i].style.cssText = "";
       inputs[i].classList.add("letra-ayuda");
@@ -621,7 +622,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function siguiente() {
     resumen.push({
-      palabra: palabraObjetivo,
+      palabra: palabraOriginal,
       conAyuda: palabraUsadaConAyuda,
       comprobaciones: comprobacionesEstaPalabra,
     });

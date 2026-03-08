@@ -681,7 +681,7 @@ input.letra-correcta:-webkit-autofill {
 @media (max-width: 480px) {
   .letras-palabras {
     margin: 30px;
-    gap: 4px;
+    gap: 3px;
   }
   .letras-palabras.palabra-larga input {
     width: 20px;

@@ -54,7 +54,7 @@ const elementos = [
 
   {
     id: 10,
-    palabras: ["cohete", "coet", "rocket", "fusee", "razzo", "foguete"],
+    palabras: ["cohete", "coet", "rocket", "fusée", "razzo", "foguete"],
     imagen: "../../assets/img/iconos/cohete.png",
   },
   {
@@ -147,7 +147,7 @@ const elementos = [
   {
     id: 24,
     palabras: [
-      "telefono",
+      "teléfono",
       "telefon",
       "phone",
       "telephone",
@@ -186,7 +186,7 @@ const elementos = [
   {
     id: 29,
     palabras: [
-      "semaforo",
+      "semáforo",
       "semafor",
       "trafficlight",
       "feu",
@@ -203,7 +203,7 @@ const elementos = [
   },
   {
     id: 31,
-    palabras: ["labios", "llabis", "lips", "levres", "labbra", "labios"],
+    palabras: ["labios", "llabis", "lips", "lèvres", "labbra", "labios"],
     imagen: "../../assets/img/iconos/labios.png",
   },
   {
@@ -217,7 +217,7 @@ const elementos = [
       "helicoptero",
       "helicopter",
       "helicopter",
-      "helicoptere",
+      "hélicoptère",
       "elicottero",
       "helicoptero",
     ],
@@ -235,7 +235,7 @@ const elementos = [
   },
   {
     id: 36,
-    palabras: ["limon", "llimona", "lemon", "citron", "limone", "limao"],
+    palabras: ["limón", "llimona", "lemon", "citron", "limone", "limão"],
     imagen: "../../assets/img/iconos/limon.png",
   },
   {
@@ -355,7 +355,7 @@ const elementos = [
       "alien",
       "alien",
       "alieno",
-      "alienigena",
+      "alienígena",
     ],
     imagen: "../../assets/img/iconos/alien.png",
   },
@@ -371,7 +371,7 @@ const elementos = [
   },
   {
     id: 56,
-    palabras: ["volcan", "volca", "volcano", "volcan", "vulcano", "vulcao"],
+    palabras: ["volcan", "volcà", "volcano", "volcan", "vulcano", "vulcao"],
     imagen: "../../assets/img/iconos/volcan.png",
   },
   {
@@ -380,7 +380,7 @@ const elementos = [
       "dinosaurio",
       "dinosaure",
       "dinosaur",
-      "dinossauro",
+      "dinosaure",
       "dinosauro",
       "dinossauro",
     ],
@@ -388,7 +388,14 @@ const elementos = [
   },
   {
     id: 58,
-    palabras: ["móvil", "mòbil", "cell", "portable", "cellulare", "telemóvel"],
+    palabras: [
+      "móvil",
+      "mòbil",
+      "cellphone",
+      "portable",
+      "cellulare",
+      "telemóvel",
+    ],
     imagen: "../../assets/img/iconos/mobil.png",
   },
   {
@@ -408,7 +415,7 @@ const elementos = [
   },
   {
     id: 62,
-    palabras: ["camión", "camió", "lorry", "camion", "camion", "camião"],
+    palabras: ["camión", "camió", "truck", "camion", "camion", "camião"],
     imagen: "../../assets/img/iconos/camion.png",
   },
   {
