@@ -681,6 +681,7 @@ input.letra-correcta:-webkit-autofill {
 @media (max-width: 480px) {
   .letras-palabras {
     margin: 30px;
+    gap: 4px;
   }
   .letras-palabras.palabra-larga input {
     width: 20px;
@@ -688,10 +689,6 @@ input.letra-correcta:-webkit-autofill {
     font-size: 13px;
     border-radius: 6px;
     border-width: 1.5px;
-  }
-
-  .letras-palabras.palabra-larga {
-    gap: 4px;
   }
 
   .letras-palabras.palabra-larga input {
@@ -703,7 +700,7 @@ input.letra-correcta:-webkit-autofill {
   }
 
   .letras-palabras.palabra-larga {
-    gap: 4px;
+    gap: 2px;
   }
   .titulo-operaciones {
     margin-top: 20px;

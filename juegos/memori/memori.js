@@ -166,17 +166,6 @@ document.addEventListener("DOMContentLoaded", () => {
       modalInstrucciones.classList.remove("mostrar");
     });
 
-    // Selección de modo
-    document.getElementById("modoNormal").addEventListener("click", () => {
-      modalInicio.classList.remove("mostrar");
-      iniciarJuegoNormal();
-    });
-
-    document.getElementById("modoDesafio").addEventListener("click", () => {
-      modalInicio.classList.remove("mostrar");
-      iniciarJuegoDesafio();
-    });
-
     // Botón salir del modal de victoria o modal principal
     salirBtn.addEventListener("click", () => {
       confirmarSalida(() => {
@@ -622,8 +611,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         parejasEncontradas = 0;
+        const nivel = niveles[nivelActual];
         nivelActual++;
-        const nivel = niveles[nivelActual - 1];
+        //const nivel = niveles[nivelActual - 1];
         nivelEnCurso = nivel;
         parejasDelNivel = nivel.parejas;
         columnasNivel = nivel.columnas;
@@ -945,7 +935,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       btnAceptar.addEventListener("click", () => {
         modalTiempo.remove();
-        reiniciarBtn.click(); // reutilizamos tu lógica existente
+        reiniciarBtn.click();
       });
     }
 

@@ -132,6 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let palabraFinalizada = false;
   let cantidad = 3;
   let estabaEnModalFinal = false;
+  let bolsaPalabras = []; // bolsa para palabras aleatorias
 
   // -----------------------------
   // SONIDOS - VERSIÓN SIMPLE Y COMPROBADA
@@ -366,6 +367,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // -----------------------------
   // FUNCIONES DEL JUEGO
   // -----------------------------
+
+  function obtenerElementosAleatorios(cantidad, pool) {
+    if (bolsaPalabras.length < cantidad) {
+      bolsaPalabras = shuffle([...pool]);
+    }
+
+    return bolsaPalabras.splice(0, cantidad);
+  }
   function mostrarImagen() {
     comprobado = false;
     resultadoCorrecto = false;
@@ -697,9 +706,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cantidad = elementosFiltrados.length;
       cantidadInput.value = cantidad;
     }
-
-    const mezclados = shuffle(elementosFiltrados);
-    seleccionados = mezclados.slice(0, cantidad);
+    seleccionados = obtenerElementosAleatorios(cantidad, elementosFiltrados);
 
     document.getElementById("fila-ayudas").style.display = ayudaActivada
       ? "flex"
