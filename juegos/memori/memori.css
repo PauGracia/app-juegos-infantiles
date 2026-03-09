@@ -15,7 +15,6 @@ body {
   padding: 0;
   width: 100%;
   overflow-x: hidden;
-  position: relative;
 }
 
 #body-memori {
@@ -24,15 +23,20 @@ body {
   margin: 0;
   padding: 5px;
   overflow-x: hidden;
+  min-height: 100dvh; /* Aseguramos que ocupe todo el viewport */
+  display: flex; /* Convertimos en flex container */
+  flex-direction: column;
+  justify-content: center;
 }
 
 .zona-juego {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 30px;
   max-width: 1400px;
   margin: 0 auto;
+  flex: 1;
 }
 
 .ui-lateral {
@@ -1056,10 +1060,13 @@ body {
   }
 
   .ui-lateral {
-    /*flex-direction: column;
-    align-items: center;*/
-    gap: 8px;
-    width: 95%;
+    flex-direction: row !important; /* Forzamos fila */
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
   }
 
   .zona-juego {
@@ -1178,6 +1185,7 @@ body {
   #body-memori {
     box-sizing: border-box;
   }
+
   .header {
     justify-content: space-between;
     margin-top: 20px;
@@ -1186,8 +1194,8 @@ body {
   .ui-lateral {
     /*flex-direction: column;
     align-items: center;*/
-    gap: 8px;
-    width: 95%;
+    gap: 6px;
+    width: 100%;
   }
 
   .zona-juego {
@@ -1313,8 +1321,8 @@ body {
   .ui-lateral {
     /*flex-direction: column;
     align-items: center;*/
-    gap: 3px;
-    width: 95%;
+    gap: 2px;
+    width: 100%;
   }
 
   #ranking {
@@ -1322,7 +1330,7 @@ body {
     display: block;
     margin-top: 5px;
     margin-bottom: 20px;
-    margin-left: 10px;
+
     width: 180px;
   }
 
