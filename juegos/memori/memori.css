@@ -1030,6 +1030,45 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+  #body-memori {
+    height: 100dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    position: fixed;
+    width: 100%;
+  }
+
+  #body-memori.teclado-abierto {
+    position: static;
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  .modal-memori.mostrar {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 20px 0;
+  }
+
+  .modal-contentMemori {
+    margin: auto;
+    max-height: 90vh;
+    overflow-y: visible;
+  }
+
+  #body-memori.teclado-abierto .modal-contentMemori {
+    margin: 20px auto;
+  }
+
+  #nombreJugador {
+    font-size: 16px;
+    margin: 10px 0;
+    position: relative;
+    z-index: 1001;
+  }
+}
+
 @media (max-width: 715px) {
   .carta {
     width: 45px;

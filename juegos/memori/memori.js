@@ -223,6 +223,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ------------------ FUNCIONES COMUNES ------------------
 
+    // Detectar apertura/cierre del teclado en móviles
+    function setupTecladoMovil() {
+      const isMobile =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent,
+        );
+
+      if (!isMobile) return;
+
+      const body = document.getElementById("body-memori");
+      const modalContent = document.querySelector(".modal-contentMemori");
+      const nombreInput = document.getElementById("nombreJugador");
+
+      // Detectar cuando el input recibe foco (teclado se abre)
+      nombreInput.addEventListener("focus", function () {
+        body.classList.add("teclado-abierto");
+
+        // Pequeño retraso para asegurar que el teclado ya se abrió
+        setTimeout(() => {
+          // Hacer scroll hacia el input
+          nombreInput.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+
+          // En Android, a veces necesitamos un pequeño empuje adicional
+          if (/Android/i.test(navigator.userAgent)) {
+            window.scrollTo({
+              top:
+                nombreInput.getBoundingClientRect().top +
+                window.pageYOffset -
+                100,
+              behavior: "smooth",
+            });
+          }
+        }, 300);
+      });
+
+      // Cuando el input pierde el foco (teclado se cierra)
+      nombreInput.addEventListener("blur", function () {
+        body.classList.remove("teclado-abierto");
+      });
+    }
+
     function mostrarBonusTiempo() {
       const bonus = document.createElement("span");
       bonus.classList.add("bonus-tiempo");
@@ -326,9 +370,16 @@ document.addEventListener("DOMContentLoaded", () => {
         guardarBtn.disabled = false;
         guardarBtn.textContent = t("common.save");
       }
-      // Guardar puntuación usando la clave correspondiente
+
       guardarBtn.onclick = () => {
         registro.style.display = "block";
+
+        // Configurar manejo del teclado móvil cuando se muestra el input
+        setTimeout(() => {
+          setupTecladoMovil();
+          // Enfocar automáticamente el input
+          nombreJugador.focus();
+        }, 100);
 
         registrarBtn.onclick = () => {
           const nombre = nombreJugador.value.trim();
@@ -347,6 +398,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
           registro.style.display = "none";
           nombreJugador.value = "";
+
+          // Quitar clase del teclado
+          document
+            .getElementById("body-memori")
+            .classList.remove("teclado-abierto");
         };
       };
     }
@@ -563,6 +619,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function iniciarJuegoDesafio() {
+      // Para probar modal final
+      //mostrarModalDesafioFinal();
+      //return;
       // Limpiar cualquier intervalo y resetear variables
       if (intervaloTiempo) {
         clearInterval(intervaloTiempo);
