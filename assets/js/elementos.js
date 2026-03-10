@@ -601,4 +601,53 @@ const elementos = [
     palabras: ["hormiga", "formiga", "ant", "fourmi", "formica", "formiga"],
     imagen: "../../assets/img/iconos/hormiga.png",
   },
+  {
+    id: 94,
+    palabras: ["estrella", "estrella", "star", "étoile", "stella", "estrela"],
+    imagen: "../../assets/img/iconos/estrella.png",
+  },
+  {
+    id: 95,
+    palabras: ["seta", "bolet", "mushroom", "champignon", "fungo", "cogumelo"],
+    imagen: "../../assets/img/iconos/seta.png",
+  },
+  {
+    id: 96,
+    palabras: ["lobo", "llop", "wolf", "loup", "lupo", "lobo"],
+    imagen: "../../assets/img/iconos/lobo.png",
+  },
+  {
+    id: 97,
+    palabras: [
+      "pingüino",
+      "pingüí",
+      "penguin",
+      "manchot",
+      "pinguino",
+      "pinguim",
+    ],
+    imagen: "../../assets/img/iconos/pinguino.png",
+  },
+  {
+    id: 98,
+    palabras: ["barco", "vaixell", "ship", "bateau", "nave", "barco"],
+    imagen: "../../assets/img/iconos/barco.png",
+  },
+  {
+    id: 99,
+    palabras: ["avión", "avió", "airplane", "avion", "aereo", "avião"],
+    imagen: "../../assets/img/iconos/avion.png",
+  },
+  {
+    id: 100,
+    palabras: [
+      "cocodrilo",
+      "cocodril",
+      "crocodile",
+      "crocodile",
+      "coccodrillo",
+      "crocodilo",
+    ],
+    imagen: "../../assets/img/iconos/cocodrilo.png",
+  },
 ];
