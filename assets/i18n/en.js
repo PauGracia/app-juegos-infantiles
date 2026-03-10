@@ -391,4 +391,22 @@ window.translationsEN = {
     "We reserve the right to update or modify these terms at any time. Changes will be notified within the application itself.",
   "terms.contact":
     "If you have questions about these terms, you can contact us through the means available in the application.",
+  "damas.config.selectPlayer": "Select player:",
+  "damas.config.noPlayer": "No player",
+  "damas.config.noPlayers": "No players",
+  "damas.config.createPlayer": "Create player",
+  "damas.config.deletePlayer": "Delete player",
+
+  "damas.player.create.title": "Create new player",
+  "damas.player.namePlaceholder": "Name (3-12 characters)",
+  "damas.player.error.length": "Name must be between 3 and 12 characters",
+  "damas.player.error.exists": "A player with that name already exists",
+  "damas.player.error.noPlayers": "No players to delete",
+  "damas.player.error.select": "Select a player to delete",
+  "damas.player.created": "Player {nombre} created successfully",
+  "damas.player.deleted": "Player {nombre} deleted",
+
+  "damas.player.delete.title": "Select player to delete",
+
+  "damas.warning.noPlayer": "You must select a player to start",
 };

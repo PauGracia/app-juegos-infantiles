@@ -390,4 +390,22 @@ window.translationsCA = {
     "Ens reservem el dret d'actualitzar o modificar aquests termes en qualsevol moment. Els canvis seran notificats dins de la pròpia aplicació.",
   "terms.contact":
     "Si tens preguntes sobre aquests termes, pots contactar a través dels mitjans disponibles a l'aplicació.",
+  "damas.config.selectPlayer": "Seleccionar jugador:",
+  "damas.config.noPlayer": "Sense jugador",
+  "damas.config.noPlayers": "No hi ha jugadors",
+  "damas.config.createPlayer": "Crear jugador",
+  "damas.config.deletePlayer": "Esborrar jugador",
+
+  "damas.player.create.title": "Crear nou jugador",
+  "damas.player.namePlaceholder": "Nom (3-12 caràcters)",
+  "damas.player.error.length": "El nom ha de tenir entre 3 i 12 caràcters",
+  "damas.player.error.exists": "Ja existeix un jugador amb aquest nom",
+  "damas.player.error.noPlayers": "No hi ha jugadors per esborrar",
+  "damas.player.error.select": "Selecciona un jugador per esborrar",
+  "damas.player.created": "Jugador {nombre} creat correctament",
+  "damas.player.deleted": "Jugador {nombre} eliminat",
+
+  "damas.player.delete.title": "Seleccionar jugador a esborrar",
+
+  "damas.warning.noPlayer": "Has de seleccionar un jugador per començar",
 };

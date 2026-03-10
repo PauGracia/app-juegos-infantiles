@@ -1889,6 +1889,301 @@ const JuegoDamas = (() => {
   }
 
   // ======================================================================
+  // SISTEMA DE GESTIÓN DE JUGADORES
+  // ======================================================================
+
+  const GestorJugadores = (() => {
+    const STORAGE_KEY = "damas_jugadores";
+    let jugadores = [];
+    let jugadorSeleccionado = null;
+
+    // Cargar jugadores del localStorage
+    function cargarJugadores() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        jugadores = stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        console.error("Error cargando jugadores:", e);
+        jugadores = [];
+      }
+      return jugadores;
+    }
+
+    // Guardar jugadores en localStorage
+    function guardarJugadores() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(jugadores));
+      } catch (e) {
+        console.error("Error guardando jugadores:", e);
+      }
+    }
+
+    // Obtener lista de jugadores
+    function obtenerJugadores() {
+      return [...jugadores];
+    }
+
+    // Añadir nuevo jugador
+    function añadirJugador(nombre) {
+      // Validar nombre
+      nombre = nombre.trim();
+      if (nombre.length < 3 || nombre.length > 12) {
+        return { exito: false, mensaje: "damas.player.error.length" };
+      }
+
+      // Comprobar si ya existe
+      if (jugadores.some((j) => j.toLowerCase() === nombre.toLowerCase())) {
+        return { exito: false, mensaje: "damas.player.error.exists" };
+      }
+
+      jugadores.push(nombre);
+      guardarJugadores();
+      return { exito: true, mensaje: "damas.player.created" };
+    }
+
+    // Eliminar jugador
+    function eliminarJugador(nombre) {
+      const index = jugadores.findIndex((j) => j === nombre);
+      if (index !== -1) {
+        jugadores.splice(index, 1);
+        guardarJugadores();
+
+        // Si el jugador eliminado era el seleccionado, limpiar selección
+        if (jugadorSeleccionado === nombre) {
+          jugadorSeleccionado = null;
+        }
+        return true;
+      }
+      return false;
+    }
+
+    // Seleccionar jugador
+    function seleccionarJugador(nombre) {
+      if (nombre && jugadores.includes(nombre)) {
+        jugadorSeleccionado = nombre;
+        return true;
+      }
+      return false;
+    }
+
+    // Obtener jugador seleccionado
+    function obtenerJugadorSeleccionado() {
+      return jugadorSeleccionado;
+    }
+
+    // Inicializar
+    cargarJugadores();
+
+    return {
+      obtenerJugadores,
+      añadirJugador,
+      eliminarJugador,
+      seleccionarJugador,
+      obtenerJugadorSeleccionado,
+      cargarJugadores,
+    };
+  })();
+
+  // ======================================================================
+  // SELECTOR PERSONALIZADO DE JUGADORES
+  // ======================================================================
+
+  function actualizarSelectorJugadores() {
+    const container = document.getElementById("selector-jugadores-container");
+    const selected = document.getElementById("jugador-selected");
+    const optionsContainer = document.getElementById("jugador-options");
+
+    if (!container || !selected || !optionsContainer) return;
+
+    const jugadores = GestorJugadores.obtenerJugadores();
+    const jugadorActual = GestorJugadores.obtenerJugadorSeleccionado();
+
+    // Actualizar texto seleccionado
+    if (jugadorActual) {
+      selected.textContent = jugadorActual;
+      selected.removeAttribute("data-vacio");
+    } else {
+      selected.textContent = t("damas.config.noPlayer");
+      selected.setAttribute("data-vacio", "true");
+    }
+
+    // Recrear opciones
+    optionsContainer.innerHTML = "";
+
+    if (jugadores.length === 0) {
+      const div = document.createElement("div");
+      div.textContent = t("damas.config.noPlayers");
+      div.style.fontStyle = "italic";
+      div.style.opacity = "0.7";
+      div.onclick = (e) => {
+        e.stopPropagation();
+        optionsContainer.classList.add("select-hide");
+        selected.classList.remove("select-arrow-active");
+      };
+      optionsContainer.appendChild(div);
+    } else {
+      jugadores.forEach((nombre) => {
+        const div = document.createElement("div");
+        div.textContent = nombre;
+        div.onclick = (e) => {
+          e.stopPropagation();
+          GestorJugadores.seleccionarJugador(nombre);
+          selected.textContent = nombre;
+          selected.removeAttribute("data-vacio");
+          optionsContainer.classList.add("select-hide");
+          selected.classList.remove("select-arrow-active");
+        };
+        optionsContainer.appendChild(div);
+      });
+    }
+  }
+
+  // ======================================================================
+  // MODAL CREAR JUGADOR
+  // ======================================================================
+
+  function mostrarModalCrearJugador() {
+    const modalHTML = `
+    <div id="modal-crear-jugador" class="modal-fin-damas" style="display: flex;">
+      <div class="modal-contenido modal-crear-jugador">
+        <h2 data-i18n="damas.player.create.title">Crear nuevo jugador</h2>
+        <input type="text" id="input-nuevo-jugador" placeholder="${t("damas.player.namePlaceholder")}" maxlength="12" autocomplete="off">
+        <div class="botones-modal">
+          <button class="boton-damas" id="btn-crear-jugador-confirm" data-i18n="common.create">Crear</button>
+          <button class="boton-damas" id="btn-crear-jugador-cancel" data-i18n="common.close">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+    // Eliminar modal anterior si existe
+    const oldModal = document.getElementById("modal-crear-jugador");
+    if (oldModal) oldModal.remove();
+
+    document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+    const modal = document.getElementById("modal-crear-jugador");
+    const input = document.getElementById("input-nuevo-jugador");
+
+    // Enfocar input
+    setTimeout(() => input.focus(), 100);
+
+    // Evento crear
+    document.getElementById("btn-crear-jugador-confirm").onclick = () => {
+      const nombre = input.value.trim();
+      const resultado = GestorJugadores.añadirJugador(nombre);
+
+      if (resultado.exito) {
+        modal.style.display = "none";
+        mostrarAvisoDamas(t(resultado.mensaje, { nombre }));
+        actualizarSelectorJugadores();
+      } else {
+        mostrarAvisoDamas(t(resultado.mensaje));
+      }
+    };
+
+    // Evento cerrar
+    document.getElementById("btn-crear-jugador-cancel").onclick = () => {
+      modal.style.display = "none";
+    };
+
+    // Cerrar al hacer click fuera
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  }
+
+  // ======================================================================
+  // MODAL BORRAR JUGADOR
+  // ======================================================================
+
+  function mostrarModalBorrarJugador() {
+    const jugadores = GestorJugadores.obtenerJugadores();
+
+    if (jugadores.length === 0) {
+      mostrarAvisoDamas(t("damas.player.error.noPlayers"));
+      return;
+    }
+
+    const listaJugadores = jugadores
+      .map(
+        (nombre) => `
+    <div class="item-jugador-borrar" data-nombre="${nombre}">
+      <input type="radio" name="jugador-borrar" value="${nombre}" id="radio-${nombre}">
+      <label for="radio-${nombre}">${nombre}</label>
+    </div>
+  `,
+      )
+      .join("");
+
+    const modalHTML = `
+    <div id="modal-borrar-jugador" class="modal-fin-damas" style="display: flex;">
+      <div class="modal-contenido modal-borrar-jugador">
+        <h2 data-i18n="damas.player.delete.title">Seleccionar jugador a borrar</h2>
+        <div class="lista-jugadores-borrar">
+          ${listaJugadores}
+        </div>
+        <div class="botones-modal">
+          <button class="boton-damas" id="btn-borrar-jugador-confirm" data-i18n="common.delete">Borrar</button>
+          <button class="boton-damas" id="btn-borrar-jugador-cancel" data-i18n="common.close">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+    // Eliminar modal anterior si existe
+    const oldModal = document.getElementById("modal-borrar-jugador");
+    if (oldModal) oldModal.remove();
+
+    document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+    const modal = document.getElementById("modal-borrar-jugador");
+
+    // Añadir efecto de selección
+    document.querySelectorAll(".item-jugador-borrar").forEach((item) => {
+      item.addEventListener("click", () => {
+        document
+          .querySelectorAll(".item-jugador-borrar")
+          .forEach((i) => i.classList.remove("seleccionado"));
+        item.classList.add("seleccionado");
+        const radio = item.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
+      });
+    });
+
+    // Evento borrar
+    document.getElementById("btn-borrar-jugador-confirm").onclick = () => {
+      const seleccionado = document.querySelector(
+        'input[name="jugador-borrar"]:checked',
+      );
+      if (!seleccionado) {
+        mostrarAvisoDamas(t("damas.player.error.select"));
+        return;
+      }
+
+      const nombre = seleccionado.value;
+      GestorJugadores.eliminarJugador(nombre);
+      modal.style.display = "none";
+      mostrarAvisoDamas(t("damas.player.deleted", { nombre }));
+      actualizarSelectorJugadores();
+    };
+
+    // Evento cerrar
+    document.getElementById("btn-borrar-jugador-cancel").onclick = () => {
+      modal.style.display = "none";
+    };
+
+    // Cerrar al hacer click fuera
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  }
+
+  // ======================================================================
   // INICIALIZACIÓN
   // ======================================================================
   let origenConfirmExit = null;
@@ -1906,6 +2201,10 @@ const JuegoDamas = (() => {
   // ======================================================================
   // INICIALIZACIÓN - VERSIÓN SIMPLIFICADA (DENTRO DE JuegoDamas)
   // ======================================================================
+  // ======================================================================
+  // MODIFICAR LA FUNCIÓN INIT() - Reemplazar la sección del evento del botón jugar
+  // ======================================================================
+
   function init() {
     // Inicializar selector personalizado
     initCustomSelect();
@@ -1958,47 +2257,80 @@ const JuegoDamas = (() => {
       origenConfirmExit = null;
     });
 
-    // Evento para el botón "Salir" de la configuración inicial
+    // Inicializar selector de jugadores
+    actualizarSelectorJugadores();
+
+    // Evento para abrir selector de jugadores
+    const jugadorSelected = document.getElementById("jugador-selected");
+    const jugadorOptions = document.getElementById("jugador-options");
+
+    if (jugadorSelected) {
+      jugadorSelected.onclick = (e) => {
+        e.stopPropagation();
+        jugadorOptions.classList.toggle("select-hide");
+        jugadorSelected.classList.toggle("select-arrow-active");
+      };
+    }
+
+    // Evento botón crear jugador
     document
-      .getElementById("boton-salir-config")
+      .getElementById("btn-crear-jugador")
       .addEventListener("click", () => {
-        origenConfirmExit = "config";
-        document.getElementById("modal-config-damas").style.display = "none";
-        document.getElementById("modal-confirm-exit").style.display = "flex";
+        mostrarModalCrearJugador();
       });
 
-    // EVENTO PARA EL BOTÓN JUGAR
+    // Evento botón borrar jugador
+    document
+      .getElementById("btn-borrar-jugador")
+      .addEventListener("click", () => {
+        mostrarModalBorrarJugador();
+      });
+
+    // EVENTO PARA EL BOTÓN JUGAR - CORREGIDO Y COLOCADO AQUÍ
     document
       .getElementById("boton-jugar-config")
       .addEventListener("click", () => {
         const estado = estadoGlobalDamas;
 
+        // Verificar que se haya realizado el sorteo
         if (!estado.sorteoRealizado) {
           mostrarAvisoDamas(t("damas.warning.mustShuffle"));
           return;
         }
 
+        // NUEVA VALIDACIÓN: comprobar si hay jugador seleccionado
+        if (!GestorJugadores.obtenerJugadorSeleccionado()) {
+          mostrarAvisoDamas(t("damas.warning.noPlayer"));
+          return;
+        }
+
+        // Obtener el nivel de IA seleccionado
         estado.nivelIA = document.getElementById("nivel-ia").value;
 
+        // Ocultar modal de configuración y mostrar juego
         document.getElementById("modal-config-damas").style.display = "none";
         document.getElementById("juego-damas-contenedor").style.display =
           "block";
 
+        // Dibujar tablero
         dibujarTableroDamas();
 
         // Iniciar temporizador al iniciar partida
         reiniciarTemporizador();
         iniciarTemporizador();
 
+        // Si el turno es de la IA, iniciar su movimiento
         if (estado.turnoActualDamas === "ia") {
           setTimeout(movimientoIA_Damas, 500);
         }
       });
 
+    // Evento para el botón de reinicio (si existe)
     document
       .getElementById("boton-reinicio-damas")
       ?.addEventListener("click", resetGameDamasUltra);
 
+    // Inicializar el juego
     resetGameDamasUltra();
   }
 
@@ -2055,11 +2387,19 @@ function clickSeguro() {
 }
 
 // Funcion de avisos
-function mostrarAvisoDamas(texto) {
+function mostrarAvisoDamas(texto, parametros = {}) {
   const modal = document.getElementById("modal-aviso-damas");
   const mensaje = document.getElementById("modal-aviso-texto");
 
-  mensaje.textContent = texto;
+  // Si hay parámetros, reemplazar en el texto
+  let textoFinal = texto;
+  if (parametros && Object.keys(parametros).length > 0) {
+    Object.keys(parametros).forEach((key) => {
+      textoFinal = textoFinal.replace(`{${key}}`, parametros[key]);
+    });
+  }
+
+  mensaje.textContent = textoFinal;
   modal.style.display = "flex";
 
   document.getElementById("boton-cerrar-aviso").onclick = () => {

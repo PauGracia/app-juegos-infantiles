@@ -945,6 +945,142 @@
   background-image: url("../../assets/img/iconos/instrucciones.png");
 }
 
+/* Estilos para la gestión de jugadores */
+.config-jugadores {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: rgba(52, 152, 219, 0.1);
+  border: 2px solid var(--color-secundario);
+}
+
+.config-jugadores label {
+  font-weight: 600;
+  color: var(--color-primario);
+  font-size: 16px;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+/* Selector de jugadores */
+#selector-jugadores-container {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#jugador-selected {
+  background: linear-gradient(145deg, #3498db, #2980b9);
+  text-align: left;
+}
+
+#jugador-selected[data-vacio="true"] {
+  background: linear-gradient(145deg, #95a5a6, #7f8c8d);
+}
+
+/* Botones verticales */
+.botones-jugadores-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.boton-crear-jugador {
+  background: linear-gradient(145deg, #f39c12, #e67e22) !important;
+}
+
+.boton-crear-jugador:hover {
+  background: linear-gradient(145deg, #f1c40f, #f39c12) !important;
+}
+
+.boton-borrar-jugador {
+  background: linear-gradient(145deg, #e67e22, #d35400) !important;
+}
+
+.boton-borrar-jugador:hover {
+  background: linear-gradient(145deg, #f39c12, #e67e22) !important;
+}
+
+/* Modal crear jugador */
+.modal-crear-jugador {
+  max-width: 380px;
+}
+
+.modal-crear-jugador input {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 20px 0;
+  border: 2px solid #dfe6e9;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.modal-crear-jugador input:focus {
+  outline: none;
+  border-color: var(--color-secundario);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+/* Modal borrar jugador */
+.modal-borrar-jugador {
+  max-width: 420px;
+}
+
+.lista-jugadores-borrar {
+  max-height: 250px;
+  overflow-y: auto;
+  margin: 20px 0;
+  border: 1px solid #dfe6e9;
+  border-radius: 8px;
+  background: white;
+}
+
+.item-jugador-borrar {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  border-bottom: 1px solid #ecf0f1;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.item-jugador-borrar:last-child {
+  border-bottom: none;
+}
+
+.item-jugador-borrar:hover {
+  background: #f8f9fa;
+}
+
+.item-jugador-borrar.seleccionado {
+  background: #e3f2fd;
+  border-left: 4px solid var(--color-secundario);
+}
+
+.item-jugador-borrar input[type="radio"] {
+  margin-right: 12px;
+  transform: scale(1.2);
+  accent-color: var(--color-secundario);
+}
+
+.item-jugador-borrar label {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-primario);
+  cursor: pointer;
+  flex: 1;
+  text-align: left;
+}
+
+/* Aviso sin jugadores */
+.sin-jugadores-msg {
+  padding: 20px;
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
 /* -------------------- MEDIA QUERIES -------------------- */
 
 /* PANTALLAS GRANDES (Desktop) */
@@ -1337,6 +1473,11 @@
     min-width: 100px;
     padding: 10px 12px;
     font-size: 18px;
+  }
+
+  .modal-configuracion h2 {
+    margin-bottom: 15px;
+    font-size: 1.4rem;
   }
 
   .titulo-damas {

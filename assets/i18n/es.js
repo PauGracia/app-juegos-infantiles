@@ -395,4 +395,22 @@ window.translationsES = {
   "common.restartWarning": "Se perderá todo tu progreso actual",
   "operaciones.maxTimeExceeded":
     "El tiempo máximo permitido es 30 minutos (1800 segundos). Se ha ajustado automáticamente.",
+  "damas.config.selectPlayer": "Seleccionar jugador:",
+  "damas.config.noPlayer": "Sin jugador",
+  "damas.config.noPlayers": "No hay jugadores",
+  "damas.config.createPlayer": "Crear jugador",
+  "damas.config.deletePlayer": "Borrar jugador",
+
+  "damas.player.create.title": "Crear nuevo jugador",
+  "damas.player.namePlaceholder": "Nombre (3-12 caracteres)",
+  "damas.player.error.length": "El nombre debe tener entre 3 y 12 caracteres",
+  "damas.player.error.exists": "Ya existe un jugador con ese nombre",
+  "damas.player.error.noPlayers": "No hay jugadores para borrar",
+  "damas.player.error.select": "Selecciona un jugador para borrar",
+  "damas.player.created": "Jugador {nombre} creado correctamente",
+  "damas.player.deleted": "Jugador {nombre} eliminado",
+
+  "damas.player.delete.title": "Seleccionar jugador a borrar",
+
+  "damas.warning.noPlayer": "Debes seleccionar un jugador para comenzar",
 };

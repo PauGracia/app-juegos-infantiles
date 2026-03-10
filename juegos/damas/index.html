@@ -32,6 +32,42 @@
       <div class="modal-contenido modal-configuracion">
         <h2 data-i18n="damas.config.title"></h2>
 
+        <div class="config-bloque config-jugadores">
+          <label for="selector-jugadores" data-i18n="damas.config.selectPlayer"
+            >Seleccionar jugador:</label
+          >
+
+          <!-- Selector personalizado de jugadores -->
+          <div class="custom-select" id="selector-jugadores-container">
+            <div
+              class="select-selected"
+              id="jugador-selected"
+              data-i18n="damas.config.noPlayer"
+            >
+              Sin jugador
+            </div>
+            <div class="select-items select-hide" id="jugador-options"></div>
+          </div>
+
+          <!-- Botones de gestión de jugadores  -->
+          <div class="botones-jugadores-vertical">
+            <button
+              class="boton-damas boton-crear-jugador"
+              id="btn-crear-jugador"
+              data-i18n="damas.config.createPlayer"
+            >
+              Crear jugador
+            </button>
+            <button
+              class="boton-damas boton-borrar-jugador"
+              id="btn-borrar-jugador"
+              data-i18n="damas.config.deletePlayer"
+            >
+              Borrar jugador
+            </button>
+          </div>
+        </div>
+
         <!-- Sorteo -->
         <div class="config-bloque">
           <button
