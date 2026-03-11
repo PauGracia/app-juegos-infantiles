@@ -19,6 +19,7 @@
     <title>Juego de damas</title>
     <link rel="stylesheet" href="../../assets/css/app.css?v=20251111" />
     <link rel="stylesheet" href="damas.css?v=20251111" />
+
     <script
       src="../../assets/js/i18n.js"
       data-i18n-path="../../assets/i18n/"
@@ -66,6 +67,16 @@
               Borrar jugador
             </button>
           </div>
+        </div>
+        <!-- Boton instrucciones -->
+        <div class="config-bloque config-instrucciones">
+          <button
+            class="boton-damas boton-instrucciones-modal"
+            id="boton-instrucciones-modal"
+            data-i18n="damas.instructions"
+          >
+            Instrucciones
+          </button>
         </div>
 
         <!-- Sorteo -->
@@ -137,6 +148,10 @@
       <div class="panel-y-botones">
         <div class="info-panel-damas">
           <div>
+            <b data-i18n="damas.jugadores2">Jugador:</b>
+            <span id="jugador-actual-info">—</span>
+          </div>
+          <div>
             <b data-i18n="damas.yourPieces">Les teves peces:</b>
             <span id="color-humano-info">—</span>
           </div>
@@ -164,15 +179,19 @@
             <b data-i18n="damas.aiCaptures">Captures MÀQUINA:</b>
             <span id="capturas-ia-info">0</span>
           </div>
+          <div>
+            <b data-i18n="damas.jugadores">Jugador:</b>
+            <span id="">0</span>
+          </div>
         </div>
 
         <div class="contenedor-botones-damas">
           <button
             class="boton-damas"
-            id="boton-instrucciones-damas"
-            data-i18n="damas.instructions"
+            id="btn-jugadores"
+            data-i18n="damas.jugadores"
           >
-            Instrucciones
+            jugadores
           </button>
 
           <button id="salirDamas" class="boton-damas" data-i18n="damas.exit">

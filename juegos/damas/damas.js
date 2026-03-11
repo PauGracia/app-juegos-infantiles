@@ -2,8 +2,17 @@
 // Juego de Damas
 // ================================
 
-function t(key) {
-  return window.translations?.[key] || key;
+function t(key, params = {}) {
+  let text = window.translations?.[key] || key;
+
+  // Reemplazar parámetros en el formato {nombre}
+  if (params && Object.keys(params).length > 0) {
+    Object.keys(params).forEach((paramKey) => {
+      text = text.replace(new RegExp(`{${paramKey}}`, "g"), params[paramKey]);
+    });
+  }
+
+  return text;
 }
 
 // ================================
@@ -184,6 +193,16 @@ const JuegoDamas = (() => {
     capturasIA: 0,
     tiempoRestante: 300000, // 5 minutos en milisegundos (5 * 60 * 1000)
     intervaloInactividad: null,
+  };
+
+  // ======================================================================
+  // ESTRUCTURA DE DATOS PARA ESTADÍSTICAS DE JUGADORES
+  // ======================================================================
+  const ESTADISTICAS_KEYS = {
+    VICTORIAS_NORMAL: "victoriasNormal",
+    DERROTAS_NORMAL: "derrotasNormal",
+    VICTORIAS_DIFICIL: "victoriasDificil",
+    DERROTAS_DIFICIL: "derrotasDificil",
   };
 
   // ======================================================================
@@ -1560,6 +1579,14 @@ const JuegoDamas = (() => {
     // También asegurar que el estado refleja que el juego terminó
     estadoGlobalDamas.juegoTerminadoFlag = true;
 
+    // Registrar estadísticas
+    const nivel = estadoGlobalDamas.nivelIA;
+    if (gano) {
+      GestorJugadores.registrarVictoria(nivel);
+    } else {
+      GestorJugadores.registrarDerrota(nivel);
+    }
+
     const modal = document.getElementById("modal-fin-damas");
     const icono = document.getElementById("icono-resultado");
     const mensaje = document.getElementById("mensaje-resultado");
@@ -1581,6 +1608,74 @@ const JuegoDamas = (() => {
       document.getElementById("modal-fin-damas").style.display = "none";
       salirAlMenuPrincipal();
     };
+  }
+
+  // ======================================================================
+  // MODAL RANKING DE JUGADORES
+  // ======================================================================
+
+  function mostrarModalRanking() {
+    const ranking = GestorJugadores.obtenerRanking();
+
+    let contenidoRanking = "";
+
+    if (ranking.length === 0) {
+      contenidoRanking = `<p class="sin-jugadores-msg" data-i18n="damas.ranking.noPlayers">No hay jugadores registrados</p>`;
+    } else {
+      ranking.forEach((jugador) => {
+        contenidoRanking += `
+        <div class="ranking-item">
+          <div class="ranking-nombre">${jugador.nombre}</div>
+          <div class="ranking-estadisticas">
+            <div class="ranking-nivel">
+              <span data-i18n="damas.config.aiNormal">Normal</span>
+              <span class="ranking-victorias">🏆 ${jugador.stats.victoriasNormal}</span>
+              <span class="ranking-derrotas">❌ ${jugador.stats.derrotasNormal}</span>
+            </div>
+            <div class="ranking-nivel">
+              <span data-i18n="damas.config.aiHard">Difícil</span>
+              <span class="ranking-victorias">🏆 ${jugador.stats.victoriasDificil}</span>
+              <span class="ranking-derrotas">❌ ${jugador.stats.derrotasDificil}</span>
+            </div>
+          </div>
+        </div>
+      `;
+      });
+    }
+
+    const modalHTML = `
+    <div id="modal-ranking-jugadores" class="modal-fin-damas" style="display: flex;">
+      <div class="modal-contenido modal-ranking">
+        <h2 data-i18n="damas.ranking.title">Ranking de jugadores</h2>
+        <div class="ranking-lista">
+          ${contenidoRanking}
+        </div>
+        <div class="botones-modal">
+          <button class="boton-damas" id="btn-cerrar-ranking" data-i18n="common.close">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+    // Eliminar modal anterior si existe
+    const oldModal = document.getElementById("modal-ranking-jugadores");
+    if (oldModal) oldModal.remove();
+
+    document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+    const modal = document.getElementById("modal-ranking-jugadores");
+
+    // Evento cerrar
+    document.getElementById("btn-cerrar-ranking").onclick = () => {
+      modal.style.display = "none";
+    };
+
+    // Cerrar al hacer click fuera
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
   }
 
   // ======================================================================
@@ -1889,24 +1984,34 @@ const JuegoDamas = (() => {
   }
 
   // ======================================================================
-  // SISTEMA DE GESTIÓN DE JUGADORES
+  // SISTEMA DE GESTIÓN DE JUGADORES CON ESTADÍSTICAS
   // ======================================================================
 
   const GestorJugadores = (() => {
     const STORAGE_KEY = "damas_jugadores";
+    const STATS_KEY = "damas_estadisticas";
+    const MAX_JUGADORES = 10;
+
     let jugadores = [];
     let jugadorSeleccionado = null;
+    let estadisticas = {};
 
-    // Cargar jugadores del localStorage
-    function cargarJugadores() {
+    // Cargar jugadores y estadísticas del localStorage
+    function cargarDatos() {
       try {
+        // Cargar jugadores
         const stored = localStorage.getItem(STORAGE_KEY);
         jugadores = stored ? JSON.parse(stored) : [];
+
+        // Cargar estadísticas
+        const statsStored = localStorage.getItem(STATS_KEY);
+        estadisticas = statsStored ? JSON.parse(statsStored) : {};
       } catch (e) {
-        console.error("Error cargando jugadores:", e);
+        console.error("Error cargando datos:", e);
         jugadores = [];
+        estadisticas = {};
       }
-      return jugadores;
+      return { jugadores, estadisticas };
     }
 
     // Guardar jugadores en localStorage
@@ -1918,15 +2023,30 @@ const JuegoDamas = (() => {
       }
     }
 
-    // Obtener lista de jugadores
-    function obtenerJugadores() {
-      return [...jugadores];
+    // Guardar estadísticas
+    function guardarEstadisticas() {
+      try {
+        localStorage.setItem(STATS_KEY, JSON.stringify(estadisticas));
+      } catch (e) {
+        console.error("Error guardando estadísticas:", e);
+      }
     }
 
-    // Añadir nuevo jugador
+    // Obtener lista de jugadores ordenada alfabéticamente
+    function obtenerJugadores() {
+      return [...jugadores].sort((a, b) => a.localeCompare(b));
+    }
+
+    // Añadir nuevo jugador (con límite de 10)
     function añadirJugador(nombre) {
       // Validar nombre
       nombre = nombre.trim();
+
+      // Comprobar límite de 10 jugadores
+      if (jugadores.length >= MAX_JUGADORES) {
+        return { exito: false, mensaje: "damas.player.error.maxPlayers" };
+      }
+
       if (nombre.length < 3 || nombre.length > 12) {
         return { exito: false, mensaje: "damas.player.error.length" };
       }
@@ -1938,6 +2058,18 @@ const JuegoDamas = (() => {
 
       jugadores.push(nombre);
       guardarJugadores();
+
+      // Inicializar estadísticas para el nuevo jugador
+      if (!estadisticas[nombre]) {
+        estadisticas[nombre] = {
+          [ESTADISTICAS_KEYS.VICTORIAS_NORMAL]: 0,
+          [ESTADISTICAS_KEYS.DERROTAS_NORMAL]: 0,
+          [ESTADISTICAS_KEYS.VICTORIAS_DIFICIL]: 0,
+          [ESTADISTICAS_KEYS.DERROTAS_DIFICIL]: 0,
+        };
+        guardarEstadisticas();
+      }
+
       return { exito: true, mensaje: "damas.player.created" };
     }
 
@@ -1947,6 +2079,10 @@ const JuegoDamas = (() => {
       if (index !== -1) {
         jugadores.splice(index, 1);
         guardarJugadores();
+
+        // Eliminar también sus estadísticas
+        delete estadisticas[nombre];
+        guardarEstadisticas();
 
         // Si el jugador eliminado era el seleccionado, limpiar selección
         if (jugadorSeleccionado === nombre) {
@@ -1971,8 +2107,74 @@ const JuegoDamas = (() => {
       return jugadorSeleccionado;
     }
 
+    // Registrar victoria para el jugador actual
+    function registrarVictoria(nivel) {
+      if (!jugadorSeleccionado) return;
+
+      if (!estadisticas[jugadorSeleccionado]) {
+        inicializarEstadisticasJugador(jugadorSeleccionado);
+      }
+
+      const key =
+        nivel === "dificil"
+          ? ESTADISTICAS_KEYS.VICTORIAS_DIFICIL
+          : ESTADISTICAS_KEYS.VICTORIAS_NORMAL;
+
+      estadisticas[jugadorSeleccionado][key] =
+        (estadisticas[jugadorSeleccionado][key] || 0) + 1;
+      guardarEstadisticas();
+    }
+
+    // Registrar derrota para el jugador actual
+    function registrarDerrota(nivel) {
+      if (!jugadorSeleccionado) return;
+
+      if (!estadisticas[jugadorSeleccionado]) {
+        inicializarEstadisticasJugador(jugadorSeleccionado);
+      }
+
+      const key =
+        nivel === "dificil"
+          ? ESTADISTICAS_KEYS.DERROTAS_DIFICIL
+          : ESTADISTICAS_KEYS.DERROTAS_NORMAL;
+
+      estadisticas[jugadorSeleccionado][key] =
+        (estadisticas[jugadorSeleccionado][key] || 0) + 1;
+      guardarEstadisticas();
+    }
+
+    function inicializarEstadisticasJugador(nombre) {
+      estadisticas[nombre] = {
+        [ESTADISTICAS_KEYS.VICTORIAS_NORMAL]: 0,
+        [ESTADISTICAS_KEYS.DERROTAS_NORMAL]: 0,
+        [ESTADISTICAS_KEYS.VICTORIAS_DIFICIL]: 0,
+        [ESTADISTICAS_KEYS.DERROTAS_DIFICIL]: 0,
+      };
+    }
+
+    // Obtener estadísticas de un jugador
+    function obtenerEstadisticas(nombre) {
+      return (
+        estadisticas[nombre] || {
+          [ESTADISTICAS_KEYS.VICTORIAS_NORMAL]: 0,
+          [ESTADISTICAS_KEYS.DERROTAS_NORMAL]: 0,
+          [ESTADISTICAS_KEYS.VICTORIAS_DIFICIL]: 0,
+          [ESTADISTICAS_KEYS.DERROTAS_DIFICIL]: 0,
+        }
+      );
+    }
+
+    // Obtener todos los jugadores con sus estadísticas (ordenados alfabéticamente)
+    function obtenerRanking() {
+      const jugadoresOrdenados = obtenerJugadores();
+      return jugadoresOrdenados.map((nombre) => ({
+        nombre,
+        stats: obtenerEstadisticas(nombre),
+      }));
+    }
+
     // Inicializar
-    cargarJugadores();
+    cargarDatos();
 
     return {
       obtenerJugadores,
@@ -1980,9 +2182,24 @@ const JuegoDamas = (() => {
       eliminarJugador,
       seleccionarJugador,
       obtenerJugadorSeleccionado,
-      cargarJugadores,
+      registrarVictoria,
+      registrarDerrota,
+      obtenerEstadisticas,
+      obtenerRanking,
+      MAX_JUGADORES,
     };
   })();
+
+  // ======================================================================
+  // ACTUALIZAR NOMBRE DEL JUGADOR EN EL PANEL
+  // ======================================================================
+  function actualizarNombreJugadorPanel() {
+    const jugadorActual = GestorJugadores.obtenerJugadorSeleccionado();
+    const spanJugador = document.getElementById("jugador-actual-info");
+    if (spanJugador) {
+      spanJugador.textContent = jugadorActual || "—";
+    }
+  }
 
   // ======================================================================
   // SELECTOR PERSONALIZADO DE JUGADORES
@@ -2013,6 +2230,7 @@ const JuegoDamas = (() => {
     if (jugadores.length === 0) {
       const div = document.createElement("div");
       div.textContent = t("damas.config.noPlayers");
+      div.setAttribute("data-i18n", "damas.config.noPlayers");
       div.style.fontStyle = "italic";
       div.style.opacity = "0.7";
       div.onclick = (e) => {
@@ -2029,9 +2247,11 @@ const JuegoDamas = (() => {
           e.stopPropagation();
           GestorJugadores.seleccionarJugador(nombre);
           selected.textContent = nombre;
+          selected.setAttribute("data-i18n", "damas.config.noPlayer");
           selected.removeAttribute("data-vacio");
           optionsContainer.classList.add("select-hide");
           selected.classList.remove("select-arrow-active");
+          actualizarNombreJugadorPanel();
         };
         optionsContainer.appendChild(div);
       });
@@ -2043,8 +2263,14 @@ const JuegoDamas = (() => {
   // ======================================================================
 
   function mostrarModalCrearJugador() {
+    // Ocultar cualquier otro modal abierto
+    const modalAviso = document.getElementById("modal-aviso-damas");
+    if (modalAviso.style.display === "flex") {
+      modalAviso.style.display = "none";
+    }
+
     const modalHTML = `
-    <div id="modal-crear-jugador" class="modal-fin-damas" style="display: flex;">
+    <div id="modal-crear-jugador" class="modal-fin-damas" style="display: flex; z-index: 9999;">
       <div class="modal-contenido modal-crear-jugador">
         <h2 data-i18n="damas.player.create.title">Crear nuevo jugador</h2>
         <input type="text" id="input-nuevo-jugador" placeholder="${t("damas.player.namePlaceholder")}" maxlength="12" autocomplete="off">
@@ -2170,6 +2396,8 @@ const JuegoDamas = (() => {
       actualizarSelectorJugadores();
     };
 
+    actualizarNombreJugadorPanel();
+
     // Evento cerrar
     document.getElementById("btn-borrar-jugador-cancel").onclick = () => {
       modal.style.display = "none";
@@ -2197,13 +2425,6 @@ const JuegoDamas = (() => {
       document.getElementById("modal-config-damas").style.display = "none";
       document.getElementById("modal-confirm-exit").style.display = "flex";
     });
-
-  // ======================================================================
-  // INICIALIZACIÓN - VERSIÓN SIMPLIFICADA (DENTRO DE JuegoDamas)
-  // ======================================================================
-  // ======================================================================
-  // MODIFICAR LA FUNCIÓN INIT() - Reemplazar la sección del evento del botón jugar
-  // ======================================================================
 
   function init() {
     // Inicializar selector personalizado
@@ -2255,6 +2476,53 @@ const JuegoDamas = (() => {
         document.getElementById("modal-config-damas").style.display = "flex";
       }
       origenConfirmExit = null;
+    });
+
+    // ======================================================================
+    // EVENTO PARA EL BOTÓN DE INSTRUCCIONES EN MODAL CONFIGURACIÓN
+    // ======================================================================
+    const botonInstrucciones = document.getElementById(
+      "boton-instrucciones-modal",
+    );
+    if (botonInstrucciones) {
+      botonInstrucciones.addEventListener("click", () => {
+        document.getElementById("modal-instrucciones-damas").style.display =
+          "flex";
+      });
+    } else {
+      console.warn("⚠️ boton-instrucciones-modal no encontrado");
+    }
+
+    // evento del botón de cerrar instrucciones
+    const botonCerrar = document.getElementById("boton-cerrar-instrucciones");
+    if (botonCerrar) {
+      botonCerrar.addEventListener("click", () => {
+        document.getElementById("modal-instrucciones-damas").style.display =
+          "none";
+      });
+    } else {
+      console.warn("⚠️ boton-cerrar-instrucciones no encontrado");
+    }
+
+    // ======================================================================
+    // SORTEO
+    // =============================================================
+
+    document
+      .getElementById("boton-sortear-colores")
+      .addEventListener("click", () => {
+        JuegoDamas.realizarSorteoColores();
+      });
+
+    document
+      .getElementById("check-sugerencias")
+      .addEventListener("change", (e) => {
+        JuegoDamas.estado.mostrarSugerencias = e.target.checked;
+      });
+
+    // Evento botón jugadores (ranking)
+    document.getElementById("btn-jugadores").addEventListener("click", () => {
+      mostrarModalRanking();
     });
 
     // Inicializar selector de jugadores
@@ -2351,32 +2619,6 @@ const JuegoDamas = (() => {
   };
 })();
 
-// ======================================================================
-// MODAL INSTRUCCIONES
-// =============================================================
-
-document
-  .getElementById("boton-instrucciones-damas")
-  .addEventListener("click", () => {
-    document.getElementById("modal-instrucciones-damas").style.display = "flex";
-  });
-
-document
-  .getElementById("boton-cerrar-instrucciones")
-  .addEventListener("click", () => {
-    document.getElementById("modal-instrucciones-damas").style.display = "none";
-  });
-
-document
-  .getElementById("boton-sortear-colores")
-  .addEventListener("click", () => {
-    JuegoDamas.realizarSorteoColores();
-  });
-
-document.getElementById("check-sugerencias").addEventListener("change", (e) => {
-  JuegoDamas.estado.mostrarSugerencias = e.target.checked;
-});
-
 let ultimoClickTiempo = 0;
 
 function clickSeguro() {
@@ -2388,8 +2630,22 @@ function clickSeguro() {
 
 // Funcion de avisos
 function mostrarAvisoDamas(texto, parametros = {}) {
+  // Cerrar otros modales si es necesario
+  const modalCrear = document.getElementById("modal-crear-jugador");
+  if (modalCrear) {
+    modalCrear.style.display = "none";
+  }
+
+  const modalBorrar = document.getElementById("modal-borrar-jugador");
+  if (modalBorrar) {
+    modalBorrar.style.display = "none";
+  }
+
   const modal = document.getElementById("modal-aviso-damas");
   const mensaje = document.getElementById("modal-aviso-texto");
+
+  // Asegurar z-index alto
+  modal.style.zIndex = "10001";
 
   // Si hay parámetros, reemplazar en el texto
   let textoFinal = texto;

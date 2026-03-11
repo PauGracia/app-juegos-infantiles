@@ -28,7 +28,7 @@ window.translationsEN = {
   "ahorcado.allWordsCompleted": "🏆 You have completed ALL the words!",
   "ahorcado.extraHelpMessage": "💡 You earned an extra hint!",
   "damas.instructionsText":
-    "• The goal is to capture all opponent's pieces.\n\n• Pieces move diagonally forward.\n\n• Captures are mandatory if available.\n\n• If a piece reaches the opposite end, it becomes a king.\n\n• Kings can move in all diagonal directions.",
+    "• The goal is to capture all of the opponent's pieces.\n\n• PLAYER MANAGEMENT:\n  - Create your player (name from 3 to 12 characters).\n  - Maximum 10 saved players.\n  - Select your player before starting.\n  - Your wins and losses are automatically saved.\n  - Check statistics in the 'Players' button.\n\n• TIME LIMIT:\n  - Each game has 5 minutes per player.\n  - If your time runs out, you automatically lose.\n\n• MOVEMENTS:\n  - Pieces move diagonally forward.\n  - Captures are mandatory if available.\n  - You can enable/disable movement suggestions.\n\n• CROWNING:\n  - If a piece reaches the opposite end, it becomes a king.\n  - Kings can move in all diagonals.\n\n• STATISTICS:\n  - Wins and losses are saved by level (Normal/Hard).\n  - The ranking shows all players in alphabetical order.\n\n• DIFFICULTY LEVELS:\n  - Normal: AI with basic movements.\n  - Hard: Advanced AI that evaluates risks and strategies.\n\n• 'PLAYERS' BUTTON:\n  - Shows the complete ranking with all statistics.\n\nEnjoy the game!",
   "ahorcado.record": "Save record",
   "damas.you": "YOU",
   "damas.ai": "COMPUTER",
@@ -396,7 +396,8 @@ window.translationsEN = {
   "damas.config.noPlayers": "No players",
   "damas.config.createPlayer": "Create player",
   "damas.config.deletePlayer": "Delete player",
-
+  "damas.jugadores": "Players",
+  "damas.jugadores2": "Player:",
   "damas.player.create.title": "Create new player",
   "damas.player.namePlaceholder": "Name (3-12 characters)",
   "damas.player.error.length": "Name must be between 3 and 12 characters",
@@ -405,7 +406,9 @@ window.translationsEN = {
   "damas.player.error.select": "Select a player to delete",
   "damas.player.created": "Player {nombre} created successfully",
   "damas.player.deleted": "Player {nombre} deleted",
-
+  "damas.player.error.maxPlayers": "You cannot create more than 10 players",
+  "damas.ranking.title": "Player ranking",
+  "damas.ranking.noPlayers": "No registered players",
   "damas.player.delete.title": "Select player to delete",
 
   "damas.warning.noPlayer": "You must select a player to start",

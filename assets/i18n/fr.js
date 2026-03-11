@@ -30,7 +30,7 @@ window.translationsFR = {
   "ahorcado.allWordsCompleted": "🏆 Vous avez complété TOUTES les mots !",
   "ahorcado.extraHelpMessage": "💡 Vous avez gagné une aide supplémentaire!",
   "damas.instructionsText":
-    "• Le but est de capturer toutes les pièces de l'adversaire.\n\n• Les pièces se déplacent en diagonale vers l'avant.\n\n• Les captures sont obligatoires si elles existent.\n\n• Si une pièce atteint l'extrémité opposée, elle devient une dame.\n\n• Les dames peuvent se déplacer dans toutes les diagonales.",
+    "• L'objectif est de capturer toutes les pièces de l'adversaire.\n\n• GESTION DES JOUEURS:\n  - Créez votre joueur (nom de 3 à 12 caractères).\n  - Maximum 10 joueurs enregistrés.\n  - Sélectionnez votre joueur avant de commencer.\n  - Vos victoires et défaites sont automatiquement sauvegardées.\n  - Consultez les statistiques avec le bouton 'Joueurs'.\n\n• LIMITE DE TEMPS:\n  - Chaque partie dure 5 minutes par joueur.\n  - Si votre temps s'épuise, vous perdez automatiquement.\n\n• MOUVEMENTS:\n  - Les pièces se déplacent en diagonale vers l'avant.\n  - Les captures sont obligatoires si disponibles.\n  - Vous pouvez activer/désactiver les suggestions de mouvement.\n\n• COURONNEMENT:\n  - Si une pièce atteint l'extrémité opposée, elle devient une dame.\n  - Les dames peuvent se déplacer dans toutes les diagonales.\n\n• STATISTIQUES:\n  - Les victoires et défaites sont sauvegardées par niveau (Normal/Difficile).\n  - Le classement montre tous les joueurs par ordre alphabétique.\n\n• NIVEAUX DE DIFFICULTÉ:\n  - Normal: IA avec mouvements de base.\n  - Difficile: IA avancée qui évalue les risques et stratégies.\n\n• BOUTON 'JOUEURS':\n  - Affiche le classement complet avec toutes les statistiques.\n\nProfitez de la partie!",
   "categoria.animal": "Animal",
   "common.confirmRestart": "Êtes-vous sûr de vouloir recommencer la partie ?",
   "common.restartWarning": "Toute votre progression actuelle sera perdue",
@@ -400,4 +400,25 @@ window.translationsFR = {
     "Nous nous réservons le droit de mettre à jour ou de modifier ces conditions à tout moment. Les changements seront notifiés dans l'application elle-même.",
   "terms.contact":
     "Si vous avez des questions sur ces conditions, vous pouvez nous contacter via les moyens disponibles dans l'application.",
+  "damas.config.selectPlayer": "Sélectionner un joueur :",
+  "damas.config.noPlayer": "Aucun joueur",
+  "damas.config.noPlayers": "Aucun joueur",
+  "damas.config.createPlayer": "Créer un joueur",
+  "damas.config.deletePlayer": "Supprimer un joueur",
+  "damas.jugadores2": "Joueur:",
+  "damas.player.create.title": "Créer un nouveau joueur",
+  "damas.player.namePlaceholder": "Nom (3-12 caractères)",
+  "damas.player.error.length": "Le nom doit contenir entre 3 et 12 caractères",
+  "damas.player.error.exists": "Un joueur avec ce nom existe déjà",
+  "damas.player.error.noPlayers": "Aucun joueur à supprimer",
+  "damas.player.error.select": "Sélectionnez un joueur à supprimer",
+  "damas.player.created": "Joueur {nombre} créé avec succès",
+  "damas.player.deleted": "Joueur {nombre} supprimé",
+
+  "damas.player.delete.title": "Sélectionner un joueur à supprimer",
+  "damas.player.error.maxPlayers":
+    "Vous ne pouvez pas créer plus de 10 joueurs",
+  "damas.ranking.title": "Classement des joueurs",
+  "damas.ranking.noPlayers": "Aucun joueur enregistré",
+  "damas.warning.noPlayer": "Vous devez sélectionner un joueur pour commencer",
 };

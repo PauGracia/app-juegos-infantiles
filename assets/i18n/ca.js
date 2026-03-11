@@ -30,8 +30,7 @@ window.translationsCA = {
   "ahorcado.winMessage": "Paraula encertada!",
   "ahorcado.nextWord": "Següent paraula!",
   "damas.instructionsText":
-    "• L'objectiu és capturar totes les fitxes del rival.\n\n• Les fitxes es mouen en diagonal cap endavant.\n\n• Les captures són obligatòries si existeixen.\n\n• Si una fitxa arriba a l'extrem contrari, es converteix en reina.\n\n• Les reines poden moure's en totes les diagonals.",
-
+    "• L'objectiu és capturar totes les fitxes del rival.\n\n• GESTIÓ DE JUGADORS:\n  - Crea el teu jugador (nom de 3 a 12 caràcters).\n  - Màxim 10 jugadors guardats.\n  - Selecciona el teu jugador abans de començar.\n  - Les teves victòries i derrotes es guarden automàticament.\n  - Consulta les estadístiques al botó 'Jugadors'.\n\n• LÍMIT DE TEMPS:\n  - Cada partida té 5 minuts per jugador.\n  - Si s'acaba el teu temps, perds automàticament.\n\n• MOVIMENTS:\n  - Les fitxes es mouen en diagonal cap endavant.\n  - Les captures són obligatòries si n'hi ha.\n  - Pots activar/desactivar els suggeriments de moviment.\n\n• CORONACIÓ:\n  - Si una fitxa arriba a l'extrem contrari, es converteix en reina.\n  - Les reines poden moure's en totes les diagonals.\n\n• ESTADÍSTIQUES:\n  - Es guarden victòries i derrotes per nivell (Normal/Difícil).\n  - El rànquing mostra tots els jugadors ordenats alfabèticament.\n\n• NIVELLS DE DIFICULTAT:\n  - Normal: IA amb moviments bàsics.\n  - Difícil: IA avançada que avalua riscos i estratègies.\n\n• BOTÓ 'JUGADORS':\n  - Mostra el rànquing complet amb totes les estadístiques.\n\nGaudeix de la partida!",
   "damas.you": "TU",
   "damas.ai": "MÀQUINA",
   "damas.white": "Blanques",
@@ -395,7 +394,8 @@ window.translationsCA = {
   "damas.config.noPlayers": "No hi ha jugadors",
   "damas.config.createPlayer": "Crear jugador",
   "damas.config.deletePlayer": "Esborrar jugador",
-
+  "damas.jugadores": "Jugadors",
+  "damas.jugadores2": "Jugador:",
   "damas.player.create.title": "Crear nou jugador",
   "damas.player.namePlaceholder": "Nom (3-12 caràcters)",
   "damas.player.error.length": "El nom ha de tenir entre 3 i 12 caràcters",
@@ -404,6 +404,9 @@ window.translationsCA = {
   "damas.player.error.select": "Selecciona un jugador per esborrar",
   "damas.player.created": "Jugador {nombre} creat correctament",
   "damas.player.deleted": "Jugador {nombre} eliminat",
+  "damas.player.error.maxPlayers": "No es poden crear més de 10 jugadors",
+  "damas.ranking.title": "Rànquing de jugadors",
+  "damas.ranking.noPlayers": "No hi ha jugadors registrats",
 
   "damas.player.delete.title": "Seleccionar jugador a esborrar",
 

@@ -24,8 +24,7 @@ window.translationsES = {
   "ahorcado.loseMessage": "La palabra era:",
   "ahorcado.winMessage": "¡Palabra acertada!",
   "damas.instructionsText":
-    "• El objetivo es capturar todas las fichas del rival.\n• Las fichas se mueven en diagonal hacia adelante.\n• Las capturas son obligatorias si existen.\n• Si una ficha llega al extremo contrario, se convierte en reina.\n• Las reinas pueden moverse en todas las diagonales.",
-
+    "• OBJETIVO: Capturar todas las fichas del rival.\n\n• JUGADORES:\n  - Crea tu jugador (3-12 caracteres, máx. 10).\n  - Selecciona tu jugador antes de jugar.\n  - Tus estadísticas se guardan automáticamente.\n\n• TIEMPO:\n  - 5 minutos por jugador.\n  - Si se acaba el tiempo, pierdes.\n\n• MOVIMIENTOS:\n  - En diagonal hacia adelante.\n  - Capturas obligatorias.\n  - Sugerencias activables.\n\n• REINAS:\n  - Al llegar al extremo contrario.\n  - Se mueven en todas las diagonales.\n\n• ESTADÍSTICAS:\n  - Victorias/Derrotas por nivel (Normal/Difícil).\n  - Ranking alfabético en botón 'Jugadores'.\n\n• NIVELES IA:\n  - Normal: movimientos básicos.\n  - Difícil: IA estratégica.\n\n¡A jugar!",
   "damas.you": "TÚ",
   "damas.ai": "MÁQUINA",
   "damas.white": "Blancas",
@@ -400,7 +399,8 @@ window.translationsES = {
   "damas.config.noPlayers": "No hay jugadores",
   "damas.config.createPlayer": "Crear jugador",
   "damas.config.deletePlayer": "Borrar jugador",
-
+  "damas.jugadores": "Jugadores",
+  "damas.jugadores2": "Jugador:",
   "damas.player.create.title": "Crear nuevo jugador",
   "damas.player.namePlaceholder": "Nombre (3-12 caracteres)",
   "damas.player.error.length": "El nombre debe tener entre 3 y 12 caracteres",
@@ -409,7 +409,9 @@ window.translationsES = {
   "damas.player.error.select": "Selecciona un jugador para borrar",
   "damas.player.created": "Jugador {nombre} creado correctamente",
   "damas.player.deleted": "Jugador {nombre} eliminado",
-
+  "damas.player.error.maxPlayers": "No se pueden crear más de 10 jugadores",
+  "damas.ranking.title": "Ranking de jugadores",
+  "damas.ranking.noPlayers": "No hay jugadores registrados",
   "damas.player.delete.title": "Seleccionar jugador a borrar",
 
   "damas.warning.noPlayer": "Debes seleccionar un jugador para comenzar",

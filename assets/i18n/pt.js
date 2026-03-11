@@ -30,7 +30,7 @@ window.translationsPT = {
   "ahorcado.allWordsCompleted": "🏆 Você completou TODAS as palavras!",
   "ahorcado.extraHelpMessage": "💡 Você ganhou uma ajuda extra!",
   "damas.instructionsText":
-    "• O objetivo é capturar todas as peças do adversário.\n\n• As peças se movem em diagonal para frente.\n\n• As capturas são obrigatórias se houver.\n\n• Se uma peça chegar ao lado oposto, ela se torna dama.\n\n• As damas podem se mover em todas as diagonais.",
+    "• O objetivo é capturar todas as peças do adversário.\n\n• GESTÃO DE JOGADORES:\n  - Crie seu jogador (nome de 3 a 12 caracteres).\n  - Máximo de 10 jogadores salvos.\n  - Selecione seu jogador antes de começar.\n  - Suas vitórias e derrotas são salvas automaticamente.\n  - Consulte as estatísticas no botão 'Jogadores'.\n\n• LIMITE DE TEMPO:\n  - Cada partida tem 5 minutos por jogador.\n  - Se seu tempo acabar, você perde automaticamente.\n\n• MOVIMENTOS:\n  - As peças movem-se na diagonal para frente.\n  - As capturas são obrigatórias se disponíveis.\n  - Você pode ativar/desativar as sugestões de movimento.\n\n• COROAÇÃO:\n  - Se uma peça chegar ao extremo oposto, torna-se uma dama.\n  - As damas podem mover-se em todas as diagonais.\n\n• ESTATÍSTICAS:\n  - Vitórias e derrotas são salvas por nível (Normal/Difícil).\n  - O ranking mostra todos os jogadores em ordem alfabética.\n\n• NÍVEIS DE DIFICULDADE:\n  - Normal: IA com movimentos básicos.\n  - Difícil: IA avançada que avalia riscos e estratégias.\n\n• BOTÃO 'JOGADORES':\n  - Mostra o ranking completo com todas as estatísticas.\n\nDivirta-se!",
   "categoria.animal": "Animal",
   "categoria.objeto": "Objeto",
   "categoria.lugar": "Lugar",
@@ -383,4 +383,24 @@ window.translationsPT = {
     "Reservamo-nos o direito de atualizar ou modificar estes termos em qualquer altura. As alterações serão notificadas dentro da própria aplicação.",
   "terms.contact":
     "Se tiver dúvidas sobre estes termos, pode contactar-nos através dos meios disponíveis na aplicação.",
+  "damas.config.selectPlayer": "Selecionar jogador:",
+  "damas.config.noPlayer": "Nenhum jogador",
+  "damas.config.noPlayers": "Nenhum jogador",
+  "damas.config.createPlayer": "Criar jogador",
+  "damas.config.deletePlayer": "Excluir jogador",
+  "damas.jugadores2": "Jogador:",
+  "damas.player.create.title": "Criar novo jogador",
+  "damas.player.namePlaceholder": "Nome (3-12 caracteres)",
+  "damas.player.error.length": "O nome deve ter entre 3 e 12 caracteres",
+  "damas.player.error.exists": "Já existe um jogador com esse nome",
+  "damas.player.error.noPlayers": "Nenhum jogador para excluir",
+  "damas.player.error.select": "Selecione um jogador para excluir",
+  "damas.player.created": "Jogador {nombre} criado com sucesso",
+  "damas.player.deleted": "Jogador {nombre} excluído",
+  "damas.player.error.maxPlayers": "Não é possível criar mais de 10 jogadores",
+  "damas.ranking.title": "Ranking de jogadores",
+  "damas.ranking.noPlayers": "Não há jogadores registrados",
+  "damas.player.delete.title": "Selecionar jogador para excluir",
+
+  "damas.warning.noPlayer": "Você deve selecionar um jogador para começar",
 };
