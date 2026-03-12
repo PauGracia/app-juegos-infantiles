@@ -1069,6 +1069,7 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
+  height: 45px;
 }
 
 #boton-jugar-config::before,
@@ -1411,6 +1412,51 @@
   border: 2px solid #0f0f0f;
   color: #0f0f0f;
   background: #bdc3c7;
+}
+
+/* -------------------- SPLASH SCREEN DE CARGA -------------------- */
+#splash-screen-damas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20000;
+  transition: opacity 0.5s ease-out;
+  opacity: 1;
+  pointer-events: none;
+}
+
+#splash-screen-damas img {
+  width: 150px;
+  height: auto;
+  animation: softPulse 1.5s ease-in-out infinite;
+  opacity: 1 !important;
+}
+
+/* Animación suave para el logo (opcional) */
+@keyframes softPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+#splash-screen-damas.hidden {
+  opacity: 0;
+  visibility: hidden;
 }
 
 /* -------------------- MEDIA QUERIES -------------------- */

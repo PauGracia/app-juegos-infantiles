@@ -971,6 +971,54 @@ html {
   background-image: url("../../assets/img/iconos/salida.png");
 }
 
+/* -------------------- SPLASH SCREEN DE CARGA (AHORCADO) -------------------- */
+#splash-screen-ahorcado {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(214, 214, 214);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20000;
+  transition: opacity 0.5s ease-out;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: none;
+}
+
+/* Estilo para la imagen del splash */
+#splash-screen-ahorcado img {
+  width: 150px;
+  opacity: 1 !important;
+  height: auto;
+  animation: softPulse 1.5s ease-in-out infinite;
+}
+
+/* Animación suave para el logo (opcional, puedes reusar la de damas) */
+@keyframes softPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+/* Clase para ocultar el splash (la añadiremos con JS) */
+#splash-screen-ahorcado.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
 /* === MEDIA QUERIES MEJORADAS PARA MÓVILES === */
 @media (max-width: 780px) {
   .body-ahorcado {
@@ -983,27 +1031,27 @@ html {
   }
 
   .mobile-title {
-    padding: 0 10px !important;
+    padding: 0 10px;
     word-break: break-word;
-    line-height: 1.2 !important;
+    line-height: 1.2;
     margin-top: 50px;
   }
 
   .mobile-score {
-    position: fixed !important;
-    top: 8px !important;
-    right: 5px !important;
-    z-index: 1000 !important;
+    position: fixed;
+    top: 8px;
+    right: 5px;
+    z-index: 1000;
   }
 
   .mobile-container {
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   .mobile-footer {
-    padding: 5px 0 !important;
-    margin-top: 0 !important;
+    padding: 5px 0;
+    margin-top: 0;
     margin-bottom: 20px;
   }
 

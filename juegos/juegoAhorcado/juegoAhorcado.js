@@ -16,16 +16,40 @@ function actualizarTextosJuego() {
   }
 }
 
-/* =========================
-   JUEGO AHORCADO 
-   ========================= */
 document.addEventListener("DOMContentLoaded", () => {
+  // ================================
+  // GESTIÓN DEL SPLASH SCREEN
+  // ================================
+  const splashScreen = document.getElementById("splash-screen-ahorcado");
+
+  // PRECARGAR LA IMAGEN DEL SPLASH
+  const splashImage = new Image();
+  splashImage.src = "../../assets/img/iconos/ahorcado.png";
+
+  splashImage.onload = function () {};
+
+  // Función para ocultar el splash cuando todo esté listo
+  function hideSplashScreen() {
+    if (splashScreen) {
+      splashScreen.classList.add("hidden");
+      setTimeout(() => {
+        if (splashScreen && splashScreen.parentNode) {
+          splashScreen.parentNode.removeChild(splashScreen);
+        }
+      }, 600);
+    }
+  }
+
   // ================================
   // FUNCIÓN DE TRADUCCIÓN GLOBAL
   // ================================
   window.getTranslation = function (key, fallback = "") {
     return window.translations?.[key] || fallback || key;
   };
+
+  // ================================
+  // CÓDIGO PRINCIPAL DEL JUEGO
+  // ================================
   (function () {
     // Variables de estado
     let ah_idiomaJuego = "es";
@@ -46,10 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // LISTENER DE CAMBIO DE IDIOMA
     // ================================
     document.addEventListener("languageChanged", (e) => {
-      // Actualizar las etiquetas del select
       actualizarEtiquetasSelectIdioma();
-
-      // Solo sincronizar si el usuario NO eligió idioma del juego
       if (!localStorage.getItem("gameLang")) {
         const select = document.getElementById("idioma-juego");
         if (select) {
@@ -57,35 +78,28 @@ document.addEventListener("DOMContentLoaded", () => {
           ah_idiomaJuego = e.detail.lang;
         }
       }
-
       actualizarTextosJuego();
     });
 
     // ================================
     // INICIALIZAR IDIOMA DEL SELECT
     // ================================
-
     let selectListenerAdded = false;
 
     function inicializarSelectIdioma() {
       const select = document.getElementById("idioma-juego");
       if (!select) return;
 
-      // Usar el idioma de la interfaz
       let idiomaInicial =
         localStorage.getItem("uiLang") || document.documentElement.lang || "es";
-
-      // Validar que el idioma sea soportado
       const opcionesValidas = ["es", "ca", "en", "it", "pt", "fr"];
       if (!opcionesValidas.includes(idiomaInicial)) {
         idiomaInicial = "es";
       }
 
-      // Asignar valor al select
       select.value = idiomaInicial;
       ah_idiomaJuego = idiomaInicial;
 
-      // Solo agregar el listener si no lo hemos hecho antes
       if (!selectListenerAdded) {
         select.addEventListener("change", (e) => {
           ah_idiomaJuego = e.target.value;
@@ -104,32 +118,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const palabraEl = document.getElementById("palabra");
     const letrasEl = document.getElementById("letras");
     const marcadorEl = document.getElementById("marcador-ahorcado");
-
-    // Nuevos elementos del DOM para los botones movidos del HTML
     const btnReiniciar = document.getElementById("btnReiniciar");
     const btnSalirFinal = document.getElementById("btnSalirFinal");
     const btnVerRankingFinal = document.getElementById("btnVerRankingFinal");
     const btnExportarRanking = document.getElementById("btnExportarRanking");
-
-    // Después de definir los elementos del DOM, añade (aproximadamente línea 70):
     const btnPista = document.getElementById("btnPista");
 
-    // Añade esta nueva función para manejar la pista:
+    // Función para manejar la pista
     function usarPista() {
       if (ah_bloqueado || !ah_categoriaActual) return;
-
       reproducirSonido(sonidos.click);
-
-      // Obtener la categoría traducida
       const categoriaTraducida = getTranslation(
         `categoria.${ah_categoriaActual}`,
         ah_categoriaActual,
       );
-
-      // Mostrar la pista usando la función existente de mensajes temporales
       mostrarMensajeTemporal(`${categoriaTraducida}`, 3000);
-      // Descomenta si tienes un sonido de pista SONIDO
     }
+
     // ================================
     // FUNCIÓN PARA MOSTRAR MODAL DE CONFIRMACIÓN
     // ================================
@@ -140,7 +145,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const modal = document.getElementById("modal-confirm-exit");
       const titulo = modal.querySelector("h2");
 
-      // Usar traducción si está disponible
       if (window.translations && window.translations["common.confirmExit"]) {
         titulo.textContent = window.translations["common.confirmExit"];
       } else {
@@ -149,15 +153,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       modal.style.display = "flex";
 
-      // Configurar botones del modal de confirmación
       const btnYes = document.getElementById("btn-confirm-yes");
       const btnNo = document.getElementById("btn-confirm-no");
 
-      // Remover listeners previos
       btnYes.replaceWith(btnYes.cloneNode(true));
       btnNo.replaceWith(btnNo.cloneNode(true));
 
-      // Agregar nuevos listeners
       const newBtnYes = document.getElementById("btn-confirm-yes");
       const newBtnNo = document.getElementById("btn-confirm-no");
 
@@ -183,33 +184,24 @@ document.addEventListener("DOMContentLoaded", () => {
     // ================================
     function ajustarLayoutMovil() {
       if (!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        return; // Solo en móviles
+        return;
       }
 
       const alturaVentana = window.innerHeight;
-      const alturaDisponible = alturaVentana - 200; // Reservar espacio para título y botones
+      const alturaDisponible = alturaVentana - 200;
 
-      // Ajustar contenedor principal
       const contenedor = document.querySelector(".contenedor-juego");
       if (contenedor) {
         contenedor.style.maxHeight = `${alturaDisponible}px`;
         contenedor.style.overflowY = "auto";
       }
 
-      // Ajustar teclado según altura disponible
       const letrasContainer = document.getElementById("letras");
       if (letrasContainer && alturaVentana < 700) {
-        // Pantallas muy cortas
         letrasContainer.style.gap = "2px";
         letrasContainer.style.padding = "3px";
-
-        const botones = letrasContainer.querySelectorAll(
-          "button:not(.btn-ayuda)",
-        );
-        botones.forEach((btn) => {});
       }
 
-      // Forzar reflow para evitar problemas de renderizado
       requestAnimationFrame(() => {
         if (contenedor) contenedor.style.display = "none";
         setTimeout(() => {
@@ -218,7 +210,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Ejecutar al cargar y al redimensionar
     window.addEventListener("load", ajustarLayoutMovil);
     window.addEventListener("resize", ajustarLayoutMovil);
     setTimeout(ajustarLayoutMovil, 500);
@@ -263,7 +254,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       setupButton(btn, letra, handler) {
         if (isTouchDevice) {
-          // Para móviles: usar solo touch events
           btn.addEventListener(
             "touchstart",
             (e) => this.handleTouchStart(e, btn, letra, handler),
@@ -278,21 +268,17 @@ document.addEventListener("DOMContentLoaded", () => {
             passive: false,
           });
           btn.addEventListener("touchcancel", () => this.cancelTouch(btn));
-
-          // Remover click listener para evitar conflictos
           btn.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
           });
         } else {
-          // Para desktop: usar solo click
           btn.addEventListener("click", (e) => {
             e.preventDefault();
             handler(btn, letra);
           });
         }
 
-        // Añadir estilo visual para feedback táctil
         if (isTouchDevice) {
           btn.style.touchAction = "manipulation";
           btn.style.msTouchAction = "manipulation";
@@ -303,7 +289,6 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         e.stopPropagation();
 
-        // Evitar múltiples toques rápidos
         const now = Date.now();
         if (now - this.lastTouchTime < 300) return;
 
@@ -312,7 +297,6 @@ document.addEventListener("DOMContentLoaded", () => {
         this.startX = touch.clientX;
         this.startY = touch.clientY;
 
-        // Feedback visual
         btn.style.opacity = "0.8";
         btn.style.transform = "scale(0.95)";
       }
@@ -324,7 +308,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const deltaX = Math.abs(touch.clientX - this.startX);
         const deltaY = Math.abs(touch.clientY - this.startY);
 
-        // Cancelar si el usuario se mueve demasiado
         if (
           deltaX > this.touchMoveThreshold ||
           deltaY > this.touchMoveThreshold
@@ -340,14 +323,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (this.activeButton !== btn) return;
         if (btn.disabled) return;
 
-        // Restaurar estilo
         btn.style.opacity = "";
         btn.style.transform = "";
 
-        // Registrar tiempo
         this.lastTouchTime = Date.now();
 
-        // Ejecutar handler
         setTimeout(() => {
           handler(btn, letra);
         }, 50);
@@ -414,28 +394,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const lineaTrim = linea.trim();
 
         if (lineaTrim === "") {
-          // Línea vacía
           if (enLista) {
             htmlFormateado += "</div>";
             enLista = false;
           }
           htmlFormateado += '<div style="height: 15px;"></div>';
         } else if (lineaTrim.startsWith("•")) {
-          // Elemento de lista
           if (!enLista) {
             htmlFormateado += '<div style="margin: 10px 0 15px 15px;">';
             enLista = true;
           }
           htmlFormateado += `<div style="margin-bottom: 10px; line-height: 1.5;">${lineaTrim}</div>`;
         } else if (lineaTrim.endsWith(":")) {
-          // Título/sección
           if (enLista) {
             htmlFormateado += "</div>";
             enLista = false;
           }
           htmlFormateado += `<div style="font-weight: 800; color: #2d3748; font-size: 1.1em; margin: 20px 0 12px 0; padding-bottom: 5px; border-bottom: 2px solid #e2e8f0;">${lineaTrim}</div>`;
         } else {
-          // Texto normal
           if (enLista) {
             htmlFormateado += "</div>";
             enLista = false;
@@ -463,12 +439,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function normalizarLetra(letra) {
       if (!letra) return "";
-
       const letraNormalizada = letra
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "");
-
-      // Convertir a mayúsculas
       return letraNormalizada.toUpperCase();
     }
 
@@ -488,8 +461,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       btn.disabled = true;
       const letraNormalizada = normalizarLetra(letra);
-
-      // Normalizar la palabra completa para la comparación
       const palabraNormalizada = normalizarLetra(ah_palabraSecreta);
 
       if (palabraNormalizada.includes(letraNormalizada)) {
@@ -522,23 +493,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "ahorcado.winMessage",
             "¡Palabra acertada!",
           );
-          setTimeout(() => {
-            reproducirSonido(sonidos.nuevaPalabra);
-            mostrarMensajeTemporal(`${winMessage} ${nextWord}`, 2200);
-          }, 500);
-
-          // Anunciar ayuda extra DESPUÉS
-          if (ganaAyuda) {
-            setTimeout(() => {
-              mostrarMensajeTemporal(
-                getTranslation(
-                  "ahorcado.extraHelpMessage",
-                  "💡 ¡Has ganado una ayuda extra!",
-                ),
-                2000,
-              );
-            }, 3000); // cuando el otro ya terminó
-          }
           const nextWord = getTranslation(
             "ahorcado.nextWord",
             "¡Siguiente palabra!",
@@ -548,6 +502,18 @@ document.addEventListener("DOMContentLoaded", () => {
             reproducirSonido(sonidos.nuevaPalabra);
             mostrarMensajeTemporal(`${winMessage} ${nextWord}`, 2200);
           }, 500);
+
+          if (ganaAyuda) {
+            setTimeout(() => {
+              mostrarMensajeTemporal(
+                getTranslation(
+                  "ahorcado.extraHelpMessage",
+                  "💡 ¡Has ganado una ayuda extra!",
+                ),
+                2000,
+              );
+            }, 3000);
+          }
 
           setTimeout(() => {
             ah_bloqueado = false;
@@ -619,9 +585,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.getItem("gameLang") ||
         document.getElementById("idioma-juego")?.value ||
         "es";
-
       ah_bloqueado = false;
-
       ah_ayudas = 2;
       ah_palabrasAcertadas = 0;
       ah_partidaPalabrasAcertadas = 0;
@@ -698,15 +662,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const lista = palabras[ah_idiomaJuego] || palabras.es;
-
-      // Filtrar palabras válidas (≤15 letras y no usadas)
       const palabrasDisponibles = lista.filter(
         (p) =>
           p.palabra.length <= AH_MAX_LETRAS &&
           !ah_palabrasUsadas.has(normalizarLetra(p.palabra)),
       );
 
-      // Si no quedan palabras final del juego
       if (palabrasDisponibles.length === 0) {
         mostrarMensajeTemporal(
           getTranslation(
@@ -715,34 +676,23 @@ document.addEventListener("DOMContentLoaded", () => {
           ),
           2500,
         );
-
         setTimeout(() => {
           ah_mostrarFinal("completado");
         }, 2600);
-
         return;
       }
 
-      // Elegir palabra aleatoria válida
       const palabraObj =
         palabrasDisponibles[
           Math.floor(Math.random() * palabrasDisponibles.length)
         ];
-
-      // Guardar la palabra ORIGINAL en MAYÚSCULAS para mostrarla
       const palabraOriginal = palabraObj.palabra.toUpperCase();
       ah_categoriaActual = palabraObj.categoria;
-
-      // Normalizar para el sistema de palabras usadas y comparaciones
       const palabraNormalizada = normalizarLetra(palabraOriginal);
 
-      // Marcar como usada (versión normalizada)
       ah_palabrasUsadas.add(palabraNormalizada);
-
-      // Guardar la palabra original con mayúsculas (para mostrar)
       ah_palabraSecreta = palabraOriginal;
 
-      // Crear progreso con la palabra original
       ah_progreso = ah_palabraSecreta.split("").map((char) => {
         return char === "-" ? "-" : "_";
       });
@@ -775,7 +725,6 @@ document.addEventListener("DOMContentLoaded", () => {
         pistaElement.style.display = "none";
       }
       if (btnPista) {
-        // Habilitar el botón si hay categoría y el juego no está bloqueado (sin límite de uso)
         btnPista.disabled = ah_bloqueado || !ah_categoriaActual;
       }
     }
@@ -806,7 +755,6 @@ document.addEventListener("DOMContentLoaded", () => {
           span.className = "ah-guion";
         } else {
           span.className = "ah-letra";
-          // Asegurar que la letra se muestra en mayúscula
           span.textContent = progresoChar;
         }
 
@@ -817,41 +765,31 @@ document.addEventListener("DOMContentLoaded", () => {
     function ah_crearBotones() {
       letrasEl.innerHTML = "";
 
-      // Definir el abecedario según el idioma
       let abecedario = [];
 
       switch (ah_idiomaJuego) {
-        case "es": // Español
+        case "es":
           abecedario = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
           break;
-
-        case "ca": // Catalán
-          // Catalán: sin Ñ, con Ç después de la C
+        case "ca":
           abecedario = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-          // Buscar el índice de la C y añadir Ç después
           const indexC = abecedario.indexOf("C");
           abecedario.splice(indexC + 1, 0, "Ç");
           break;
-
-        case "pt": // Portugués
-          // Portugués: sin Ñ, con Ç después de la C (mismo orden)
+        case "pt":
           abecedario = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
           const indexCPT = abecedario.indexOf("C");
           abecedario.splice(indexCPT + 1, 0, "Ç");
           break;
-
-        case "en": // Inglés
-        case "it": // Italiano
-        case "fr": // Francés
-          // Inglés, italiano y francés: 26 letras sin Ñ
+        case "en":
+        case "it":
+        case "fr":
           abecedario = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
           break;
-
         default:
           abecedario = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
       }
 
-      // === BOTONES DE LETRAS ===
       abecedario.forEach((letra) => {
         const btn = document.createElement("button");
         btn.textContent = letra;
@@ -863,7 +801,6 @@ document.addEventListener("DOMContentLoaded", () => {
         letrasEl.appendChild(btn);
       });
 
-      // === BOTÓN AYUDA ===
       const btnAyuda = document.createElement("button");
       btnAyuda.className = "btn-ayuda";
       btnAyuda.textContent = `💡 ${ah_ayudas}`;
@@ -871,7 +808,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (ah_ayudas <= 0) btnAyuda.disabled = true;
 
-      // Configurar eventos para el botón ayuda
       if (isTouchDevice) {
         btnAyuda.addEventListener(
           "touchstart",
@@ -924,9 +860,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      // Marcar botón como acertado
       const botones = letrasEl.querySelectorAll(".letra-btn");
-
       botones.forEach((btnLetra) => {
         if (normalizarLetra(btnLetra.textContent) === letraNormalizada) {
           btnLetra.disabled = true;
@@ -944,7 +878,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!ah_progreso.includes("_")) {
         ah_puntos++;
         ah_palabrasAcertadas++;
-
         ah_actualizarMarcador();
         setTimeout(ah_nuevaPalabra, 1200);
       }
@@ -1009,7 +942,6 @@ document.addEventListener("DOMContentLoaded", () => {
         resultado.textContent = mensajeFinal;
       }
 
-      // Controlar el botón de guardar récord
       const btnGuardarRecord = document.getElementById("btnGuardarRecord");
       if (btnGuardarRecord) {
         if (ah_partidaPalabrasAcertadas >= 3) {
@@ -1035,10 +967,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ================================
     // CONFIGURACIÓN DE EVENTOS
     // ================================
-
-    // Configurar eventos para los botones que se movieron del HTML
     function configurarEventosBotones() {
-      // Botón Reiniciar en modal final
       if (btnReiniciar) {
         btnReiniciar.addEventListener("click", () => {
           const modalFinal = document.getElementById("modal-final");
@@ -1048,7 +977,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
-      // Botón Salir en modal final
       if (btnSalirFinal) {
         btnSalirFinal.addEventListener("click", () => {
           mostrarModalConfirmacion(
@@ -1062,14 +990,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
-      // Botón Ver Ranking en modal final
       if (btnVerRankingFinal) {
         btnVerRankingFinal.addEventListener("click", () => {
           window.location.href = "../ranking/rankingLocal.html";
         });
       }
 
-      // Botón Exportar Ranking
       if (btnExportarRanking) {
         btnExportarRanking.addEventListener("click", () => {
           const ranking =
@@ -1078,9 +1004,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const dataUri =
             "data:application/json;charset=utf-8," +
             encodeURIComponent(dataStr);
-
           const exportFileDefaultName = `ranking_ahorcado_${new Date().toISOString().split("T")[0]}.json`;
-
           const linkElement = document.createElement("a");
           linkElement.setAttribute("href", dataUri);
           linkElement.setAttribute("download", exportFileDefaultName);
@@ -1140,13 +1064,10 @@ ${getTranslation("ahorcado.instructions.language", "IDIOMA:")}
 
 
 ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
-
         `;
 
-        // Usar la función de formateo
         const instruccionesFormateadas =
           formatearInstruccionesParaModal(instrucciones);
-
         window.mostrarModalInfo(
           getTranslation("common.instructions", "Instrucciones"),
           instruccionesFormateadas,
@@ -1225,9 +1146,7 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
     }
 
     function ah_resetearJuegoCompleto() {
-      // Reset variables
       ah_bloqueado = false;
-
       ah_palabraSecreta = "";
       ah_progreso = [];
       ah_errores = 0;
@@ -1235,13 +1154,11 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       ah_usuario = "";
       ah_partidaPalabrasAcertadas = 0;
 
-      // Limpiar UI
       if (palabraEl) palabraEl.innerHTML = "";
       if (letrasEl) letrasEl.innerHTML = "";
       ah_actualizarMarcador();
       ah_resetearSVG();
 
-      // Ocultar modales
       const modalFinal = document.getElementById("modal-final");
       const modalInfo = document.getElementById("modal-info");
       const modalConfirm = document.getElementById("modal-confirm-exit");
@@ -1249,15 +1166,12 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       if (modalInfo) modalInfo.style.display = "none";
       if (modalConfirm) modalConfirm.style.display = "none";
 
-      // Mostrar modal inicio
       const modalInicio = document.getElementById("modal-inicio");
       if (modalInicio) modalInicio.style.display = "flex";
 
-      // Limpiar input usuario
       const inputUsuario = document.getElementById("usuario");
       if (inputUsuario) inputUsuario.value = "";
 
-      // Re-inicializar el select del idioma
       inicializarSelectIdioma();
       document.addEventListener("languageChanged", () => {
         const btnPista = document.getElementById("btnPista");
@@ -1266,24 +1180,16 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
         }
       });
 
-      // Resetear pista
       if (btnPista) {
-        btnPista.disabled = true; // Al reiniciar, no hay palabra, así que deshabilitado
+        btnPista.disabled = true;
       }
     }
 
     // ================================
     // INICIALIZAR TODO
     // ================================
-
-    // Configurar eventos de los botones que se movieron del HTML
     configurarEventosBotones();
 
-    // ================================
-    // FIX PARA MÓVILES
-    // ================================
-
-    // Prevenir scroll cuando se tocan botones
     document.addEventListener(
       "touchmove",
       function (e) {
@@ -1294,7 +1200,6 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       { passive: false },
     );
 
-    // Prevenir zoom con doble toque
     let lastTouchEnd = 0;
     document.addEventListener(
       "touchend",
@@ -1308,16 +1213,11 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
       { passive: false },
     );
 
-    // Prevenir menú contextual en botones
     document.addEventListener("contextmenu", function (e) {
       if (e.target.closest(".letras button, .letras .btn-ayuda")) {
         e.preventDefault();
       }
     });
-
-    // ================================
-    // EVENTO PARA EL BOTÓN DE PISTA
-    // ================================
 
     if (btnPista) {
       if (isTouchDevice) {
@@ -1344,7 +1244,6 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
           { passive: false },
         );
 
-        // Cancelar si el dedo se mueve fuera del botón
         btnPista.addEventListener(
           "touchmove",
           (e) => {
@@ -1368,7 +1267,16 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
     }
   })();
 
-  // Funciones modal globales
+  // ================================
+  // OCULTAR EL SPLASH SCREEN DESPUÉS DE UN PEQUEÑO RETRASO
+  // ================================
+  setTimeout(() => {
+    hideSplashScreen();
+  }, 200); // Aumentamos a 200ms para asegurar que todo esté listo
+
+  // ================================
+  // FUNCIONES MODAL GLOBALES
+  // ================================
   window.mostrarModalInfo = function (titulo, mensaje = "") {
     const modalTitulo = document.getElementById("modal-info-titulo");
     const modalTexto = document.getElementById("modal-info-texto");
@@ -1376,24 +1284,21 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
 
     if (modalTitulo) modalTitulo.textContent = titulo;
     if (modalTexto) {
-      // Reemplazar saltos de línea por <br> para HTML
       const mensajeConSaltos = mensaje.replace(/\n/g, "<br>");
       modalTexto.innerHTML = mensajeConSaltos;
 
-      // Añadir estilos específicos para las instrucciones
       if (
         titulo === getTranslation("common.instructions", "Instrucciones") ||
         titulo === "Instrucciones"
       ) {
         modalTexto.style.cssText = `
-        color: #4a5568;
-        font-size: 1.05em;
-        line-height: 1.7;
-        text-align: left;
-        padding: 10px 5px;
-      `;
+          color: #4a5568;
+          font-size: 1.05em;
+          line-height: 1.7;
+          text-align: left;
+          padding: 10px 5px;
+        `;
 
-        // Estilos para secciones dentro de las instrucciones
         const lineas = mensajeConSaltos.split("<br>");
         let contenidoFormateado = "";
 
@@ -1414,11 +1319,9 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
     }
     if (modal) modal.style.display = "flex";
 
-    // Si el contenido es muy largo, asegurar que el botón sea visible
     setTimeout(() => {
       const modalContenido = document.querySelector(".modal-ranking-contenido");
       if (modalContenido) {
-        // Forzar scroll al inicio
         const scrollContainer = modalContenido.querySelector(
           ".modal-scroll-container",
         );
@@ -1426,7 +1329,6 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
           scrollContainer.scrollTop = 0;
         }
 
-        // Asegurar que el modal no se salga de la pantalla
         const viewportHeight = window.innerHeight;
         const modalHeight = modalContenido.offsetHeight;
 
@@ -1442,7 +1344,6 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
     if (modal) modal.style.display = "none";
   };
 
-  // Configurar evento del botón Aceptar
   const btnModalInfoAceptar = document.getElementById("btnModalInfoAceptar");
   if (btnModalInfoAceptar) {
     btnModalInfoAceptar.addEventListener("click", window.cerrarModalInfo);

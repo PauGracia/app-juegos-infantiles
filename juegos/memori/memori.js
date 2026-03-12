@@ -15,9 +15,44 @@ function applyTranslations() {
   });
 }
 
+// ================================
+// GESTIÓN DEL SPLASH SCREEN
+// ================================
+// Precargar la imagen del splash
+const splashImage = new Image();
+splashImage.src = "../../assets/img/iconos/memori.png";
+
 document.addEventListener("DOMContentLoaded", () => {
+  // Obtener el splash screen
+  const splashScreen = document.getElementById("splash-screen-memori");
+
+  // Función para ocultar el splash
+  function hideSplashScreen() {
+    if (splashScreen) {
+      splashScreen.classList.add("hidden");
+      // Eliminar del DOM después de la transición
+      setTimeout(() => {
+        if (splashScreen && splashScreen.parentNode) {
+          splashScreen.parentNode.removeChild(splashScreen);
+        }
+      }, 600);
+    }
+  }
+
+  // Inicializar traducciones
   initLanguage();
   function iniciarMemori() {
+    // Asegurar que el splash no bloquea la interacción
+    const splash = document.getElementById("splash-screen-memori");
+    if (splash && !splash.classList.contains("hidden")) {
+      // Si el splash aún está visible, esperamos un poco más
+      setTimeout(() => {
+        if (!splash.classList.contains("hidden")) {
+          splash.classList.add("hidden");
+        }
+      }, 500);
+    }
+
     // Referencias DOM
     const tablero = document.getElementById("tablero");
     const marcador = document.getElementById("marcador");
@@ -1042,4 +1077,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (document.getElementById("tablero")) iniciarMemori();
+
+  setTimeout(hideSplashScreen, 200);
 });

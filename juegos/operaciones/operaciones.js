@@ -1,5 +1,12 @@
 // -----JUEGO OPERACIONES-----
 
+// ================================
+// GESTIÓN DEL SPLASH SCREEN
+// ================================
+// Precargar la imagen del splash
+const splashImage = new Image();
+splashImage.src = "../../assets/img/iconos/operaciones.png";
+
 // Constantes globales para el juego de operaciones
 const MIN_OPERACIONES = 3;
 const MAX_OPERACIONES = 50;
@@ -18,12 +25,35 @@ if ("scrollRestoration" in history) {
 window.scrollTo(0, 0);
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Obtener el splash screen
+  // Primero, asegurar que el splash sea visible
+  const splashScreen = document.getElementById("splash-screen-operaciones");
+  if (splashScreen) {
+    splashScreen.style.opacity = "1";
+    splashScreen.style.visibility = "visible";
+  }
+
+  // Función para ocultar el splash
+  function hideSplashScreen() {
+    if (splashScreen) {
+      splashScreen.classList.add("hidden");
+      // Eliminar del DOM después de la transición
+      setTimeout(() => {
+        if (splashScreen && splashScreen.parentNode) {
+          splashScreen.parentNode.removeChild(splashScreen);
+        }
+      }, 600);
+    }
+  }
+
   window.scrollTo(0, 0);
 
   // También asegurar que ningún input tenga foco automático
   if (document.activeElement && document.activeElement.blur) {
     document.activeElement.blur();
   }
+
+  setTimeout(hideSplashScreen, 200);
 });
 
 // =============================
@@ -1253,6 +1283,12 @@ function salirAlMenu() {
 }
 
 function resetearTodo() {
+  // Asegurar que el splash no está bloqueando la interfaz
+  const splash = document.getElementById("splash-screen-operaciones");
+  if (splash && !splash.classList.contains("hidden")) {
+    splash.classList.add("hidden");
+  }
+
   // ─── Estado del juego ───
   clearInterval(intervaloCrono);
   intervaloCrono = null;

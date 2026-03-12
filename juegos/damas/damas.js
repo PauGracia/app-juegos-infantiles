@@ -2452,15 +2452,25 @@ const JuegoDamas = (() => {
     });
 
   function init() {
+    // --- Mostrar el splash screen al inicio ---
+    const splashScreen = document.getElementById("splash-screen-damas");
+    if (splashScreen) {
+      splashScreen.classList.remove("hidden"); // Asegurarse de que sea visible
+    }
     // Ocultar contenido inicialmente
     document.body.classList.remove("translations-loaded");
+
+    const modalConfig = document.getElementById("modal-config-damas");
+
+    modalConfig.style.display = "none";
 
     // Inicializar selector personalizado
     initCustomSelect();
 
     // Esperar a que las traducciones estén listas
     initLanguage().then(() => {
-      // Resto del código...
+      // Aplicar traducciones a elementos específicos
+
       document.getElementById("salirDamas").innerText = t("damas.exit");
 
       // Eventos del modal de fin
@@ -2683,6 +2693,28 @@ const JuegoDamas = (() => {
       document
         .getElementById("boton-reinicio-damas")
         ?.addEventListener("click", resetGameDamasUltra);
+
+      // FORZAR UN REFLOW para asegurar que el modal se renderice
+      void modalConfig.offsetHeight;
+
+      // AHORA mostrar el modal CON LAS TRADUCCIONES YA APLICADAS
+      modalConfig.style.display = "flex";
+
+      // Forzar otro reflow después de mostrar
+      void modalConfig.offsetHeight;
+
+      // ocultar el splash
+      if (splashScreen) {
+        splashScreen.classList.add("hidden");
+        setTimeout(() => {
+          if (splashScreen.parentNode) {
+            splashScreen.parentNode.removeChild(splashScreen);
+          }
+        }, 600);
+      }
+
+      // Marcar que las traducciones están cargadas
+      document.body.classList.add("translations-loaded");
 
       // Inicializar el juego
       resetGameDamasUltra();

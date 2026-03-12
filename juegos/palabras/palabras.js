@@ -1,4 +1,31 @@
+// ================================
+// PRECARGAR IMAGEN DEL SPLASH
+// ================================
+const splashImage = new Image();
+splashImage.src = "../../assets/img/iconos/palabras.png";
+
 document.addEventListener("DOMContentLoaded", () => {
+  // ================================
+  // GESTIÓN DEL SPLASH SCREEN
+  // ================================
+  const splashScreen = document.getElementById("splash-screen-palabras");
+
+  // Función para ocultar el splash
+  function hideSplashScreen() {
+    if (splashScreen) {
+      splashScreen.classList.add("hidden");
+      // Eliminar del DOM después de la transición
+      setTimeout(() => {
+        if (splashScreen && splashScreen.parentNode) {
+          splashScreen.parentNode.removeChild(splashScreen);
+        }
+      }, 600);
+    }
+  }
+
+  // Ocultar el splash después de un pequeño retraso
+  setTimeout(hideSplashScreen, 200);
+
   // -----------------------------
   // INICIALIZACIÓN DE IDIOMA DE INTERFAZ
   // -----------------------------
