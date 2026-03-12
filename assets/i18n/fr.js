@@ -285,6 +285,7 @@ window.translationsFR = {
   "history.confirmMessage":
     "Êtes-vous sûr de vouloir supprimer toutes les données de",
   "history.confirmAllTitle": "Supprimer tout l'historique",
+  "history.deleteHard": "Difficile",
   "history.confirmAllMessage":
     "Êtes-vous sûr de vouloir supprimer TOUTES les données des jeux suivants ?",
   "history.deleted": "Données supprimées avec succès",

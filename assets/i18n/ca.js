@@ -280,6 +280,7 @@ window.translationsCA = {
   "ranking.filterUser": "Filtrar per usuari",
   "menu.settings.history": "Historial",
   "history.title": "Historial de partides",
+  "history.deleteHard": "Difícil",
   "history.delete": "Esborrar dades",
   "history.deleteAll": "Esborrar totes les dades",
   "history.confirmTitle": "Confirmar esborrat",

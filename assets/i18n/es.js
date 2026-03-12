@@ -103,6 +103,7 @@ window.translationsES = {
   "common.check": "Comprobar",
   "common.restart": "Reiniciar",
   "history.confirmTitle": "Confirmar borrado",
+  "history.deleteHard": "Difícil",
   "history.confirmText": "¿Seguro que quieres borrar estos datos?",
   "history.confirmTextAll":
     "⚠️ ¿Seguro que quieres borrar TODOS LOS DATOS de TODOS LOS JUEGOS?\nEsta acción no se puede deshacer.",

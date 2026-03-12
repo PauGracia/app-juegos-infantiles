@@ -452,6 +452,11 @@ body.modal-open {
   font-size: clamp(1rem, 3vw, 1.1rem);
 }
 
+/* Asegurar que los iconos mantienen el tamaño correcto */
+.history-icon img[src*="damas.png"] {
+  object-fit: contain;
+}
+
 .language-list {
   display: flex;
   flex-direction: column;

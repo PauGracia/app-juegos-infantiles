@@ -506,6 +506,66 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ============================================
+  // BOTONES DE BORRADO PARA DAMAS
+  // ============================================
+
+  // Función específica para borrar datos de Damas
+  function borrarDatosDamas(modo, nombreJuego) {
+    abrirModalConfirmacion(
+      `¿Seguro que quieres borrar todos los datos de Damas - ${nombreJuego}?`,
+      () => {
+        // Claves específicas de Damas
+        const clavesDamas = ["damas_jugadores", "damas_estadisticas"];
+
+        clavesDamas.forEach((clave) => {
+          if (localStorage.getItem(clave) !== null) {
+            localStorage.removeItem(clave);
+          }
+        });
+
+        mostrarToastIdioma(`Datos de Damas (${nombreJuego}) borrados`);
+      },
+    );
+  }
+
+  // Botón para borrar datos del modo Normal
+  const btnDamasNormal = document.getElementById("btn-delete-damas-normal");
+  if (btnDamasNormal) {
+    btnDamasNormal.addEventListener("click", function () {
+      borrarDatosDamas("normal", "Modo Normal");
+    });
+  }
+
+  // Botón para borrar datos del modo Difícil
+  const btnDamasDificil = document.getElementById("btn-delete-damas-dificil");
+  if (btnDamasDificil) {
+    btnDamasDificil.addEventListener("click", function () {
+      borrarDatosDamas("dificil", "Modo Difícil");
+    });
+  }
+
+  // Botón para borrar todos los datos de Damas
+  const btnDamasAll = document.getElementById("btn-delete-damas-all");
+  if (btnDamasAll) {
+    btnDamasAll.addEventListener("click", function () {
+      abrirModalConfirmacion(
+        "¿Seguro que quieres borrar TODOS los datos de Damas (todos los modos)?",
+        () => {
+          const clavesDamas = ["damas_jugadores", "damas_estadisticas"];
+
+          clavesDamas.forEach((clave) => {
+            if (localStorage.getItem(clave) !== null) {
+              localStorage.removeItem(clave);
+            }
+          });
+
+          mostrarToastIdioma("Todos los datos de Damas han sido borrados");
+        },
+      );
+    });
+  }
+
   // BOTÓN DE BORRAR TODOS LOS JUEGOS
   const btnDeleteAllGames = document.getElementById("btn-delete-all-games");
   if (btnDeleteAllGames) {
@@ -514,6 +574,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "ranking_memori",
         "ranking_desafio",
         "rankingAhorcado",
+        "damas_jugadores",
+        "damas_estadisticas",
       ];
 
       abrirModalConfirmacion(

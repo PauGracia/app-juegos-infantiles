@@ -2212,11 +2212,19 @@ const JuegoDamas = (() => {
 
     if (!container || !selected || !optionsContainer) return;
 
-    const jugadores = GestorJugadores.obtenerJugadores();
+    // Obtener jugadores y filtrar para EXCLUIR a "Player"
+    const jugadores = GestorJugadores.obtenerJugadores().filter(
+      (nombre) => nombre !== "Player",
+    );
     const jugadorActual = GestorJugadores.obtenerJugadorSeleccionado();
 
+    // Si el jugador actual es "Player", lo deseleccionamos
+    if (jugadorActual === "Player") {
+      GestorJugadores.seleccionarJugador(null);
+    }
+
     // Actualizar texto seleccionado
-    if (jugadorActual) {
+    if (jugadorActual && jugadorActual !== "Player") {
       selected.textContent = jugadorActual;
       selected.removeAttribute("data-vacio");
     } else {
@@ -2224,7 +2232,7 @@ const JuegoDamas = (() => {
       selected.setAttribute("data-vacio", "true");
     }
 
-    // Recrear opciones
+    // Recrear opciones (excluyendo a "Player")
     optionsContainer.innerHTML = "";
 
     if (jugadores.length === 0) {

@@ -298,6 +298,7 @@ window.translationsPT = {
   "history.confirmTitle": "Confirmar exclusão",
   "history.confirmMessage":
     "Tens a certeza que queres apagar todos os dados de",
+  "history.deleteHard": "Difícil",
   "history.confirmAllTitle": "Apagar todo o histórico",
   "history.confirmAllMessage":
     "Tens a certeza que queres apagar TODOS os dados dos seguintes jogos?",
