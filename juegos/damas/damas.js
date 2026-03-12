@@ -2083,6 +2083,12 @@ const JuegoDamas = (() => {
 
     // Eliminar jugador
     function eliminarJugador(nombre) {
+      // Proteger al jugador "Player" de ser eliminado
+      if (nombre === "Player") {
+        console.warn("El jugador Player no puede ser eliminado");
+        return false;
+      }
+
       const index = jugadores.findIndex((j) => j === nombre);
       if (index !== -1) {
         jugadores.splice(index, 1);
@@ -2342,7 +2348,10 @@ const JuegoDamas = (() => {
   // ======================================================================
 
   function mostrarModalBorrarJugador() {
-    const jugadores = GestorJugadores.obtenerJugadores();
+    // Obtener jugadores y filtrar para EXCLUIR a "Player"
+    const jugadores = GestorJugadores.obtenerJugadores().filter(
+      (nombre) => nombre !== "Player",
+    );
 
     if (jugadores.length === 0) {
       mostrarAvisoDamas(t("damas.player.error.noPlayers"));
