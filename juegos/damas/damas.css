@@ -14,6 +14,33 @@
   --color-aviso: #f39c12;
 }
 
+/* Ocultar contenido hasta que las traducciones estén listas */
+.body-damas:not(.translations-loaded) .titulo-damas,
+.body-damas:not(.translations-loaded) .boton-damas,
+.body-damas:not(.translations-loaded) .config-bloque,
+.body-damas:not(.translations-loaded) .info-panel-damas,
+.body-damas:not(.translations-loaded) [data-i18n] {
+  visibility: hidden !important;
+}
+
+/* Mostrar solo después de cargar */
+.body-damas.translations-loaded {
+  visibility: visible;
+}
+
+/* Opcional: añadir un loader mientras se cargan las traducciones */
+.body-damas:not(.translations-loaded)::before {
+  content: "Cargando...";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
 .texto-instrucciones-damas {
   white-space: pre-line;
 }

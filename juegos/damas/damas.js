@@ -461,59 +461,67 @@ const JuegoDamas = (() => {
     });
   }
 
-  // Función initLanguage simplificada (ASINCRONA)
+  // Función initLanguage mejorada con promesa y control de carga
   function initLanguage() {
-    // El idioma ya está en localStorage por i18n.js
-    const lang = localStorage.getItem("appLang") || "es";
+    return new Promise((resolve) => {
+      // El idioma ya está en localStorage por i18n.js
+      const lang = localStorage.getItem("appLang") || "es";
 
-    // Las traducciones ya están en window.translations (cargadas por i18n.js)
-    const translations = window.translations;
-    if (!translations) {
-      console.warn("Traducciones no disponibles");
-      return;
-    }
-
-    document.querySelectorAll("[data-i18n]").forEach((el) => {
-      const key = el.getAttribute("data-i18n");
-      if (translations[key]) {
-        el.textContent = translations[key];
+      // Las traducciones ya están en window.translations (cargadas por i18n.js)
+      const translations = window.translations;
+      if (!translations) {
+        console.warn("Traducciones no disponibles");
+        resolve();
+        return;
       }
-    });
 
-    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
-      const key = el.getAttribute("data-i18n-placeholder");
-      if (translations[key]) {
-        el.placeholder = translations[key];
-      }
-    });
-
-    const nivelSelect = document.getElementById("nivel-ia");
-    if (nivelSelect) {
-      Array.from(nivelSelect.options).forEach((option) => {
-        const key = option.getAttribute("data-i18n");
-        if (key && translations[key]) {
-          option.text = translations[key];
+      // Aplicar traducciones a todos los elementos
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[key]) {
+          el.textContent = translations[key];
         }
       });
-    }
 
-    const container = document.getElementById("nivel-ia-container");
-    if (container && container.actualizarSelector) {
-      container.actualizarSelector();
-    }
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        if (translations[key]) {
+          el.placeholder = translations[key];
+        }
+      });
 
-    const resultadoSorteo = document.getElementById("resultado-sorteo");
-    if (
-      resultadoSorteo &&
-      JuegoDamas &&
-      JuegoDamas.estado &&
-      JuegoDamas.estado.sorteoRealizado
-    ) {
-      resultadoSorteo.textContent =
-        JuegoDamas.estado.colorHumano === "blancas"
-          ? translations["damas.config.result.white"]
-          : translations["damas.config.result.black"];
-    }
+      const nivelSelect = document.getElementById("nivel-ia");
+      if (nivelSelect) {
+        Array.from(nivelSelect.options).forEach((option) => {
+          const key = option.getAttribute("data-i18n");
+          if (key && translations[key]) {
+            option.text = translations[key];
+          }
+        });
+      }
+
+      const container = document.getElementById("nivel-ia-container");
+      if (container && container.actualizarSelector) {
+        container.actualizarSelector();
+      }
+
+      const resultadoSorteo = document.getElementById("resultado-sorteo");
+      if (
+        resultadoSorteo &&
+        JuegoDamas &&
+        JuegoDamas.estado &&
+        JuegoDamas.estado.sorteoRealizado
+      ) {
+        resultadoSorteo.textContent =
+          JuegoDamas.estado.colorHumano === "blancas"
+            ? translations["damas.config.result.white"]
+            : translations["damas.config.result.black"];
+      }
+
+      // Marcar que las traducciones están cargadas
+      document.body.classList.add("translations-loaded");
+      resolve();
+    });
   }
 
   // Inicializar al cargar la página
@@ -2435,233 +2443,241 @@ const JuegoDamas = (() => {
     });
 
   function init() {
+    // Ocultar contenido inicialmente
+    document.body.classList.remove("translations-loaded");
+
     // Inicializar selector personalizado
     initCustomSelect();
 
-    // Aplicar idioma actual
-    initLanguage();
+    // Esperar a que las traducciones estén listas
+    initLanguage().then(() => {
+      // Resto del código...
+      document.getElementById("salirDamas").innerText = t("damas.exit");
 
-    // Resto del código...
-    document.getElementById("salirDamas").innerText = t("damas.exit");
+      // Eventos del modal de fin
+      document
+        .getElementById("boton-reiniciar-modal")
+        .addEventListener("click", () => {
+          document.getElementById("modal-fin-damas").style.display = "none";
+          reiniciarJuegoDamas();
+        });
 
-    // Eventos del modal de fin
-    document
-      .getElementById("boton-reiniciar-modal")
-      .addEventListener("click", () => {
+      document.getElementById("btn-salir-fin").addEventListener("click", () => {
         document.getElementById("modal-fin-damas").style.display = "none";
-        reiniciarJuegoDamas();
-      });
-
-    document.getElementById("btn-salir-fin").addEventListener("click", () => {
-      document.getElementById("modal-fin-damas").style.display = "none";
-      salirAlMenuPrincipal();
-    });
-
-    // Eventos del botón "Salir" durante la partida
-    document.getElementById("salirDamas").addEventListener("click", () => {
-      origenConfirmExit = "juego";
-      document.getElementById("modal-confirm-exit").style.display = "flex";
-    });
-
-    // Eventos del modal de confirmación
-    document.getElementById("btn-confirm-yes").addEventListener("click", () => {
-      document.getElementById("modal-confirm-exit").style.display = "none";
-      if (origenConfirmExit === "config") {
         salirAlMenuPrincipal();
-      } else if (origenConfirmExit === "juego") {
-        const estado = JuegoDamas.estado;
-        estado.juegoTerminadoFlag = true;
-        const ganadorInfo = document.getElementById("ganador-info");
-        if (ganadorInfo) ganadorInfo.textContent = t("damas.ai");
-        mostrarModalFin(false);
+      });
+
+      // Eventos del botón "Salir" durante la partida
+      document.getElementById("salirDamas").addEventListener("click", () => {
+        origenConfirmExit = "juego";
+        document.getElementById("modal-confirm-exit").style.display = "flex";
+      });
+
+      // Eventos del modal de confirmación
+      document
+        .getElementById("btn-confirm-yes")
+        .addEventListener("click", () => {
+          document.getElementById("modal-confirm-exit").style.display = "none";
+          if (origenConfirmExit === "config") {
+            salirAlMenuPrincipal();
+          } else if (origenConfirmExit === "juego") {
+            const estado = JuegoDamas.estado;
+            estado.juegoTerminadoFlag = true;
+            const ganadorInfo = document.getElementById("ganador-info");
+            if (ganadorInfo) ganadorInfo.textContent = t("damas.ai");
+            mostrarModalFin(false);
+          }
+          origenConfirmExit = null;
+        });
+
+      document
+        .getElementById("btn-confirm-no")
+        .addEventListener("click", () => {
+          document.getElementById("modal-confirm-exit").style.display = "none";
+          if (origenConfirmExit === "config") {
+            document.getElementById("modal-config-damas").style.display =
+              "flex";
+          }
+          origenConfirmExit = null;
+        });
+
+      // ======================================================================
+      // EVENTO PARA EL BOTÓN DE INSTRUCCIONES EN MODAL CONFIGURACIÓN
+      // ======================================================================
+      const botonInstrucciones = document.getElementById(
+        "boton-instrucciones-modal",
+      );
+      if (botonInstrucciones) {
+        botonInstrucciones.addEventListener("click", () => {
+          document.getElementById("modal-instrucciones-damas").style.display =
+            "flex";
+        });
+      } else {
+        console.warn("⚠️ boton-instrucciones-modal no encontrado");
       }
-      origenConfirmExit = null;
-    });
 
-    document.getElementById("btn-confirm-no").addEventListener("click", () => {
-      document.getElementById("modal-confirm-exit").style.display = "none";
-      if (origenConfirmExit === "config") {
-        document.getElementById("modal-config-damas").style.display = "flex";
+      // evento del botón de cerrar instrucciones
+      const botonCerrar = document.getElementById("boton-cerrar-instrucciones");
+      if (botonCerrar) {
+        botonCerrar.addEventListener("click", () => {
+          document.getElementById("modal-instrucciones-damas").style.display =
+            "none";
+        });
+      } else {
+        console.warn("⚠️ boton-cerrar-instrucciones no encontrado");
       }
-      origenConfirmExit = null;
+
+      // ======================================================================
+      // SORTEO
+      // =============================================================
+
+      document
+        .getElementById("boton-sortear-colores")
+        .addEventListener("click", () => {
+          JuegoDamas.realizarSorteoColores();
+        });
+
+      document
+        .getElementById("check-sugerencias")
+        .addEventListener("change", (e) => {
+          JuegoDamas.estado.mostrarSugerencias = e.target.checked;
+        });
+
+      // Evento botón jugadores (ranking)
+      document.getElementById("btn-jugadores").addEventListener("click", () => {
+        mostrarModalRanking();
+      });
+
+      // Evento para PARTIDA RÁPIDA
+      document
+        .getElementById("boton-partida-rapida")
+        .addEventListener("click", () => {
+          const estado = estadoGlobalDamas;
+
+          // Seleccionar jugador "Player" por defecto
+          const jugadoresExistentes = GestorJugadores.obtenerJugadores();
+          if (!jugadoresExistentes.includes("Player")) {
+            GestorJugadores.añadirJugador("Player");
+          }
+          GestorJugadores.seleccionarJugador("Player");
+          actualizarSelectorJugadores();
+          actualizarNombreJugadorPanel();
+
+          mostrarAvisoDamas(
+            "Jugando como 'Player' - Las estadísticas no se guardarán en el ranking",
+          );
+
+          // Realizar sorteo automático de colores
+          realizarSorteoColores(); // Esta función ya existe y actualiza el estado
+
+          // Establecer nivel normal
+          estado.nivelIA = "normal";
+          document.getElementById("nivel-ia").value = "normal";
+
+          // Actualizar el selector visual de nivel
+          const nivelContainer = document.getElementById("nivel-ia-container");
+          if (nivelContainer && nivelContainer.actualizarSelector) {
+            nivelContainer.actualizarSelector();
+          }
+
+          // Sugerencias activadas por defecto
+          estado.mostrarSugerencias = true;
+          document.getElementById("check-sugerencias").checked = true;
+
+          // Ocultar modal de configuración y mostrar juego
+          document.getElementById("modal-config-damas").style.display = "none";
+          document.getElementById("juego-damas-contenedor").style.display =
+            "block";
+
+          // Dibujar tablero
+          dibujarTableroDamas();
+
+          // Iniciar temporizador
+          reiniciarTemporizador();
+          iniciarTemporizador();
+
+          // Si el turno es de la IA, iniciar su movimiento
+          if (estado.turnoActualDamas === "ia") {
+            setTimeout(movimientoIA_Damas, 500);
+          }
+        });
+
+      // Inicializar selector de jugadores
+      actualizarSelectorJugadores();
+
+      // Evento para abrir selector de jugadores
+      const jugadorSelected = document.getElementById("jugador-selected");
+      const jugadorOptions = document.getElementById("jugador-options");
+
+      if (jugadorSelected) {
+        jugadorSelected.onclick = (e) => {
+          e.stopPropagation();
+          jugadorOptions.classList.toggle("select-hide");
+          jugadorSelected.classList.toggle("select-arrow-active");
+        };
+      }
+
+      // Evento botón crear jugador
+      document
+        .getElementById("btn-crear-jugador")
+        .addEventListener("click", () => {
+          mostrarModalCrearJugador();
+        });
+
+      // Evento botón borrar jugador
+      document
+        .getElementById("btn-borrar-jugador")
+        .addEventListener("click", () => {
+          mostrarModalBorrarJugador();
+        });
+
+      // EVENTO PARA EL BOTÓN JUGAR - CORREGIDO Y COLOCADO AQUÍ
+      document
+        .getElementById("boton-jugar-config")
+        .addEventListener("click", () => {
+          const estado = estadoGlobalDamas;
+
+          // Verificar que se haya realizado el sorteo
+          if (!estado.sorteoRealizado) {
+            mostrarAvisoDamas(t("damas.warning.mustShuffle"));
+            return;
+          }
+
+          // NUEVA VALIDACIÓN: comprobar si hay jugador seleccionado
+          if (!GestorJugadores.obtenerJugadorSeleccionado()) {
+            mostrarAvisoDamas(t("damas.warning.noPlayer"));
+            return;
+          }
+
+          // Obtener el nivel de IA seleccionado
+          estado.nivelIA = document.getElementById("nivel-ia").value;
+
+          // Ocultar modal de configuración y mostrar juego
+          document.getElementById("modal-config-damas").style.display = "none";
+          document.getElementById("juego-damas-contenedor").style.display =
+            "block";
+
+          // Dibujar tablero
+          dibujarTableroDamas();
+
+          // Iniciar temporizador al iniciar partida
+          reiniciarTemporizador();
+          iniciarTemporizador();
+
+          // Si el turno es de la IA, iniciar su movimiento
+          if (estado.turnoActualDamas === "ia") {
+            setTimeout(movimientoIA_Damas, 500);
+          }
+        });
+
+      // Evento para el botón de reinicio (si existe)
+      document
+        .getElementById("boton-reinicio-damas")
+        ?.addEventListener("click", resetGameDamasUltra);
+
+      // Inicializar el juego
+      resetGameDamasUltra();
     });
-
-    // ======================================================================
-    // EVENTO PARA EL BOTÓN DE INSTRUCCIONES EN MODAL CONFIGURACIÓN
-    // ======================================================================
-    const botonInstrucciones = document.getElementById(
-      "boton-instrucciones-modal",
-    );
-    if (botonInstrucciones) {
-      botonInstrucciones.addEventListener("click", () => {
-        document.getElementById("modal-instrucciones-damas").style.display =
-          "flex";
-      });
-    } else {
-      console.warn("⚠️ boton-instrucciones-modal no encontrado");
-    }
-
-    // evento del botón de cerrar instrucciones
-    const botonCerrar = document.getElementById("boton-cerrar-instrucciones");
-    if (botonCerrar) {
-      botonCerrar.addEventListener("click", () => {
-        document.getElementById("modal-instrucciones-damas").style.display =
-          "none";
-      });
-    } else {
-      console.warn("⚠️ boton-cerrar-instrucciones no encontrado");
-    }
-
-    // ======================================================================
-    // SORTEO
-    // =============================================================
-
-    document
-      .getElementById("boton-sortear-colores")
-      .addEventListener("click", () => {
-        JuegoDamas.realizarSorteoColores();
-      });
-
-    document
-      .getElementById("check-sugerencias")
-      .addEventListener("change", (e) => {
-        JuegoDamas.estado.mostrarSugerencias = e.target.checked;
-      });
-
-    // Evento botón jugadores (ranking)
-    document.getElementById("btn-jugadores").addEventListener("click", () => {
-      mostrarModalRanking();
-    });
-
-    // Evento para PARTIDA RÁPIDA
-    document
-      .getElementById("boton-partida-rapida")
-      .addEventListener("click", () => {
-        const estado = estadoGlobalDamas;
-
-        // Seleccionar jugador "Player" por defecto
-        const jugadoresExistentes = GestorJugadores.obtenerJugadores();
-        if (!jugadoresExistentes.includes("Player")) {
-          GestorJugadores.añadirJugador("Player");
-        }
-        GestorJugadores.seleccionarJugador("Player");
-        actualizarSelectorJugadores();
-        actualizarNombreJugadorPanel();
-
-        mostrarAvisoDamas(
-          "Jugando como 'Player' - Las estadísticas no se guardarán en el ranking",
-        );
-
-        // Realizar sorteo automático de colores
-        realizarSorteoColores(); // Esta función ya existe y actualiza el estado
-
-        // Establecer nivel normal
-        estado.nivelIA = "normal";
-        document.getElementById("nivel-ia").value = "normal";
-
-        // Actualizar el selector visual de nivel
-        const nivelContainer = document.getElementById("nivel-ia-container");
-        if (nivelContainer && nivelContainer.actualizarSelector) {
-          nivelContainer.actualizarSelector();
-        }
-
-        // Sugerencias activadas por defecto
-        estado.mostrarSugerencias = true;
-        document.getElementById("check-sugerencias").checked = true;
-
-        // Ocultar modal de configuración y mostrar juego
-        document.getElementById("modal-config-damas").style.display = "none";
-        document.getElementById("juego-damas-contenedor").style.display =
-          "block";
-
-        // Dibujar tablero
-        dibujarTableroDamas();
-
-        // Iniciar temporizador
-        reiniciarTemporizador();
-        iniciarTemporizador();
-
-        // Si el turno es de la IA, iniciar su movimiento
-        if (estado.turnoActualDamas === "ia") {
-          setTimeout(movimientoIA_Damas, 500);
-        }
-      });
-
-    // Inicializar selector de jugadores
-    actualizarSelectorJugadores();
-
-    // Evento para abrir selector de jugadores
-    const jugadorSelected = document.getElementById("jugador-selected");
-    const jugadorOptions = document.getElementById("jugador-options");
-
-    if (jugadorSelected) {
-      jugadorSelected.onclick = (e) => {
-        e.stopPropagation();
-        jugadorOptions.classList.toggle("select-hide");
-        jugadorSelected.classList.toggle("select-arrow-active");
-      };
-    }
-
-    // Evento botón crear jugador
-    document
-      .getElementById("btn-crear-jugador")
-      .addEventListener("click", () => {
-        mostrarModalCrearJugador();
-      });
-
-    // Evento botón borrar jugador
-    document
-      .getElementById("btn-borrar-jugador")
-      .addEventListener("click", () => {
-        mostrarModalBorrarJugador();
-      });
-
-    // EVENTO PARA EL BOTÓN JUGAR - CORREGIDO Y COLOCADO AQUÍ
-    document
-      .getElementById("boton-jugar-config")
-      .addEventListener("click", () => {
-        const estado = estadoGlobalDamas;
-
-        // Verificar que se haya realizado el sorteo
-        if (!estado.sorteoRealizado) {
-          mostrarAvisoDamas(t("damas.warning.mustShuffle"));
-          return;
-        }
-
-        // NUEVA VALIDACIÓN: comprobar si hay jugador seleccionado
-        if (!GestorJugadores.obtenerJugadorSeleccionado()) {
-          mostrarAvisoDamas(t("damas.warning.noPlayer"));
-          return;
-        }
-
-        // Obtener el nivel de IA seleccionado
-        estado.nivelIA = document.getElementById("nivel-ia").value;
-
-        // Ocultar modal de configuración y mostrar juego
-        document.getElementById("modal-config-damas").style.display = "none";
-        document.getElementById("juego-damas-contenedor").style.display =
-          "block";
-
-        // Dibujar tablero
-        dibujarTableroDamas();
-
-        // Iniciar temporizador al iniciar partida
-        reiniciarTemporizador();
-        iniciarTemporizador();
-
-        // Si el turno es de la IA, iniciar su movimiento
-        if (estado.turnoActualDamas === "ia") {
-          setTimeout(movimientoIA_Damas, 500);
-        }
-      });
-
-    // Evento para el botón de reinicio (si existe)
-    document
-      .getElementById("boton-reinicio-damas")
-      ?.addEventListener("click", resetGameDamasUltra);
-
-    // Inicializar el juego
-    resetGameDamasUltra();
   }
 
   // Escuchar cambios de idioma (importante)
