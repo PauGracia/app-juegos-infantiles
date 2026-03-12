@@ -19,6 +19,8 @@ window.translationsFR = {
   "damas.shuffle": "Tirer au sort",
   "damas.instructions": "Instructions",
   "damas.howToPlay": "Comment jouer aux dames",
+  "damas.you": "TOI",
+  "damas.config.quickGame": "Partie rapide",
   "ahorcado.loseMessage": "Le mot était:",
   "ahorcado.nextWord": "Mot suivant !",
   "operaciones.maxTimeExceeded":
@@ -30,7 +32,7 @@ window.translationsFR = {
   "ahorcado.allWordsCompleted": "🏆 Vous avez complété TOUTES les mots !",
   "ahorcado.extraHelpMessage": "💡 Vous avez gagné une aide supplémentaire!",
   "damas.instructionsText":
-    "• L'objectif est de capturer toutes les pièces de l'adversaire.\n\n• GESTION DES JOUEURS:\n  - Créez votre joueur (nom de 3 à 12 caractères).\n  - Maximum 10 joueurs enregistrés.\n  - Sélectionnez votre joueur avant de commencer.\n  - Vos victoires et défaites sont automatiquement sauvegardées.\n  - Consultez les statistiques avec le bouton 'Joueurs'.\n\n• LIMITE DE TEMPS:\n  - Chaque partie dure 5 minutes par joueur.\n  - Si votre temps s'épuise, vous perdez automatiquement.\n\n• MOUVEMENTS:\n  - Les pièces se déplacent en diagonale vers l'avant.\n  - Les captures sont obligatoires si disponibles.\n  - Vous pouvez activer/désactiver les suggestions de mouvement.\n\n• COURONNEMENT:\n  - Si une pièce atteint l'extrémité opposée, elle devient une dame.\n  - Les dames peuvent se déplacer dans toutes les diagonales.\n\n• STATISTIQUES:\n  - Les victoires et défaites sont sauvegardées par niveau (Normal/Difficile).\n  - Le classement montre tous les joueurs par ordre alphabétique.\n\n• NIVEAUX DE DIFFICULTÉ:\n  - Normal: IA avec mouvements de base.\n  - Difficile: IA avancée qui évalue les risques et stratégies.\n\n• BOUTON 'JOUEURS':\n  - Affiche le classement complet avec toutes les statistiques.\n\nProfitez de la partie!",
+    "• OBJECTIF: Capturer toutes les pièces de l'adversaire.\n\n• JOUEURS:\n  - Créez votre joueur (3-12 caractères, max. 10).\n  - Sélectionnez votre joueur avant de jouer.\n  - Vos statistiques sont sauvegardées automatiquement.\n\n• PARTIE RAPIDE:\n  - Jouez instantanément en tant que 'Player'.\n  - Sans sauvegarder les statistiques au classement.\n  - Tirage automatique, niveau Normal.\n\n• TEMPS:\n  - 5 minutes par joueur.\n  - Si le temps s'écoule, vous perdez.\n\n• MOUVEMENTS:\n  - En diagonale vers l'avant.\n  - Prises obligatoires.\n  - Suggestions activables.\n\n• DAMES:\n  - En atteignant l'extrémité opposée.\n  - Se déplacent dans toutes les diagonales.\n\n• STATISTIQUES:\n  - Victoires/Défaites par niveau (Normal/Difficile).\n  - Classement alphabétique dans le bouton 'Joueurs'.\n\n• NIVEAUX IA:\n  - Normal: mouvements basiques.\n  - Difficile: IA stratégique.\n\nÀ vous de jouer!",
   "categoria.animal": "Animal",
   "common.confirmRestart": "Êtes-vous sûr de vouloir recommencer la partie ?",
   "common.restartWarning": "Toute votre progression actuelle sera perdue",
@@ -40,7 +42,7 @@ window.translationsFR = {
   "categoria.profesion": "Profession",
   "categoria.abstracto": "Concept abstrait",
   "categoria.deporte": "Sport",
-  "damas.you": "TOI",
+
   "common.yes": "Oui",
   "common.no": "Non",
   "damas.config.aiLevel": "Niveau de l’IA",

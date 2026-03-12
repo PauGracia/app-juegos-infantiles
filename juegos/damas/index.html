@@ -33,6 +33,17 @@
       <div class="modal-contenido modal-configuracion">
         <h2 data-i18n="damas.config.title"></h2>
 
+        <!-- Boton instrucciones -->
+        <div class="config-bloque config-instrucciones">
+          <button
+            class="boton-damas boton-instrucciones-modal"
+            id="boton-instrucciones-modal"
+            data-i18n="damas.instructions"
+          >
+            Instrucciones
+          </button>
+        </div>
+
         <div class="config-bloque config-jugadores">
           <label for="selector-jugadores" data-i18n="damas.config.selectPlayer"
             >Seleccionar jugador:</label
@@ -67,16 +78,6 @@
               Borrar jugador
             </button>
           </div>
-        </div>
-        <!-- Boton instrucciones -->
-        <div class="config-bloque config-instrucciones">
-          <button
-            class="boton-damas boton-instrucciones-modal"
-            id="boton-instrucciones-modal"
-            data-i18n="damas.instructions"
-          >
-            Instrucciones
-          </button>
         </div>
 
         <!-- Sorteo -->
@@ -117,7 +118,12 @@
         </div>
 
         <!-- Botones finales -->
-        <div class="botones-modal">
+        <!-- Botones finales -->
+        <div class="botones-modal tres-botones">
+          <button
+            id="boton-partida-rapida"
+            data-i18n="damas.config.quickGame"
+          ></button>
           <button
             id="boton-jugar-config"
             data-i18n="damas.config.play"

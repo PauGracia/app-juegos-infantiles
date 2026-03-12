@@ -24,7 +24,7 @@ window.translationsES = {
   "ahorcado.loseMessage": "La palabra era:",
   "ahorcado.winMessage": "¡Palabra acertada!",
   "damas.instructionsText":
-    "• OBJETIVO: Capturar todas las fichas del rival.\n\n• JUGADORES:\n  - Crea tu jugador (3-12 caracteres, máx. 10).\n  - Selecciona tu jugador antes de jugar.\n  - Tus estadísticas se guardan automáticamente.\n\n• TIEMPO:\n  - 5 minutos por jugador.\n  - Si se acaba el tiempo, pierdes.\n\n• MOVIMIENTOS:\n  - En diagonal hacia adelante.\n  - Capturas obligatorias.\n  - Sugerencias activables.\n\n• REINAS:\n  - Al llegar al extremo contrario.\n  - Se mueven en todas las diagonales.\n\n• ESTADÍSTICAS:\n  - Victorias/Derrotas por nivel (Normal/Difícil).\n  - Ranking alfabético en botón 'Jugadores'.\n\n• NIVELES IA:\n  - Normal: movimientos básicos.\n  - Difícil: IA estratégica.\n\n¡A jugar!",
+    "• OBJETIVO: Capturar todas las fichas del rival.\n\n• JUGADORES:\n  - Crea tu jugador (3-12 caracteres, máx. 10).\n  - Selecciona tu jugador antes de jugar.\n  - Tus estadísticas se guardan automáticamente.\n\n• PARTIDA RÁPIDA:\n  - Juega al instante como 'Player'.\n  - Sin guardar estadísticas en el ranking.\n  - Sorteo automático, nivel Normal.\n\n• TIEMPO:\n  - 5 minutos por jugador.\n  - Si se acaba el tiempo, pierdes.\n\n• MOVIMIENTOS:\n  - En diagonal hacia adelante.\n  - Capturas obligatorias.\n  - Sugerencias activables.\n\n• REINAS:\n  - Al llegar al extremo contrario.\n  - Se mueven en todas las diagonales.\n\n• ESTADÍSTICAS:\n  - Victorias/Derrotas por nivel (Normal/Difícil).\n  - Ranking alfabético en botón 'Jugadores'.\n\n• NIVELES IA:\n  - Normal: movimientos básicos.\n  - Difícil: IA estratégica.\n\n¡A jugar!",
   "damas.you": "TÚ",
   "damas.ai": "MÁQUINA",
   "damas.white": "Blancas",
@@ -35,6 +35,7 @@ window.translationsES = {
   "damas.none": "—",
   "damas.restart": "Reiniciar",
   "damas.exit": "Salir",
+  "damas.config.quickGame": "Partida rápida",
   "palabras.title": "Escribe el nombre",
   "palabras.config.title": "Configuración",
   "palabras.config.language": "Idioma:",

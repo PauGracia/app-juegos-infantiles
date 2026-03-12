@@ -30,7 +30,7 @@ window.translationsCA = {
   "ahorcado.winMessage": "Paraula encertada!",
   "ahorcado.nextWord": "Següent paraula!",
   "damas.instructionsText":
-    "• L'objectiu és capturar totes les fitxes del rival.\n\n• GESTIÓ DE JUGADORS:\n  - Crea el teu jugador (nom de 3 a 12 caràcters).\n  - Màxim 10 jugadors guardats.\n  - Selecciona el teu jugador abans de començar.\n  - Les teves victòries i derrotes es guarden automàticament.\n  - Consulta les estadístiques al botó 'Jugadors'.\n\n• LÍMIT DE TEMPS:\n  - Cada partida té 5 minuts per jugador.\n  - Si s'acaba el teu temps, perds automàticament.\n\n• MOVIMENTS:\n  - Les fitxes es mouen en diagonal cap endavant.\n  - Les captures són obligatòries si n'hi ha.\n  - Pots activar/desactivar els suggeriments de moviment.\n\n• CORONACIÓ:\n  - Si una fitxa arriba a l'extrem contrari, es converteix en reina.\n  - Les reines poden moure's en totes les diagonals.\n\n• ESTADÍSTIQUES:\n  - Es guarden victòries i derrotes per nivell (Normal/Difícil).\n  - El rànquing mostra tots els jugadors ordenats alfabèticament.\n\n• NIVELLS DE DIFICULTAT:\n  - Normal: IA amb moviments bàsics.\n  - Difícil: IA avançada que avalua riscos i estratègies.\n\n• BOTÓ 'JUGADORS':\n  - Mostra el rànquing complet amb totes les estadístiques.\n\nGaudeix de la partida!",
+    "• OBJECTIU: Capturar totes les fitxes del rival.\n\n• JUGADORS:\n  - Crea el teu jugador (3-12 caràcters, màx. 10).\n  - Selecciona el teu jugador abans de jugar.\n  - Les teves estadístiques es guarden automàticament.\n\n• PARTIDA RÀPIDA:\n  - Juga a l'instant com a 'Player'.\n  - Sense guardar estadístiques al rànquing.\n  - Sorteig automàtic, nivell Normal.\n\n• TEMPS:\n  - 5 minuts per jugador.\n  - Si s'acaba el temps, perds.\n\n• MOVIMENTS:\n  - En diagonal cap endavant.\n  - Captures obligatòries.\n  - Suggeriments activables.\n\n• REINES:\n  - En arribar a l'extrem contrari.\n  - Es mouen en totes les diagonals.\n\n• ESTADÍSTIQUES:\n  - Victòries/Derrotes per nivell (Normal/Difícil).\n  - Rànquing alfabètic al botó 'Jugadors'.\n\n• NIVELLS IA:\n  - Normal: moviments bàsics.\n  - Difícil: IA estratègica.\n\nA jugar!",
   "damas.you": "TU",
   "damas.ai": "MÀQUINA",
   "damas.white": "Blanques",
@@ -396,6 +396,7 @@ window.translationsCA = {
   "damas.config.deletePlayer": "Esborrar jugador",
   "damas.jugadores": "Jugadors",
   "damas.jugadores2": "Jugador:",
+  "damas.config.quickGame": "Partida ràpida",
   "damas.player.create.title": "Crear nou jugador",
   "damas.player.namePlaceholder": "Nom (3-12 caràcters)",
   "damas.player.error.length": "El nom ha de tenir entre 3 i 12 caràcters",

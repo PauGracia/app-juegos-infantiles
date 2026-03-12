@@ -56,6 +56,67 @@
   border-radius: 20px;
 }
 
+/* Estilos para el botón de partida rápida */
+#boton-partida-rapida {
+  background: linear-gradient(145deg, #2ecc71, #27ae60);
+  flex: 1;
+  min-width: 0;
+  font-size: 17px;
+  padding: 16px 20px;
+  height: 50px;
+  margin: 0;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#boton-partida-rapida::before {
+  content: "";
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  background-image: url("../../assets/img/iconos/play-mas.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  filter: brightness(0) invert(1);
+  margin-right: 6px;
+}
+
+#boton-partida-rapida:hover {
+  background: linear-gradient(145deg, #27ae60, #219653);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Layout para tres botones en el modal */
+.modal-configuracion .botones-modal.tres-botones {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.modal-configuracion .botones-modal.tres-botones .boton-damas {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  padding: 16px 12px;
+}
+
 #modal-config-damas {
   display: flex;
   align-items: flex-start;
@@ -159,12 +220,14 @@
   min-width: 140px;
 }
 
-#btn-crear-jugador-confirm {
+#btn-crear-jugador-confirm,
+#btn-borrar-jugador-confirm {
   height: 45px;
   border: 2px solid #0f0f0f;
 }
 
-#btn-crear-jugador-cancel {
+#btn-crear-jugador-cancel,
+#btn-borrar-jugador-cancel {
   height: 45px;
   border: 2px solid #0f0f0f;
   color: #0f0f0f;
@@ -816,7 +879,7 @@
   border-radius: 12px;
   border-left: 4px solid var(--color-secundario);
   overflow-y: auto;
-  height: 80vh;
+  height: 70vh;
 }
 
 #boton-cerrar-instrucciones {
@@ -1588,6 +1651,11 @@
     width: 1.1em;
     height: 1.1em;
   }
+
+  .modal-configuracion .botones-modal.tres-botones .boton-damas {
+    font-size: 14px;
+    padding: 14px 8px;
+  }
 }
 
 /* MÓVILES (Hasta 480px) - CORREGIDO: Layout especial y más compacto */
@@ -1720,6 +1788,17 @@
   .modal-configuracion h2 {
     margin-bottom: 15px;
     font-size: 1.4rem;
+  }
+
+  .modal-configuracion .botones-modal.tres-botones {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .modal-configuracion .botones-modal.tres-botones .boton-damas {
+    width: 100%;
+    font-size: 16px;
+    padding: 14px 16px;
   }
 
   .titulo-damas {

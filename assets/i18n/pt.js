@@ -30,7 +30,7 @@ window.translationsPT = {
   "ahorcado.allWordsCompleted": "🏆 Você completou TODAS as palavras!",
   "ahorcado.extraHelpMessage": "💡 Você ganhou uma ajuda extra!",
   "damas.instructionsText":
-    "• O objetivo é capturar todas as peças do adversário.\n\n• GESTÃO DE JOGADORES:\n  - Crie seu jogador (nome de 3 a 12 caracteres).\n  - Máximo de 10 jogadores salvos.\n  - Selecione seu jogador antes de começar.\n  - Suas vitórias e derrotas são salvas automaticamente.\n  - Consulte as estatísticas no botão 'Jogadores'.\n\n• LIMITE DE TEMPO:\n  - Cada partida tem 5 minutos por jogador.\n  - Se seu tempo acabar, você perde automaticamente.\n\n• MOVIMENTOS:\n  - As peças movem-se na diagonal para frente.\n  - As capturas são obrigatórias se disponíveis.\n  - Você pode ativar/desativar as sugestões de movimento.\n\n• COROAÇÃO:\n  - Se uma peça chegar ao extremo oposto, torna-se uma dama.\n  - As damas podem mover-se em todas as diagonais.\n\n• ESTATÍSTICAS:\n  - Vitórias e derrotas são salvas por nível (Normal/Difícil).\n  - O ranking mostra todos os jogadores em ordem alfabética.\n\n• NÍVEIS DE DIFICULDADE:\n  - Normal: IA com movimentos básicos.\n  - Difícil: IA avançada que avalia riscos e estratégias.\n\n• BOTÃO 'JOGADORES':\n  - Mostra o ranking completo com todas as estatísticas.\n\nDivirta-se!",
+    "• OBJETIVO: Capturar todas as peças do adversário.\n\n• JOGADORES:\n  - Cria o teu jogador (3-12 caracteres, máx. 10).\n  - Seleciona o teu jogador antes de jogar.\n  - As tuas estatísticas são guardadas automaticamente.\n\n• PARTIDA RÁPIDA:\n  - Joga instantaneamente como 'Player'.\n  - Sem guardar estatísticas no ranking.\n  - Sorteio automático, nível Normal.\n\n• TEMPO:\n  - 5 minutos por jogador.\n  - Se o tempo acabar, perdes.\n\n• MOVIMENTOS:\n  - Na diagonal para a frente.\n  - Capturas obrigatórias.\n  - Sugestões ativáveis.\n\n• DAMAS (REIS):\n  - Ao chegar ao extremo oposto.\n  - Movem-se em todas as diagonais.\n\n• ESTATÍSTICAS:\n  - Vitórias/Derrotas por nível (Normal/Difícil).\n  - Ranking alfabético no botão 'Jogadores'.\n\n• NÍVEIS IA:\n  - Normal: movimentos básicos.\n  - Difícil: IA estratégica.\n\nVamos jogar!",
   "categoria.animal": "Animal",
   "categoria.objeto": "Objeto",
   "categoria.lugar": "Lugar",
@@ -48,6 +48,7 @@ window.translationsPT = {
   "damas.none": "—",
   "damas.restart": "Reiniciar",
   "damas.exit": "Sair",
+  "damas.config.quickGame": "Partida rápida",
   "palabras.title": "Escreva o nome",
   "palabras.config.title": "Configuração",
   "palabras.config.language": "Idioma:",

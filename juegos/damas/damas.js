@@ -1624,38 +1624,38 @@ const JuegoDamas = (() => {
     } else {
       ranking.forEach((jugador) => {
         contenidoRanking += `
-        <div class="ranking-item">
-          <div class="ranking-nombre">${jugador.nombre}</div>
-          <div class="ranking-estadisticas">
-            <div class="ranking-nivel">
-              <span data-i18n="damas.config.aiNormal">Normal</span>
-              <span class="ranking-victorias">🏆 ${jugador.stats.victoriasNormal}</span>
-              <span class="ranking-derrotas">❌ ${jugador.stats.derrotasNormal}</span>
-            </div>
-            <div class="ranking-nivel">
-              <span data-i18n="damas.config.aiHard">Difícil</span>
-              <span class="ranking-victorias">🏆 ${jugador.stats.victoriasDificil}</span>
-              <span class="ranking-derrotas">❌ ${jugador.stats.derrotasDificil}</span>
-            </div>
+      <div class="ranking-item">
+        <div class="ranking-nombre">${jugador.nombre}</div>
+        <div class="ranking-estadisticas">
+          <div class="ranking-nivel">
+            <span data-i18n="damas.config.aiNormal">Normal</span>
+            <span class="ranking-victorias">🏆 ${jugador.stats.victoriasNormal}</span>
+            <span class="ranking-derrotas">❌ ${jugador.stats.derrotasNormal}</span>
+          </div>
+          <div class="ranking-nivel">
+            <span data-i18n="damas.config.aiHard">Difícil</span>
+            <span class="ranking-victorias">🏆 ${jugador.stats.victoriasDificil}</span>
+            <span class="ranking-derrotas">❌ ${jugador.stats.derrotasDificil}</span>
           </div>
         </div>
-      `;
+      </div>
+    `;
       });
     }
 
     const modalHTML = `
-    <div id="modal-ranking-jugadores" class="modal-fin-damas" style="display: flex;">
-      <div class="modal-contenido modal-ranking">
-        <h2 data-i18n="damas.ranking.title">Ranking de jugadores</h2>
-        <div class="ranking-lista">
-          ${contenidoRanking}
-        </div>
-        <div class="botones-modal">
-          <button class="boton-damas" id="btn-cerrar-ranking" data-i18n="common.close">Cerrar</button>
-        </div>
+  <div id="modal-ranking-jugadores" class="modal-fin-damas" style="display: flex;">
+    <div class="modal-contenido modal-ranking">
+      <h2 data-i18n="damas.ranking.title">Ranking de jugadores</h2>
+      <div class="ranking-lista">
+        ${contenidoRanking}
+      </div>
+      <div class="botones-modal">
+        <button class="boton-damas" id="btn-cerrar-ranking" data-i18n="common.close">Cerrar</button>
       </div>
     </div>
-  `;
+  </div>
+`;
 
     // Eliminar modal anterior si existe
     const oldModal = document.getElementById("modal-ranking-jugadores");
@@ -2109,8 +2109,7 @@ const JuegoDamas = (() => {
 
     // Registrar victoria para el jugador actual
     function registrarVictoria(nivel) {
-      if (!jugadorSeleccionado) return;
-
+      if (!jugadorSeleccionado || jugadorSeleccionado === "Player") return;
       if (!estadisticas[jugadorSeleccionado]) {
         inicializarEstadisticasJugador(jugadorSeleccionado);
       }
@@ -2127,8 +2126,7 @@ const JuegoDamas = (() => {
 
     // Registrar derrota para el jugador actual
     function registrarDerrota(nivel) {
-      if (!jugadorSeleccionado) return;
-
+      if (!jugadorSeleccionado || jugadorSeleccionado === "Player") return;
       if (!estadisticas[jugadorSeleccionado]) {
         inicializarEstadisticasJugador(jugadorSeleccionado);
       }
@@ -2167,10 +2165,12 @@ const JuegoDamas = (() => {
     // Obtener todos los jugadores con sus estadísticas (ordenados alfabéticamente)
     function obtenerRanking() {
       const jugadoresOrdenados = obtenerJugadores();
-      return jugadoresOrdenados.map((nombre) => ({
-        nombre,
-        stats: obtenerEstadisticas(nombre),
-      }));
+      return jugadoresOrdenados
+        .filter((nombre) => nombre !== "Player") // Excluir al jugador Player
+        .map((nombre) => ({
+          nombre,
+          stats: obtenerEstadisticas(nombre),
+        }));
     }
 
     // Inicializar
@@ -2524,6 +2524,60 @@ const JuegoDamas = (() => {
     document.getElementById("btn-jugadores").addEventListener("click", () => {
       mostrarModalRanking();
     });
+
+    // Evento para PARTIDA RÁPIDA
+    document
+      .getElementById("boton-partida-rapida")
+      .addEventListener("click", () => {
+        const estado = estadoGlobalDamas;
+
+        // Seleccionar jugador "Player" por defecto
+        const jugadoresExistentes = GestorJugadores.obtenerJugadores();
+        if (!jugadoresExistentes.includes("Player")) {
+          GestorJugadores.añadirJugador("Player");
+        }
+        GestorJugadores.seleccionarJugador("Player");
+        actualizarSelectorJugadores();
+        actualizarNombreJugadorPanel();
+
+        mostrarAvisoDamas(
+          "Jugando como 'Player' - Las estadísticas no se guardarán en el ranking",
+        );
+
+        // Realizar sorteo automático de colores
+        realizarSorteoColores(); // Esta función ya existe y actualiza el estado
+
+        // Establecer nivel normal
+        estado.nivelIA = "normal";
+        document.getElementById("nivel-ia").value = "normal";
+
+        // Actualizar el selector visual de nivel
+        const nivelContainer = document.getElementById("nivel-ia-container");
+        if (nivelContainer && nivelContainer.actualizarSelector) {
+          nivelContainer.actualizarSelector();
+        }
+
+        // Sugerencias activadas por defecto
+        estado.mostrarSugerencias = true;
+        document.getElementById("check-sugerencias").checked = true;
+
+        // Ocultar modal de configuración y mostrar juego
+        document.getElementById("modal-config-damas").style.display = "none";
+        document.getElementById("juego-damas-contenedor").style.display =
+          "block";
+
+        // Dibujar tablero
+        dibujarTableroDamas();
+
+        // Iniciar temporizador
+        reiniciarTemporizador();
+        iniciarTemporizador();
+
+        // Si el turno es de la IA, iniciar su movimiento
+        if (estado.turnoActualDamas === "ia") {
+          setTimeout(movimientoIA_Damas, 500);
+        }
+      });
 
     // Inicializar selector de jugadores
     actualizarSelectorJugadores();

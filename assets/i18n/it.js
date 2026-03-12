@@ -19,7 +19,7 @@ window.translationsIT = {
   "damas.instructions": "Istruzioni",
   "damas.howToPlay": "Come giocare a Dama",
   "damas.instructionsText":
-    "• L'obiettivo è catturare tutti i pezzi dell'avversario.\n\n• GESTIONE GIOCATORI:\n  - Crea il tuo giocatore (nome da 3 a 12 caratteri).\n  - Massimo 10 giocatori salvati.\n  - Seleziona il tuo giocatore prima di iniziare.\n  - Le tue vittorie e sconfitte vengono salvate automaticamente.\n  - Consulta le statistiche con il pulsante 'Giocatori'.\n\n• LIMITE DI TEMPO:\n  - Ogni partita ha 5 minuti per giocatore.\n  - Se il tuo tempo scade, perdi automaticamente.\n\n• MOVIMENTI:\n  - I pezzi si muovono in diagonale in avanti.\n  - Le catture sono obbligatorie se disponibili.\n  - Puoi attivare/disattivare i suggerimenti di movimento.\n\n• INCORONAZIONE:\n  - Se un pezzo raggiunge l'estremità opposta, diventa una dama.\n  - Le dame possono muoversi in tutte le diagonali.\n\n• STATISTICHE:\n  - Vittorie e sconfitte sono salvate per livello (Normale/Difficile).\n  - La classifica mostra tutti i giocatori in ordine alfabetico.\n\n• LIVELLI DI DIFFICOLTÀ:\n  - Normale: IA con movimenti di base.\n  - Difficile: IA avanzata che valuta rischi e strategie.\n\n• PULSANTE 'GIOCATORI':\n  - Mostra la classifica completa con tutte le statistiche.\n\nBuona partita!",
+    "• OBIETTIVO: Catturare tutti i pezzi dell'avversario.\n\n• GIOCATORI:\n  - Crea il tuo giocatore (3-12 caratteri, max. 10).\n  - Seleziona il tuo giocatore prima di giocare.\n  - Le tue statistiche vengono salvate automaticamente.\n\n• PARTITA RAPIDA:\n  - Gioca all'istante come 'Player'.\n  - Senza salvare le statistiche in classifica.\n  - Sorteggio automatico, livello Normale.\n\n• TEMPO:\n  - 5 minuti per giocatore.\n  - Se il tempo scade, perdi.\n\n• MOSSE:\n  - In diagonale in avanti.\n  - Catture obbligatorie.\n  - Suggerimenti attivabili.\n\n• REGINE:\n  - Raggiungendo l'estremità opposta.\n  - Si muovono in tutte le diagonali.\n\n• STATISTICHE:\n  - Vittorie/Sconfitte per livello (Normale/Difficile).\n  - Classifica alfabetica nel pulsante 'Giocatori'.\n\n• LIVELLI IA:\n  - Normale: mosse basiche.\n  - Difficile: IA strategica.\n\nA giocare!",
   "ahorcado.record": "Salva record",
   "damas.you": "TU",
   "damas.ai": "COMPUTER",
@@ -31,6 +31,7 @@ window.translationsIT = {
   "damas.none": "—",
   "damas.restart": "Ricomincia",
   "damas.exit": "Esci",
+  "damas.config.quickGame": "Partita rapida",
   "palabras.title": "Scrivi il nome",
   "palabras.config.title": "Configurazione",
   "palabras.config.language": "Lingua:",
