@@ -5,7 +5,43 @@ let animationFrame;
 let footerAnimationInProgress = false;
 let isClosingModal = false;
 
+// ================================
+// GESTIÓN DEL SPLASH SCREEN
+// ================================
+// Ocultar el splash cuando todo el DOM esté cargado
+document.addEventListener("DOMContentLoaded", function () {
+  const splashScreen = document.getElementById("splash-screen-index");
+
+  // Función para ocultar el splash
+  function hideSplashScreen() {
+    if (splashScreen) {
+      splashScreen.classList.add("hidden");
+
+      // Hacer visible el body
+      document.body.classList.add("visible");
+
+      // Eliminar del DOM después de la transición
+      setTimeout(() => {
+        if (splashScreen && splashScreen.parentNode) {
+          splashScreen.parentNode.removeChild(splashScreen);
+        }
+      }, 400);
+    }
+  }
+
+  // Esperar a que todo esté cargado
+  window.addEventListener("load", function () {
+    setTimeout(hideSplashScreen, 300);
+  });
+});
+
 function resetFooter(force = false) {
+  // Asegurar que el splash no está bloqueando la interfaz
+  const splash = document.getElementById("splash-screen-index");
+  if (splash && !splash.classList.contains("hidden")) {
+    splash.classList.add("hidden");
+  }
+
   const footer = document.querySelector("footer");
   if (!footer) return;
 

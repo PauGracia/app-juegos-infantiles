@@ -1903,7 +1903,6 @@ const JuegoDamas = (() => {
   // RESET
   // ======================================================================
   function resetGameDamasUltra() {
-    generarTableroInicialDamas();
     estadoGlobalDamas.ladoHumanoAsignado = "bottom";
 
     // Actualizar color humano de forma segura
@@ -2464,6 +2463,12 @@ const JuegoDamas = (() => {
 
     modalConfig.style.display = "none";
 
+    // También ocultar el contenedor del juego
+    const juegoContenedor = document.getElementById("juego-damas-contenedor");
+    if (juegoContenedor) {
+      juegoContenedor.style.display = "none";
+    }
+
     // Inicializar selector personalizado
     initCustomSelect();
 
@@ -2650,7 +2655,7 @@ const JuegoDamas = (() => {
           mostrarModalBorrarJugador();
         });
 
-      // EVENTO PARA EL BOTÓN JUGAR - CORREGIDO Y COLOCADO AQUÍ
+      // EVENTO PARA EL BOTÓN JUGAR
       document
         .getElementById("boton-jugar-config")
         .addEventListener("click", () => {
@@ -2662,7 +2667,7 @@ const JuegoDamas = (() => {
             return;
           }
 
-          // NUEVA VALIDACIÓN: comprobar si hay jugador seleccionado
+          // Verificar si hay jugador seleccionado
           if (!GestorJugadores.obtenerJugadorSeleccionado()) {
             mostrarAvisoDamas(t("damas.warning.noPlayer"));
             return;
@@ -2671,15 +2676,19 @@ const JuegoDamas = (() => {
           // Obtener el nivel de IA seleccionado
           estado.nivelIA = document.getElementById("nivel-ia").value;
 
-          // Ocultar modal de configuración y mostrar juego
+          // Ocultar modal de configuración
           document.getElementById("modal-config-damas").style.display = "none";
-          document.getElementById("juego-damas-contenedor").style.display =
-            "block";
 
-          // Dibujar tablero
-          dibujarTableroDamas();
+          // Mostrar el contenedor del juego
+          const juegoContenedor = document.getElementById(
+            "juego-damas-contenedor",
+          );
+          juegoContenedor.style.display = "block";
 
-          // Iniciar temporizador al iniciar partida
+          // Inicializar el tablero
+          resetGameDamasUltra();
+
+          // Iniciar temporizador
           reiniciarTemporizador();
           iniciarTemporizador();
 
@@ -2694,8 +2703,10 @@ const JuegoDamas = (() => {
         .getElementById("boton-reinicio-damas")
         ?.addEventListener("click", resetGameDamasUltra);
 
-      // FORZAR UN REFLOW para asegurar que el modal se renderice
-      void modalConfig.offsetHeight;
+      // Ocultar el splash
+      if (splashScreen) {
+        splashScreen.classList.add("hidden");
+      }
 
       // AHORA mostrar el modal CON LAS TRADUCCIONES YA APLICADAS
       modalConfig.style.display = "flex";
@@ -2703,15 +2714,12 @@ const JuegoDamas = (() => {
       // Forzar otro reflow después de mostrar
       void modalConfig.offsetHeight;
 
-      // ocultar el splash
-      if (splashScreen) {
-        splashScreen.classList.add("hidden");
-        setTimeout(() => {
-          if (splashScreen.parentNode) {
-            splashScreen.parentNode.removeChild(splashScreen);
-          }
-        }, 600);
-      }
+      // Eliminar el splash del DOM después de la transición
+      setTimeout(() => {
+        if (splashScreen && splashScreen.parentNode) {
+          splashScreen.parentNode.removeChild(splashScreen);
+        }
+      }, 600);
 
       // Marcar que las traducciones están cargadas
       document.body.classList.add("translations-loaded");

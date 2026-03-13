@@ -1271,9 +1271,18 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
   // OCULTAR EL SPLASH SCREEN DESPUÉS DE UN PEQUEÑO RETRASO
   // ================================
   setTimeout(() => {
+    // Primero ocultamos el splash
     hideSplashScreen();
-  }, 200); // Aumentamos a 200ms para asegurar que todo esté listo
 
+    // Luego mostramos el modal (después de un pequeño retraso)
+
+    const modalInicio = document.getElementById("modal-inicio");
+    if (modalInicio) {
+      modalInicio.style.display = "flex";
+      // Forzar reflow para evitar la animación de crecimiento
+      void modalInicio.offsetHeight;
+    }
+  }, 200);
   // ================================
   // FUNCIONES MODAL GLOBALES
   // ================================
