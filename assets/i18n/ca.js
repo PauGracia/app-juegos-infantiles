@@ -317,7 +317,7 @@ window.translationsCA = {
 
   "footer.contact": "Contacte",
   "footer.privacy": "Política de Privacitat",
-  "footer.copyright": "© 2025 Jocs Educatius Infantils",
+  "footer.copyright": "© 2026 Jocs Educatius Infantils",
   "footer.about": "Sobre el Projecte",
   "footer.terms": "Termes",
   "footer.educational": "Aplicació Educativa | v2.0.0",

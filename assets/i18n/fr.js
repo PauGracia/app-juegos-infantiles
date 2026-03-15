@@ -329,7 +329,7 @@ window.translationsFR = {
   "ranking.filterUser": "Filtrer par utilisateur",
   "footer.contact": "Contact",
   "footer.privacy": "Politique de Confidentialité",
-  "footer.copyright": "© 2025 Jeux Éducatifs pour Enfants",
+  "footer.copyright": "© 2026 Jeux Éducatifs pour Enfants",
   "footer.about": "À propos du Projet",
   "footer.terms": "Conditions",
   "footer.educational": "Application Éducative | v2.0.0",

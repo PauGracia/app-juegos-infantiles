@@ -4,6 +4,7 @@ let isExpanded = false;
 let animationFrame;
 let footerAnimationInProgress = false;
 let isClosingModal = false;
+let footerAutoCloseTimer = null;
 
 // ================================
 // GESTIÓN DEL SPLASH SCREEN
@@ -327,6 +328,18 @@ document.addEventListener("DOMContentLoaded", () => {
     animationFrame = requestAnimationFrame(step);
   }
 
+  function startFooterAutoCloseTimer() {
+    if (footerAutoCloseTimer) {
+      clearTimeout(footerAutoCloseTimer);
+    }
+
+    footerAutoCloseTimer = setTimeout(() => {
+      if (isExpanded && !document.body.classList.contains("modal-open")) {
+        collapseFooter();
+      }
+    }, 60000); // 2 minutos
+  }
+
   function expandFooter() {
     // No expandir si hay un modal abierto
     if (document.body.classList.contains("modal-open")) {
@@ -338,15 +351,18 @@ document.addEventListener("DOMContentLoaded", () => {
     isExpanded = true;
     footer.classList.add("expanded");
     animateHeight(footer.offsetHeight, getExpandedHeight(), 350);
+
+    startFooterAutoCloseTimer();
   }
 
   function collapseFooter() {
-    // No contraer si hay un modal abierto
-    if (document.body.classList.contains("modal-open")) {
-      return;
-    }
-
+    if (document.body.classList.contains("modal-open")) return;
     if (!isExpanded || footerAnimationInProgress) return;
+
+    if (footerAutoCloseTimer) {
+      clearTimeout(footerAutoCloseTimer);
+      footerAutoCloseTimer = null;
+    }
 
     isExpanded = false;
     animateHeight(footer.offsetHeight, footerTop.offsetHeight, 350, () => {
