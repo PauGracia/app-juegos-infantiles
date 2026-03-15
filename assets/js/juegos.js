@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const footerTop = footer.querySelector(".footer-top");
   const footerBottom = footer.querySelector(".footer-bottom");
 
-  const isMobile = window.matchMedia("(hover: none)").matches;
+  const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
   // Variables para control de eventos
   let lastScrollTop = 0;
@@ -381,7 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop;
 
-      if (!isMobile) {
+      if (!isTouch) {
         if (scrollTop > 20 && !document.body.classList.contains("modal-open")) {
           expandFooter();
         } else if (
@@ -397,7 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Hover desktop
-  if (!isMobile) {
+  if (!isTouch) {
     footer.addEventListener("mouseenter", () => {
       if (document.body.classList.contains("modal-open")) return;
       expandFooter();
@@ -415,8 +415,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Toque móvil: expandir/contraer con tap
-  if (isMobile) {
-    footer.addEventListener("click", (e) => {
+  if (isTouch) {
+    footer.addEventListener("pointerdown", (e) => {
       if (
         document.body.classList.contains("modal-open") ||
         isClosingModal ||
@@ -456,6 +456,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const lang = btn.dataset.lang;
       loadLanguage(lang, true);
     });
+  });
+
+  // Cerrar footer al tocar fuera
+  document.addEventListener("pointerdown", (e) => {
+    if (!footer.contains(e.target) && isExpanded) {
+      collapseFooter();
+    }
   });
 
   const footerAbout = document.getElementById("footer-about");

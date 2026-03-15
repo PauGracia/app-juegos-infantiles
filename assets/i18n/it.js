@@ -7,7 +7,6 @@ window.translationsIT = {
   "menu.damas": "Gioco della Dama",
   "operations.confirmExit": "Sei sicuro di voler uscire dal gioco?",
 
-  "footer.rights": "Tutti i diritti riservati.",
   "damas.yourPieces": "Le tue pedine:",
   "damas.yourSide": "Turno:",
   "damas.turn": "Turno:",
@@ -377,7 +376,7 @@ window.translationsIT = {
     "L'applicazione funziona completamente sul tuo dispositivo. Non vengono effettuate connessioni a server esterni, non vengono raccolti dati personali e non è richiesta alcuna registrazione per il suo utilizzo.",
   "terms.licenseTitle": "3. Licenza d'uso",
   "terms.license":
-    "Questa applicazione è gratuita. Non è consentita la sua modifica, distribuzione commerciale o riproduzione totale o parziale senza autorizzazione espressa.",
+    "Non è consentita la sua modifica, distribuzione commerciale o riproduzione totale o parziale senza autorizzazione espressa.",
   "terms.contentTitle": "4. Proprietà del contenuto",
   "terms.content":
     "Tutti gli elementi grafici, suoni, icone e codice sono di proprietà dei rispettivi autori (vedi sezione Attribuzioni) e sono utilizzati sotto licenze che ne consentono l'uso in questo contesto educativo.",

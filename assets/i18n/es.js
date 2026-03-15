@@ -7,7 +7,6 @@ window.translationsES = {
   "menu.damas": "Juego de Damas",
   "operaciones.confirmExit": "¿Seguro que quieres salir del juego?",
   "ahorcado.record": "Guardar récord",
-  "footer.rights": "Todos los derechos reservados.",
   "damas.yourPieces": "Tus piezas:",
   "damas.yourSide": "Turno:",
   "damas.turn": "Turno:",
@@ -380,7 +379,7 @@ window.translationsES = {
     "La aplicación funciona completamente en tu dispositivo. No se realizan conexiones a servidores externos, no se recopilan datos personales y no se requiere registro alguno para su uso.",
   "terms.licenseTitle": "3. Licencia de uso",
   "terms.license":
-    "Esta aplicación es de uso gratuito. No está permitida su modificación, distribución comercial o reproducción total o parcial sin autorización expresa.",
+    "No está permitida su modificación, distribución comercial o reproducción total o parcial sin autorización expresa.",
   "terms.contentTitle": "4. Propiedad del contenido",
   "terms.content":
     "Todos los elementos gráficos, sonidos, iconos y código son propiedad de sus respectivos autores (ver sección de Atribuciones) y se utilizan bajo licencias que permiten su uso en este contexto educativo.",

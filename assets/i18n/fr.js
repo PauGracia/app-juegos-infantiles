@@ -6,7 +6,6 @@ window.translationsFR = {
   "menu.ahorcado": "Jeu du Pendu",
   "menu.damas": "Jeu de Dames",
   "ahorcado.winMessage": "Mot correct !",
-  "footer.rights": "Tous droits réservés.",
   "damas.yourPieces": "Tes pièces:",
   "damas.yourSide": "Tour:",
   "damas.turn": "Tour:",
@@ -391,7 +390,7 @@ window.translationsFR = {
     "L'application fonctionne entièrement sur votre appareil. Aucune connexion à des serveurs externes n'est établie, aucune donnée personnelle n'est collectée et aucun enregistrement n'est requis pour son utilisation.",
   "terms.licenseTitle": "3. Licence d'utilisation",
   "terms.license":
-    "Cette application est gratuite. Sa modification, sa distribution commerciale ou sa reproduction totale ou partielle sans autorisation expresse est interdite.",
+    "Sa modification, sa distribution commerciale ou sa reproduction totale ou partielle sans autorisation expresse est interdite.",
   "terms.contentTitle": "4. Propriété du contenu",
   "terms.content":
     "Tous les éléments graphiques, sons, icônes et codes sont la propriété de leurs auteurs respectifs (voir section Attributions) et sont utilisés sous des licences permettant leur utilisation dans ce contexte éducatif.",

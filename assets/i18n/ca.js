@@ -13,7 +13,6 @@ window.translationsCA = {
   "ahorcado.saveRecord": "Guardar rècord",
   "ahorcado.allWordsCompleted": "🏆 Has completat TOTES les paraules!",
   "ahorcado.extraHelpMessage": "💡 Has guanyat una ajuda extra!",
-  "footer.rights": "Tots els drets reservats.",
   "damas.yourPieces": "Les teves peces:",
   "damas.yourSide": "Torn:",
   "damas.turn": "Torn:",
@@ -378,7 +377,7 @@ window.translationsCA = {
     "L'aplicació funciona completament en el teu dispositiu. No es realitzen connexions a servidors externs, no es recopilen dades personals i no es requereix cap registre per al seu ús.",
   "terms.licenseTitle": "3. Llicència d'ús",
   "terms.license":
-    "Aquesta aplicació és d'ús gratuït. No està permesa la seva modificació, distribució comercial o reproducció total o parcial sense autorització expressa.",
+    "No està permesa la seva modificació, distribució comercial o reproducció total o parcial sense autorització expressa.",
   "terms.contentTitle": "4. Propietat del contingut",
   "terms.content":
     "Tots els elements gràfics, sons, icones i codi són propietat dels seus respectius autors (veure secció d'Atribucions) i s'utilitzen sota llicències que permeten el seu ús en aquest context educatiu.",

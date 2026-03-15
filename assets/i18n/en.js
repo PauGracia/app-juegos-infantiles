@@ -6,7 +6,6 @@ window.translationsEN = {
   "menu.ahorcado": "Hangman Game",
   "menu.damas": "Checkers Game",
   "ahorcado.winMessage": "Correct word!",
-  "footer.rights": "All rights reserved.",
   "damas.yourPieces": "Your pieces:",
   "damas.yourSide": "Turn :",
   "damas.turn": "Turn:",
@@ -381,7 +380,7 @@ window.translationsEN = {
     "The application runs completely on your device. No connections are made to external servers, no personal data is collected, and no registration is required for its use.",
   "terms.licenseTitle": "3. License of Use",
   "terms.license":
-    "This application is free to use. Its modification, commercial distribution, or total or partial reproduction without express authorization is not permitted.",
+    "Its modification, commercial distribution, or total or partial reproduction without express authorization is not permitted.",
   "terms.contentTitle": "4. Content Ownership",
   "terms.content":
     "All graphic elements, sounds, icons, and code are the property of their respective authors (see Attributions section) and are used under licenses that allow their use in this educational context.",
