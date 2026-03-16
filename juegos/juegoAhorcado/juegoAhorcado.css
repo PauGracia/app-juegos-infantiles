@@ -518,6 +518,29 @@ html {
   margin: 10px auto;
 }
 
+/* Icono personalizado para el modal */
+.modal-icono-ahorcado {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+  animation: softPulse 2s ease-in-out infinite;
+}
+
+@keyframes softPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
 #modal-final-contenido button:last-child {
   background: linear-gradient(45deg, #667eea, #764ba2) !important;
 }
@@ -978,7 +1001,7 @@ html {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgb(214, 214, 214);
+  background-color: #333;
   display: flex;
   justify-content: center;
   align-items: center;

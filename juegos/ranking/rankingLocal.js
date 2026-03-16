@@ -1,5 +1,38 @@
 let rankingInicializado = false;
 
+// Referencia al splash screen
+let splashScreen;
+
+// Función para ocultar el splash screen
+function hideSplashScreen() {
+  splashScreen = document.getElementById("splash-screen");
+  if (splashScreen) {
+    // Pequeño retraso para asegurar que todo está renderizado
+    setTimeout(() => {
+      splashScreen.classList.add("hidden");
+      // Opcional: eliminar del DOM después de la transición
+      setTimeout(() => {
+        if (splashScreen.parentNode) {
+          splashScreen.parentNode.removeChild(splashScreen);
+        }
+      }, 500);
+    }, 300);
+  }
+}
+
+// Variable para controlar que todo esté cargado
+let recursosCargados = {
+  idioma: false,
+  ranking: false,
+};
+
+// Función para verificar si todo está cargado
+function verificarCargaCompleta() {
+  if (recursosCargados.idioma && recursosCargados.ranking) {
+    hideSplashScreen();
+  }
+}
+
 // Función para actualizar placeholders
 function actualizarPlaceholders() {
   const filtroInput = document.getElementById("filtroUsuario");
@@ -161,6 +194,11 @@ function initRanking() {
         window.translations?.["ranking.noResults"] || "No hay resultados"
       }</div>`;
       lista.appendChild(li);
+
+      // Marcar ranking como cargado y verificar
+      recursosCargados.ranking = true;
+      verificarCargaCompleta();
+
       return;
     }
 
@@ -192,6 +230,7 @@ function initRanking() {
       `;
       lista.appendChild(li);
     });
+
     // AÑADIR: elemento invisible al final para dar espacio
     const spacer = document.createElement("li");
     spacer.style.height = "20px";
@@ -199,6 +238,10 @@ function initRanking() {
     spacer.style.boxShadow = "none";
     spacer.style.pointerEvents = "none";
     lista.appendChild(spacer);
+
+    // Marcar ranking como cargado y verificar
+    recursosCargados.ranking = true;
+    verificarCargaCompleta();
   }
 
   // Eventos
@@ -226,27 +269,60 @@ function initRanking() {
   window.ranking_refrescarUI = function () {
     actualizarPlaceholders();
     actualizarEtiquetasSelect();
+
+    // Actualizar texto del splash si aún está visible
+    const splashText = document.querySelector(".splash-text");
+    if (splashText && window.translations?.["ranking.loadingSplash"]) {
+      splashText.textContent = window.translations["ranking.loadingSplash"];
+    }
+
     renderRanking();
   };
 
-  //seedRankingAhorcado(); // LLamar funcuon de prueba del ranking
+  //seedRankingAhorcado(); // LLamar funcion de prueba del ranking
   cargarRanking();
 }
 
 // Inicializar cuando cambie el idioma
 document.addEventListener("languageChanged", () => {
+  // Marcar idioma como cargado
+  recursosCargados.idioma = true;
+
   if (typeof window.ranking_refrescarUI === "function") {
     window.ranking_refrescarUI();
   }
+
+  verificarCargaCompleta();
 });
 
 // Inicializar cuando se cargue la página
-document.addEventListener("DOMContentLoaded", initRanking);
+document.addEventListener("DOMContentLoaded", () => {
+  // Si el idioma ya estaba cargado
+  if (window.translations) {
+    recursosCargados.idioma = true;
+  }
+
+  initRanking();
+});
 
 // También inicializar si el DOM ya está listo
 if (
   document.readyState === "interactive" ||
   document.readyState === "complete"
 ) {
-  setTimeout(initRanking, 100);
+  setTimeout(() => {
+    if (window.translations) {
+      recursosCargados.idioma = true;
+    }
+    initRanking();
+  }, 100);
 }
+
+// Timeout de seguridad por si algo falla
+setTimeout(() => {
+  splashScreen = document.getElementById("splash-screen");
+  if (splashScreen && !splashScreen.classList.contains("hidden")) {
+    console.warn("Timeout de seguridad: ocultando splash screen");
+    hideSplashScreen();
+  }
+}, 5000); // 5 segundos máximo

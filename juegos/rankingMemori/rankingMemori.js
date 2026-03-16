@@ -1,18 +1,54 @@
 // ------------------ RANKING ------------------
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Referencia al splash screen
+  const splashScreen = document.getElementById("splash-screen");
+
+  // Función para ocultar el splash screen
+  function hideSplashScreen() {
+    if (splashScreen) {
+      // Pequeño retraso para asegurar que todo está renderizado
+      setTimeout(() => {
+        splashScreen.classList.add("hidden");
+
+        setTimeout(() => {
+          if (splashScreen.parentNode) {
+            splashScreen.parentNode.removeChild(splashScreen);
+          }
+        }, 500);
+      }, 300);
+    }
+  }
+
   // UTITLIZAR PARA PROBAR RANKING
-  //seedRankingMemori();
+  // seedRankingMemori();
 
   // Cargar el idioma inicial
   if (typeof initLanguage === "function") {
     initLanguage();
   }
 
+  // Variable para controlar que todo esté cargado
+  let recursosCargados = {
+    idioma: false,
+    ranking: false,
+  };
+
+  // Función para verificar si todo está cargado
+  function verificarCargaCompleta() {
+    if (recursosCargados.idioma && recursosCargados.ranking) {
+      hideSplashScreen();
+    }
+  }
+
   // Escuchar cambios de idioma
   document.addEventListener("languageChanged", () => {
     // Actualizar la interfaz cuando cambie el idioma
     aplicarTraduccionesRanking();
+
+    // Marcar idioma como cargado
+    recursosCargados.idioma = true;
+    verificarCargaCompleta();
   });
 
   function aplicarTraduccionesRanking() {
@@ -31,6 +67,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       if (atrasBtn && window.translations["common.back"]) {
         atrasBtn.textContent = window.translations["common.back"];
+      }
+
+      // Actualizar texto del splash si aún está visible
+      const splashText = document.querySelector(".splash-text");
+      if (splashText && window.translations["ranking.loadingSplash"]) {
+        splashText.textContent = window.translations["ranking.loadingSplash"];
       }
     }
   }
@@ -85,15 +127,15 @@ document.addEventListener("DOMContentLoaded", () => {
       // Manejar caso cuando no hay datos
       if (ranking.length === 0) {
         listaDiv.innerHTML = `
-      <div class="empty-state fade-in">
-        <div class="empty-state-icon">🏆</div>
-        <div class="empty-state-title">${t(
-          "ranking.noScores",
-          "No hay puntuaciones aún",
-        )}</div>
-        <div class="empty-state-subtitle">Sé el primero en jugar y aparecer aquí</div>
-      </div>
-    `;
+          <div class="empty-state fade-in">
+            <div class="empty-state-icon">🏆</div>
+            <div class="empty-state-title">${t(
+              "ranking.noScores",
+              "No hay puntuaciones aún",
+            )}</div>
+            <div class="empty-state-subtitle">Sé el primero en jugar y aparecer aquí</div>
+          </div>
+        `;
         paginaSpan.textContent = `${t("ranking.page", "Página")} 0 ${t(
           "ranking.of",
           "de",
@@ -127,26 +169,30 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (numeroRanking === 3) claseTop = "top3";
 
         html += `
-        <li class="fade-in ${claseTop}" data-rank="${numeroRanking}">
-          <div class="ranking-item-content">
-            <div class="nombre-container">
-              <span class="nombre">${escapeHtml(r.nombre)}</span>
-              <span class="ranking-badge ${badgeClass}">
-                ${t(esNormal ? "ranking.normal" : "ranking.challenge", esNormal ? "Normal" : "Desafío")}
-              </span>
+          <li class="fade-in ${claseTop}" data-rank="${numeroRanking}">
+            <div class="ranking-item-content">
+              <div class="nombre-container">
+                <span class="nombre">${escapeHtml(r.nombre)}</span>
+                <span class="ranking-badge ${badgeClass}">
+                  ${t(esNormal ? "ranking.normal" : "ranking.challenge", esNormal ? "Normal" : "Desafío")}
+                </span>
+              </div>
+              <div class="puntos-container">
+                <span class="puntos-label">${esNormal ? t("ranking.points", "Puntos") : t("ranking.level", "Nivel")}</span>
+                <span class="puntos ${puntosClass}">${puntosTexto}</span>
+              </div>
             </div>
-            <div class="puntos-container">
-              <span class="puntos-label">${esNormal ? t("ranking.points", "Puntos") : t("ranking.level", "Nivel")}</span>
-              <span class="puntos ${puntosClass}">${puntosTexto}</span>
-            </div>
-          </div>
-        </li>
+          </li>
         `;
       });
 
       html += "</ol>";
       listaDiv.innerHTML = html;
       listaDiv.classList.remove("loading");
+
+      // Marcar ranking como cargado y verificar
+      recursosCargados.ranking = true;
+      verificarCargaCompleta();
 
       // Actualizar información de paginación
       paginaSpan.textContent = `${t(
@@ -203,12 +249,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
         btn.classList.add("activa");
         tipoRanking = btn.dataset.tipo;
+
+        // Mostrar loading mientras cambia de pestaña
+        listaDiv.innerHTML = `
+          <div class="loading">
+            <div class="loading-spinner"></div>
+            <span>${t("ranking.loading", "Cargando ranking…")}</span>
+          </div>
+        `;
+
         cargarRanking();
       });
     });
 
     // Aplicar traducciones iniciales
     aplicarTraduccionesRanking();
+
+    // Si el idioma ya estaba cargado (por ejemplo, si no hay evento languageChanged)
+    if (window.translations) {
+      recursosCargados.idioma = true;
+    }
 
     // Cargar el ranking inicial
     cargarRanking();
@@ -217,7 +277,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // Iniciar el sistema de ranking solo si existe el elemento lista (página correcta)
   if (document.getElementById("lista")) {
     iniciarRanking();
+  } else {
+    // Si no hay ranking, ocultar splash de todas formas
+    recursosCargados.ranking = true;
+    if (window.translations) {
+      recursosCargados.idioma = true;
+    }
+    verificarCargaCompleta();
   }
+
+  // Timeout de seguridad por si algo falla
+  setTimeout(() => {
+    if (splashScreen && !splashScreen.classList.contains("hidden")) {
+      console.warn("Timeout de seguridad: ocultando splash screen");
+      hideSplashScreen();
+    }
+  }, 5000); // 5 segundos máximo
 });
 
 // ------------------ DEV: seed ranking ------------------

@@ -350,6 +350,15 @@ const JuegoDamas = (() => {
   // DIBUJAR TABLERO
   // ======================================================================
   function dibujarTableroDamas() {
+    // Verificar que la matriz existe
+    if (
+      !estadoGlobalDamas.matrizDamas ||
+      !estadoGlobalDamas.matrizDamas.length
+    ) {
+      console.warn("Matriz no inicializada, generando tablero por defecto");
+      generarTableroInicialDamas();
+    }
+
     tableroDamasPrincipal.innerHTML = "";
 
     for (let r = 0; r < 8; r++) {
@@ -361,14 +370,13 @@ const JuegoDamas = (() => {
         celda.dataset.c = c;
 
         if ((r + c) % 2 === 1) {
-          const pieza = estadoGlobalDamas.matrizDamas[r][c];
+          const pieza = estadoGlobalDamas.matrizDamas?.[r]?.[c];
           const dot = document.createElement("div");
           dot.className = "dot-pieza";
 
           if (pieza) {
             const esHumano =
               pieza.dueño === estadoGlobalDamas.ladoHumanoAsignado;
-
             const humanoEsBlanco = estadoGlobalDamas.colorHumano === "blancas";
 
             if (esHumano) {
@@ -1903,27 +1911,31 @@ const JuegoDamas = (() => {
   // RESET
   // ======================================================================
   function resetGameDamasUltra() {
-    estadoGlobalDamas.ladoHumanoAsignado = "bottom";
+    // Detener temporizador al reiniciar
+    detenerTemporizador();
 
-    // Actualizar color humano de forma segura
-    const colorHumanoInfo = document.getElementById("color-humano-info");
-    if (colorHumanoInfo) {
-      colorHumanoInfo.textContent = t("damas.bottom");
-    }
+    // GENERAR TABLERO INICIAL PRIMERO
+    generarTableroInicialDamas();
+
+    estadoGlobalDamas.ladoHumanoAsignado =
+      estadoGlobalDamas.colorHumano === "blancas" ? "bottom" : "top";
 
     estadoGlobalDamas.seleccionActualDamas = null;
     estadoGlobalDamas.movimientosDisponiblesDamas = [];
     estadoGlobalDamas.juegoTerminadoFlag = false;
     estadoGlobalDamas.capturasHumano = 0;
     estadoGlobalDamas.capturasIA = 0;
+    estadoGlobalDamas.tiempoRestante = 300000;
 
-    // Limpiar ganador-info de forma segura
+    // Limpiar info de forma segura
     const ganadorInfo = document.getElementById("ganador-info");
     if (ganadorInfo) {
       ganadorInfo.textContent = "";
     }
 
     dibujarTableroDamas();
+
+    actualizarDisplayTiempo();
 
     if (estadoGlobalDamas.turnoActualDamas === "ia") {
       setTimeout(movimientoIA_Damas, 500);
@@ -2592,7 +2604,7 @@ const JuegoDamas = (() => {
           );
 
           // Realizar sorteo automático de colores
-          realizarSorteoColores(); // Esta función ya existe y actualiza el estado
+          realizarSorteoColores();
 
           // Establecer nivel normal
           estado.nivelIA = "normal";
@@ -2607,6 +2619,13 @@ const JuegoDamas = (() => {
           // Sugerencias activadas por defecto
           estado.mostrarSugerencias = true;
           document.getElementById("check-sugerencias").checked = true;
+
+          // GENERAR TABLERO INICIAL ANTES DE OCULTAR MODAL
+          generarTableroInicialDamas();
+
+          // Establecer lado humano asignado basado en el color sorteado
+          estado.ladoHumanoAsignado =
+            estado.colorHumano === "blancas" ? "bottom" : "top";
 
           // Ocultar modal de configuración y mostrar juego
           document.getElementById("modal-config-damas").style.display = "none";

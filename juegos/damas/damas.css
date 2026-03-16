@@ -83,6 +83,29 @@
   border-radius: 20px;
 }
 
+/* Icono personalizado para el modal */
+.modal-icono-damas {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+  animation: softPulse 2s ease-in-out infinite;
+}
+
+@keyframes softPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
 /* Estilos para el botón de partida rápida */
 #boton-partida-rapida {
   background: linear-gradient(145deg, #2ecc71, #27ae60);
