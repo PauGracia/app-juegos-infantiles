@@ -2463,20 +2463,26 @@ const JuegoDamas = (() => {
     });
 
   function init() {
-    // --- Mostrar el splash screen al inicio ---
+    // Referencias a elementos
     const splashScreen = document.getElementById("splash-screen-damas");
-    if (splashScreen) {
-      splashScreen.classList.remove("hidden"); // Asegurarse de que sea visible
-    }
-    // Ocultar contenido inicialmente
+    const modalConfig = document.getElementById("modal-config-damas");
+    const juegoContenedor = document.getElementById("juego-damas-contenedor");
+
+    // Estado inicial
     document.body.classList.remove("translations-loaded");
 
-    const modalConfig = document.getElementById("modal-config-damas");
+    // Asegurar que el splash es visible
+    if (splashScreen) {
+      splashScreen.classList.remove("hidden");
+      splashScreen.style.opacity = "1";
+      splashScreen.style.visibility = "visible";
+    }
 
-    modalConfig.style.display = "none";
+    // Ocultar todo lo demás
+    if (modalConfig) {
+      modalConfig.style.display = "none";
+    }
 
-    // También ocultar el contenedor del juego
-    const juegoContenedor = document.getElementById("juego-damas-contenedor");
     if (juegoContenedor) {
       juegoContenedor.style.display = "none";
     }
@@ -2676,24 +2682,38 @@ const JuegoDamas = (() => {
           mostrarModalBorrarJugador();
         });
 
-      // EVENTO PARA EL BOTÓN JUGAR
+      // Evento para ir a configuración de partida
       document
         .getElementById("boton-configuracion-partida")
         .addEventListener("click", () => {
-          // Ocultar modal inicial
-          document.getElementById("modal-config-damas").style.display = "none";
-          // Mostrar modal configuración de partida
-          document.getElementById("modal-config-partida").style.display =
-            "flex";
+          const modalInicial = document.getElementById("modal-config-damas");
+          const modalConfig = document.getElementById("modal-config-partida");
+
+          // Mostrar el segundo modal primero (transparente)
+          modalConfig.style.display = "flex";
+
+          // Pequeño retraso para que el DOM se actualice
+          setTimeout(() => {
+            // Ocultar el primero y mostrar el segundo
+            modalInicial.style.display = "none";
+            // El segundo ya está visible
+          }, 20);
         });
 
-      // Evento para el botón volver
+      // Evento para volver
       document
         .getElementById("boton-volver-config")
         .addEventListener("click", () => {
-          document.getElementById("modal-config-partida").style.display =
-            "none";
-          document.getElementById("modal-config-damas").style.display = "flex";
+          const modalInicial = document.getElementById("modal-config-damas");
+          const modalConfig = document.getElementById("modal-config-partida");
+
+          // Mostrar el modal inicial
+          modalInicial.style.display = "flex";
+
+          setTimeout(() => {
+            // Ocultar el de configuración
+            modalConfig.style.display = "none";
+          }, 20);
         });
 
       // Evento para el botón inicio partida
