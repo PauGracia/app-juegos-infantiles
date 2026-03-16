@@ -402,6 +402,9 @@ window.translationsPT = {
   "damas.ranking.title": "Ranking de jogadores",
   "damas.ranking.noPlayers": "Não há jogadores registrados",
   "damas.player.delete.title": "Selecionar jogador para excluir",
-
+  "damas.config.initialTitle": "Opções Iniciais",
+  "damas.config.gameSetup": "Configurar partida",
+  "damas.config.startGame": "Iniciar partida",
+  "damas.config.back": "Voltar",
   "damas.warning.noPlayer": "Você deve selecionar um jogador para começar",
 };

@@ -2453,11 +2453,11 @@ const JuegoDamas = (() => {
   let origenConfirmExit = null;
   // valores posibles: "config" | "fin"
 
+  // evento del botón salir
   document
     .getElementById("boton-salir-config")
     .addEventListener("click", () => {
       origenConfirmExit = "config";
-
       document.getElementById("modal-config-damas").style.display = "none";
       document.getElementById("modal-confirm-exit").style.display = "flex";
     });
@@ -2515,6 +2515,8 @@ const JuegoDamas = (() => {
         .addEventListener("click", () => {
           document.getElementById("modal-confirm-exit").style.display = "none";
           if (origenConfirmExit === "config") {
+            document.getElementById("modal-config-partida").style.display =
+              "none";
             salirAlMenuPrincipal();
           } else if (origenConfirmExit === "juego") {
             const estado = JuegoDamas.estado;
@@ -2676,7 +2678,27 @@ const JuegoDamas = (() => {
 
       // EVENTO PARA EL BOTÓN JUGAR
       document
-        .getElementById("boton-jugar-config")
+        .getElementById("boton-configuracion-partida")
+        .addEventListener("click", () => {
+          // Ocultar modal inicial
+          document.getElementById("modal-config-damas").style.display = "none";
+          // Mostrar modal configuración de partida
+          document.getElementById("modal-config-partida").style.display =
+            "flex";
+        });
+
+      // Evento para el botón volver
+      document
+        .getElementById("boton-volver-config")
+        .addEventListener("click", () => {
+          document.getElementById("modal-config-partida").style.display =
+            "none";
+          document.getElementById("modal-config-damas").style.display = "flex";
+        });
+
+      // Evento para el botón inicio partida
+      document
+        .getElementById("boton-inicio-partida")
         .addEventListener("click", () => {
           const estado = estadoGlobalDamas;
 
@@ -2695,8 +2717,9 @@ const JuegoDamas = (() => {
           // Obtener el nivel de IA seleccionado
           estado.nivelIA = document.getElementById("nivel-ia").value;
 
-          // Ocultar modal de configuración
-          document.getElementById("modal-config-damas").style.display = "none";
+          // Ocultar modal de configuración de partida
+          document.getElementById("modal-config-partida").style.display =
+            "none";
 
           // Mostrar el contenedor del juego
           const juegoContenedor = document.getElementById(
@@ -2732,6 +2755,13 @@ const JuegoDamas = (() => {
 
       // Forzar otro reflow después de mostrar
       void modalConfig.offsetHeight;
+
+      const modalConfigPartida = document.getElementById(
+        "modal-config-partida",
+      );
+      if (modalConfigPartida) {
+        modalConfigPartida.style.display = "none";
+      }
 
       // Eliminar el splash del DOM después de la transición
       setTimeout(() => {

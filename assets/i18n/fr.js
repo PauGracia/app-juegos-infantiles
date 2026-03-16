@@ -416,7 +416,10 @@ window.translationsFR = {
   "damas.player.error.select": "Sélectionnez un joueur à supprimer",
   "damas.player.created": "Joueur {nombre} créé avec succès",
   "damas.player.deleted": "Joueur {nombre} supprimé",
-
+  "damas.config.initialTitle": "Options Initiales",
+  "damas.config.gameSetup": "Configurer la partie",
+  "damas.config.startGame": "Commencer la partie",
+  "damas.config.back": "Retour",
   "damas.player.delete.title": "Sélectionner un joueur à supprimer",
   "damas.player.error.maxPlayers":
     "Vous ne pouvez pas créer plus de 10 joueurs",

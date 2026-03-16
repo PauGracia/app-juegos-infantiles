@@ -408,8 +408,14 @@ window.translationsCA = {
   "damas.player.error.maxPlayers": "No es poden crear més de 10 jugadors",
   "damas.ranking.title": "Rànquing de jugadors",
   "damas.ranking.noPlayers": "No hi ha jugadors registrats",
-
+  "damas.config.initialTitle": "Opcions Inicials",
+  "damas.config.gameSetup": "Configurar partida",
+  "damas.config.startGame": "Començar partida",
+  "damas.config.back": "Tornar",
   "damas.player.delete.title": "Seleccionar jugador a esborrar",
-
+  "damas.config.initialTitle": "Initial Options",
+  "damas.config.gameSetup": "Game Setup",
+  "damas.config.startGame": "Start Game",
+  "damas.config.back": "Back",
   "damas.warning.noPlayer": "Has de seleccionar un jugador per començar",
 };

@@ -35,15 +35,15 @@
 
     <h1 class="titulo-damas" data-i18n="damas.title"></h1>
 
-    <!-- Modal configuración inicial -->
+    <!-- Modal configuración inicial (simplificado) -->
     <div id="modal-config-damas" class="modal-fin-damas" style="display: none">
-      <div class="modal-contenido modal-configuracion">
+      <div class="modal-contenido modal-configuracion modal-config-inicial">
         <img
           src="../../assets/img/iconos/damas.png"
           alt="Damas"
           class="modal-icono-damas"
         />
-        <h2 data-i18n="damas.config.title"></h2>
+        <h2 data-i18n="damas.config.initialTitle">Opciones Iniciales</h2>
 
         <!-- Boton instrucciones -->
         <div class="config-bloque config-instrucciones">
@@ -55,6 +55,41 @@
             Instrucciones
           </button>
         </div>
+
+        <!-- Botones finales -->
+        <div class="botones-modal dos-botones">
+          <button
+            id="boton-partida-rapida"
+            data-i18n="damas.config.quickGame"
+          ></button>
+          <button
+            id="boton-configuracion-partida"
+            data-i18n="damas.config.gameSetup"
+          ></button>
+        </div>
+
+        <div class="botones-modal un-boton">
+          <button
+            id="boton-salir-config"
+            data-i18n="damas.config.exit"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nuevo modal configuración de partida -->
+    <div
+      id="modal-config-partida"
+      class="modal-fin-damas"
+      style="display: none"
+    >
+      <div class="modal-contenido modal-configuracion">
+        <img
+          src="../../assets/img/iconos/damas.png"
+          alt="Damas"
+          class="modal-icono-damas"
+        />
+        <h2 data-i18n="damas.config.title">Configuración de partida</h2>
 
         <div class="config-bloque config-jugadores">
           <label for="selector-jugadores" data-i18n="damas.config.selectPlayer"
@@ -104,13 +139,7 @@
           <div id="resultado-sorteo" class="resultado-sorteo">—</div>
         </div>
 
-        <!-- Checkbox sugerencias -->
-        <div class="config-bloque checkbox-bloque">
-          <label>
-            <input type="checkbox" id="check-sugerencias" checked />
-            <span data-i18n="damas.config.enableHints"></span>
-          </label>
-        </div>
+        <!-- Nivel IA -->
         <div class="config-item">
           <label for="nivel-ia" data-i18n="damas.config.aiLevel"></label>
 
@@ -129,19 +158,23 @@
           </div>
         </div>
 
+        <!-- Checkbox sugerencias -->
+        <div class="config-bloque checkbox-bloque">
+          <label>
+            <input type="checkbox" id="check-sugerencias" checked />
+            <span data-i18n="damas.config.enableHints"></span>
+          </label>
+        </div>
+
         <!-- Botones finales -->
-        <div class="botones-modal tres-botones">
+        <div class="botones-modal dos-botones">
           <button
-            id="boton-partida-rapida"
-            data-i18n="damas.config.quickGame"
+            id="boton-inicio-partida"
+            data-i18n="damas.config.startGame"
           ></button>
           <button
-            id="boton-jugar-config"
-            data-i18n="damas.config.play"
-          ></button>
-          <button
-            id="boton-salir-config"
-            data-i18n="damas.config.exit"
+            id="boton-volver-config"
+            data-i18n="damas.config.back"
           ></button>
         </div>
       </div>
