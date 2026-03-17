@@ -121,9 +121,7 @@
 .modal-configuracion .botones-modal.dos-botones {
   display: flex;
   flex-direction: column;
-
   gap: 15px;
-
   width: 100%;
 }
 
@@ -323,7 +321,7 @@
 /* Layout para tres botones en el modal */
 .modal-configuracion .botones-modal.tres-botones {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: 10px;
   margin-top: 30px;
   width: 100%;
@@ -427,7 +425,7 @@
 
 .modal-configuracion .botones-modal {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: 15px;
   margin-top: 30px;
   width: 100%;
@@ -460,6 +458,7 @@
   border: 2px solid #0f0f0f;
   color: #0f0f0f;
   background: #bdc3c7;
+  max-width: 300px;
 }
 /* Color específico para cada botón */
 #boton-jugar-config {
@@ -486,7 +485,7 @@
 .botones-modal {
   display: flex;
   gap: 15px;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   margin-top: 20px;
 }
@@ -495,6 +494,7 @@
 #btn-confirm-no {
   height: 45px;
   min-height: 45px;
+  min-width: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1118,6 +1118,10 @@
 /* Modal aviso */
 #modal-aviso-damas .modal-contenido {
   border-color: var(--color-aviso);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #modal-aviso-damas {
@@ -2094,7 +2098,7 @@
   .botones-modal .boton-damas {
     min-width: 100px;
     padding: 10px 12px;
-    font-size: 18px;
+    font-size: 17px;
   }
 
   .modal-configuracion h2 {
@@ -2111,6 +2115,11 @@
     width: 100%;
     font-size: 16px;
     padding: 14px 16px;
+  }
+
+  #btn-confirm-yes,
+  #btn-confirm-no {
+    min-width: 100px;
   }
 
   .titulo-damas {
