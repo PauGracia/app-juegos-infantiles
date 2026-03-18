@@ -81,18 +81,25 @@ const elementos = [
   },
   {
     id: 14,
-    palabras: ["carne", "carn", "meat", "viande", "carne", "carne"],
-    imagen: "../../assets/img/iconos/bife.png",
+    palabras: ["rombo", "rombe", "rhombus", "losange", "rombo", "losango"],
+    imagen: "../../assets/img/iconos/rombo.png",
   },
   {
     id: 15,
-    palabras: ["caca", "caca", "poop", "caca", "cacca", "coco"],
-    imagen: "../../assets/img/iconos/caca.png",
+    palabras: ["círculo", "cercle", "circle", "cercle", "cerchio", "círculo"],
+    imagen: "../../assets/img/iconos/circulo.png",
   },
   {
     id: 16,
-    palabras: ["cactus", "cactus", "cactus", "cactus", "cactus", "cacto"],
-    imagen: "../../assets/img/iconos/cactus.png",
+    palabras: [
+      "hexágono",
+      "hexàgon",
+      "hexagon",
+      "hexagone",
+      "esagono",
+      "hexágono",
+    ],
+    imagen: "../../assets/img/iconos/hexagono.png",
   },
   {
     id: 17,
@@ -101,8 +108,8 @@ const elementos = [
   },
   {
     id: 18,
-    palabras: ["gamba", "gamba", "shrimp", "crevette", "gambero", "camarao"],
-    imagen: "../../assets/img/iconos/camaron.png",
+    palabras: ["conejo", "conill", "rabbit", "lapin", "coniglio", "coelho"],
+    imagen: "../../assets/img/iconos/conejo.png",
   },
   {
     id: 19,
@@ -301,14 +308,14 @@ const elementos = [
   {
     id: 46,
     palabras: [
-      "bocadillo",
-      "entrapa",
-      "sandwich",
-      "sandwich",
-      "panino",
-      "sanduiche",
+      "murciélago",
+      "ratpenat",
+      "bat",
+      "chauve-souris",
+      "pipistrello",
+      "morcego",
     ],
-    imagen: "../../assets/img/iconos/sandwich.png",
+    imagen: "../../assets/img/iconos/batman.png",
   },
   {
     id: 47,
@@ -350,14 +357,14 @@ const elementos = [
   {
     id: 53,
     palabras: [
-      "extraterrestre",
-      "extraterrestre",
-      "alien",
-      "alien",
-      "alieno",
-      "alienígena",
+      "triángulo",
+      "triangle",
+      "triangle",
+      "triangle",
+      "triangolo",
+      "triângulo",
     ],
-    imagen: "../../assets/img/iconos/alien.png",
+    imagen: "../../assets/img/iconos/triangulo.png",
   },
   {
     id: 54,
@@ -526,8 +533,15 @@ const elementos = [
   },
   {
     id: 80,
-    palabras: ["banana", "plàtan", "banana", "banane", "banana", "banana"],
-    imagen: "../../assets/img/iconos/banana.png",
+    palabras: [
+      "cuadrado",
+      "quadrat",
+      "square",
+      "carré",
+      "quadrato",
+      "quadrado",
+    ],
+    imagen: "../../assets/img/iconos/cuadrado.png",
   },
   {
     id: 81,
