@@ -518,6 +518,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const img = document.createElement("img");
       img.src = elemento.imagen;
       img.alt = elemento.nombre || "Carta";
+
+      img.style.width = "100%";
+      img.style.height = "100%";
+      img.style.objectFit = "contain"; // Para mantener proporciones
       back.appendChild(img);
 
       inner.appendChild(front);

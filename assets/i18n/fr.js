@@ -420,6 +420,10 @@ window.translationsFR = {
   "damas.config.gameSetup": "Configurer la partie",
   "damas.config.startGame": "Commencer la partie",
   "damas.config.back": "Retour",
+  "footer.attributions.iconsLabel": "Icônes :",
+  "footer.attributions.licenseLabel": "Licence :",
+  "footer.attributions.noModifications":
+    "Ces icônes sont utilisées sans modifications.",
   "damas.player.delete.title": "Sélectionner un joueur à supprimer",
   "damas.player.error.maxPlayers":
     "Vous ne pouvez pas créer plus de 10 joueurs",

@@ -415,8 +415,18 @@ document.addEventListener("DOMContentLoaded", () => {
     palabraOriginal = objetoActual.palabras[idiomaPalabrasSeleccionado].trim();
     palabraObjetivo = normalizar(palabraOriginal);
     console.log("Original:", palabraOriginal);
-    document.getElementById("imagen").src = objetoActual.imagen;
+    const imagenElement = document.getElementById("imagen");
+    imagenElement.src = objetoActual.imagen;
 
+    // Forzar recálculo para SVG
+    imagenElement.onload = function () {
+      // Asegurar que el SVG se renderice correctamente
+      this.style.width = "100%";
+      this.style.height = "100%";
+      this.style.objectFit = "contain";
+    };
+
+    imagenElement.classList.add("imagen-palabras");
     const contenedor = document.querySelector(".imagen-contenedor");
     contenedor.style.borderColor = "black";
 

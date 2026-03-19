@@ -385,6 +385,10 @@ window.translationsPT = {
   "terms.contact":
     "Se tiver dúvidas sobre estes termos, pode contactar-nos através dos meios disponíveis na aplicação.",
   "damas.config.selectPlayer": "Selecionar jogador:",
+  "footer.attributions.iconsLabel": "Ícones:",
+  "footer.attributions.licenseLabel": "Licença:",
+  "footer.attributions.noModifications":
+    "Estes ícones são usados sem modificações.",
   "damas.config.noPlayer": "Nenhum jogador",
   "damas.config.noPlayers": "Nenhum jogador",
   "damas.config.createPlayer": "Criar jogador",

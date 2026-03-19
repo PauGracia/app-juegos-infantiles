@@ -59,20 +59,20 @@ const elementos = [
   },
   {
     id: 11,
-    palabras: [
-      "calabaza",
-      "carbassa",
-      "pumpkin",
-      "citrouille",
-      "zucca",
-      "abobora",
-    ],
-    imagen: "../../assets/img/iconos/calabaza.png",
+    palabras: ["fábrica", "fàbrica", "factory", "usine", "fabbrica", "fábrica"],
+    imagen: "../../assets/img/iconos/fabrica.svg",
   },
   {
     id: 12,
-    palabras: ["canasta", "sistella", "basket", "panier", "cesto", "cesto"],
-    imagen: "../../assets/img/iconos/canasta.png",
+    palabras: [
+      "ambulancia",
+      "ambulància",
+      "ambulance",
+      "ambulance",
+      "ambulanza",
+      "ambulância",
+    ],
+    imagen: "../../assets/img/iconos/ambulancia.svg",
   },
   {
     id: 13,
@@ -81,18 +81,32 @@ const elementos = [
   },
   {
     id: 14,
-    palabras: ["carne", "carn", "meat", "viande", "carne", "carne"],
-    imagen: "../../assets/img/iconos/bife.png",
+    palabras: [
+      "microscopio",
+      "microscopi",
+      "microscope",
+      "microscope",
+      "microscopio",
+      "microscópio",
+    ],
+    imagen: "../../assets/img/iconos/microscopio.svg",
   },
   {
     id: 15,
-    palabras: ["caca", "caca", "poop", "caca", "cacca", "coco"],
-    imagen: "../../assets/img/iconos/caca.png",
+    palabras: [
+      "motocicleta",
+      "motocicleta",
+      "motorcycle",
+      "motocyclette",
+      "motocicletta",
+      "motocicleta",
+    ],
+    imagen: "../../assets/img/iconos/motocicleta.svg",
   },
   {
     id: 16,
-    palabras: ["cactus", "cactus", "cactus", "cactus", "cactus", "cacto"],
-    imagen: "../../assets/img/iconos/cactus.png",
+    palabras: ["foca", "foca", "seal", "phoque", "foca", "foca"],
+    imagen: "../../assets/img/iconos/foca.svg",
   },
   {
     id: 17,
@@ -120,7 +134,7 @@ const elementos = [
   {
     id: 20,
     palabras: ["campana", "campana", "bell", "cloche", "campana", "sino"],
-    imagen: "../../assets/img/iconos/cencerro.png",
+    imagen: "../../assets/img/iconos/campana.png",
   },
   {
     id: 21,
@@ -129,15 +143,8 @@ const elementos = [
   },
   {
     id: 22,
-    palabras: [
-      "martillo",
-      "martell",
-      "hammer",
-      "marteau",
-      "martello",
-      "martelo",
-    ],
-    imagen: "../../assets/img/iconos/martillo.png",
+    palabras: ["túnel", "túnel", "tunnel", "tunnel", "tunnel", "túnel"],
+    imagen: "../../assets/img/iconos/tunel.svg",
   },
   {
     id: 23,
@@ -180,8 +187,8 @@ const elementos = [
   },
   {
     id: 28,
-    palabras: ["balanza", "balança", "scale", "balance", "bilancia", "balanca"],
-    imagen: "../../assets/img/iconos/igualdad.png",
+    palabras: ["hoja", "fulla", "leaf", "feuille", "foglia", "folha"],
+    imagen: "../../assets/img/iconos/hoja.png",
   },
   {
     id: 29,
@@ -203,8 +210,15 @@ const elementos = [
   },
   {
     id: 31,
-    palabras: ["labios", "llabis", "lips", "lèvres", "labbra", "labios"],
-    imagen: "../../assets/img/iconos/labios.png",
+    palabras: [
+      "candado",
+      "cadenat",
+      "padlock",
+      "cadenas",
+      "lucchetto",
+      "cadeado",
+    ],
+    imagen: "../../assets/img/iconos/candado.svg",
   },
   {
     id: 32,
@@ -235,13 +249,13 @@ const elementos = [
   },
   {
     id: 36,
-    palabras: ["limón", "llimona", "lemon", "citron", "limone", "limão"],
-    imagen: "../../assets/img/iconos/limon.png",
+    palabras: ["cometa", "estel", "kite", "cerf-volant", "aquilone", "pipa"],
+    imagen: "../../assets/img/iconos/cometa.png",
   },
   {
     id: 37,
-    palabras: ["olla", "olla", "pot", "casserole", "pentola", "panela"],
-    imagen: "../../assets/img/iconos/maceta.png",
+    palabras: ["nube", "núvol", "cloud", "nuage", "nuvola", "nuvem"],
+    imagen: "../../assets/img/iconos/nube.svg",
   },
   {
     id: 38,
@@ -305,8 +319,15 @@ const elementos = [
   },
   {
     id: 47,
-    palabras: ["planeta", "planeta", "planet", "planete", "pianeta", "planeta"],
-    imagen: "../../assets/img/iconos/planeta.png",
+    palabras: [
+      "tijeras",
+      "tisores",
+      "scissors",
+      "ciseaux",
+      "forbici",
+      "tesoura",
+    ],
+    imagen: "../../assets/img/iconos/tijeras.svg",
   },
   {
     id: 48,
@@ -376,15 +397,8 @@ const elementos = [
   },
   {
     id: 57,
-    palabras: [
-      "dinosaurio",
-      "dinosaure",
-      "dinosaur",
-      "dinosaure",
-      "dinosauro",
-      "dinossauro",
-    ],
-    imagen: "../../assets/img/iconos/dinosaurio.png",
+    palabras: ["patines", "patins", "skates", "patins", "pattini", "patins"],
+    imagen: "../../assets/img/iconos/patines.png",
   },
   {
     id: 58,
@@ -447,8 +461,8 @@ const elementos = [
   },
   {
     id: 67,
-    palabras: ["leon", "lleó", "lion", "lion", "leone", "leão"],
-    imagen: "../../assets/img/iconos/leon.png",
+    palabras: ["labios", "llavis", "lips", "lèvres", "labbra", "lábios"],
+    imagen: "../../assets/img/iconos/labios.png",
   },
   {
     id: 68,
@@ -518,15 +532,8 @@ const elementos = [
   },
   {
     id: 77,
-    palabras: [
-      "elefante",
-      "elefant",
-      "elephant",
-      "éléphant",
-      "elefante",
-      "elefante",
-    ],
-    imagen: "../../assets/img/iconos/elefante.png",
+    palabras: ["planeta", "planeta", "planet", "planète", "pianeta", "planeta"],
+    imagen: "../../assets/img/iconos/planeta.png",
   },
   {
     id: 78,
@@ -553,7 +560,7 @@ const elementos = [
   {
     id: 81,
     palabras: ["oso", "ós", "bear", "ours", "orso", "urso"],
-    imagen: "../../assets/img/iconos/oso.png",
+    imagen: "../../assets/img/iconos/oso.svg",
   },
   {
     id: 82,
@@ -572,8 +579,15 @@ const elementos = [
   },
   {
     id: 85,
-    palabras: ["dragón", "drac", "dragon", "dragon", "drago", "dragão"],
-    imagen: "../../assets/img/iconos/dragon.png",
+    palabras: [
+      "escalada",
+      "escalada",
+      "climbing",
+      "escalade",
+      "arrampicata",
+      "escalada",
+    ],
+    imagen: "../../assets/img/iconos/escalada.svg",
   },
   {
     id: 86,
