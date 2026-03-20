@@ -366,10 +366,9 @@ window.translationsEN = {
   "palabras.instructions.title": "How to play",
   "palabras.instructions.text":
     "Write the correct name of the image.\n\nYou can check the word as many times as you want.\n\nIf help is enabled, it will appear automatically after several attempts.\n\nAll words count as correct, but checks and help usage are recorded.",
-  "footer.attributions.iconsLabel": "Icons:",
-  "footer.attributions.licenseLabel": "License:",
-  "footer.attributions.noModifications":
-    "These icons are used without modifications.",
+  "attributions.iconsLabel": "Icons:",
+  "attributions.licenseLabel": "License:",
+  "attributions.noModifications": "These icons are used without modifications.",
   "damas.warning.title": "Warning",
   "damas.warning.mustShuffle": "You must shuffle colors before playing",
   "terms.title": "Terms of Use",

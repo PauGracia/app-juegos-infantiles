@@ -400,10 +400,9 @@ window.translationsES = {
   "damas.config.noPlayers": "No hay jugadores",
   "damas.config.createPlayer": "Crear jugador",
   "damas.config.deletePlayer": "Borrar jugador",
-  "footer.attributions.iconsLabel": "Iconos:",
-  "footer.attributions.licenseLabel": "Licencia:",
-  "footer.attributions.noModifications":
-    "Estos iconos se usan sin modificaciones.",
+  "attributions.iconsLabel": "Iconos:",
+  "attributions.licenseLabel": "Licencia:",
+  "attributions.noModifications": "Estos iconos se usan sin modificaciones.",
   "damas.jugadores": "Jugadores",
   "damas.jugadores2": "Jugador:",
   "damas.player.create.title": "Crear nuevo jugador",

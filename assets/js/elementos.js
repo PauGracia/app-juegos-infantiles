@@ -133,8 +133,15 @@ const elementos = [
 
   {
     id: 20,
-    palabras: ["campana", "campana", "bell", "cloche", "campana", "sino"],
-    imagen: "../../assets/img/iconos/campana.png",
+    palabras: [
+      "cuadrado",
+      "quadrat",
+      "square",
+      "carré",
+      "quadrato",
+      "quadrado",
+    ],
+    imagen: "../../assets/img/iconos/cuadrado.png",
   },
   {
     id: 21,
@@ -143,8 +150,15 @@ const elementos = [
   },
   {
     id: 22,
-    palabras: ["túnel", "túnel", "tunnel", "tunnel", "tunnel", "túnel"],
-    imagen: "../../assets/img/iconos/tunel.svg",
+    palabras: [
+      "hexágono",
+      "hexàgon",
+      "hexagon",
+      "hexagone",
+      "esagono",
+      "hexágono",
+    ],
+    imagen: "../../assets/img/iconos/hexagono.png",
   },
   {
     id: 23,
@@ -498,15 +512,8 @@ const elementos = [
   },
   {
     id: 73,
-    palabras: [
-      "televisión",
-      "televisió",
-      "television",
-      "télévision",
-      "televisione",
-      "televisão",
-    ],
-    imagen: "../../assets/img/iconos/television.png",
+    palabras: ["avión", "avió", "airplane", "avion", "aereo", "avião"],
+    imagen: "../../assets/img/iconos/avion.png",
   },
   {
     id: 74,
@@ -579,15 +586,8 @@ const elementos = [
   },
   {
     id: 85,
-    palabras: [
-      "escalada",
-      "escalada",
-      "climbing",
-      "escalade",
-      "arrampicata",
-      "escalada",
-    ],
-    imagen: "../../assets/img/iconos/escalada.svg",
+    palabras: ["círculo", "cercle", "circle", "cercle", "cerchio", "círculo"],
+    imagen: "../../assets/img/iconos/circulo.png",
   },
   {
     id: 86,
@@ -649,5 +649,17 @@ const elementos = [
       "microfone",
     ],
     imagen: "../../assets/img/iconos/microfono.png",
+  },
+  {
+    id: 94,
+    palabras: [
+      "triángulo",
+      "triangle",
+      "triangle",
+      "triangle",
+      "triangolo",
+      "triângulo",
+    ],
+    imagen: "../../assets/img/iconos/triangulo.png",
   },
 ];

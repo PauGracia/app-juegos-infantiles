@@ -395,9 +395,9 @@ window.translationsIT = {
   "damas.config.deletePlayer": "Elimina giocatore",
   "damas.jugadores": "Giocatori",
   "damas.jugadores2": "Giocatore:",
-  "footer.attributions.iconsLabel": "Icone:",
-  "footer.attributions.licenseLabel": "Licenza:",
-  "footer.attributions.noModifications":
+  "attributions.iconsLabel": "Icone:",
+  "attributions.licenseLabel": "Licenza:",
+  "attributions.noModifications":
     "Queste icone sono utilizzate senza modifiche.",
   "damas.player.create.title": "Crea nuovo giocatore",
   "damas.player.namePlaceholder": "Nome (3-12 caratteri)",

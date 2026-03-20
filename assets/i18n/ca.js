@@ -395,9 +395,9 @@ window.translationsCA = {
   "damas.config.createPlayer": "Crear jugador",
   "damas.config.deletePlayer": "Esborrar jugador",
   "damas.jugadores": "Jugadors",
-  "footer.attributions.iconsLabel": "Icones:",
-  "footer.attributions.licenseLabel": "Llicència:",
-  "footer.attributions.noModifications":
+  "attributions.iconsLabel": "Icones:",
+  "attributions.licenseLabel": "Llicència:",
+  "attributions.noModifications":
     "Aquests icones s'utilitzen sense modificacions.",
   "damas.jugadores2": "Jugador:",
   "damas.config.quickGame": "Partida ràpida",
