@@ -162,9 +162,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let bolsaPalabras = []; // bolsa para palabras aleatorias
   let palabraOriginal = "";
 
-  // -----------------------------
-  // SONIDOS - VERSIÓN SIMPLE Y COMPROBADA
-  // -----------------------------
+  // ---------
+  // SONIDOS
+  // ---------
   const sonidosPalabras = (() => {
     // Lista de todos los sonidos necesarios
     const archivosSonidos = {
@@ -174,16 +174,14 @@ document.addEventListener("DOMContentLoaded", () => {
       azul: "sounds/azul.mp3",
     };
 
-    // Objeto para almacenar los Audio elements precargados
+    // Objeto para almacenar los Audio elements
     const sonidos = {};
 
-    // Estado de carga
     let sonidosCargados = 0;
     const totalSonidos = Object.keys(archivosSonidos).length;
-    let precargaCompleta = false;
 
     /**
-     * Precarga todos los sonidos al iniciar
+     * Precarga todos los sonidos
      */
     function precargarSonidos() {
       console.log("🎵 Precargando sonidos...");
@@ -191,7 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
       Object.entries(archivosSonidos).forEach(([key, ruta]) => {
         const audio = new Audio();
 
-        // Eventos para monitorear la carga
         audio.addEventListener(
           "canplaythrough",
           () => {
@@ -199,11 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log(
               `✅ Sonido cargado: ${key} (${sonidosCargados}/${totalSonidos})`,
             );
-
-            if (sonidosCargados === totalSonidos) {
-              precargaCompleta = true;
-              console.log("🎵 Todos los sonidos precargados correctamente");
-            }
           },
           { once: true },
         );
@@ -212,10 +204,9 @@ document.addEventListener("DOMContentLoaded", () => {
           console.error(`❌ Error cargando sonido: ${key}`, e);
         });
 
-        // Configurar y precargar
         audio.src = ruta;
-        audio.load(); // Inicia la precarga
-        audio.volume = 1; // Volumen al máximo para todos
+        audio.load();
+        audio.volume = 1;
         sonidos[key] = audio;
       });
     }
@@ -239,8 +230,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (playPromise !== undefined) {
           playPromise.catch((error) => {
-            // Ignorar errores de autoplay (se solucionan con la interacción del usuario)
-            if (error.name !== "NotAllowedError") {
+            // Si es error de autoplay, intentar de nuevo después de interacción
+            if (error.name === "NotAllowedError") {
+              console.log(
+                `⚠️ Autoplay bloqueado para ${key}, esperando interacción...`,
+              );
+              // No hacer nada, el audio se desbloqueará con la siguiente interacción
+            } else {
               console.warn(`Error reproduciendo ${key}:`, error);
             }
           });
@@ -253,51 +249,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Iniciar precarga inmediatamente
     precargarSonidos();
 
-    // Desbloquear audio en la primera interacción del usuario
-    const desbloquearAudio = () => {
-      try {
-        // Intentar crear un contexto de audio silencioso
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (AudioContext) {
-          const ctx = new AudioContext();
-          if (ctx.state === "suspended") {
-            ctx
-              .resume()
-              .then(() => {
-                console.log("🔊 AudioContext desbloqueado");
-              })
-              .catch(() => {});
-          }
-        }
-      } catch (e) {
-        // Fallback: reproducir un sonido a volumen 0
-        if (sonidos.acierto) {
-          const audioSilencioso = sonidos.acierto.cloneNode();
-          audioSilencioso.volume = 0;
-          audioSilencioso.play().catch(() => {});
-        }
-      }
-
-      // Remover listeners
-      document.removeEventListener("click", desbloquearAudio);
-      document.removeEventListener("touchstart", desbloquearAudio);
-    };
-
-    // Añadir listeners para la primera interacción
-    document.addEventListener("click", desbloquearAudio, { once: true });
-    document.addEventListener("touchstart", desbloquearAudio, { once: true });
-
     // API pública
     return {
       acierto: () => playSonido("acierto"),
       fallo: () => playSonido("fallo"),
       ganar: () => playSonido("ganar"),
       azul: () => playSonido("azul"),
-      // Método de utilidad para verificar estado
-      estaPrecargado: () => precargaCompleta,
     };
   })();
-
   // Constante para el retraso de feedback visual
   const RETRASO_FEEDBACK = 150;
 
@@ -403,6 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     return bolsaPalabras.splice(0, cantidad);
   }
+
   function mostrarImagen() {
     comprobado = false;
     resultadoCorrecto = false;
@@ -420,7 +380,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Forzar recálculo para SVG
     imagenElement.onload = function () {
-      // Asegurar que el SVG se renderice correctamente
+      // el SVG se renderice correctamente
       this.style.width = "100%";
       this.style.height = "100%";
       this.style.objectFit = "contain";
@@ -451,6 +411,7 @@ document.addEventListener("DOMContentLoaded", () => {
       input.setAttribute("autocapitalize", "none");
       input.setAttribute("spellcheck", "false");
       input.setAttribute("inputmode", "text");
+      input.setAttribute("data-had-value", "false");
 
       //  Usar name muy genérico que no coincida con patrones de SMS
       input.name = `l_${Date.now()}_${i}`;
@@ -482,16 +443,29 @@ document.addEventListener("DOMContentLoaded", () => {
       input.addEventListener("input", (e) => {
         const next = inputsDiv.querySelector(`input[data-index='${i + 1}']`);
         if (next && e.target.value && !comprobado) {
-          next.focus();
+          const hadValue = e.target.getAttribute("data-had-value") === "true";
+
+          if (!hadValue) {
+            // Era un input vacío, es escritura nueva, avanzar
+            next.focus();
+          }
         }
 
+        // Marcar si este input ahora tiene valor
+        if (e.target.value) {
+          e.target.setAttribute("data-had-value", "true");
+        } else {
+          e.target.setAttribute("data-had-value", "false");
+        }
+
+        // Limpiar clases de error al editar
         if (input.classList.contains("letra-error")) {
           input.classList.remove("letra-error");
           input.style.backgroundColor = "white";
         }
       });
 
-      // Manejo del click
+      // Manejo del click (COMPORTAMIENTO ORIGINAL - borra la letra)
       input.addEventListener("click", (e) => {
         if (!input.disabled) {
           const teniaError = input.classList.contains("letra-error");
@@ -536,6 +510,7 @@ document.addEventListener("DOMContentLoaded", () => {
               "letra-error",
               "letra-ayuda",
             );
+            prev.setAttribute("data-had-value", "false");
           }
         } else if (e.key === "ArrowLeft") {
           e.preventDefault();
@@ -591,7 +566,8 @@ document.addEventListener("DOMContentLoaded", () => {
           input.classList.remove("letra-error");
           input.classList.add("letra-correcta");
           input.style.backgroundColor = "#9f9";
-          input.disabled = true;
+          input.disabled = true; // Bloquear todas las letras cuando acierta
+          input.setAttribute("data-had-value", "true");
         });
 
         btnSiguiente.disabled = false;
@@ -613,19 +589,26 @@ document.addEventListener("DOMContentLoaded", () => {
         const valorInput = inputs[i] ? normalizar(inputs[i].value || "") : "";
 
         if (valorInput === palabraObjetivo[i]) {
-          // Letra correcta
+          // Letra correcta - se bloquea
           inputs[i].classList.remove("letra-error");
           inputs[i].classList.add("letra-correcta");
           inputs[i].style.backgroundColor = "#9f9";
           inputs[i].disabled = true;
+          inputs[i].setAttribute("data-had-value", "true");
         } else {
-          // Letra incorrecta o vacía - NO deshabilitar para permitir corrección
+          // Letra incorrecta se puede editar (NO se bloquea)
           inputs[i].classList.remove("letra-correcta");
           inputs[i].classList.remove("letra-error");
           void inputs[i].offsetWidth;
           inputs[i].classList.add("letra-error");
           inputs[i].style.backgroundColor = "#fed7d7";
-          inputs[i].disabled = false; // Asegurar que no esté deshabilitado
+          inputs[i].disabled = false;
+          // Mantener el estado del atributo
+          if (inputs[i].value) {
+            inputs[i].setAttribute("data-had-value", "true");
+          } else {
+            inputs[i].setAttribute("data-had-value", "false");
+          }
         }
       }
 
@@ -639,6 +622,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function revelarPalabra(inputs) {
     sonidosPalabras.azul();
+
+    const contenedor = document.querySelector(".imagen-contenedor");
+    contenedor.style.borderColor = "#4299e1";
 
     for (let i = 0; i < palabraObjetivo.length; i++) {
       inputs[i].value = palabraOriginal[i];
@@ -764,9 +750,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     mostrarImagen();
-    const dummy = document.getElementById("dummy-input");
 
+    try {
+      const audioTest = new Audio();
+      audioTest.volume = 0;
+      audioTest.play().catch(() => {});
+    } catch (e) {}
+
+    const dummy = document.getElementById("dummy-input");
     dummy.focus();
+    setTimeout(() => {
+      dummy.blur();
+    }, 50);
 
     setTimeout(() => {
       dummy.blur();
