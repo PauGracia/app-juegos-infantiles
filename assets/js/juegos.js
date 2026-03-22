@@ -9,19 +9,14 @@ let footerAutoCloseTimer = null;
 // ================================
 // GESTIÓN DEL SPLASH SCREEN
 // ================================
-// Ocultar el splash cuando todo el DOM esté cargado
 document.addEventListener("DOMContentLoaded", function () {
   const splashScreen = document.getElementById("splash-screen-index");
 
-  // Función para ocultar el splash
   function hideSplashScreen() {
     if (splashScreen) {
       splashScreen.classList.add("hidden");
-
-      // Hacer visible el body
       document.body.classList.add("visible");
 
-      // Eliminar del DOM después de la transición
       setTimeout(() => {
         if (splashScreen && splashScreen.parentNode) {
           splashScreen.parentNode.removeChild(splashScreen);
@@ -30,14 +25,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Esperar a que todo esté cargado
   window.addEventListener("load", function () {
     setTimeout(hideSplashScreen, 300);
   });
 });
 
 function resetFooter(force = false) {
-  // Asegurar que el splash no está bloqueando la interfaz
   const splash = document.getElementById("splash-screen-index");
   if (splash && !splash.classList.contains("hidden")) {
     splash.classList.add("hidden");
@@ -49,7 +42,6 @@ function resetFooter(force = false) {
   const footerTop = footer.querySelector(".footer-top");
   if (!footerTop) return;
 
-  // Cancelar cualquier animación en curso
   if (animationFrame) {
     cancelAnimationFrame(animationFrame);
     animationFrame = null;
@@ -60,11 +52,7 @@ function resetFooter(force = false) {
   isExpanded = false;
   footerAnimationInProgress = false;
 
-  // Ajustar padding del body
-  const bodyIndex = document.getElementById("body-index");
-  if (bodyIndex) {
-    bodyIndex.style.paddingBottom = `${footerTop.offsetHeight}px`;
-  }
+  // ELIMINADO: ya no ajustamos el padding del body
 }
 
 // Abrir/cerrar menú de configuración
@@ -74,7 +62,6 @@ document.getElementById("settings-btn").addEventListener("click", function (e) {
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 });
 
-// Cerrar menú al hacer clic fuera
 document.addEventListener("click", function (e) {
   const settingsMenu = document.getElementById("settings-menu");
   const settingsBtn = document.getElementById("settings-btn");
@@ -92,7 +79,6 @@ function abrirModalConfirmacion(mensaje, accion) {
   const modal = document.getElementById("modal-confirm-delete");
   const messageEl = document.getElementById("confirm-message");
 
-  // Guardamos el modal actualmente abierto
   modalAnterior = document.querySelector(".modal-settings[style*='flex']");
 
   messageEl.textContent = mensaje;
@@ -103,11 +89,8 @@ function abrirModalConfirmacion(mensaje, accion) {
 
 function cerrarModalConfirmacion() {
   confirmAction = null;
-
-  // Cerrar solo el modal de confirmación
   document.getElementById("modal-confirm-delete").style.display = "none";
 
-  // Volver al modal anterior (historial)
   if (modalAnterior) {
     modalAnterior.style.display = "flex";
   } else {
@@ -117,27 +100,22 @@ function cerrarModalConfirmacion() {
   modalAnterior = null;
 }
 
-// Función para abrir y cerrar modales de configuración
-// En abrirModalSettings
 function abrirModalSettings(modalId) {
   document.getElementById("settings-menu").style.display = "none";
   document.body.classList.add("modal-open");
 
-  // Cerrar todos los modales primero
   document
     .querySelectorAll(".modal-settings, .modal-terminos")
     .forEach((modal) => {
       modal.style.display = "none";
     });
 
-  // Abrir el modal específico
   const modalToOpen = document.getElementById(modalId);
   if (modalToOpen) {
     modalToOpen.style.display = "flex";
   }
 }
 
-// En los event listeners de cierre
 document
   .querySelectorAll(".modal-settings, .modal-terminos")
   .forEach((modal) => {
@@ -150,7 +128,6 @@ document
 
 function cerrarModalSettings() {
   isClosingModal = true;
-  // Cerrar todos los modales
   document
     .querySelectorAll(".modal-settings, .modal-terminos")
     .forEach((modal) => {
@@ -158,7 +135,6 @@ function cerrarModalSettings() {
     });
   document.body.classList.remove("modal-open");
 
-  // Resetear el footer de forma forzada y sin animaciones
   forceResetFooter();
 
   setTimeout(() => {
@@ -173,13 +149,11 @@ function forceResetFooter() {
   const footerTop = footer.querySelector(".footer-top");
   if (!footerTop) return;
 
-  // Cancelar cualquier animación en curso
   if (animationFrame) {
     cancelAnimationFrame(animationFrame);
     animationFrame = null;
   }
 
-  // Remover clases y estilos
   footer.classList.remove("expanded");
   footer.style.height = `${footerTop.offsetHeight}px`;
   footer.style.transition = "none";
@@ -188,13 +162,8 @@ function forceResetFooter() {
   isExpanded = false;
   footerAnimationInProgress = false;
 
-  // Ajustar padding del body
-  const bodyIndex = document.getElementById("body-index");
-  if (bodyIndex) {
-    bodyIndex.style.paddingBottom = `${footerTop.offsetHeight}px`;
-  }
+  // ELIMINADO: ya no ajustamos el padding del body
 
-  // Restaurar transición después de un pequeño retraso
   setTimeout(() => {
     footer.style.transition = "";
   }, 100);
@@ -213,10 +182,9 @@ function mostrarToastIdioma(texto) {
 }
 
 document.addEventListener("languageChanged", (e) => {
-  if (!e.detail.manual) return; // ignorar inicio automático
+  if (!e.detail.manual) return;
 
   const lang = e.detail.lang;
-
   const langName = translations[`language.${lang}`] || lang.toUpperCase();
   const template =
     translations["language.selected"] || "Language selected: {lang}";
@@ -224,9 +192,7 @@ document.addEventListener("languageChanged", (e) => {
   mostrarToastIdioma(template.replace("{lang}", langName));
 });
 
-// Asignar eventos a los botones del menú de ajustes
 document.addEventListener("DOMContentLoaded", function () {
-  // Botón de idiomas
   const btnLanguage = document.getElementById("btn-settings-language");
   if (btnLanguage) {
     btnLanguage.addEventListener("click", function () {
@@ -234,7 +200,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Botón de objetivo
   const btnObjective = document.getElementById("btn-settings-objective");
   if (btnObjective) {
     btnObjective.addEventListener("click", function () {
@@ -242,7 +207,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Cerrar modales al hacer clic fuera del contenido
   document.querySelectorAll(".modal-settings").forEach((modal) => {
     modal.addEventListener("click", function (e) {
       if (e.target === this) {
@@ -251,7 +215,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Cerrar modales con Escape
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
       cerrarModalSettings();
@@ -260,9 +223,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// Controlar modal atribuciones
 const footerAttributions = document.getElementById("footer-attributions");
-
 if (footerAttributions) {
   footerAttributions.addEventListener("click", (e) => {
     e.preventDefault();
@@ -270,7 +231,6 @@ if (footerAttributions) {
   });
 }
 
-// Controlar modal términos
 const footerTerms = document.getElementById("footer-terms");
 if (footerTerms) {
   footerTerms.addEventListener("click", (e) => {
@@ -282,13 +242,11 @@ if (footerTerms) {
 document.addEventListener("DOMContentLoaded", () => {
   initLanguage();
   const footer = document.querySelector("footer");
-  const bodyIndex = document.getElementById("body-index");
   const footerTop = footer.querySelector(".footer-top");
   const footerBottom = footer.querySelector(".footer-bottom");
 
   const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
-  // Variables para control de eventos
   let lastScrollTop = 0;
   let scrollTimeout;
 
@@ -296,12 +254,9 @@ document.addEventListener("DOMContentLoaded", () => {
     return footerTop.offsetHeight + footerBottom.scrollHeight;
   }
 
-  function updateBodyPadding(height) {
-    bodyIndex.style.paddingBottom = `${height}px`;
-  }
+  // ELIMINADA: función updateBodyPadding
 
   function animateHeight(from, to, duration = 350, callback) {
-    // Si hay una animación en curso, la cancelamos
     if (animationFrame) {
       cancelAnimationFrame(animationFrame);
     }
@@ -314,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const progress = Math.min(elapsed / duration, 1);
       const newHeight = from + (to - from) * progress;
       footer.style.height = `${newHeight}px`;
-      updateBodyPadding(newHeight);
+      // ELIMINADO: ya no llamamos a updateBodyPadding
 
       if (progress < 1 && !document.body.classList.contains("modal-open")) {
         animationFrame = requestAnimationFrame(step);
@@ -337,11 +292,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (isExpanded && !document.body.classList.contains("modal-open")) {
         collapseFooter();
       }
-    }, 60000); // 2 minutos
+    }, 60000);
   }
 
   function expandFooter() {
-    // No expandir si hay un modal abierto
     if (document.body.classList.contains("modal-open")) {
       return;
     }
@@ -370,11 +324,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Scroll desktop con throttle
   window.addEventListener("scroll", () => {
     if (document.body.classList.contains("modal-open")) return;
 
-    // Throttle para mejorar rendimiento
     if (scrollTimeout) return;
 
     scrollTimeout = setTimeout(() => {
@@ -396,7 +348,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 50);
   });
 
-  // Hover desktop
   if (!isTouch) {
     footer.addEventListener("mouseenter", () => {
       if (document.body.classList.contains("modal-open")) return;
@@ -414,7 +365,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Toque móvil: expandir/contraer con tap
   if (isTouch) {
     footer.addEventListener("pointerdown", (e) => {
       if (
@@ -436,19 +386,16 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener(
     "click",
     (e) => {
-      // Si el clic es en un botón con data-close-modal o close-btn
       if (
         e.target.closest("[data-close-modal]") ||
         e.target.closest(".close-btn")
       ) {
-        // Marcar que estamos procesando un cierre
         isClosingModal = true;
       }
     },
     true,
-  ); // Usar captura para asegurar que se ejecuta primero
+  );
 
-  // Inicializamos altura
   resetFooter(true);
 
   document.querySelectorAll("[data-lang]").forEach((btn) => {
@@ -458,7 +405,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Cerrar footer al tocar fuera
   document.addEventListener("pointerdown", (e) => {
     if (!footer.contains(e.target) && isExpanded) {
       collapseFooter();
@@ -466,7 +412,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const footerAbout = document.getElementById("footer-about");
-
   if (footerAbout) {
     footerAbout.addEventListener("click", (e) => {
       e.preventDefault();
@@ -481,7 +426,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const footerPrivacy = document.getElementById("footer-privacy");
-
   if (footerPrivacy) {
     footerPrivacy.addEventListener("click", (e) => {
       e.preventDefault();
@@ -493,7 +437,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // GESTIÓN DE BORRADO DE DATOS
   // ============================================
 
-  // Botón de historial
   const btnHistory = document.getElementById("btn-settings-history");
   if (btnHistory) {
     btnHistory.addEventListener("click", function () {
@@ -501,7 +444,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Botón para borrar datos del ahorcado
   const btnDeleteAhorcado = document.getElementById("btn-delete-ahorcado");
   if (btnDeleteAhorcado) {
     btnDeleteAhorcado.addEventListener("click", () => {
@@ -515,7 +457,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Función genérica para borrar datos con confirmación
   function borrarDatosJuego(claves, nombreJuego, mensajeExito) {
     abrirModalConfirmacion(
       `¿Seguro que quieres borrar todos los datos de ${nombreJuego}?`,
@@ -525,13 +466,11 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
           localStorage.removeItem(claves);
         }
-
         mostrarToastIdioma(mensajeExito || `${nombreJuego} - Datos borrados`);
       },
     );
   }
 
-  // BOTONES DEL MEMORI
   const btnMemoriNormal = document.getElementById("btn-delete-memori-normal");
   if (btnMemoriNormal) {
     btnMemoriNormal.addEventListener("click", function () {
@@ -565,30 +504,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ============================================
-  // BOTONES DE BORRADO PARA DAMAS
-  // ============================================
-
-  // Función específica para borrar datos de Damas
   function borrarDatosDamas(modo, nombreJuego) {
     abrirModalConfirmacion(
       `¿Seguro que quieres borrar todos los datos de Damas - ${nombreJuego}?`,
       () => {
-        // Claves específicas de Damas
         const clavesDamas = ["damas_jugadores", "damas_estadisticas"];
-
         clavesDamas.forEach((clave) => {
           if (localStorage.getItem(clave) !== null) {
             localStorage.removeItem(clave);
           }
         });
-
         mostrarToastIdioma(`Datos de Damas (${nombreJuego}) borrados`);
       },
     );
   }
 
-  // Botón para borrar datos del modo Normal
   const btnDamasNormal = document.getElementById("btn-delete-damas-normal");
   if (btnDamasNormal) {
     btnDamasNormal.addEventListener("click", function () {
@@ -596,7 +526,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Botón para borrar datos del modo Difícil
   const btnDamasDificil = document.getElementById("btn-delete-damas-dificil");
   if (btnDamasDificil) {
     btnDamasDificil.addEventListener("click", function () {
@@ -604,7 +533,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Botón para borrar todos los datos de Damas
   const btnDamasAll = document.getElementById("btn-delete-damas-all");
   if (btnDamasAll) {
     btnDamasAll.addEventListener("click", function () {
@@ -612,20 +540,17 @@ document.addEventListener("DOMContentLoaded", () => {
         "¿Seguro que quieres borrar TODOS los datos de Damas (todos los modos)?",
         () => {
           const clavesDamas = ["damas_jugadores", "damas_estadisticas"];
-
           clavesDamas.forEach((clave) => {
             if (localStorage.getItem(clave) !== null) {
               localStorage.removeItem(clave);
             }
           });
-
           mostrarToastIdioma("Todos los datos de Damas han sido borrados");
         },
       );
     });
   }
 
-  // BOTÓN DE BORRAR TODOS LOS JUEGOS
   const btnDeleteAllGames = document.getElementById("btn-delete-all-games");
   if (btnDeleteAllGames) {
     btnDeleteAllGames.addEventListener("click", function () {
@@ -645,18 +570,15 @@ document.addEventListener("DOMContentLoaded", () => {
               localStorage.removeItem(clave);
             }
           });
-
           mostrarToastIdioma(
             "Todos los datos de todos los juegos han sido borrados",
           );
-
           cerrarModalSettings();
         },
       );
     });
   }
 
-  // Funcionalidad modal de confirmacion
   const btnConfirmAccept = document.getElementById("btn-confirm-accept");
   const btnConfirmCancel = document.getElementById("btn-confirm-cancel");
 
@@ -677,7 +599,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Añade esto dentro del DOMContentLoaded
   const closeTermsBtn = document.querySelector("#modal-terms .close-btn");
   if (closeTermsBtn) {
     closeTermsBtn.addEventListener("click", (e) => {
@@ -686,7 +607,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // También para el botón "Cerrar" específico si tiene otra clase
   const cerrarModalTermsBtn = document.querySelector(
     "#modal-terms .cerrar-modal",
   );
@@ -698,14 +618,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function configurarBotonesCierre() {
-    // Botones con data-close-modal (los del modal principal)
     document.querySelectorAll("[data-close-modal]").forEach((btn) => {
-      // Remover listeners anteriores para evitar duplicados
       btn.removeEventListener("click", handleCloseModal);
       btn.addEventListener("click", handleCloseModal);
     });
 
-    // Botones específicos de cierre de modales de settings
     document.querySelectorAll(".modal-settings .close-btn").forEach((btn) => {
       btn.removeEventListener("click", handleCloseModal);
       btn.addEventListener("click", handleCloseModal);
@@ -715,19 +632,14 @@ document.addEventListener("DOMContentLoaded", () => {
   function handleCloseModal(e) {
     e.preventDefault();
     e.stopPropagation();
-
-    // Verificar si estamos dentro de un modal de confirmación
     const isInConfirmModal = e.target.closest("#modal-confirm-delete");
 
     if (isInConfirmModal) {
-      // Si es el modal de confirmación, cerrar solo ese modal
       cerrarModalConfirmacion();
     } else {
-      // Si es otro modal, cerrar todos
       cerrarModalSettings();
     }
   }
 
-  // Llamar a la función después de configurar todo
   configurarBotonesCierre();
 });

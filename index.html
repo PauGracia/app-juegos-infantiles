@@ -27,25 +27,9 @@
 
   <body id="body-index">
     <!-- ================================ -->
-    <!-- SPLASH SCREEN DE CARGA (INDEX) - CON ESTILOS INLINE -->
+    <!-- SPLASH SCREEN DE CARGA (INDEX) -->
     <!-- ================================ -->
-    <div
-      id="splash-screen-index"
-      style="
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url(&quot;./assets/img/imagenes/fondoIndice.jpg&quot;);
-        background-size: cover;
-        background-position: center;
-        z-index: 20000;
-        opacity: 1;
-        visibility: visible;
-        pointer-events: none;
-      "
-    ></div>
+    <div id="splash-screen-index"></div>
 
     <!-- Botón flotante de ajustes -->
     <div id="settings-container">
@@ -220,61 +204,63 @@
         Juegos Educativos Infantiles
       </h1>
     </div>
-    <div id="lista-enlaces">
-      <ul>
-        <li>
-          <a href="./juegos/operaciones/index.html">
-            <span class="menu-icon">
-              <img src="./assets/img/iconos/operaciones.png" alt="" />
-            </span>
-            <span class="menu-text" data-i18n="menu.operaciones">
-              Operaciones Básicas
-            </span>
-          </a>
-        </li>
+    <div class="main-content">
+      <div id="lista-enlaces">
+        <ul>
+          <li>
+            <a href="./juegos/operaciones/index.html">
+              <span class="menu-icon">
+                <img src="./assets/img/iconos/operaciones.png" alt="" />
+              </span>
+              <span class="menu-text" data-i18n="menu.operaciones">
+                Operaciones Básicas
+              </span>
+            </a>
+          </li>
 
-        <li>
-          <a href="./juegos/palabras/index.html">
-            <span class="menu-icon">
-              <img src="./assets/img/iconos/palabras.png" alt="" />
-            </span>
-            <span class="menu-text" data-i18n="menu.palabras">
-              Cómo se llama
-            </span>
-          </a>
-        </li>
+          <li>
+            <a href="./juegos/palabras/index.html">
+              <span class="menu-icon">
+                <img src="./assets/img/iconos/palabras.png" alt="" />
+              </span>
+              <span class="menu-text" data-i18n="menu.palabras">
+                Cómo se llama
+              </span>
+            </a>
+          </li>
 
-        <li>
-          <a href="./juegos/memori/index.html">
-            <span class="menu-icon">
-              <img src="./assets/img/iconos/memori.png" alt="" />
-            </span>
-            <span class="menu-text" data-i18n="menu.memori">Emparejar</span>
-          </a>
-        </li>
+          <li>
+            <a href="./juegos/memori/index.html">
+              <span class="menu-icon">
+                <img src="./assets/img/iconos/memori.png" alt="" />
+              </span>
+              <span class="menu-text" data-i18n="menu.memori">Emparejar</span>
+            </a>
+          </li>
 
-        <li>
-          <a href="./juegos/juegoAhorcado/index.html">
-            <span class="menu-icon">
-              <img src="./assets/img/iconos/ahorcado.png" alt="" />
-            </span>
-            <span class="menu-text" data-i18n="menu.ahorcado">
-              Juego del Ahorcado
-            </span>
-          </a>
-        </li>
+          <li>
+            <a href="./juegos/juegoAhorcado/index.html">
+              <span class="menu-icon">
+                <img src="./assets/img/iconos/ahorcado.png" alt="" />
+              </span>
+              <span class="menu-text" data-i18n="menu.ahorcado">
+                Juego del Ahorcado
+              </span>
+            </a>
+          </li>
 
-        <li>
-          <a href="./juegos/damas/index.html">
-            <span class="menu-icon">
-              <img src="./assets/img/iconos/damas.png" alt="" />
-            </span>
-            <span class="menu-text" data-i18n="menu.damas">
-              Juego de Damas
-            </span>
-          </a>
-        </li>
-      </ul>
+          <li>
+            <a href="./juegos/damas/index.html">
+              <span class="menu-icon">
+                <img src="./assets/img/iconos/damas.png" alt="" />
+              </span>
+              <span class="menu-text" data-i18n="menu.damas">
+                Juego de Damas
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
     <!-- Toast idioma seleccionado -->
     <div id="language-toast" class="language-toast" aria-live="polite"></div>
