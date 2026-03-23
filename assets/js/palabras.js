@@ -3,7 +3,7 @@
 const palabras = {
   es: [
     // Animales
-    /*{ palabra: "araña", categoria: "animal" },
+    { palabra: "araña", categoria: "animal" },
     { palabra: "gato", categoria: "animal" },
     { palabra: "perro", categoria: "animal" },
     { palabra: "caballo", categoria: "animal" },
@@ -39,9 +39,9 @@ const palabras = {
     { palabra: "caracol", categoria: "animal" },
     { palabra: "lagarto", categoria: "animal" },
     { palabra: "serpiente", categoria: "animal" },
-    { palabra: "camaleón", categoria: "animal" },*/
+    { palabra: "camaleón", categoria: "animal" },
     { palabra: "ornitorrinco", categoria: "animal" },
-    /* { palabra: "canguro", categoria: "animal" },
+    { palabra: "canguro", categoria: "animal" },
     { palabra: "koala", categoria: "animal" },
 
     // Objetos
@@ -76,9 +76,9 @@ const palabras = {
     { palabra: "televisión", categoria: "objeto" },
     { palabra: "radio", categoria: "objeto" },
     { palabra: "cámara", categoria: "objeto" },
-    { palabra: "martillo", categoria: "objeto" },*/
+    { palabra: "martillo", categoria: "objeto" },
     { palabra: "destornillador", categoria: "objeto" },
-    /* { palabra: "llave", categoria: "objeto" },
+    { palabra: "llave", categoria: "objeto" },
     { palabra: "candado", categoria: "objeto" },
     { palabra: "maleta", categoria: "objeto" },
     { palabra: "paraguas", categoria: "objeto" },
@@ -279,7 +279,7 @@ const palabras = {
     { palabra: "surf", categoria: "deporte" },
     { palabra: "skate", categoria: "deporte" },
     { palabra: "piragüismo", categoria: "deporte" },
-    { palabra: "remo", categoria: "deporte" },*/
+    { palabra: "remo", categoria: "deporte" },
   ],
   ca: [
     // Animals
