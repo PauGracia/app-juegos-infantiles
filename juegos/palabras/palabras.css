@@ -212,8 +212,8 @@ body {
 .imagen-contenedor {
   border: 6px solid #2d3748;
   border-radius: 24px;
-  width: 370px; /* Ancho fijo */
-  height: 370px; /* Alto fijo - mismo que ancho para que sea cuadrado */
+  width: 360px; /* Ancho fijo */
+  height: 360px; /* Alto fijo - mismo que ancho para que sea cuadrado */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -246,7 +246,7 @@ body {
 
 /* Inputs de letras */
 .letras-palabras {
-  margin: 30px 0;
+  margin: 50px 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -521,7 +521,7 @@ input.letra-correcta:-webkit-autofill {
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 48px);
-  max-width: 180px;
+
   background: rgba(45, 55, 72, 0.95);
   backdrop-filter: blur(10px);
   color: white;
@@ -534,6 +534,7 @@ input.letra-correcta:-webkit-autofill {
   border: 1px solid rgba(255, 255, 255, 0.1);
   pointer-events: none;
   transition: opacity 0.3s ease;
+  max-width: 300px;
 }
 
 /* Clase para ocultar panel cuando el teclado está abierto */
@@ -754,37 +755,8 @@ input.letra-correcta:-webkit-autofill {
    Palabras largas en móviles
    =============================== */
 
-@media (max-width: 480px) {
-  .letras-palabras {
-    margin: 30px;
-    gap: 3px;
-  }
-  .letras-palabras.palabra-larga input {
-    width: 20px;
-    height: 20px;
-    font-size: 13px;
-    border-radius: 6px;
-    border-width: 1.5px;
-  }
-
-  .letras-palabras.palabra-larga input {
-    width: 18px;
-    height: 18px;
-    font-size: 13px;
-    border-radius: 6px;
-    border-width: 1.5px;
-  }
-
-  .letras-palabras.palabra-larga {
-    gap: 2px;
-  }
-  .titulo-operaciones {
-    margin-top: 20px;
-  }
-}
-
 /* Media Queries - Manteniendo las proporciones existentes */
-@media (min-width: 781px) and (max-width: 1280px) and (orientation: portrait) {
+@media (max-width: 1280px) {
   .contenedor-imagenPalabra {
     justify-content: flex-start;
     padding-top: 10px;
@@ -792,15 +764,21 @@ input.letra-correcta:-webkit-autofill {
   }
 
   .imagen-contenedor {
-    max-width: 200px;
-    max-height: 200px;
-    padding: 30px;
+    max-width: 320px;
+    max-height: 320px;
+    padding: 12px;
   }
 
   .letras-palabras input {
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+  }
+
+  .letras-palabras.palabra-larga input {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
   }
 
   .botones-palabras button {
@@ -809,12 +787,16 @@ input.letra-correcta:-webkit-autofill {
   }
 
   .titulo-operaciones {
-    font-size: 32px;
+    font-size: 45px;
+    margin-top: 45px;
+    margin-bottom: 45px;
   }
-  .panel-info {
-    max-width: 200px;
 
+  .panel-info {
+    width: 300px;
+    max-width: 300px;
     padding: 14px 16px;
+    font-size: 16px;
   }
 }
 
@@ -824,13 +806,6 @@ input.letra-correcta:-webkit-autofill {
     justify-content: flex-start;
     padding-top: 10px;
     padding-bottom: 20px;
-  }
-
-  /* Panel de información */
-  .panel-info {
-    max-width: 220px;
-
-    padding: 14px 16px;
   }
 
   /* Hacer los inputs más pequeños para que quepan mejor */
@@ -846,8 +821,8 @@ input.letra-correcta:-webkit-autofill {
 
   .contenedor-imagenPalabra.keyboard-visible .imagen-contenedor {
     padding: 15px;
-    max-width: 140px;
-    max-height: 140px;
+    max-width: 180px;
+    max-height: 180px;
   }
 
   .imagen-contenedor {
@@ -922,7 +897,7 @@ input.letra-correcta:-webkit-autofill {
    Panel info lateral (solo NO móvil)
    ========================================= */
 
-@media (min-width: 781px) {
+@media (min-width: 1281px) {
   .panel-info {
     position: fixed !important;
     top: 120px;
@@ -932,21 +907,37 @@ input.letra-correcta:-webkit-autofill {
 
     transform: none;
 
-    width: 220px;
-    max-width: 220px;
+    width: 300px;
+    max-width: 300px;
 
     padding: 14px 16px;
-    font-size: 15px;
+    font-size: 16px;
     text-align: left;
 
     pointer-events: none;
   }
 }
 
-@media (min-width: 1281px) {
-  .panel-info {
-    top: 140px;
-    width: 200px;
+@media (max-width: 480px) {
+  .letras-palabras {
+    margin: 25px;
+    gap: 3px;
+  }
+
+  .letras-palabras.palabra-larga input {
+    width: 18px;
+    height: 18px;
+    font-size: 13px;
+    border-radius: 6px;
+    border-width: 1.5px;
+  }
+
+  .letras-palabras.palabra-larga {
+    gap: 2px;
+  }
+  .titulo-operaciones {
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 }
 
