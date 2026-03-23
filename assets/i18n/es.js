@@ -317,7 +317,7 @@ window.translationsES = {
   "operaciones.invalidTime":
     "El tiempo mínimo es de 5 segundos (o 0 para sin límite)",
   "footer.privacy": "Política de Privacidad",
-  "footer.copyright": "© 2026 Juegos Educativos Infantiles",
+  "footer.copyright": "© 2026 PGL",
   "footer.about": "Sobre el Proyecto",
   "footer.terms": "Términos",
   "footer.educational": "Aplicación Educativa | v2.0.0",

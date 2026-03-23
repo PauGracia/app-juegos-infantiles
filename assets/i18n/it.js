@@ -296,7 +296,7 @@ window.translationsIT = {
   "common.save": "Salva",
   "footer.contact": "Contatto",
   "footer.privacy": "Privacy",
-  "footer.copyright": "© 2026 Giochi Educativi per Bambini",
+  "footer.copyright": "© 2026 PGL",
   "footer.about": "Informazioni sul progetto",
   "footer.terms": "Termini",
   "footer.educational": "Applicazione Educativa | v2.0.0",

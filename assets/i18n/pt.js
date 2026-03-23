@@ -313,7 +313,7 @@ window.translationsPT = {
   "history.allDeleted": "Todos os dados de todos os jogos foram apagados",
   "footer.contact": "Contato",
   "footer.privacy": "Política de Privacidade",
-  "footer.copyright": "© 2026 Jogos Educativos Infantis",
+  "footer.copyright": "© 2026 PGL",
   "footer.about": "Sobre o Projeto",
   "footer.terms": "Termos",
   "footer.educational": "Aplicativo Educativo | v2.0.0",

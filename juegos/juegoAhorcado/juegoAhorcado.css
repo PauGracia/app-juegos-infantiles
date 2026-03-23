@@ -24,7 +24,7 @@ html {
   margin: 0;
   padding: 10px;
   color: #333;
-  overflow-y: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -32,7 +32,7 @@ html {
   font-size: 3.5em;
   margin-bottom: 30px;
   color: white;
-  margin-top: 80px;
+  margin-top: 85px;
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
   font-weight: 700;
   letter-spacing: 1px;
@@ -623,6 +623,7 @@ html {
 
 #btnModalInfoAceptar {
   background: linear-gradient(45deg, #48bb78, #38a169);
+  min-height: 45px;
 }
 
 #modal-contenido button:hover,
@@ -1029,6 +1030,13 @@ html {
 }
 
 /* === MEDIA QUERIES MEJORADAS PARA MÓVILES === */
+@media (max-width: 1280px) {
+  .imagen-ahorcado {
+    width: 290px;
+    height: 290px;
+  }
+}
+
 @media (max-width: 780px) {
   .body-ahorcado {
     display: flex;

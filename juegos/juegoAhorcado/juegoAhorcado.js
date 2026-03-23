@@ -439,10 +439,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function normalizarLetra(letra) {
       if (!letra) return "";
-      const letraNormalizada = letra
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
-      return letraNormalizada.toUpperCase();
+
+      const letraMayus = letra.toUpperCase();
+
+      // La Ñ y la Ç se mantienen como están (no se normalizan)
+      if (letraMayus === "Ñ" || letraMayus === "Ç") {
+        return letraMayus;
+      }
+
+      // Para el resto de letras (incluyendo vocales acentuadas), normalizar
+      return letraMayus.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
     function deshabilitarTeclado() {

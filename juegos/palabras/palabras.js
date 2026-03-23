@@ -548,11 +548,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const inputs = document.querySelectorAll("#inputs input");
 
+    // Construir el resultado solo con los inputs que tienen valor
     let resultado = "";
-    inputs.forEach((input) => (resultado += normalizar(input.value)));
+    inputs.forEach((input) => {
+      resultado += normalizar(input.value || "");
+    });
 
     const contenedor = document.querySelector(".imagen-contenedor");
-    resultadoCorrecto = resultado === palabraObjetivo;
+
+    // Verificar si todos los inputs que deberían tener valor están completos
+    const todosLlenos = Array.from(inputs).every(
+      (input) => input.value.length > 0,
+    );
+
+    // Solo considerar correcto si todos los inputs están llenos Y coinciden exactamente
+    resultadoCorrecto = todosLlenos && resultado === palabraObjetivo;
 
     if (resultadoCorrecto) {
       aciertos++;
@@ -566,7 +576,7 @@ document.addEventListener("DOMContentLoaded", () => {
           input.classList.remove("letra-error");
           input.classList.add("letra-correcta");
           input.style.backgroundColor = "#9f9";
-          input.disabled = true; // Bloquear todas las letras cuando acierta
+          input.disabled = true;
           input.setAttribute("data-had-value", "true");
         });
 
@@ -577,17 +587,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
       return;
     } else {
-      // Verificar si se va a revelar la palabra
+      // Solo reproducir sonido de fallo si hay al menos un input con valor incorrecto
+      const hayAlgunInputLleno = Array.from(inputs).some(
+        (input) => input.value.length > 0,
+      );
       const vaARevelar = ayudaActivada && comprobacionesEstaPalabra >= 3;
 
-      // Si NO se va a revelar, reproducir sonido de fallo
-      if (!vaARevelar) {
+      // Si NO se va a revelar y hay al menos un input con contenido, reproducir fallo
+      if (!vaARevelar && hayAlgunInputLleno) {
         sonidosPalabras.fallo();
       }
 
+      // Evaluar cada input individualmente
       for (let i = 0; i < palabraObjetivo.length; i++) {
-        const valorInput = inputs[i] ? normalizar(inputs[i].value || "") : "";
+        const valorInput = normalizar(inputs[i].value || "");
+        const inputTieneValor = inputs[i].value.length > 0;
 
+        // Si el input está vacío, no hacer nada (ni correcto ni error)
+        if (!inputTieneValor) {
+          // Mantener el input como está, sin clases de error
+          if (inputs[i].classList.contains("letra-error")) {
+            inputs[i].classList.remove("letra-error");
+          }
+          if (inputs[i].classList.contains("letra-correcta")) {
+            inputs[i].classList.remove("letra-correcta");
+          }
+          inputs[i].style.backgroundColor = "white";
+          inputs[i].disabled = false;
+          continue;
+        }
+
+        // Solo procesar inputs que tienen valor
         if (valorInput === palabraObjetivo[i]) {
           // Letra correcta - se bloquea
           inputs[i].classList.remove("letra-error");
@@ -610,6 +640,41 @@ document.addEventListener("DOMContentLoaded", () => {
             inputs[i].setAttribute("data-had-value", "false");
           }
         }
+      }
+
+      // Verificar si después de evaluar, todos los inputs están correctos y completos
+      const todosCorrectos = Array.from(inputs).every((input, idx) => {
+        const tieneValor = input.value.length > 0;
+        const esCorrecto = normalizar(input.value) === palabraObjetivo[idx];
+        return tieneValor && esCorrecto;
+      });
+
+      const todosLlenosAhora = Array.from(inputs).every(
+        (input) => input.value.length > 0,
+      );
+
+      // Si todos los inputs están llenos y correctos, completar automáticamente
+      if (todosCorrectos && todosLlenosAhora) {
+        aciertos++;
+        palabraFinalizada = true;
+        sonidosPalabras.acierto();
+
+        setTimeout(() => {
+          contenedor.style.borderColor = "green";
+          inputs.forEach((input, i) => {
+            input.value = palabraOriginal[i];
+            input.classList.remove("letra-error");
+            input.classList.add("letra-correcta");
+            input.style.backgroundColor = "#9f9";
+            input.disabled = true;
+          });
+
+          btnSiguiente.disabled = false;
+          document.getElementById("btnComprobar").disabled = true;
+          document.getElementById("info-aciertos").textContent = aciertos;
+        }, RETRASO_FEEDBACK);
+
+        return;
       }
 
       if (vaARevelar) {

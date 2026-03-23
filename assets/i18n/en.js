@@ -288,7 +288,7 @@ window.translationsEN = {
   "history.deleteHard": "Hard",
   "footer.contact": "Contact",
   "footer.privacy": "Privacy Policy",
-  "footer.copyright": "© 2026 Educational Children's Games",
+  "footer.copyright": "© 2026 PGL",
   "footer.about": "About the Project",
   "footer.terms": "Terms",
   "footer.educational": "Educational App | v2.0.0",
