@@ -2592,6 +2592,13 @@ const JuegoDamas = (() => {
         mostrarModalRanking();
       });
 
+      // Evento botón jugadores del modal (ranking)
+      document
+        .getElementById("btn-jugadores-modal")
+        .addEventListener("click", () => {
+          mostrarModalRanking();
+        });
+
       // Evento para PARTIDA RÁPIDA
       document
         .getElementById("boton-partida-rapida")

@@ -121,7 +121,7 @@
 .modal-configuracion .botones-modal.dos-botones {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   width: 100%;
 }
 
@@ -1310,6 +1310,7 @@
   background: transparent;
   border: none;
   margin: 5px 0;
+  gap: 10px;
 }
 
 .boton-instrucciones-modal {
@@ -1345,9 +1346,35 @@
   justify-content: center;
   gap: 6px;
   position: relative;
+  margin-bottom: 15px;
 }
 
 #btn-jugadores::before {
+  content: "";
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background-image: url("../../assets/img/iconos/niños.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  filter: brightness(0) invert(1);
+}
+
+#btn-jugadores-modal {
+  width: 100%;
+  background: linear-gradient(145deg, #3498db, #2980b9);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  position: relative;
+  margin-bottom: 15px;
+}
+
+#btn-jugadores-modal::before {
   content: "";
   display: inline-block;
   width: 25px;
