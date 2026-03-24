@@ -1310,6 +1310,13 @@ function resetearTodo() {
   // ─── RESET MODAL CONFIGURACIÓN ───
   const modal = document.getElementById("modal-operaciones");
 
+  // Restaurar selector de nivel a "1"
+  const nivelSelect = document.getElementById("nivel");
+  if (nivelSelect) {
+    nivelSelect.value = "1";
+    cambiarNivel();
+  }
+
   // Radios / checkboxes
   modal
     .querySelectorAll("input[type='radio'], input[type='checkbox']")
@@ -1330,6 +1337,17 @@ function resetearTodo() {
   modal
     .querySelectorAll("input[type='number'], input[type='text']")
     .forEach((input) => (input.value = ""));
+
+  // Restaurar input-maximo (Nivel 1)
+  const inputMaximo = document.getElementById("input-maximo");
+  if (inputMaximo) {
+    inputMaximo.style.display = "block";
+    inputMaximo.disabled = false;
+    const translation =
+      window.translations &&
+      window.translations["operaciones.maxOperatorPlaceholder"];
+    inputMaximo.placeholder = translation || "Número Operador (solo nivel 1)";
+  }
 
   // Clases visuales de modo
   modal

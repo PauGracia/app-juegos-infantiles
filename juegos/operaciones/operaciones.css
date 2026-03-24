@@ -1118,6 +1118,9 @@ body {
   color: #ddd;
   border: 3px solid #2e7d5b;
   height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #modal-confirmar-reiniciar #btn-reiniciar-no {
@@ -1125,6 +1128,9 @@ body {
   color: #ddd;
   border: 3px solid #d32f2f;
   height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /*  SPLASH SCREEN DE CARGA (OPERACIONES) */
