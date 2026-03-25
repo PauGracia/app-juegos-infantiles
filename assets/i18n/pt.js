@@ -175,6 +175,8 @@ window.translationsPT = {
   "memori.ranking": "Classificação",
   "memori.instructions": "Instruções",
   "memori.instructionsTitle": "Instruções",
+  "memori.instructionsRanking":
+    "Ranking: No final de cada partida, se atingir certos mínimos, poderá guardar o seu recorde na classificação.",
   "memori.instructionsIntro": "Bem-vindo ao jogo Em Pares. Existem dois modos:",
   "memori.instructionsNormal":
     "Modo Normal: Encontre todos os pares. Cada acerto soma pontos e cada erro subtrai.",
@@ -335,7 +337,7 @@ window.translationsPT = {
   "footer.copyright": "© 2026 PGL",
   "footer.about": "Sobre o Projeto",
   "footer.terms": "Termos",
-  "footer.educational": "Aplicativo Educativo | v2.0.0",
+  "footer.educational": "Jogos educativos infantis | v2.0.0",
   "damas.config.title": "Configuração da partida",
   "damas.config.shuffleColors": "🎲 Embaralhar peças",
   "damas.config.enableHints": "Ativar sugestões de movimentos",

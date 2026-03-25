@@ -131,6 +131,8 @@ window.translationsCA = {
   "memori.ranking": "Ranking",
   "memori.instructions": "Instruccions",
   "memori.instructionsTitle": "Instruccions",
+  "memori.instructionsRanking":
+    "Rànquing: Al final de cada partida, si superes uns mínims, podràs desar el teu rècord a la classificació.",
   "memori.instructionsIntro": "Benvingut al joc En Parella. Hi ha dos modes:",
   "memori.instructionsNormal":
     "Mode Normal: Troba totes les parelles. Cada encert suma punts i cada error resta.",
@@ -337,7 +339,7 @@ window.translationsCA = {
   "footer.copyright": "© 2026 PGL",
   "footer.about": "Sobre el Projecte",
   "footer.terms": "Termes",
-  "footer.educational": "Aplicació Educativa | v2.0.0",
+  "footer.educational": "Jocs infantils educatius | v2.0.0",
   "damas.config.title": "Configuració de la partida",
   "damas.config.shuffleColors": "🎲 Sorteig de peces",
   "damas.config.enableHints": "Activar suggeriments de moviments",

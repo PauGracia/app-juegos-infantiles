@@ -117,6 +117,8 @@ window.translationsIT = {
   "memori.instructionsTitle": "Istruzioni",
   "memori.instructionsIntro":
     "Benvenuto nel gioco A Coppie. Esistono due modalità:",
+  "memori.instructionsRanking":
+    "Classifica: Alla fine di ogni partita, se raggiungi determinati requisiti minimi, puoi salvare il tuo record nella classifica.",
   "memori.instructionsNormal":
     "Modalità Normale: Trova tutte le coppie. Ogni corretta fa guadagnare punti, ogni errore li toglie.",
   "memori.instructionsChallenge":
@@ -318,7 +320,7 @@ window.translationsIT = {
   "footer.copyright": "© 2026 PGL",
   "footer.about": "Informazioni sul progetto",
   "footer.terms": "Termini",
-  "footer.educational": "Applicazione Educativa | v2.0.0",
+  "footer.educational": "Giochi educativi per bambini | v2.0.0",
   "damas.config.title": "Configurazione partita",
   "damas.config.shuffleColors": "🎲 Sorteggia pedine",
   "damas.config.enableHints": "Attiva suggerimenti mosse",

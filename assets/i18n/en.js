@@ -133,6 +133,8 @@ window.translationsEN = {
   "memori.instructionsTitle": "Instructions",
   "memori.instructionsIntro":
     "Welcome to Matching Pairs game. There are two modes:",
+  "memori.instructionsRanking":
+    "Ranking: At the end of each game, if you reach certain minimums, you can save your record on the leaderboard.",
   "memori.instructionsNormal":
     "Normal Mode: Find all pairs. Each match adds points and each mistake subtracts.",
   "memori.instructionsChallenge":
@@ -309,7 +311,7 @@ window.translationsEN = {
   "footer.copyright": "© 2026 PGL",
   "footer.about": "About the Project",
   "footer.terms": "Terms",
-  "footer.educational": "Educational App | v2.0.0",
+  "footer.educational": "Educational children's games | v2.0.0",
   "damas.config.title": "Game Configuration",
   "damas.config.shuffleColors": "🎲 Piece draw",
   "damas.config.enableHints": "Enable Move Hints",

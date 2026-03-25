@@ -149,6 +149,8 @@ window.translationsFR = {
   "memori.ranking": "Classement",
   "memori.instructions": "Instructions",
   "memori.instructionsTitle": "Instructions",
+  "memori.instructionsRanking":
+    "Classement : À la fin de chaque partie, si vous atteignez certains minimums, vous pouvez enregistrer votre record dans le classement.",
   "memori.instructionsIntro": "Bienvenue au Jeu des Paires. Il y a deux modes:",
   "memori.instructionsNormal":
     "Mode Normal: Trouve toutes les paires. Chaque paire correcte ajoute des points et chaque erreur en retire.",
@@ -350,7 +352,7 @@ window.translationsFR = {
   "footer.copyright": "© 2026 PGL",
   "footer.about": "À propos du Projet",
   "footer.terms": "Conditions",
-  "footer.educational": "Application Éducative | v2.0.0",
+  "footer.educational": "Jeux éducatifs pour enfants | v2.0.0",
   "damas.config.title": "Configuration de la partie",
   "damas.config.shuffleColors": "🎲 Tirage au sort des pièces",
   "damas.config.enableHints": "Activer les suggestions de mouvements",

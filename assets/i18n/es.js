@@ -173,6 +173,8 @@ window.translationsES = {
   "memori.instructionsTitle": "Instrucciones",
   "memori.instructionsIntro":
     "Bienvenido al juego En Pareja. Existen dos modos:",
+  "memori.instructionsRanking":
+    "Ranking: Al final de cada partida, si superas ciertos mínimos, podrás guardar tu récord en la clasificación.",
   "memori.instructionsNormal":
     "Modo Normal: Encuentra todas las parejas. Cada acierto suma puntos y cada error resta.",
   "memori.instructionsChallenge":
@@ -338,7 +340,7 @@ window.translationsES = {
   "footer.copyright": "© 2026 PGL",
   "footer.about": "Sobre el Proyecto",
   "footer.terms": "Términos",
-  "footer.educational": "Aplicación Educativa | v2.0.0",
+  "footer.educational": "Juegos infantiles educativos | v2.0.0",
   "damas.config.title": "Configuración de partida",
   "damas.config.shuffleColors": "🎲 Sortear piezas",
   "damas.config.enableHints": "Activar sugerencia de movimientos",
