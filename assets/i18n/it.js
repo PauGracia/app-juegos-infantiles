@@ -78,9 +78,9 @@ window.translationsIT = {
   "operaciones.allLevelsCompleted": "Hai completato tutti i livelli.",
   "operaciones.mathLegend": "Sei una leggenda della matematica",
   "operaciones.instructions.normal":
-    '- Seleziona il livello di difficoltà.\n- Indica il numero di operazioni da risolvere.\n- Inserisci le risposte e premi "Controlla".\n- Alla fine vedrai un riepilogo di corrette e errori.',
+    '- Seleziona il livello di difficoltà.\n- Indica il numero di operazioni da risolvere.\n- Scegli il tipo di operazioni da esercitare.\n- Facoltativamente, puoi impostare un limite di tempo.\n- Inserisci le risposte e premi "Controlla".\n- Al termine vedrai un riepilogo delle risposte corrette ed errate.',
   "operaciones.instructions.challenge":
-    "- Si risolveranno livelli consecutivi con tempo limite.\n- Ogni livello ha un numero diverso di operazioni e operatori vari.\n- Se completi tutte le operazioni prima del tempo, passerai al livello successivo.\n- Se il tempo scade, dovrai ricominciare la sfida.",
+    "- Completerai livelli consecutivi con un limite di tempo.\n- Ogni livello ha un numero diverso di operazioni e operatori vari.\n- Man mano che avanzi, la difficoltà aumenta, introducendo nuove operazioni come moltiplicazioni e divisioni e, nei livelli più alti, numeri negativi.\n- Se completi tutte le operazioni prima che il tempo scada, passerai al livello successivo.\n- Se il tempo finisce, dovrai ricominciare la sfida.",
   "operaciones.numOperationsPlaceholder": "Numero di operazioni (max 50)",
   "operaciones.maxOperatorPlaceholder": "Numero operatore (solo livello 1)",
   "operaciones.timeOptionalPlaceholder": "Lascia vuoto per senza limite",
@@ -243,8 +243,7 @@ window.translationsIT = {
   "common.clear": "Pulisci",
   "ranking.clearConfirm": "Sei sicuro di voler cancellare tutta la classifica?",
   "common.cancel": "Annulla",
-  "menu.settings.language": "Lingue",
-  "menu.settings.objective": "Obiettivo",
+  "menu.settings.language": " 🌍 Lingue",
   "ahorcado.instructions.minWords":
     "Devi indovinare almeno 3 parole per poter salvare il tuo record.",
   "ahorcado.minWordsRequired": "Minimo 3 parole per salvare",
@@ -265,7 +264,7 @@ window.translationsIT = {
     "Questa applicazione è progettata per un uso educativo destinato ai bambini e rispetta i principi di tutela della privacy dei minori.",
   "privacy.changes":
     "Se in futuro verranno apportate modifiche che influenzano questa informativa, gli utenti saranno chiaramente informati all’interno dell’applicazione.",
-  "menu.settings.history": "Cronologia",
+  "menu.settings.history": " 📋 Cronologia",
   "history.title": "Cronologia partite",
   "history.delete": "Elimina dati",
   "history.deleteAll": "Elimina tutti i dati",
@@ -366,28 +365,41 @@ window.translationsIT = {
   "palabras.instructions.text":
     "Scrivi il nome corretto dell'immagine.\n\nPuoi verificare la parola tutte le volte che vuoi.\n\nSe l'aiuto è attivato, apparirà automaticamente dopo diversi tentativi.\n\nTutte le parole contano come corrette, ma le verifiche e l'uso dell'aiuto vengono registrati.",
   "terms.title": "Termini di utilizzo",
+
   "terms.acceptance":
     "Utilizzando questa applicazione, accetti i seguenti termini e condizioni.",
-  "terms.educationalTitle": "1. Uso educativo",
+
+  "terms.educationalTitle": "1. Finalità dell’applicazione",
   "terms.educational":
-    "Questa applicazione è progettata esclusivamente per scopi educativi e di intrattenimento per bambini. Il suo contenuto è appropriato per tutte le età e favorisce lo sviluppo cognitivo attraverso il gioco.",
-  "terms.localTitle": "2. Funzionamento locale",
+    "Questa applicazione è progettata per scopi educativi e di intrattenimento, in particolare per bambini e ragazzi dai 6 anni in su. L’obiettivo è favorire l’apprendimento attraverso attività interattive legate a matematica, linguaggio, memoria e logica.",
+
+  "terms.localTitle": "2. Funzionamento e privacy",
   "terms.local":
-    "L'applicazione funziona completamente sul tuo dispositivo. Non vengono effettuate connessioni a server esterni, non vengono raccolti dati personali e non è richiesta alcuna registrazione per il suo utilizzo.",
-  "terms.licenseTitle": "3. Licenza d'uso",
+    "L’applicazione funziona completamente sul dispositivo dell’utente. Non vengono effettuate connessioni a server esterni, non vengono raccolti dati personali e non è richiesta registrazione. Tutti i dati sono salvati localmente.",
+
+  "terms.licenseTitle": "3. Licenza d’uso",
   "terms.license":
-    "Non è consentita la sua modifica, distribuzione commerciale o riproduzione totale o parziale senza autorizzazione espressa.",
-  "terms.contentTitle": "4. Proprietà del contenuto",
+    "Viene concessa una licenza limitata, non esclusiva e non trasferibile per uso personale. Non è consentita la riproduzione, distribuzione, modifica o sfruttamento commerciale senza autorizzazione esplicita.",
+
+  "terms.contentTitle": "4. Proprietà intellettuale",
   "terms.content":
-    "Tutti gli elementi grafici, suoni, icone e codice sono di proprietà dei rispettivi autori (vedi sezione Attribuzioni) e sono utilizzati sotto licenze che ne consentono l'uso in questo contesto educativo.",
-  "terms.responsibilityTitle": "5. Responsabilità",
+    "Tutti gli elementi dell’applicazione, inclusi grafica, suoni, icone e codice, appartengono ai rispettivi autori o licenziatari e sono utilizzati secondo le relative licenze (vedi sezione Attribuzioni).",
+
+  "terms.responsibilityTitle": "5. Limitazione di responsabilità",
   "terms.responsibility":
-    "I creatori di questa applicazione non sono responsabili di eventuali usi impropri che possano essere fatti, né di eventuali danni derivanti dal suo utilizzo. L'applicazione è fornita 'così com'è', senza alcuna garanzia.",
-  "terms.changesTitle": "6. Modifiche",
+    "L’applicazione è fornita 'così com’è', senza garanzie di alcun tipo. Lo sviluppatore non garantisce l’assenza di errori né la disponibilità continua e non è responsabile per eventuali danni derivanti dall’uso.",
+
+  "terms.childrenTitle": "6. Utilizzo da parte di minori",
+  "terms.children":
+    "Questa applicazione è destinata a un pubblico infantile e non contiene contenuti inappropriati. Non vengono raccolti dati personali dei minori né sono presenti sistemi di tracciamento, analisi o pubblicità.",
+
+  "terms.changesTitle": "7. Modifiche",
   "terms.changes":
-    "Ci riserviamo il diritto di aggiornare o modificare questi termini in qualsiasi momento. Le modifiche saranno notificate all'interno dell'applicazione stessa.",
+    "Ci riserviamo il diritto di modificare questi termini in qualsiasi momento. Le modifiche saranno comunicate all’interno dell’applicazione.",
+
+  "terms.contactTitle": "8. Contatto",
   "terms.contact":
-    "Se hai domande su questi termini, puoi contattarci attraverso i mezzi disponibili nell'applicazione.",
+    "Per qualsiasi domanda relativa a questi termini, puoi contattarci all’indirizzo: pgl.educational.game@gmail.com",
   "damas.config.selectPlayer": "Seleziona giocatore:",
   "damas.config.noPlayer": "Nessun giocatore",
   "damas.config.noPlayers": "Nessun giocatore",

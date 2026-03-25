@@ -94,9 +94,9 @@ window.translationsCA = {
   "operaciones.allLevelsCompleted": "Has completat tots els nivells.",
   "operaciones.mathLegend": "Ets una autèntica llegenda matemàtica",
   "operaciones.instructions.normal":
-    "- Selecciona el nivell de dificultat.\n- Indica el nombre d'operacions que vols resoldre.\n- Introdueix les teves respostes i prem \"Comprovar\".\n- Al finalitzar veuràs un resum d'encerts i errors.",
+    '- Selecciona el nivell de dificultat.\n- Indica el nombre d’operacions que vols resoldre.\n- Tria el tipus d’operacions a practicar.\n- Opcionalment, pots establir un temps màxim.\n- Introdueix les respostes i prem "Comprovar".\n- En finalitzar veuràs un resum d’encerts i errors.',
   "operaciones.instructions.challenge":
-    "- Es resoldran nivells consecutius amb temps límit.\n- Cada nivell té un nombre d'operacions diferent i operadors variats.\n- Si completes totes les operacions abans del temps, passaràs al següent nivell.\n- Si s'acaba el temps, hauràs de reiniciar el desafiament.",
+    "- Es resolen nivells consecutius amb temps limitat.\n- Cada nivell té un nombre diferent d’operacions i operadors variats.\n- A mesura que avances, augmenta la dificultat, incorporant noves operacions com multiplicacions i divisions, i en nivells més alts, nombres negatius.\n- Si completes totes les operacions abans que s’acabi el temps, passaràs al següent nivell.\n- Si s’acaba el temps, hauràs de reiniciar el desafiament.",
   "operaciones.numOperationsPlaceholder": "Nombre d'operacions (màx 50)",
   "operaciones.maxOperatorPlaceholder": "Número Operador (només nivell 1)",
   "operaciones.timeOptionalPlaceholder": "Deixa en blanc per sense límit",
@@ -259,9 +259,7 @@ window.translationsCA = {
   "common.playAgain": "Reiniciar",
   "ranking.clearConfirm": "Segur que vols esborrar tot el rànquing?",
   "common.cancel": "Cancel·lar",
-  "menu.settings.language": "Idiomes",
-  "menu.settings.objective": "Objectiu",
-
+  "menu.settings.language": " 🌍 Idiomes",
   "ranking.confirmDelete": "Segur que vols esborrar tot el ranking?",
 
   "menu.language.title": "Selecciona l’idioma",
@@ -277,7 +275,7 @@ window.translationsCA = {
   "ranking.sort.date": "Ordenar per data",
   "ranking.sort.user": "Ordenar per nom",
   "ranking.filterUser": "Filtrar per usuari",
-  "menu.settings.history": "Historial",
+  "menu.settings.history": " 📋 Historial",
   "history.title": "Historial de partides",
   "history.deleteHard": "Difícil",
   "history.delete": "Esborrar dades",
@@ -366,29 +364,42 @@ window.translationsCA = {
     "Escriu el nom correcte de la imatge.\n\nPots comprovar la paraula tantes vegades com vulguis.\n\nSi l'ajuda està activada, apareixerà automàticament després de diversos intents.\n\nTotes les paraules compten com a encert, però es registren les comprovacions i l'ús de l'ajuda.",
 
   "damas.warning.mustShuffle": "Has de barrejar els colors abans de jugar",
-  "terms.title": "Termes d'ús",
+  "terms.title": "Termes d’ús",
+
   "terms.acceptance":
     "En utilitzar aquesta aplicació, acceptes els següents termes i condicions.",
-  "terms.educationalTitle": "1. Ús educatiu",
+
+  "terms.educationalTitle": "1. Finalitat de l’aplicació",
   "terms.educational":
-    "Aquesta aplicació està dissenyada exclusivament per a fins educatius i d'entreteniment infantil. El seu contingut és apropiat per a totes les edats i fomenta el desenvolupament cognitiu a través del joc.",
-  "terms.localTitle": "2. Funcionament local",
+    "Aquesta aplicació està dissenyada amb finalitats educatives i d’entreteniment, especialment per a nens i joves a partir de 6 anys. El seu objectiu és fomentar l’aprenentatge mitjançant activitats interactives relacionades amb les matemàtiques, el llenguatge, la memòria i la lògica.",
+
+  "terms.localTitle": "2. Funcionament i privacitat",
   "terms.local":
-    "L'aplicació funciona completament en el teu dispositiu. No es realitzen connexions a servidors externs, no es recopilen dades personals i no es requereix cap registre per al seu ús.",
-  "terms.licenseTitle": "3. Llicència d'ús",
+    "L’aplicació funciona completament al dispositiu de l’usuari. No es fan connexions a servidors externs, no es recopilen dades personals i no cal registre per utilitzar-la. Tota la informació es guarda únicament de manera local.",
+
+  "terms.licenseTitle": "3. Llicència d’ús",
   "terms.license":
-    "No està permesa la seva modificació, distribució comercial o reproducció total o parcial sense autorització expressa.",
-  "terms.contentTitle": "4. Propietat del contingut",
+    "Es concedeix a l’usuari una llicència limitada, no exclusiva i no transferible per a l’ús personal de l’aplicació. No està permesa la seva reproducció, distribució, modificació o explotació comercial sense autorització expressa del titular.",
+
+  "terms.contentTitle": "4. Propietat intel·lectual",
   "terms.content":
-    "Tots els elements gràfics, sons, icones i codi són propietat dels seus respectius autors (veure secció d'Atribucions) i s'utilitzen sota llicències que permeten el seu ús en aquest context educatiu.",
-  "terms.responsibilityTitle": "5. Responsabilitat",
+    "Tots els elements de l’aplicació, incloent-hi gràfics, sons, icones i codi, pertanyen als seus respectius autors o llicenciadors i s’utilitzen d’acord amb les seves llicències (vegeu la secció d’Atribucions).",
+
+  "terms.responsibilityTitle": "5. Limitació de responsabilitat",
   "terms.responsibility":
-    "Els creadors d'aquesta aplicació no es fan responsables del mal ús que se'n pugui fer, ni dels danys que poguessin derivar-se de la seva utilització. L'aplicació es proporciona 'tal qual', sense garanties de cap tipus.",
-  "terms.changesTitle": "6. Modificacions",
+    "L’aplicació es proporciona 'tal qual', sense garanties de cap tipus. El desenvolupador no garanteix l’absència d’errors ni la disponibilitat contínua i no es fa responsable dels possibles danys derivats del seu ús.",
+
+  "terms.childrenTitle": "6. Ús per menors",
+  "terms.children":
+    "Aquesta aplicació està dissenyada per a un públic infantil i no conté contingut inapropiat. No es recopilen dades personals de menors ni s’inclouen mecanismes de seguiment, analítica o publicitat.",
+
+  "terms.changesTitle": "7. Modificacions",
   "terms.changes":
-    "Ens reservem el dret d'actualitzar o modificar aquests termes en qualsevol moment. Els canvis seran notificats dins de la pròpia aplicació.",
+    "Ens reservem el dret de modificar aquests termes en qualsevol moment. Els canvis es notificaran dins de la mateixa aplicació.",
+
+  "terms.contactTitle": "8. Contacte",
   "terms.contact":
-    "Si tens preguntes sobre aquests termes, pots contactar a través dels mitjans disponibles a l'aplicació.",
+    "Per a qualsevol consulta sobre aquests termes, pots contactar a través del correu electrònic: pgl.educational.game@gmail.com",
   "damas.config.selectPlayer": "Seleccionar jugador:",
   "damas.config.noPlayer": "Sense jugador",
   "damas.config.noPlayers": "No hi ha jugadors",

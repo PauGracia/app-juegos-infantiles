@@ -95,9 +95,9 @@ window.translationsEN = {
   "operaciones.allLevelsCompleted": "You have completed all levels.",
   "operaciones.mathLegend": "You are a true math legend",
   "operaciones.instructions.normal":
-    '- Select difficulty level.\n- Indicate number of operations to solve.\n- Enter your answers and press "Check".\n- At the end you\'ll see a summary of correct and incorrect answers.',
+    '- Select the difficulty level.\n- Choose the number of operations you want to solve.\n- Select the types of operations to practice.\n- Optionally, you can set a time limit.\n- Enter your answers and press "Check".\n- At the end, you will see a summary of correct and incorrect answers.',
   "operaciones.instructions.challenge":
-    "- Consecutive levels with time limit will be solved.\n- Each level has different number of operations and varied operators.\n- If you complete all operations before time, you'll advance to next level.\n- If time runs out, you must restart the challenge.",
+    "- You will complete consecutive levels with a time limit.\n- Each level has a different number of operations and varied operators.\n- As you progress, the difficulty increases, introducing new operations such as multiplication and division, and at higher levels, negative numbers.\n- If you complete all operations before time runs out, you will advance to the next level.\n- If time runs out, you must restart the challenge.",
   "operaciones.numOperationsPlaceholder": "Number of operations (max 50)",
   "operaciones.maxOperatorPlaceholder": "Maximum operand (level 1 only)",
   "operaciones.timeOptionalPlaceholder": "Leave blank for no limit",
@@ -277,8 +277,7 @@ window.translationsEN = {
   "ranking.sort.date": "Sort by date",
   "ranking.sort.user": "Sort by name",
   "ranking.filterUser": "Filter by user",
-  "menu.settings.language": "Languages",
-  "menu.settings.objective": "Objective",
+  "menu.settings.language": " 🌍 Languages",
   "menu.language.title": "Select language",
   "menu.objective.title": "Project objective",
   "menu.objective.text":
@@ -298,7 +297,7 @@ window.translationsEN = {
   "damas.config.play": "Play",
   "damas.config.exit": "Exit",
   "privacy.title": "Privacy Policy",
-  "menu.settings.history": "History",
+  "menu.settings.history": " 📋 History",
   "history.title": "Game History",
   "history.delete": "Delete data",
   "history.deleteAll": "Delete all data",
@@ -372,28 +371,41 @@ window.translationsEN = {
   "damas.warning.title": "Warning",
   "damas.warning.mustShuffle": "You must shuffle colors before playing",
   "terms.title": "Terms of Use",
+
   "terms.acceptance":
     "By using this application, you agree to the following terms and conditions.",
-  "terms.educationalTitle": "1. Educational Use",
+
+  "terms.educationalTitle": "1. Purpose of the application",
   "terms.educational":
-    "This application is designed exclusively for educational and children's entertainment purposes. Its content is appropriate for all ages and promotes cognitive development through play.",
-  "terms.localTitle": "2. Local Operation",
+    "This application is designed for educational and entertainment purposes, especially for children and young users aged 6 and above. Its goal is to promote learning through interactive activities related to mathematics, language, memory, and logic.",
+
+  "terms.localTitle": "2. Operation and privacy",
   "terms.local":
-    "The application runs completely on your device. No connections are made to external servers, no personal data is collected, and no registration is required for its use.",
-  "terms.licenseTitle": "3. License of Use",
+    "The application runs entirely on the user's device. No connections to external servers are made, no personal data is collected, and no registration is required. All data is stored locally on the device.",
+
+  "terms.licenseTitle": "3. License of use",
   "terms.license":
-    "Its modification, commercial distribution, or total or partial reproduction without express authorization is not permitted.",
-  "terms.contentTitle": "4. Content Ownership",
+    "A limited, non-exclusive and non-transferable license is granted for personal use of the application. Reproduction, distribution, modification, or commercial exploitation without explicit authorization from the owner is not permitted.",
+
+  "terms.contentTitle": "4. Intellectual property",
   "terms.content":
-    "All graphic elements, sounds, icons, and code are the property of their respective authors (see Attributions section) and are used under licenses that allow their use in this educational context.",
-  "terms.responsibilityTitle": "5. Responsibility",
+    "All elements of the application, including graphics, sounds, icons, and code, belong to their respective authors or licensors and are used in accordance with their respective licenses (see Attributions section).",
+
+  "terms.responsibilityTitle": "5. Limitation of liability",
   "terms.responsibility":
-    "The creators of this application are not responsible for any misuse that may be made of it, nor for any damages that may arise from its use. The application is provided 'as is', without any warranties.",
-  "terms.changesTitle": "6. Modifications",
+    "The application is provided 'as is', without warranties of any kind. The developer does not guarantee the absence of errors or uninterrupted availability and is not responsible for any damages arising from its use.",
+
+  "terms.childrenTitle": "6. Use by minors",
+  "terms.children":
+    "This application is intended for children and does not contain inappropriate content. No personal data from minors is collected, and no tracking, analytics, or advertising mechanisms are included.",
+
+  "terms.changesTitle": "7. Modifications",
   "terms.changes":
-    "We reserve the right to update or modify these terms at any time. Changes will be notified within the application itself.",
+    "We reserve the right to update or modify these terms at any time. Changes will be communicated within the application.",
+
+  "terms.contactTitle": "8. Contact",
   "terms.contact":
-    "If you have questions about these terms, you can contact us through the means available in the application.",
+    "If you have any questions regarding these terms, you can contact us at: pgl.educational.game@gmail.com",
   "damas.config.selectPlayer": "Select player:",
   "damas.config.noPlayer": "No player",
   "damas.config.noPlayers": "No players",

@@ -5,6 +5,7 @@ let animationFrame;
 let footerAnimationInProgress = false;
 let isClosingModal = false;
 let footerAutoCloseTimer = null;
+let footer, footerTop, footerBottom; // Variables globales para el footer
 
 // ================================
 // GESTIÓN DEL SPLASH SCREEN
@@ -36,10 +37,10 @@ function resetFooter(force = false) {
     splash.classList.add("hidden");
   }
 
-  const footer = document.querySelector("footer");
+  if (!footer) footer = document.querySelector("footer");
   if (!footer) return;
 
-  const footerTop = footer.querySelector(".footer-top");
+  if (!footerTop) footerTop = footer.querySelector(".footer-top");
   if (!footerTop) return;
 
   if (animationFrame) {
@@ -51,8 +52,80 @@ function resetFooter(force = false) {
   footer.style.height = `${footerTop.offsetHeight}px`;
   isExpanded = false;
   footerAnimationInProgress = false;
+}
 
-  // ELIMINADO: ya no ajustamos el padding del body
+// Funciones de footer movidas al ámbito global
+function getExpandedHeight() {
+  return footerTop.offsetHeight + footerBottom.scrollHeight;
+}
+
+function animateHeight(from, to, duration = 350, callback) {
+  if (animationFrame) {
+    cancelAnimationFrame(animationFrame);
+  }
+
+  footerAnimationInProgress = true;
+  const startTime = performance.now();
+
+  function step(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const newHeight = from + (to - from) * progress;
+    if (footer) footer.style.height = `${newHeight}px`;
+
+    if (progress < 1 && !document.body.classList.contains("modal-open")) {
+      animationFrame = requestAnimationFrame(step);
+    } else {
+      animationFrame = null;
+      footerAnimationInProgress = false;
+      if (callback) callback();
+    }
+  }
+
+  animationFrame = requestAnimationFrame(step);
+}
+
+function startFooterAutoCloseTimer() {
+  if (footerAutoCloseTimer) {
+    clearTimeout(footerAutoCloseTimer);
+  }
+
+  footerAutoCloseTimer = setTimeout(() => {
+    if (isExpanded && !document.body.classList.contains("modal-open")) {
+      collapseFooter();
+    }
+  }, 60000);
+}
+
+function expandFooter() {
+  // No expandir si hay un modal abierto
+  if (document.body.classList.contains("modal-open")) {
+    return;
+  }
+
+  if (isExpanded || footerAnimationInProgress) return;
+
+  isExpanded = true;
+  footer.classList.add("expanded");
+  animateHeight(footer.offsetHeight, getExpandedHeight(), 350);
+
+  startFooterAutoCloseTimer();
+}
+
+function collapseFooter() {
+  // No colapsar si hay un modal abierto (pero no debería estar expandido)
+  if (document.body.classList.contains("modal-open")) return;
+  if (!isExpanded || footerAnimationInProgress) return;
+
+  if (footerAutoCloseTimer) {
+    clearTimeout(footerAutoCloseTimer);
+    footerAutoCloseTimer = null;
+  }
+
+  isExpanded = false;
+  animateHeight(footer.offsetHeight, footerTop.offsetHeight, 350, () => {
+    footer.classList.remove("expanded");
+  });
 }
 
 // Abrir/cerrar menú de configuración
@@ -101,9 +174,18 @@ function cerrarModalConfirmacion() {
 }
 
 function abrirModalSettings(modalId) {
-  document.getElementById("settings-menu").style.display = "none";
+  // Cerrar el menú de settings si está abierto
+  const settingsMenu = document.getElementById("settings-menu");
+  if (settingsMenu) settingsMenu.style.display = "none";
+
   document.body.classList.add("modal-open");
 
+  // IMPORTANTE: Colapsar el footer cuando se abre cualquier modal
+  if (isExpanded && !footerAnimationInProgress && collapseFooter) {
+    collapseFooter();
+  }
+
+  // Ocultar todos los modales
   document
     .querySelectorAll(".modal-settings, .modal-terminos")
     .forEach((modal) => {
@@ -113,9 +195,12 @@ function abrirModalSettings(modalId) {
   const modalToOpen = document.getElementById(modalId);
   if (modalToOpen) {
     modalToOpen.style.display = "flex";
+    // Asegurar que el modal tenga un z-index alto
+    modalToOpen.style.zIndex = "20000";
   }
 }
 
+// Cerrar modales al hacer clic fuera
 document
   .querySelectorAll(".modal-settings, .modal-terminos")
   .forEach((modal) => {
@@ -143,10 +228,10 @@ function cerrarModalSettings() {
 }
 
 function forceResetFooter() {
-  const footer = document.querySelector("footer");
+  if (!footer) footer = document.querySelector("footer");
   if (!footer) return;
 
-  const footerTop = footer.querySelector(".footer-top");
+  if (!footerTop) footerTop = footer.querySelector(".footer-top");
   if (!footerTop) return;
 
   if (animationFrame) {
@@ -162,10 +247,8 @@ function forceResetFooter() {
   isExpanded = false;
   footerAnimationInProgress = false;
 
-  // ELIMINADO: ya no ajustamos el padding del body
-
   setTimeout(() => {
-    footer.style.transition = "";
+    if (footer) footer.style.transition = "";
   }, 100);
 }
 
@@ -193,17 +276,17 @@ document.addEventListener("languageChanged", (e) => {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Inicializar variables del footer
+  footer = document.querySelector("footer");
+  if (footer) {
+    footerTop = footer.querySelector(".footer-top");
+    footerBottom = footer.querySelector(".footer-bottom");
+  }
+
   const btnLanguage = document.getElementById("btn-settings-language");
   if (btnLanguage) {
     btnLanguage.addEventListener("click", function () {
       abrirModalSettings("modal-language");
-    });
-  }
-
-  const btnObjective = document.getElementById("btn-settings-objective");
-  if (btnObjective) {
-    btnObjective.addEventListener("click", function () {
-      abrirModalSettings("modal-objective");
     });
   }
 
@@ -241,89 +324,18 @@ if (footerTerms) {
 
 document.addEventListener("DOMContentLoaded", () => {
   initLanguage();
-  const footer = document.querySelector("footer");
-  const footerTop = footer.querySelector(".footer-top");
-  const footerBottom = footer.querySelector(".footer-bottom");
+
+  // Re-inicializar variables del footer si no se hicieron antes
+  if (!footer) footer = document.querySelector("footer");
+  if (!footerTop) footerTop = footer?.querySelector(".footer-top");
+  if (!footerBottom) footerBottom = footer?.querySelector(".footer-bottom");
+
+  if (!footer) return;
 
   const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-
-  let lastScrollTop = 0;
   let scrollTimeout;
 
-  function getExpandedHeight() {
-    return footerTop.offsetHeight + footerBottom.scrollHeight;
-  }
-
-  // ELIMINADA: función updateBodyPadding
-
-  function animateHeight(from, to, duration = 350, callback) {
-    if (animationFrame) {
-      cancelAnimationFrame(animationFrame);
-    }
-
-    footerAnimationInProgress = true;
-    const startTime = performance.now();
-
-    function step(currentTime) {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const newHeight = from + (to - from) * progress;
-      footer.style.height = `${newHeight}px`;
-      // ELIMINADO: ya no llamamos a updateBodyPadding
-
-      if (progress < 1 && !document.body.classList.contains("modal-open")) {
-        animationFrame = requestAnimationFrame(step);
-      } else {
-        animationFrame = null;
-        footerAnimationInProgress = false;
-        if (callback) callback();
-      }
-    }
-
-    animationFrame = requestAnimationFrame(step);
-  }
-
-  function startFooterAutoCloseTimer() {
-    if (footerAutoCloseTimer) {
-      clearTimeout(footerAutoCloseTimer);
-    }
-
-    footerAutoCloseTimer = setTimeout(() => {
-      if (isExpanded && !document.body.classList.contains("modal-open")) {
-        collapseFooter();
-      }
-    }, 60000);
-  }
-
-  function expandFooter() {
-    if (document.body.classList.contains("modal-open")) {
-      return;
-    }
-
-    if (isExpanded || footerAnimationInProgress) return;
-
-    isExpanded = true;
-    footer.classList.add("expanded");
-    animateHeight(footer.offsetHeight, getExpandedHeight(), 350);
-
-    startFooterAutoCloseTimer();
-  }
-
-  function collapseFooter() {
-    if (document.body.classList.contains("modal-open")) return;
-    if (!isExpanded || footerAnimationInProgress) return;
-
-    if (footerAutoCloseTimer) {
-      clearTimeout(footerAutoCloseTimer);
-      footerAutoCloseTimer = null;
-    }
-
-    isExpanded = false;
-    animateHeight(footer.offsetHeight, footerTop.offsetHeight, 350, () => {
-      footer.classList.remove("expanded");
-    });
-  }
-
+  // Configurar eventos del footer
   window.addEventListener("scroll", () => {
     if (document.body.classList.contains("modal-open")) return;
 
@@ -406,7 +418,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.addEventListener("pointerdown", (e) => {
-    if (!footer.contains(e.target) && isExpanded) {
+    if (footer && !footer.contains(e.target) && isExpanded) {
       collapseFooter();
     }
   });

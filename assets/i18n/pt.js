@@ -121,9 +121,9 @@ window.translationsPT = {
   "operaciones.allLevelsCompleted": "Você completou todos os níveis.",
   "operaciones.mathLegend": "Você é uma verdadeira lenda da matemática",
   "operaciones.instructions.normal":
-    '- Selecione o nível de dificuldade.\n- Indique o número de operações que deseja resolver.\n- Insira suas respostas e clique em "Verificar".\n- Ao final, você verá um resumo de acertos e erros.',
+    '- Seleciona o nível de dificuldade.\n- Indica o número de operações que queres resolver.\n- Escolhe o tipo de operações a praticar.\n- Opcionalmente, podes definir um tempo máximo.\n- Introduz as respostas e clica em "Verificar".\n- No final verás um resumo de acertos e erros.',
   "operaciones.instructions.challenge":
-    "- Serão resolvidos níveis consecutivos com tempo limite.\n- Cada nível tem número diferente de operações e operadores variados.\n- Se completar todas as operações antes do tempo, você passará para o próximo nível.\n- Se o tempo acabar, deverá reiniciar o desafio.",
+    "- Irás completar níveis consecutivos com limite de tempo.\n- Cada nível tem um número diferente de operações e operadores variados.\n- À medida que avanças, a dificuldade aumenta, introduzindo novas operações como multiplicações e divisões e, nos níveis mais altos, números negativos.\n- Se completares todas as operações antes do tempo acabar, passarás ao nível seguinte.\n- Se o tempo terminar, terás de reiniciar o desafio.",
   "operaciones.numOperationsPlaceholder": "Número de operações (máx 50)",
   "operaciones.maxOperatorPlaceholder": "Número do operador (somente nível 1)",
   "operaciones.timeOptionalPlaceholder": "Deixe em branco para sem limite",
@@ -270,8 +270,7 @@ window.translationsPT = {
   "common.clear": "Limpar",
   "ranking.clearConfirm": "Tem certeza que deseja limpar toda a classificação?",
   "common.cancel": "Cancelar",
-  "menu.settings.language": "Idiomas",
-  "menu.settings.objective": "Objetivo",
+  "menu.settings.language": " 🌍 Idiomas",
   "common.save": "Salvar",
   "menu.language.title": "Selecione idioma",
   "menu.objective.title": "Objetivo do projeto",
@@ -290,7 +289,7 @@ window.translationsPT = {
     "Esta aplicação foi concebida para uso educativo infantil e respeita os princípios de proteção da privacidade das crianças.",
   "privacy.changes":
     "Caso ocorram alterações a esta política no futuro, os utilizadores serão claramente informados dentro da aplicação.",
-  "menu.settings.history": "Histórico",
+  "menu.settings.history": " 📋 Histórico",
   "history.title": "Histórico de partidas",
   "history.delete": "Apagar dados",
   "history.deleteAll": "Apagar todos os dados",
@@ -362,28 +361,41 @@ window.translationsPT = {
   "palabras.instructions.text":
     "Escreve o nome correto da imagem.\n\nPodes verificar a palavra quantas vezes quiseres.\n\nSe a ajuda estiver ativada, aparecerá automaticamente após várias tentativas.\n\nTodas as palavras contam como acerto, mas as verificações e o uso da ajuda são registados.",
   "terms.title": "Termos de uso",
+
   "terms.acceptance":
-    "Ao utilizar esta aplicação, aceita os seguintes termos e condições.",
-  "terms.educationalTitle": "1. Uso educativo",
+    "Ao utilizar esta aplicação, você concorda com os seguintes termos e condições.",
+
+  "terms.educationalTitle": "1. Finalidade da aplicação",
   "terms.educational":
-    "Esta aplicação foi concebida exclusivamente para fins educativos e de entretenimento infantil. O seu conteúdo é adequado para todas as idades e promove o desenvolvimento cognitivo através do jogo.",
-  "terms.localTitle": "2. Funcionamento local",
+    "Esta aplicação foi desenvolvida para fins educativos e de entretenimento, especialmente para crianças e jovens a partir dos 6 anos. O objetivo é promover a aprendizagem através de atividades interativas relacionadas com matemática, linguagem, memória e lógica.",
+
+  "terms.localTitle": "2. Funcionamento e privacidade",
   "terms.local":
-    "A aplicação funciona completamente no seu dispositivo. Não são estabelecidas ligações a servidores externos, não são recolhidos dados pessoais e não é necessário qualquer registo para a sua utilização.",
+    "A aplicação funciona totalmente no dispositivo do utilizador. Não há conexão com servidores externos, não são recolhidos dados pessoais e não é necessário registo. Todos os dados são armazenados localmente.",
+
   "terms.licenseTitle": "3. Licença de uso",
   "terms.license":
-    "Não é permitida a sua modificação, distribuição comercial ou reprodução total ou parcial sem autorização expressa.",
-  "terms.contentTitle": "4. Propriedade do conteúdo",
+    "É concedida uma licença limitada, não exclusiva e intransferível para uso pessoal. Não é permitida a reprodução, distribuição, modificação ou exploração comercial sem autorização expressa.",
+
+  "terms.contentTitle": "4. Propriedade intelectual",
   "terms.content":
-    "Todos os elementos gráficos, sons, ícones e código são propriedade dos seus respetivos autores (ver secção de Atribuições) e são utilizados sob licenças que permitem a sua utilização neste contexto educativo.",
-  "terms.responsibilityTitle": "5. Responsabilidade",
+    "Todos os elementos da aplicação, incluindo gráficos, sons, ícones e código, pertencem aos seus respetivos autores ou licenciadores e são utilizados de acordo com as suas licenças (ver secção de Atribuições).",
+
+  "terms.responsibilityTitle": "5. Limitação de responsabilidade",
   "terms.responsibility":
-    "Os criadores desta aplicação não se responsabilizam por qualquer uso indevido que possa ser feito da mesma, nem por quaisquer danos que possam decorrer da sua utilização. A aplicação é fornecida 'como está', sem garantias de qualquer tipo.",
-  "terms.changesTitle": "6. Modificações",
+    "A aplicação é fornecida 'tal como está', sem garantias de qualquer tipo. O desenvolvedor não garante a ausência de erros nem a disponibilidade contínua e não se responsabiliza por danos decorrentes da sua utilização.",
+
+  "terms.childrenTitle": "6. Uso por menores",
+  "terms.children":
+    "Esta aplicação é destinada ao público infantil e não contém conteúdo inadequado. Não são recolhidos dados pessoais de menores nem são utilizados mecanismos de rastreamento, análise ou publicidade.",
+
+  "terms.changesTitle": "7. Modificações",
   "terms.changes":
-    "Reservamo-nos o direito de atualizar ou modificar estes termos em qualquer altura. As alterações serão notificadas dentro da própria aplicação.",
+    "Reservamo-nos o direito de modificar estes termos a qualquer momento. As alterações serão comunicadas dentro da aplicação.",
+
+  "terms.contactTitle": "8. Contacto",
   "terms.contact":
-    "Se tiver dúvidas sobre estes termos, pode contactar-nos através dos meios disponíveis na aplicação.",
+    "Para qualquer dúvida sobre estes termos, pode contactar através do seguinte email: pgl.educational.game@gmail.com",
   "damas.config.selectPlayer": "Selecionar jogador:",
   "attributions.iconsLabel": "Ícones:",
   "attributions.licenseLabel": "Licença:",
