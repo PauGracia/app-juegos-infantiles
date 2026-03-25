@@ -18,6 +18,25 @@ window.translationsES = {
   "damas.instructions": "Instrucciones",
   "damas.howToPlay": "Cómo jugar a las damas",
   "ahorcado.nextWord": "¡Siguiente palabra!",
+  "ahorcado.instructions.hint":
+    "Dispones de un botón de ayuda que revela una letra. Solo puedes usarlo 2 veces y se recarga 1 uso cada 10 palabras adivinadas.",
+  "ahorcado.instructions.categoryHint":
+    "También tienes el botón de pregunta (lupa), que te indica la categoría de la palabra. Puedes usarlo siempre que quieras.",
+
+  "ahorcado.instructions.categoriesTitle": "CATEGORÍAS:",
+  "ahorcado.instructions.category.objects":
+    "Objetos: cosas materiales que puedes ver y tocar.",
+  "ahorcado.instructions.category.animals":
+    "Animales: seres vivos que se mueven y sienten.",
+  "ahorcado.instructions.category.places":
+    "Lugares: sitios o espacios donde puedes estar o ir.",
+  "ahorcado.instructions.category.food": "Comida: cosas que se comen o beben.",
+  "ahorcado.instructions.category.profession":
+    "Profesión: trabajo o actividad que realiza una persona.",
+  "ahorcado.instructions.category.sport":
+    "Deporte: actividad física con reglas que se practica para divertirse o competir.",
+  "ahorcado.instructions.category.abstract":
+    "Concepto abstracto: idea o cosa que no se puede tocar, como sentimientos o pensamientos.",
   "common.yes": "Si",
   "common.no": "No",
   "ahorcado.loseMessage": "La palabra era:",
@@ -157,7 +176,7 @@ window.translationsES = {
   "memori.instructionsNormal":
     "Modo Normal: Encuentra todas las parejas. Cada acierto suma puntos y cada error resta.",
   "memori.instructionsChallenge":
-    "Modo Desafío: Completa niveles en tiempo limitado.",
+    "Modo Desafío: Completa niveles en tiempo limitado. Los desafíos aumentan su dificultad en cada nivel.",
   "memori.instructionsEnd": "¡Diviértete y desafía tu memoria!",
   "ranking.sort.language": "Ordenar por idioma",
   "memori.congrats": "¡Enhorabuena!",

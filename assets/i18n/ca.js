@@ -135,7 +135,7 @@ window.translationsCA = {
   "memori.instructionsNormal":
     "Mode Normal: Troba totes les parelles. Cada encert suma punts i cada error resta.",
   "memori.instructionsChallenge":
-    "Mode Desafiament: Completa nivells en temps limitat.",
+    "Mode Desafiament: Completa nivells en temps limitat. Els desafiaments augmenten la seva dificultat a cada nivell.",
   "memori.instructionsEnd": "Divertiu-t'ho i desafia la teva memòria!",
 
   "memori.congrats": "Enhorabona!",
@@ -175,6 +175,26 @@ window.translationsCA = {
   "common.next": "Següent",
   "common.back": "Enrere",
   "ahorcado.startGame": "Inicia el teu joc",
+  "ahorcado.instructions.hint":
+    "Disposes d’un botó d’ajuda que revela una lletra. Només el pots utilitzar 2 vegades i es recarrega 1 ús cada 10 paraules endevinades.",
+  "ahorcado.instructions.categoryHint":
+    "També tens el botó de pregunta (lupa), que t’indica la categoria de la paraula. El pots utilitzar sempre que vulguis.",
+
+  "ahorcado.instructions.categoriesTitle": "CATEGORIES:",
+  "ahorcado.instructions.category.objects":
+    "Objectes: coses materials que pots veure i tocar.",
+  "ahorcado.instructions.category.animals":
+    "Animals: éssers vius que es mouen i senten.",
+  "ahorcado.instructions.category.places":
+    "Llocs: espais o indrets on pots estar o anar.",
+  "ahorcado.instructions.category.food":
+    "Menjar: coses que es mengen o es beuen.",
+  "ahorcado.instructions.category.profession":
+    "Professió: feina o activitat que fa una persona.",
+  "ahorcado.instructions.category.sport":
+    "Esport: activitat física amb regles que es practica per divertir-se o competir.",
+  "ahorcado.instructions.category.abstract":
+    "Concepte abstracte: idea o cosa que no es pot tocar, com sentiments o pensaments.",
   "ahorcado.username": "Nom d'usuari",
   "ahorcado.usernamePlaceholder": "Escriu el teu nom",
   "ahorcado.gameLanguage": "Idioma del joc",

@@ -1053,6 +1053,17 @@ ${getTranslation("ahorcado.instructions.gameplay", "CÓMO JUGAR:")}
 • ${getTranslation("ahorcado.instructions.correct", "Si la letra es correcta, aparecerá en la palabra.")}
 • ${getTranslation("ahorcado.instructions.wrong", "Si la letra es incorrecta, se añadirá una parte al dibujo del ahorcado.")}
 • ${getTranslation("ahorcado.instructions.maxErrors", "Si completas el dibujo (10 errores), pierdes la palabra.")}
+• ${getTranslation("ahorcado.instructions.hint", "Dispones de un botón de ayuda que revela una letra. Solo puedes usarlo 2 veces y se recarga 1 uso cada 10 palabras adivinadas.")}
+• ${getTranslation("ahorcado.instructions.categoryHint", "También tienes el botón de pregunta (lupa), que te indica la categoría de la palabra. Puedes usarlo siempre que quieras.")}
+
+${getTranslation("ahorcado.instructions.categoriesTitle", "CATEGORÍAS:")}
+• ${getTranslation("ahorcado.instructions.category.objects", "Objetos: cosas materiales que puedes ver y tocar.")}
+• ${getTranslation("ahorcado.instructions.category.animals", "Animales: seres vivos que se mueven y sienten.")}
+• ${getTranslation("ahorcado.instructions.category.places", "Lugares: sitios o espacios donde puedes estar o ir.")}
+• ${getTranslation("ahorcado.instructions.category.food", "Comida: cosas que se comen o beben.")}
+• ${getTranslation("ahorcado.instructions.category.profession", "Profesión: trabajo o actividad que realiza una persona.")}
+• ${getTranslation("ahorcado.instructions.category.sport", "Deporte: actividad física con reglas que se practica para divertirse o competir.")}
+• ${getTranslation("ahorcado.instructions.category.abstract", "Concepto abstracto: idea o cosa que no se puede tocar, como sentimientos o pensamientos.")}
 
 ${getTranslation("ahorcado.instructions.scoring", "PUNTUACIÓN:")}
 • ${getTranslation("ahorcado.instructions.pointsPerWord", "Cada palabra acertada suma 1 punto al marcador.")}

@@ -120,7 +120,7 @@ window.translationsIT = {
   "memori.instructionsNormal":
     "Modalità Normale: Trova tutte le coppie. Ogni corretta fa guadagnare punti, ogni errore li toglie.",
   "memori.instructionsChallenge":
-    "Modalità Sfida: Completa i livelli entro il tempo limite.",
+    "Modalità Sfida: Completa i livelli entro un tempo limite. Le sfide aumentano di difficoltà a ogni livello.",
   "memori.instructionsEnd": "Divertiti e sfida la tua memoria!",
 
   "memori.congrats": "Complimenti!",
@@ -162,6 +162,26 @@ window.translationsIT = {
   "ahorcado.gameLanguage": "Lingua del gioco",
   "ahorcado.viewRanking": "Visualizza classifica",
   "ahorcado.gameOver": "Fine gioco",
+  "ahorcado.instructions.hint":
+    "Hai un pulsante di aiuto che rivela una lettera. Puoi usarlo solo 2 volte e si ricarica di 1 utilizzo ogni 10 parole indovinate.",
+  "ahorcado.instructions.categoryHint":
+    "Hai anche un pulsante domanda (lente) che indica la categoria della parola. Puoi usarlo quando vuoi.",
+
+  "ahorcado.instructions.categoriesTitle": "CATEGORIE:",
+  "ahorcado.instructions.category.objects":
+    "Oggetti: cose materiali che puoi vedere e toccare.",
+  "ahorcado.instructions.category.animals":
+    "Animali: esseri viventi che si muovono e sentono.",
+  "ahorcado.instructions.category.places":
+    "Luoghi: spazi o posti dove puoi essere o andare.",
+  "ahorcado.instructions.category.food":
+    "Cibo: cose che si mangiano o si bevono.",
+  "ahorcado.instructions.category.profession":
+    "Professione: lavoro o attività svolta da una persona.",
+  "ahorcado.instructions.category.sport":
+    "Sport: attività fisica con regole, praticata per divertimento o competizione.",
+  "ahorcado.instructions.category.abstract":
+    "Concetto astratto: idea o cosa che non si può toccare, come sentimenti o pensieri.",
 
   "ahorcado.points": "punti",
   "ahorcado.score": "Punteggio",

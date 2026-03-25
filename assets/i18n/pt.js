@@ -179,7 +179,7 @@ window.translationsPT = {
   "memori.instructionsNormal":
     "Modo Normal: Encontre todos os pares. Cada acerto soma pontos e cada erro subtrai.",
   "memori.instructionsChallenge":
-    "Modo Desafio: Complete os níveis dentro do tempo limite.",
+    "Modalità Sfida: Completa i livelli entro un tempo limite. Le sfide aumentano di difficoltà a ogni livello.",
   "memori.instructionsEnd": "Divirta-se e desafie sua memória!",
 
   "memori.congrats": "Parabéns!",
@@ -219,6 +219,26 @@ window.translationsPT = {
   "ahorcado.gameLanguage": "Idioma do jogo",
   "ahorcado.viewRanking": "Ver classificação",
   "ahorcado.gameOver": "Fim do jogo",
+  "ahorcado.instructions.hint":
+    "Você tem um botão de ajuda que revela uma letra. Só pode usá-lo 2 vezes e ele recarrega 1 uso a cada 10 palavras adivinhadas.",
+  "ahorcado.instructions.categoryHint":
+    "Você também tem o botão de pergunta (lupa), que informa a categoria da palavra. Pode usá-lo sempre que quiser.",
+
+  "ahorcado.instructions.categoriesTitle": "CATEGORIAS:",
+  "ahorcado.instructions.category.objects":
+    "Objetos: coisas materiais que você pode ver e tocar.",
+  "ahorcado.instructions.category.animals":
+    "Animais: seres vivos que se movem e sentem.",
+  "ahorcado.instructions.category.places":
+    "Lugares: espaços ou locais onde você pode estar ou ir.",
+  "ahorcado.instructions.category.food":
+    "Comida: coisas que se comem ou bebem.",
+  "ahorcado.instructions.category.profession":
+    "Profissão: trabalho ou atividade que uma pessoa realiza.",
+  "ahorcado.instructions.category.sport":
+    "Esporte: atividade física com regras, praticada para diversão ou competição.",
+  "ahorcado.instructions.category.abstract":
+    "Conceito abstrato: ideia ou coisa que não se pode tocar, como sentimentos ou pensamentos.",
 
   "ahorcado.points": "pontos",
   "ahorcado.score": "Pontuação",

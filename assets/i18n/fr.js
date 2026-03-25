@@ -153,7 +153,7 @@ window.translationsFR = {
   "memori.instructionsNormal":
     "Mode Normal: Trouve toutes les paires. Chaque paire correcte ajoute des points et chaque erreur en retire.",
   "memori.instructionsChallenge":
-    "Mode Défi: Complète des niveaux avec temps limité.",
+    "Mode Défi : Complétez des niveaux dans un temps limité. Les défis deviennent plus difficiles à chaque niveau.",
   "memori.instructionsEnd": "Amuse-toi et défie ta mémoire !",
 
   "memori.congrats": "Félicitations !",
@@ -198,6 +198,26 @@ window.translationsFR = {
   "ahorcado.gameLanguage": "Langue du jeu",
   "ahorcado.viewRanking": "Voir classement",
   "ahorcado.gameOver": "Fin du jeu",
+  "ahorcado.instructions.hint":
+    "Vous disposez d’un bouton d’aide qui révèle une lettre. Vous pouvez l’utiliser seulement 2 fois et il se recharge d’une utilisation tous les 10 mots devinés.",
+  "ahorcado.instructions.categoryHint":
+    "Vous avez aussi un bouton question (loupe) qui indique la catégorie du mot. Vous pouvez l’utiliser à tout moment.",
+
+  "ahorcado.instructions.categoriesTitle": "CATÉGORIES :",
+  "ahorcado.instructions.category.objects":
+    "Objets : choses matérielles que vous pouvez voir et toucher.",
+  "ahorcado.instructions.category.animals":
+    "Animaux : êtres vivants qui bougent et ressentent.",
+  "ahorcado.instructions.category.places":
+    "Lieux : endroits ou espaces où vous pouvez être ou aller.",
+  "ahorcado.instructions.category.food":
+    "Nourriture : choses que l’on mange ou boit.",
+  "ahorcado.instructions.category.profession":
+    "Profession : travail ou activité exercé(e) par une personne.",
+  "ahorcado.instructions.category.sport":
+    "Sport : activité physique avec des règles, pratiquée pour le plaisir ou la compétition.",
+  "ahorcado.instructions.category.abstract":
+    "Concept abstrait : idée ou chose que l’on ne peut pas toucher, comme les sentiments ou les pensées.",
 
   "ahorcado.points": "points",
   "ahorcado.score": "Score",

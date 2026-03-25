@@ -136,7 +136,7 @@ window.translationsEN = {
   "memori.instructionsNormal":
     "Normal Mode: Find all pairs. Each match adds points and each mistake subtracts.",
   "memori.instructionsChallenge":
-    "Challenge Mode: Complete levels with time limit.",
+    "Challenge Mode: Complete levels within a time limit. The challenges increase in difficulty with each level.",
   "memori.instructionsEnd": "Have fun and challenge your memory!",
 
   "memori.congrats": "Congratulations!",
@@ -180,6 +180,25 @@ window.translationsEN = {
   "ahorcado.gameLanguage": "Game language",
   "ahorcado.viewRanking": "View ranking",
   "ahorcado.gameOver": "Game Over",
+  "ahorcado.instructions.hint":
+    "You have a hint button that reveals a letter. You can only use it 2 times and it recharges 1 use every 10 words guessed.",
+  "ahorcado.instructions.categoryHint":
+    "You also have a question button (magnifying glass) that tells you the word’s category. You can use it whenever you want.",
+
+  "ahorcado.instructions.categoriesTitle": "CATEGORIES:",
+  "ahorcado.instructions.category.objects":
+    "Objects: physical things you can see and touch.",
+  "ahorcado.instructions.category.animals":
+    "Animals: living beings that move and feel.",
+  "ahorcado.instructions.category.places":
+    "Places: locations or spaces where you can be or go.",
+  "ahorcado.instructions.category.food": "Food: things you can eat or drink.",
+  "ahorcado.instructions.category.profession":
+    "Profession: a job or activity a person does.",
+  "ahorcado.instructions.category.sport":
+    "Sport: a physical activity with rules, played for fun or competition.",
+  "ahorcado.instructions.category.abstract":
+    "Abstract concept: an idea or thing you cannot touch, like feelings or thoughts.",
 
   "ahorcado.points": "points",
   "ahorcado.score": "Score",
