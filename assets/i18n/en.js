@@ -263,6 +263,12 @@ window.translationsEN = {
   "attributions.operaciones": "Basic Operations: Interface icons (Flaticon)",
   "ahorcado.instructions.goodLuck": "Good luck!",
   "memori.recordSaved": "Record saved",
+  "memori.inactivityTitle": "Inactivity",
+  "memori.inactivityMessage":
+    "You have been inactive for too long. The game will close.",
+  "memori.inactivityWarning":
+    "You haven't played for 10 minutes. If you don't play in the next 3 minutes, the game will end.",
+  "common.understand": "Understood",
   "language.selected": "Selected language: {lang}",
   "palabras.errors.invalidAmount":
     "The number of words must be between 1 and 50",

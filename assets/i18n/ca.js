@@ -125,6 +125,12 @@ window.translationsCA = {
   "common.sec": "seg",
   "common.exitMenu": "Sortir",
   "memori.title": "En Parella",
+  "memori.inactivityTitle": "Inactivitat",
+  "memori.inactivityMessage":
+    "Has estat inactiu massa temps. El joc es tancarà.",
+  "memori.inactivityWarning":
+    "Portes 10 minuts sense jugar. Si en els propers 3 minuts no jugues, el joc s'acabarà.",
+  "common.understand": "Entès",
   "memori.victoryTitle": "VICTÒRIA!",
   "memori.selectMode": "Selecciona un mode",
   "memori.normal": "Mode Normal",

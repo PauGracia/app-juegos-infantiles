@@ -264,6 +264,12 @@ window.translationsES = {
   "ahorcado.instructions.scoreKeeps":
     "La puntuación se acumula durante toda la partida.",
   "memori.recordSaved": "Récord guardado",
+  "memori.inactivityTitle": "Inactividad",
+  "memori.inactivityMessage":
+    "Has estado inactivo demasiado tiempo. El juego se cerrará.",
+  "memori.inactivityWarning":
+    "Llevas 10 minutos sin jugar. Si en los próximos 3 minutos no juegas, el juego se acabará.",
+  "common.understand": "Entendido",
   "language.selected": "Idioma seleccionado: {lang}",
   "damas.title": "Juego de Damas",
   "footer.attributions": "Atribuciones",

@@ -485,14 +485,103 @@ document.addEventListener("DOMContentLoaded", () => {
         intervaloTiempo = null;
       }
 
-      const cantidadParejas = 40;
-      const seleccionados = mezclar([...elementos]).slice(0, cantidadParejas); // selecciona al azar
+      // INACTIVIDAD
+      let tiempoInactividad = 0;
+      let intervaloInactividad = null;
+      let avisoMostrado = false;
+      let modalAvisoInactividad = null;
 
-      let valores = [...seleccionados, ...seleccionados]; // duplicar para parejas
-      valores = mezclar(valores); // mezclar el orden final
+      // Función para reiniciar el contador de inactividad
+      function reiniciarContadorInactividad() {
+        tiempoInactividad = 0;
+        avisoMostrado = false;
+
+        // Si hay un modal de aviso abierto, cerrarlo
+        if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+          modalAvisoInactividad.remove();
+          modalAvisoInactividad = null;
+        }
+      }
+
+      // Función para finalizar juego por inactividad
+      function finalizarPorInactividad() {
+        // Limpiar intervalo
+        if (intervaloInactividad) {
+          clearInterval(intervaloInactividad);
+          intervaloInactividad = null;
+        }
+
+        // Cerrar el modal de aviso si está abierto
+        if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+          modalAvisoInactividad.remove();
+          modalAvisoInactividad = null;
+        }
+
+        // Reiniciar directamente sin modal adicional
+        volverAlModalInicial();
+      }
+
+      // Función para mostrar aviso de inactividad
+      function mostrarAvisoInactividad() {
+        if (avisoMostrado) return;
+        avisoMostrado = true;
+
+        // Crear modal de aviso
+        modalAvisoInactividad = document.createElement("div");
+        modalAvisoInactividad.classList.add("modal-memori", "mostrar");
+        modalAvisoInactividad.id = "modal-aviso-inactividad";
+        modalAvisoInactividad.innerHTML = `
+    <div class="modal-contentMemori-aviso">
+      <h2>${t("memori.warning")}</h2>
+      <p>${t("memori.inactivityWarning")}</p>
+      <button id="entendidoInactividad">${t("common.understand")}</button>
+    </div>
+  `;
+        document.body.appendChild(modalAvisoInactividad);
+
+        modalAvisoInactividad
+          .querySelector("#entendidoInactividad")
+          .addEventListener("click", () => {
+            if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+              modalAvisoInactividad.remove();
+              modalAvisoInactividad = null;
+            }
+            // Reiniciamos el contador al cerrar el aviso manualmente
+            reiniciarContadorInactividad();
+          });
+      }
+
+      // Iniciar el intervalo de control de inactividad (cada segundo)
+      // Para producción: 600 segundos = 10 minutos, 780 segundos = 13 minutos
+      // Para pruebas: usa valores pequeños como 30 y 45
+      intervaloInactividad = setInterval(() => {
+        tiempoInactividad++;
+        //console.log("Tiempo inactividad:", tiempoInactividad, "segundos");
+
+        // AVISO a los 10 minutos (600 segundos)
+        if (tiempoInactividad === 600 && !avisoMostrado) {
+          mostrarAvisoInactividad();
+        }
+
+        // FINALIZAR a los 13 minutos (780 segundos)
+        if (tiempoInactividad === 780) {
+          clearInterval(intervaloInactividad);
+          intervaloInactividad = null;
+          finalizarPorInactividad(); // Reinicia sin mostrar otro modal
+        }
+      }, 1000); // 1000 ms = 1 segundo
+
+      const cantidadParejas = 40;
+      const seleccionados = mezclar([...elementos]).slice(0, cantidadParejas);
+
+      let valores = [...seleccionados, ...seleccionados];
 
       tablero.innerHTML = "";
-      valores.forEach(crearCartaNormal);
+
+      valores.forEach((elemento) => {
+        crearCartaNormal(elemento, reiniciarContadorInactividad);
+      });
+
       ajustarGrid(valores.length);
 
       puntuacion = 0;
@@ -502,7 +591,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cargarRankingLocal("ranking_memori");
     }
 
-    function crearCartaNormal(elemento) {
+    function crearCartaNormal(elemento, reiniciarContadorInactividad) {
       const div = document.createElement("div");
       div.classList.add("carta");
       div.dataset.valor = elemento.id;
@@ -521,7 +610,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       img.style.width = "100%";
       img.style.height = "100%";
-      img.style.objectFit = "contain"; // Para mantener proporciones
+      img.style.objectFit = "contain";
       back.appendChild(img);
 
       inner.appendChild(front);
@@ -529,6 +618,11 @@ document.addEventListener("DOMContentLoaded", () => {
       div.appendChild(inner);
 
       div.addEventListener("click", () => {
+        // REINICIAR CONTADOR DE INACTIVIDAD AL HACER CLIC
+        if (reiniciarContadorInactividad) {
+          reiniciarContadorInactividad();
+        }
+
         if (bloqueo || div.classList.contains("volteada")) return;
         playSound(sonidos.girar);
         div.classList.add("volteada");
@@ -537,12 +631,10 @@ document.addEventListener("DOMContentLoaded", () => {
           primeraCarta = div;
         } else {
           if (primeraCarta.dataset.valor === div.dataset.valor) {
-            // Pequeño retraso para que el sonido de girar termine
             setTimeout(() => {
               playSound(sonidos.pareja);
             }, 200);
 
-            // Añadir clase emparejada a ambas cartas
             primeraCarta.classList.add("emparejada");
             div.classList.add("emparejada");
 
@@ -574,6 +666,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       tablero.appendChild(div);
     }
+
     function mostrarModal() {
       playSound(sonidos.win);
       modal.classList.add("mostrar");

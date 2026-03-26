@@ -252,6 +252,12 @@ window.translationsIT = {
   "damas.title": "Gioco della Dama",
 
   "memori.recordSaved": "Record salvato",
+  "memori.inactivityTitle": "Inattività",
+  "memori.inactivityMessage":
+    "Sei rimasto inattivo troppo a lungo. Il gioco si chiuderà.",
+  "memori.inactivityWarning":
+    "Sono 10 minuti che non giochi. Se non giochi nei prossimi 3 minuti, il gioco finirà.",
+  "common.understand": "Capito",
   "memori.timeUpTitle": "Tempo scaduto",
   "memori.timeUpFinal": "Hai perso per mancanza di tempo",
   "memori.levelReached": "Livello raggiunto:",

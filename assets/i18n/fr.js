@@ -154,6 +154,12 @@ window.translationsFR = {
   "common.sec": "sec",
   "common.exitMenu": "Quitter",
   "memori.title": "Jeu des Paires",
+  "memori.inactivityTitle": "Inactivité",
+  "memori.inactivityMessage":
+    "Vous êtes resté inactif trop longtemps. Le jeu va se fermer.",
+  "memori.inactivityWarning":
+    "Cela fait 10 minutes que vous ne jouez pas. Si vous ne jouez pas dans les 3 prochaines minutes, le jeu se terminera.",
+  "common.understand": "Compris",
   "memori.victoryTitle": "VICTOIRE!",
   "memori.selectMode": "Sélectionne un mode",
   "memori.normal": "Mode Normal",

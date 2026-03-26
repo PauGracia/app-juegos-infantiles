@@ -117,6 +117,12 @@ window.translationsPT = {
   "memori.timeUpFinal": "Perdeste por falta de tempo",
   "memori.levelReached": "Nível alcançado:",
   "memori.victoryTitle": "VITÓRIA!",
+  "memori.inactivityTitle": "Inatividade",
+  "memori.inactivityMessage":
+    "Você ficou inativo por muito tempo. O jogo será fechado.",
+  "memori.inactivityWarning":
+    "Você está há 10 minutos sem jogar. Se não jogar nos próximos 3 minutos, o jogo terminará.",
+  "common.understand": "Entendido",
   "operaciones.congratulations": "Parabéns!",
   "operaciones.hasCompleted": "Você completou o nível para",
   "operaciones.continueChallenge": "Deseja continuar com o próximo nível?",
