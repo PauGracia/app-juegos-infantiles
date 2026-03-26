@@ -48,10 +48,21 @@ window.translationsFR = {
   "damas.config.aiNormal": "Normal",
   "damas.config.aiHard": "Difficile",
   "footer.attributionsTitle": "Attributions",
-  "footer.attributions.iconsTitle": "Icônes :",
-  "footer.attributions.iconsText": "Icônes conçues par Freepik sur",
-  "footer.attributions.soundsTitle": "Effets sonores :",
-  "footer.attributions.soundsText": "Effets sonores obtenus depuis",
+  "attributions.flaticon":
+    "Icônes d'interface fournies par Flaticon sous licence gratuite",
+  "attributions.memoriCards": "Icônes de cartes - Jeu d'association",
+  "attributions.googleIcons": "Google Material Design Icons",
+  "attributions.iconify": "Iconify",
+  "attributions.soundsPixabay": "Effets sonores de Pixabay",
+  "attributions.soundsFreesound": "Effets sonores de Freesound",
+  "attributions.summaryTitle": "Résumé par jeu",
+  "attributions.memori":
+    "Jeu d'association (Memori): Icônes interface (Flaticon) | Icônes cartes (Apache/CC0)",
+  "attributions.palabras":
+    "Comment ça s'appelle (Mots): Icônes interface (Flaticon) | Icônes cartes (Apache/CC0)",
+  "attributions.ahorcado": "Jeu du Pendu: Icônes interface (Flaticon)",
+  "attributions.damas": "Jeu de Dames: Icônes interface (Flaticon)",
+  "attributions.operaciones": "Opérations de base: Icônes interface (Flaticon)",
 
   "damas.ai": "ORDINATEUR",
   "damas.white": "Blanches",
@@ -143,6 +154,7 @@ window.translationsFR = {
   "common.sec": "sec",
   "common.exitMenu": "Quitter",
   "memori.title": "Jeu des Paires",
+  "memori.victoryTitle": "VICTOIRE!",
   "memori.selectMode": "Sélectionne un mode",
   "memori.normal": "Mode Normal",
   "memori.challenge": "Mode Défi",
@@ -419,7 +431,7 @@ window.translationsFR = {
 
   "terms.contentTitle": "4. Propriété intellectuelle",
   "terms.content":
-    "Tous les éléments de l’application, y compris les graphismes, sons, icônes et le code, appartiennent à leurs auteurs ou titulaires de licence respectifs et sont utilisés conformément à leurs licences (voir section Attributions).",
+    "Tous les éléments de l’application, y compris les graphismes, sons, icônes et le code, appartiennent à leurs auteurs ou titulaires de licence respectifs et sont utilisés conformément à leurs licences (voir section).",
 
   "terms.responsibilityTitle": "5. Limitation de responsabilité",
   "terms.responsibility":

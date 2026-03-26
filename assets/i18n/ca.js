@@ -125,6 +125,7 @@ window.translationsCA = {
   "common.sec": "seg",
   "common.exitMenu": "Sortir",
   "memori.title": "En Parella",
+  "memori.victoryTitle": "VICTÒRIA!",
   "memori.selectMode": "Selecciona un mode",
   "memori.normal": "Mode Normal",
   "memori.challenge": "Mode Desafiament",
@@ -242,9 +243,22 @@ window.translationsCA = {
   "common.restartWarning": "Es perdrà tot el teu progrés actual",
   "footer.attributionsTitle": "Atribucions",
   "footer.attributions.iconsTitle": "Icones:",
-  "footer.attributions.iconsText": "Icones dissenyades per Freepik a",
-  "footer.attributions.soundsTitle": "Efectes de so:",
-  "footer.attributions.soundsText": "Efectes de so obtinguts de",
+  "attributions.flaticon":
+    "Icones d'interfície proporcionats per Flaticon sota llicència gratuïta",
+  "attributions.memoriCards": "Icones de cartes - Joc Emparellar",
+  "attributions.googleIcons": "Google Material Design Icons",
+  "attributions.iconify": "Iconify",
+  "attributions.soundsPixabay": "Efectes de so de Pixabay",
+  "attributions.soundsFreesound": "Efectes de so de Freesound",
+  "attributions.summaryTitle": "Resum per joc",
+  "attributions.memori":
+    "Emparellar (Memori): Icones interfície (Flaticon) | Icones cartes (Apache/CC0)",
+  "attributions.palabras":
+    "Com es diu (Paraules): Icones interfície (Flaticon) | Icones cartes (Apache/CC0)",
+  "attributions.ahorcado": "Joc de la Forca: Icones interfície (Flaticon)",
+  "attributions.damas": "Joc de Dames: Icones interfície (Flaticon)",
+  "attributions.operaciones":
+    "Operacions Bàsiques: Icones interfície (Flaticon)",
   "ahorcado.instructions.language": "IDIOMA:",
   "ahorcado.instructions.interfaceLanguage":
     "Pots jugar a aquest joc en diferents idiomes per practicar.",

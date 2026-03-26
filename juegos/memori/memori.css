@@ -986,6 +986,110 @@ body {
   visibility: hidden;
 }
 
+/* Pantalla de victoria especial para modo desafío */
+#victory-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20001;
+  transition: opacity 0.5s ease-out;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#victory-screen.mostrar {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.victory-content {
+  text-align: center;
+  animation: victoryAnimation 0.5s ease-out;
+}
+
+.victory-trophy {
+  width: 150px;
+  height: auto;
+  filter: drop-shadow(0 0 20px gold);
+  animation: trophyGlow 1s ease-in-out infinite alternate;
+}
+
+@keyframes trophyGlow {
+  from {
+    filter: drop-shadow(0 0 10px gold);
+    transform: scale(1);
+  }
+  to {
+    filter: drop-shadow(0 0 30px #ffd700);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes victoryAnimation {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.victory-text {
+  color: gold;
+  font-size: 32px;
+  font-weight: bold;
+  margin-top: 30px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  animation: textPulse 1s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* Partículas de confeti */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background-color: #f00;
+  animation: fall 3s linear forwards;
+  z-index: 20002;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
 /* Pantallas raras */
 @media (max-width: 1380px) {
   #titulo-memori {

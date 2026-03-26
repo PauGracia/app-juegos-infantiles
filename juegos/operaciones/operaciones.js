@@ -673,9 +673,45 @@ function derrotaTiempo() {
 function mostrarVictoriaFinal() {
   clearInterval(intervaloCrono);
 
-  reproducirSonido(sonidoGranVictoria);
+  // Obtener elementos de la pantalla de victoria
+  const victoryScreen = document.getElementById("victory-screen-operaciones");
+  const sonidoAplausos = new Audio("sounds/aplausos.mp3");
+  sonidoAplausos.volume = 0.7;
 
-  document.getElementById("modal-gran-victoria").classList.remove("oculto");
+  // Limpiar confetis existentes
+  const existingConfetti = document.querySelectorAll(".confetti-operaciones");
+  existingConfetti.forEach((c) => c.remove());
+
+  // Reproducir sonido de aplausos (en lugar del sonido normal de victoria)
+  sonidoAplausos.play().catch(() => {});
+
+  // Crear confeti con pequeño retraso
+  setTimeout(() => {
+    crearConfetiOperaciones();
+  }, 100);
+
+  // Mostrar pantalla de victoria especial
+  victoryScreen.classList.add("mostrar");
+
+  // Ocultar pantalla de victoria después de 5 segundos y mostrar modal normal
+  setTimeout(() => {
+    victoryScreen.classList.remove("mostrar");
+
+    // Limpiar confetis restantes
+    const remainingConfetti = document.querySelectorAll(
+      ".confetti-operaciones",
+    );
+    remainingConfetti.forEach((c) => c.remove());
+
+    // Mostrar el modal de victoria normal
+    document.getElementById("modal-gran-victoria").classList.remove("oculto");
+
+    // Detener el sonido de aplausos
+    setTimeout(() => {
+      sonidoAplausos.pause();
+      sonidoAplausos.currentTime = 0;
+    }, 5000);
+  }, 5000);
 }
 
 function cerrarGranVictoria() {
@@ -1092,6 +1128,54 @@ function comprobarRespuestas() {
       mostrarModalNivelSuperado();
     }
     return;
+  }
+
+  function crearConfetiOperaciones() {
+    const colors = [
+      "#ff0000",
+      "#00ff00",
+      "#0000ff",
+      "#ffff00",
+      "#ff00ff",
+      "#00ffff",
+      "#ffa500",
+      "#ff1493",
+      "#ff4500",
+      "#32cd32",
+      "#ffd700",
+      "#ff69b4",
+      "#00ced1",
+      "#7b68ee",
+      "#ff6347",
+    ];
+
+    // Limpiar confetis existentes
+    const existingConfetti = document.querySelectorAll(".confetti-operaciones");
+    existingConfetti.forEach((c) => c.remove());
+
+    for (let i = 0; i < 150; i++) {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti-operaciones");
+
+      confetti.style.backgroundColor =
+        colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.left = Math.random() * 100 + "%";
+
+      const size = Math.random() * 8 + 4;
+      confetti.style.width = size + "px";
+      confetti.style.height = size + "px";
+      confetti.style.top = "-10px";
+      confetti.style.borderRadius = Math.random() > 0.5 ? "2px" : "50%";
+      confetti.style.animationDuration = Math.random() * 2 + 2 + "s";
+      confetti.style.animationDelay = Math.random() * 1.5 + "s";
+      confetti.style.opacity = Math.random() * 0.8 + 0.3;
+
+      document.body.appendChild(confetti);
+
+      setTimeout(() => {
+        if (confetti.parentNode) confetti.remove();
+      }, 5000);
+    }
   }
 
   // ───── MODO NORMAL ─────

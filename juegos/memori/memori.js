@@ -597,6 +597,68 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ------------------ MODO DESAFÍO ------------------
+
+    function crearConfeti() {
+      const colors = [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff",
+        "#ffff00",
+        "#ff00ff",
+        "#00ffff",
+        "#ffa500",
+        "#ff1493",
+        "#ff4500",
+        "#32cd32",
+        "#ffd700",
+        "#ff69b4",
+        "#00ced1",
+        "#7b68ee",
+        "#ff6347",
+      ];
+
+      // Limpiar confetis existentes para evitar duplicados
+      const existingConfetti = document.querySelectorAll(".confetti");
+      existingConfetti.forEach((c) => c.remove());
+
+      for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+
+        // Color aleatorio
+        confetti.style.backgroundColor =
+          colors[Math.floor(Math.random() * colors.length)];
+
+        // Posición horizontal aleatoria - asegurar que no queden en 0
+        confetti.style.left = Math.random() * 100 + "%";
+
+        // Tamaño aleatorio
+        const size = Math.random() * 8 + 4;
+        confetti.style.width = size + "px";
+        confetti.style.height = size + "px";
+
+        // Posición inicial vertical: desde arriba de la pantalla
+        confetti.style.top = "-10px";
+
+        // Forma aleatoria
+        confetti.style.borderRadius = Math.random() > 0.5 ? "2px" : "50%";
+
+        // Duración y retraso aleatorios
+        confetti.style.animationDuration = Math.random() * 2 + 2 + "s";
+        confetti.style.animationDelay = Math.random() * 1.5 + "s";
+
+        // Opacidad aleatoria
+        confetti.style.opacity = Math.random() * 0.8 + 0.3;
+
+        document.body.appendChild(confetti);
+
+        // Eliminar después de la animación
+        setTimeout(() => {
+          if (confetti.parentNode) confetti.remove();
+        }, 5000);
+      }
+    }
+
     function mostrarModalTiempoAgotadoConRecord() {
       playSound(sonidos.finTiempo);
 
@@ -632,29 +694,66 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function mostrarModalDesafioFinal() {
-      guardarBtn.disabled = false;
-      guardarBtn.textContent = t("memori.saveRecord");
+      const victoryScreen = document.getElementById("victory-screen");
+      const sonidoAplausos = new Audio("sounds/aplausos.mp3");
+      sonidoAplausos.volume = 0.7;
 
-      playSound(sonidos.win);
-      modal.classList.add("mostrar");
+      // LIMPIAR CONFETIS EXISTENTES ANTES DE CREAR NUEVOS
+      const existingConfetti = document.querySelectorAll(".confetti");
+      existingConfetti.forEach((c) => c.remove());
 
-      // Crear/actualizar elemento para nivel alcanzado
-      let nivelElement = modal.querySelector("#nivelAlcanzado");
-      if (!nivelElement) {
-        nivelElement = document.createElement("p");
-        nivelElement.id = "nivelAlcanzado";
-        // Insertar después del título
-        modal.querySelector("h2").after(nivelElement);
-      }
+      // Reproducir sonido de aplausos
+      sonidoAplausos.play().catch(() => {});
 
-      nivelElement.textContent = `${t(
-        "memori.levelReached",
-      )} ${nivelMaximoAlcanzado}`;
+      // Crear confeti (con pequeño retraso para que la pantalla ya esté visible)
+      setTimeout(() => {
+        crearConfeti();
+      }, 100);
 
-      // Ocultar registro por si estaba abierto
-      registro.style.display = "none";
+      // Mostrar pantalla de victoria
+      victoryScreen.classList.add("mostrar");
 
-      actualizarBotonGuardarDesafio();
+      // Ocultar pantalla de victoria después de 5 segundos y mostrar modal
+      setTimeout(() => {
+        victoryScreen.classList.remove("mostrar");
+
+        // Limpiar confetis restantes
+        const remainingConfetti = document.querySelectorAll(".confetti");
+        remainingConfetti.forEach((c) => c.remove());
+
+        // Mostrar el modal de victoria
+        guardarBtn.disabled = false;
+        guardarBtn.textContent = t("memori.saveRecord");
+
+        playSound(sonidos.win);
+        modal.classList.add("mostrar");
+
+        // Crear/actualizar elemento para nivel alcanzado
+        let nivelElement = modal.querySelector("#nivelAlcanzado");
+        if (!nivelElement) {
+          nivelElement = document.createElement("p");
+          nivelElement.id = "nivelAlcanzado";
+          modal.querySelector("h2").after(nivelElement);
+        }
+
+        nivelElement.textContent = `${t(
+          "memori.levelReached",
+        )} ${nivelMaximoAlcanzado}`;
+
+        // Actualizar el título del modal para victoria completa
+        modal.querySelector("h2").textContent = t("memori.congrats");
+
+        // Ocultar registro por si estaba abierto
+        registro.style.display = "none";
+
+        actualizarBotonGuardarDesafio();
+
+        // Detener el sonido de aplausos
+        setTimeout(() => {
+          sonidoAplausos.pause();
+          sonidoAplausos.currentTime = 0;
+        }, 5000);
+      }, 5000);
     }
 
     function iniciarJuegoDesafio() {
@@ -817,6 +916,11 @@ document.addEventListener("DOMContentLoaded", () => {
         intervaloTiempo = null;
       }
 
+      // Resetear variables del nivel
+      parejasEncontradas = 0;
+      primeraCarta = null;
+      bloqueo = false;
+
       // Seleccionamos parejas al azar
       const seleccionados = mezclar(elementos).slice(0, parejasDelNivel);
       let valores = [...seleccionados, ...seleccionados];
@@ -827,26 +931,29 @@ document.addEventListener("DOMContentLoaded", () => {
       ajustarGridPorNivel(parejasDelNivel, columnasNivel);
 
       actualizarMarcador();
-
       cargarRankingLocal("ranking_desafio");
 
+      // Mostrar tiempo inicial
       const minutos = Math.floor(tiempoRestante / 60);
       const segundos = tiempoRestante % 60;
       marcador.textContent = `${minutos}:${segundos.toString().padStart(2, "0")}`;
 
-      // Iniciar cronómetro
+      // Iniciar cronómetro (SOLO para contar el tiempo)
       intervaloTiempo = setInterval(() => {
-        tiempoRestante--;
+        if (tiempoRestante > 0) {
+          tiempoRestante--;
 
-        // Actualizar marcador con formato mm:ss
-        const mins = Math.floor(tiempoRestante / 60);
-        const segs = tiempoRestante % 60;
-        marcador.textContent = `${mins}:${segs.toString().padStart(2, "0")}`;
+          // Actualizar marcador con formato mm:ss
+          const mins = Math.floor(tiempoRestante / 60);
+          const segs = tiempoRestante % 60;
+          marcador.textContent = `${mins}:${segs.toString().padStart(2, "0")}`;
 
-        if (tiempoRestante <= 0) {
-          clearInterval(intervaloTiempo);
-          intervaloTiempo = null;
-          mostrarModalTiempoAgotado();
+          // Si se acaba el tiempo
+          if (tiempoRestante <= 0) {
+            clearInterval(intervaloTiempo);
+            intervaloTiempo = null;
+            mostrarModalTiempoAgotado();
+          }
         }
       }, 1000);
     }
@@ -1019,13 +1126,13 @@ document.addEventListener("DOMContentLoaded", () => {
       modalTiempo.id = "modal-tiempo";
 
       modalTiempo.innerHTML = `
-  <div class="modal-contentMemori">
-    <h2>${t("memori.timeUpTitle")}</h2>
-    <p>${t("memori.timeUpText")}</p>
-    <p>${t("memori.levelReached")} ${nivelMaximoAlcanzado}</p>
-    <button id="reiniciarTiempo">${t("memori.restartChallenge")}</button>
-  </div>
-`;
+        <div class="modal-contentMemori">
+          <h2>${t("memori.timeUpTitle")}</h2>
+          <p>${t("memori.timeUpText")}</p>
+          <p>${t("memori.levelReached")} ${nivelMaximoAlcanzado}</p>
+          <button id="reiniciarTiempo">${t("memori.restartChallenge")}</button>
+        </div>
+      `;
 
       document.body.appendChild(modalTiempo);
 

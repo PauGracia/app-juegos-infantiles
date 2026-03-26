@@ -165,6 +165,7 @@ window.translationsES = {
   "common.sec": "seg",
   "common.exitMenu": "Salir",
   "memori.title": "En Pareja",
+  "memori.victoryTitle": "¡VICTORIA!",
   "memori.selectMode": "Selecciona un modo",
   "memori.normal": "Modo Normal",
   "memori.challenge": "Modo Desafío",
@@ -267,10 +268,21 @@ window.translationsES = {
   "damas.title": "Juego de Damas",
   "footer.attributions": "Atribuciones",
   "footer.attributionsTitle": "Atribuciones",
-  "footer.attributions.iconsTitle": "Iconos:",
-  "footer.attributions.iconsText": "Iconos diseñados por Freepik en",
-  "footer.attributions.soundsTitle": "Efectos de sonido:",
-  "footer.attributions.soundsText": "Efectos de sonido obtenidos de",
+  "attributions.flaticon":
+    "Iconos de interfaz proporcionados por Flaticon bajo licencia gratuita",
+  "attributions.memoriCards": "Iconos de cartas - Juego Emparejar",
+  "attributions.googleIcons": "Google Material Design Icons",
+  "attributions.iconify": "Iconify",
+  "attributions.soundsPixabay": "Efectos de sonido de Pixabay",
+  "attributions.soundsFreesound": "Efectos de sonido de Freesound",
+  "attributions.summaryTitle": "Resumen por juego",
+  "attributions.memori":
+    "Emparejar (Memori): Iconos interfaz (Flaticon) | Iconos cartas (Apache/CC0)",
+  "attributions.palabras":
+    "Cómo se llama (Palabras): Iconos interfaz (Flaticon) | Iconos cartas (Apache/CC0)",
+  "attributions.ahorcado": "Juego del Ahorcado: Iconos interfaz (Flaticon)",
+  "attributions.damas": "Juego de Damas: Iconos interfaz (Flaticon)",
+  "attributions.operaciones": "Operaciones Básicas: Iconos interfaz (Flaticon)",
   "ahorcado.instructions.saveRecord":
     "Al finalizar puedes guardar tu récord en el ranking local.",
   "ahorcado.instructions.ranking": "RANKING:",

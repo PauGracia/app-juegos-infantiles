@@ -109,6 +109,7 @@ window.translationsIT = {
   "common.sec": "sec",
   "common.exitMenu": "Esci",
   "memori.title": "A Coppie",
+  "memori.victoryTitle": "VITTORIA!",
   "memori.selectMode": "Seleziona modalità",
   "memori.normal": "Modalità Normale",
   "memori.challenge": "Modalità Sfida",
@@ -231,12 +232,21 @@ window.translationsIT = {
   "damas.config.aiLevel": "Livello dell’IA",
   "damas.config.aiNormal": "Normale",
   "damas.config.aiHard": "Difficile",
-  "footer.attributionsTitle": "Attribuzioni",
-  "footer.attributions.iconsTitle": "Icone:",
-  "footer.attributions.iconsText": "Icone realizzate da Freepik su",
-  "footer.attributions.soundsTitle": "Effetti sonori:",
-  "footer.attributions.soundsText": "Effetti sonori ottenuti da",
-
+  "attributions.flaticon":
+    "Icone dell'interfaccia fornite da Flaticon sotto licenza gratuita",
+  "attributions.memoriCards": "Icone delle carte - Gioco Abbina",
+  "attributions.googleIcons": "Google Material Design Icons",
+  "attributions.iconify": "Iconify",
+  "attributions.soundsPixabay": "Effetti sonori da Pixabay",
+  "attributions.soundsFreesound": "Effetti sonori da Freesound",
+  "attributions.summaryTitle": "Riepilogo per gioco",
+  "attributions.memori":
+    "Abbina (Memori): Icone interfaccia (Flaticon) | Icone carte (Apache/CC0)",
+  "attributions.palabras":
+    "Come si chiama (Parole): Icone interfaccia (Flaticon) | Icone carte (Apache/CC0)",
+  "attributions.ahorcado": "Gioco dell'Impiccato: Icone interfaccia (Flaticon)",
+  "attributions.damas": "Gioco della Dama: Icone interfaccia (Flaticon)",
+  "attributions.operaciones": "Operazioni Base: Icone interfaccia (Flaticon)",
   "palabras.errors.invalidAmount":
     "Il numero di parole deve essere compreso tra 1 e 50",
   "damas.title": "Gioco della Dama",
