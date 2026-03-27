@@ -126,6 +126,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Función para manejar la pista
     function usarPista() {
+      // reniciar contador de inactividad
+      reiniciarContadorInactividad();
+
       if (ah_bloqueado || !ah_categoriaActual) return;
       reproducirSonido(sonidos.click);
       const categoriaTraducida = getTranslation(
@@ -233,6 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
       nuevaPalabra: new Audio("sounds/nueva-palabra.mp3"),
       fin: new Audio("sounds/fin.mp3"),
       click: new Audio("sounds/click.mp3"),
+      sonidoInactividad: new Audio("sounds/pitido.mp3"),
     };
 
     Object.values(sonidos).forEach((audio) => {
@@ -381,9 +385,122 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
     const ah_maxErrores = ah_partesSVG.length;
 
+    //------------------------------
+    // variables para la inactividad
+    //------------------------------
+    let intervaloInactividad = null;
+    let tiempoInactividad = 0;
+    let avisoInactividadMostrado = false;
+    let modalAvisoInactividad = null;
+
     // ================================
     // FUNCIONES PRINCIPALES
     // ================================
+
+    // Función para reiniciar contador de inactividad
+    function reiniciarContadorInactividad() {
+      tiempoInactividad = 0;
+      avisoInactividadMostrado = false;
+
+      // Cerrar modal de aviso si existe
+      if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+        modalAvisoInactividad.remove();
+        modalAvisoInactividad = null;
+      }
+    }
+
+    // Función para finalizar por inactividad
+    function finalizarPorInactividad() {
+      // Limpiar intervalo
+      if (intervaloInactividad) {
+        clearInterval(intervaloInactividad);
+        intervaloInactividad = null;
+      }
+
+      // Cerrar modal de aviso si existe
+      if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+        modalAvisoInactividad.remove();
+        modalAvisoInactividad = null;
+      }
+
+      // Reiniciar juego - volver al menú inicial
+      ah_resetearJuegoCompleto();
+    }
+
+    // Función para mostrar aviso de inactividad
+    function mostrarAvisoInactividad() {
+      if (avisoInactividadMostrado) return;
+      avisoInactividadMostrado = true;
+
+      // Reproducir sonido
+      reproducirSonido(sonidos.sonidoInactividad);
+
+      // Crear modal de aviso
+      modalAvisoInactividad = document.createElement("div");
+      modalAvisoInactividad.id = "modal-aviso-inactividad";
+      modalAvisoInactividad.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    backdrop-filter: blur(5px);
+  `;
+
+      modalAvisoInactividad.innerHTML = `
+    <div class="modal-inactividad-content" style="
+      background: linear-gradient(145deg, #ffffff, #f8f8f2);
+      padding: 35px 40px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 400px;
+      width: 85%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 3px solid #ff9800;
+    ">
+      <h2 style="
+        color: #667eea;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+      ">${getTranslation("memori.warning", "Aviso")}</h2>
+      <p style="
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 25px;
+        line-height: 1.5;
+      ">${getTranslation("memori.inactivityWarning", "Llevas 10 minutos sin jugar. Si en los próximos 3 minutos no juegas, el juego se acabará.")}</p>
+      <button id="btn-entendido-inactividad" style="
+        background: linear-gradient(145deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      ">${getTranslation("common.understand", "Entendido")}</button>
+    </div>
+  `;
+
+      document.body.appendChild(modalAvisoInactividad);
+
+      document
+        .getElementById("btn-entendido-inactividad")
+        .addEventListener("click", () => {
+          if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+            modalAvisoInactividad.remove();
+            modalAvisoInactividad = null;
+          }
+          reiniciarContadorInactividad();
+        });
+    }
 
     function formatearInstruccionesParaModal(mensaje) {
       const lineas = mensaje.split("\n");
@@ -442,13 +559,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const letraMayus = letra.toUpperCase();
 
-      // La Ñ y la Ç se mantienen como están (no se normalizan)
       if (letraMayus === "Ñ" || letraMayus === "Ç") {
         return letraMayus;
       }
 
-      // Para el resto de letras (incluyendo vocales acentuadas), normalizar
-      return letraMayus.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      let normalizada = letraMayus
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+      if (letraMayus === "Ñ") {
+        return "Ñ";
+      }
+
+      return normalizada;
     }
 
     function deshabilitarTeclado() {
@@ -462,23 +585,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function ah_manejarLetra(btn, letra) {
+      reiniciarContadorInactividad();
+
       if (ah_bloqueado) return;
       if (btn.disabled) return;
 
       btn.disabled = true;
       const letraNormalizada = normalizarLetra(letra);
-      const palabraNormalizada = normalizarLetra(ah_palabraSecreta);
 
-      if (palabraNormalizada.includes(letraNormalizada)) {
+      // Buscar coincidencias letra por letra
+      let encontrada = false;
+      for (let i = 0; i < ah_palabraSecreta.length; i++) {
+        const letraSecreta = ah_palabraSecreta[i];
+        const letraSecretaNormalizada = normalizarLetra(letraSecreta);
+
+        if (letraSecretaNormalizada === letraNormalizada) {
+          encontrada = true;
+          ah_progreso[i] = letraSecreta; // Mantener la letra original (con Ñ)
+        }
+      }
+
+      if (encontrada) {
         reproducirSonido(sonidos.bien);
         btn.style.background = "green";
-
-        for (let i = 0; i < ah_palabraSecreta.length; i++) {
-          if (normalizarLetra(ah_palabraSecreta[i]) === letraNormalizada) {
-            ah_progreso[i] = ah_palabraSecreta[i];
-          }
-        }
-
         ah_mostrarPalabra();
 
         if (!ah_progreso.includes("_")) {
@@ -639,6 +768,36 @@ document.addEventListener("DOMContentLoaded", () => {
       ah_nuevaPalabra();
     };
 
+    // ========== INICIAR CONTROL DE INACTIVIDAD ==========
+    // Limpiar intervalo anterior si existe
+    if (intervaloInactividad) {
+      clearInterval(intervaloInactividad);
+      intervaloInactividad = null;
+    }
+
+    // Reiniciar variables de inactividad
+    tiempoInactividad = 0;
+    avisoInactividadMostrado = false;
+
+    // Iniciar intervalo de inactividad (cada segundo)
+    // Para producción: 600 segundos = 10 minutos, 780 segundos = 13 minutos
+    intervaloInactividad = setInterval(() => {
+      tiempoInactividad++;
+
+      // AVISO a los 10 minutos (600 segundos)
+      if (tiempoInactividad === 600 && !avisoInactividadMostrado) {
+        mostrarAvisoInactividad();
+      }
+
+      // FINALIZAR a los 13 minutos (780 segundos)
+      if (tiempoInactividad === 780) {
+        clearInterval(intervaloInactividad);
+        intervaloInactividad = null;
+        finalizarPorInactividad();
+      }
+    }, 1000);
+    // ========== FIN CONTROL DE INACTIVIDAD ==========
+
     function ah_resetearSVG() {
       ah_partesSVG.forEach((parteId) => {
         const elemento = document.getElementById(parteId);
@@ -668,11 +827,19 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const lista = palabras[ah_idiomaJuego] || palabras.es;
-      const palabrasDisponibles = lista.filter(
-        (p) =>
+
+      // Para el filtro, normalizar letra por letra para comparar
+      const palabrasDisponibles = lista.filter((p) => {
+        const palabraNormalizadaSet = p.palabra
+          .toUpperCase()
+          .split("")
+          .map((c) => normalizarLetra(c))
+          .join("");
+        return (
           p.palabra.length <= AH_MAX_LETRAS &&
-          !ah_palabrasUsadas.has(normalizarLetra(p.palabra)),
-      );
+          !ah_palabrasUsadas.has(palabraNormalizadaSet)
+        );
+      });
 
       if (palabrasDisponibles.length === 0) {
         mostrarMensajeTemporal(
@@ -694,9 +861,14 @@ document.addEventListener("DOMContentLoaded", () => {
         ];
       const palabraOriginal = palabraObj.palabra.toUpperCase();
       ah_categoriaActual = palabraObj.categoria;
-      const palabraNormalizada = normalizarLetra(palabraOriginal);
 
-      ah_palabrasUsadas.add(palabraNormalizada);
+      // Normalizar letra por letra para guardar en el Set
+      const palabraNormalizadaSet = palabraOriginal
+        .split("")
+        .map((c) => normalizarLetra(c))
+        .join("");
+
+      ah_palabrasUsadas.add(palabraNormalizadaSet);
       ah_palabraSecreta = palabraOriginal;
 
       ah_progreso = ah_palabraSecreta.split("").map((char) => {
@@ -845,6 +1017,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function usarAyuda(btn) {
+      //reniciar contador de inactividad
+      reiniciarContadorInactividad();
+
       if (ah_ayudas <= 0) return;
       if (ah_bloqueado) return;
 
@@ -1163,6 +1338,21 @@ ${getTranslation("ahorcado.instructions.goodLuck", "¡Buena suerte!")}
     }
 
     function ah_resetearJuegoCompleto() {
+      // Limpiar intervalo de inactividad
+      if (intervaloInactividad) {
+        clearInterval(intervaloInactividad);
+        intervaloInactividad = null;
+      }
+
+      // Cerrar modal de inactividad si existe
+      if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+        modalAvisoInactividad.remove();
+        modalAvisoInactividad = null;
+      }
+
+      tiempoInactividad = 0;
+      avisoInactividadMostrado = false;
+
       ah_bloqueado = false;
       ah_palabraSecreta = "";
       ah_progreso = [];

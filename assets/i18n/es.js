@@ -18,6 +18,10 @@ window.translationsES = {
   "damas.instructions": "Instrucciones",
   "damas.howToPlay": "Cómo jugar a las damas",
   "ahorcado.nextWord": "¡Siguiente palabra!",
+
+  "memori.inactivityWarning":
+    "Llevas 10 minutos sin jugar. Si en los próximos 3 minutos no juegas, el juego se acabará.",
+
   "ahorcado.instructions.hint":
     "Dispones de un botón de ayuda que revela una letra. Solo puedes usarlo 2 veces y se recarga 1 uso cada 10 palabras adivinadas.",
   "ahorcado.instructions.categoryHint":
@@ -199,7 +203,7 @@ window.translationsES = {
   "memori.restartChallenge": "Volver a empezar",
 
   "memori.invalidName": "El nombre debe tener entre 3 y 10 caracteres",
-  "memori.warning": "⚠️ Aviso",
+  "memori.warning": "Aviso",
   "ranking.title": "🏆 Ranking",
   "memori.levelModalTitle": "Nivel {{level}}",
   "memori.levelModalInfo": "{{pairs}} parejas - {{time}} minutos",
@@ -267,8 +271,7 @@ window.translationsES = {
   "memori.inactivityTitle": "Inactividad",
   "memori.inactivityMessage":
     "Has estado inactivo demasiado tiempo. El juego se cerrará.",
-  "memori.inactivityWarning":
-    "Llevas 10 minutos sin jugar. Si en los próximos 3 minutos no juegas, el juego se acabará.",
+
   "common.understand": "Entendido",
   "language.selected": "Idioma seleccionado: {lang}",
   "damas.title": "Juego de Damas",

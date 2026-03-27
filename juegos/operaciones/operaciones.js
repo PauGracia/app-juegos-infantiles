@@ -14,7 +14,7 @@ const MAX_OPERACIONES = 50;
 const MIN_OPERANDO = 3;
 const MAX_OPERANDO = 1000;
 
-const MIN_TIEMPO = 5; // si lo usas luego
+const MIN_TIEMPO = 5;
 
 // Prevenir que el navegador recuerde la posición del scroll
 if ("scrollRestoration" in history) {
@@ -167,6 +167,10 @@ let tiempoLimiteModoNormal = null;
 let contextoSalida = null; // "juego" | "menu"
 let ultimoGrupoEdadSuperado = "";
 let operacionesProximas = [];
+let intervaloInactividad = null;
+let tiempoInactividad = 0;
+let avisoInactividadMostrado = false;
+let modalAvisoInactividad = null;
 
 // ───── SONIDOS ─────
 const sonidoComprobar = new Audio("sounds/ping.mp3");
@@ -175,6 +179,8 @@ const sonidoFinTiempo = new Audio("sounds/fin-time.mp3");
 const sonidoNuevoNivel = new Audio("sounds/new-level.mp3");
 const sonidoGranVictoria = new Audio("sounds/gran-victoria.mp3");
 const sonidoSuperacionEdad = new Audio("sounds/edad.mp3");
+const sonidoInactividad = new Audio("sounds/pitido.mp3");
+sonidoInactividad.preload = "auto";
 sonidoGranVictoria.preload = "auto";
 sonidoSuperacionEdad.preload = "auto";
 
@@ -505,6 +511,112 @@ function iniciarCronometro() {
   }, 1000);
 }
 
+// Función para reiniciar contador de inactividad
+function reiniciarContadorInactividad() {
+  tiempoInactividad = 0;
+  avisoInactividadMostrado = false;
+
+  // Cerrar modal de aviso si existe
+  if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+    modalAvisoInactividad.remove();
+    modalAvisoInactividad = null;
+  }
+}
+
+// Función para finalizar por inactividad
+function finalizarPorInactividad() {
+  // Limpiar intervalo
+  if (intervaloInactividad) {
+    clearInterval(intervaloInactividad);
+    intervaloInactividad = null;
+  }
+
+  // Cerrar modal de aviso si existe
+  if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+    modalAvisoInactividad.remove();
+    modalAvisoInactividad = null;
+  }
+
+  // Reiniciar juego
+  resetearTodo();
+  document.getElementById("modal-modo").style.display = "flex";
+}
+
+// Función para mostrar aviso de inactividad
+function mostrarAvisoInactividad() {
+  if (avisoInactividadMostrado) return;
+  avisoInactividadMostrado = true;
+
+  // Reproducir sonido
+  reproducirSonido(sonidoInactividad);
+
+  // Crear modal de aviso
+  modalAvisoInactividad = document.createElement("div");
+  modalAvisoInactividad.id = "modal-aviso-inactividad";
+  modalAvisoInactividad.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    backdrop-filter: blur(5px);
+  `;
+
+  modalAvisoInactividad.innerHTML = `
+    <div class="modal-inactividad-content" style="
+      background: linear-gradient(145deg, #ffffff, #f8f8f2);
+      padding: 35px 40px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 400px;
+      width: 85%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 3px solid #ff9800;
+    ">
+      <h2 style="
+        color: #2e7d5b;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+      ">${t("memori.warning") || "Aviso"}</h2>
+      <p style="
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 25px;
+        line-height: 1.5;
+      ">${t("memori.inactivityWarning") || "Llevas 10 minutos sin jugar. Si en los próximos 3 minutos no juegas, el juego se acabará."}</p>
+      <button id="btn-entendido-inactividad" style="
+        background: linear-gradient(145deg, #2e7d5b, #1f5f45);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      ">${t("common.understand") || "Entendido"}</button>
+    </div>
+  `;
+
+  document.body.appendChild(modalAvisoInactividad);
+
+  document
+    .getElementById("btn-entendido-inactividad")
+    .addEventListener("click", () => {
+      if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+        modalAvisoInactividad.remove();
+        modalAvisoInactividad = null;
+      }
+      reiniciarContadorInactividad();
+    });
+}
+
 function salirModoDesafio() {
   // parar cronómetro
   clearInterval(intervaloCrono);
@@ -764,6 +876,7 @@ function iniciar() {
   }
 
   const tiempoInput = document.getElementById("input-tiempo").value;
+  let tiempoConfigurado = false;
 
   // Validar que el tiempo no supere 30 minutos (1800 segundos)
   if (tiempoInput && tiempoInput.trim() !== "") {
@@ -780,6 +893,39 @@ function iniciar() {
   } else {
     tiempoLimiteModoNormal = null;
   }
+
+  // ========== INICIAR CONTROL DE INACTIVIDAD (SOLO SI NO HAY TIEMPO LÍMITE) ==========
+  // Limpiar intervalo anterior si existe
+  if (intervaloInactividad) {
+    clearInterval(intervaloInactividad);
+    intervaloInactividad = null;
+  }
+
+  // Reiniciar variables de inactividad
+  tiempoInactividad = 0;
+  avisoInactividadMostrado = false;
+
+  // SOLO activar el control de inactividad si NO hay tiempo límite configurado
+  if (!tiempoConfigurado) {
+    // Iniciar intervalo de inactividad (cada segundo)
+    // Para producción: 600 segundos = 10 minutos, 780 segundos = 13 minutos
+    intervaloInactividad = setInterval(() => {
+      tiempoInactividad++;
+
+      // AVISO a los 10 minutos (600 segundos)
+      if (tiempoInactividad === 600 && !avisoInactividadMostrado) {
+        mostrarAvisoInactividad();
+      }
+
+      // FINALIZAR a los 13 minutos (780 segundos)
+      if (tiempoInactividad === 780) {
+        clearInterval(intervaloInactividad);
+        intervaloInactividad = null;
+        finalizarPorInactividad();
+      }
+    }, 1000);
+  }
+  // ========== FIN CONTROL DE INACTIVIDAD ==========
 
   if (nivel === "1") {
     // Validar máximo operando
@@ -1008,6 +1154,16 @@ function crearOperacion(a, b, op) {
 `;
 
   const input = div.querySelector(".resultado-input");
+
+  // REINICIAR CONTADOR DE INACTIVIDAD AL INTERACTUAR CON EL INPUT
+  const reiniciarHandler = () => {
+    if (intervaloInactividad) {
+      reiniciarContadorInactividad();
+    }
+  };
+
+  input.addEventListener("focus", reiniciarHandler);
+  input.addEventListener("input", reiniciarHandler);
 
   input.addEventListener("focus", () => {
     if (input.classList.contains("incorrecto")) {
@@ -1367,6 +1523,21 @@ function salirAlMenu() {
 }
 
 function resetearTodo() {
+  // Limpiar intervalo de inactividad
+  if (intervaloInactividad) {
+    clearInterval(intervaloInactividad);
+    intervaloInactividad = null;
+  }
+
+  // Cerrar modal de inactividad si existe
+  if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+    modalAvisoInactividad.remove();
+    modalAvisoInactividad = null;
+  }
+
+  tiempoInactividad = 0;
+  avisoInactividadMostrado = false;
+
   // Asegurar que el splash no está bloqueando la interfaz
   const splash = document.getElementById("splash-screen-operaciones");
   if (splash && !splash.classList.contains("hidden")) {

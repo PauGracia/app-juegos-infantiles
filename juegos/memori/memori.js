@@ -75,6 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
       pasoNivel: new Audio("sounds/paso-nivel.mp3"),
       finTiempo: new Audio("sounds/fin-tiempo.mp3"),
       win: new Audio("sounds/win.mp3"),
+      inactivo: new Audio("sounds/pitido.mp3"),
     };
 
     Object.values(sonidos).forEach((audio) => {
@@ -88,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sonidos.pasoNivel.volume = 0.2;
     sonidos.finTiempo.volume = 0.5;
     sonidos.win.volume = 0.7;
+    sonidos.inactivo.volume = 0.5;
 
     // Función segura para reproducir sonido
     function playSound(sound) {
@@ -560,6 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // AVISO a los 10 minutos (600 segundos)
         if (tiempoInactividad === 600 && !avisoMostrado) {
+          playSound(sonidos.inactivo);
           mostrarAvisoInactividad();
         }
 

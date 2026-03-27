@@ -159,7 +159,7 @@ window.translationsFR = {
     "Vous êtes resté inactif trop longtemps. Le jeu va se fermer.",
   "memori.inactivityWarning":
     "Cela fait 10 minutes que vous ne jouez pas. Si vous ne jouez pas dans les 3 prochaines minutes, le jeu se terminera.",
-  "common.understand": "Compris",
+
   "memori.victoryTitle": "VICTOIRE!",
   "memori.selectMode": "Sélectionne un mode",
   "memori.normal": "Mode Normal",
@@ -193,7 +193,7 @@ window.translationsFR = {
   "memori.restartChallenge": "Recommencer",
 
   "memori.invalidName": "Le nom doit avoir entre 3 et 10 caractères",
-  "memori.warning": "⚠️ Avertissement",
+  "memori.warning": "Avertissement",
   "ranking.title": "🏆 Classement",
   "ranking.sort.language": "Trier par langue",
   "memori.levelModalTitle": "Niveau {{level}}",
@@ -213,6 +213,8 @@ window.translationsFR = {
   "common.next": "Suivant",
   "common.back": "Retour",
   "ahorcado.startGame": "Commence ton jeu",
+
+  "common.understand": "Compris",
   "ahorcado.username": "Nom d'utilisateur",
   "ahorcado.usernamePlaceholder": "Écris ton nom",
   "ahorcado.gameLanguage": "Langue du jeu",

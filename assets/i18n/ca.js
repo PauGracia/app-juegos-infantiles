@@ -128,10 +128,9 @@ window.translationsCA = {
   "memori.inactivityTitle": "Inactivitat",
   "memori.inactivityMessage":
     "Has estat inactiu massa temps. El joc es tancarà.",
-  "memori.inactivityWarning":
-    "Portes 10 minuts sense jugar. Si en els propers 3 minuts no jugues, el joc s'acabarà.",
-  "common.understand": "Entès",
+
   "memori.victoryTitle": "VICTÒRIA!",
+
   "memori.selectMode": "Selecciona un mode",
   "memori.normal": "Mode Normal",
   "memori.challenge": "Mode Desafiament",
@@ -165,7 +164,7 @@ window.translationsCA = {
   "memori.restartChallenge": "Tornar a començar",
 
   "memori.invalidName": "El nom ha de tenir entre 3 i 10 caràcters",
-  "memori.warning": "⚠️ Avís",
+  "memori.warning": "Avís",
   "ranking.title": "🏆 Ranking",
   "memori.levelModalTitle": "Nivell {{level}}",
   "memori.levelModalInfo": "{{pairs}} parelles - {{time}} minuts",
@@ -184,6 +183,10 @@ window.translationsCA = {
   "common.next": "Següent",
   "common.back": "Enrere",
   "ahorcado.startGame": "Inicia el teu joc",
+
+  "memori.inactivityWarning":
+    "Portes 10 minuts sense jugar. Si en els propers 3 minuts no jugues, el joc s'acabarà.",
+  "common.understand": "Entès",
   "ahorcado.instructions.hint":
     "Disposes d’un botó d’ajuda que revela una lletra. Només el pots utilitzar 2 vegades i es recarrega 1 ús cada 10 paraules endevinades.",
   "ahorcado.instructions.categoryHint":

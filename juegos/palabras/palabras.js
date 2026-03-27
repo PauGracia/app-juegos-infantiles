@@ -172,6 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
       fallo: "sounds/fallo.mp3",
       ganar: "sounds/ganar.mp3",
       azul: "sounds/azul.mp3",
+      sonidoInactividad: "sounds/pitido.mp3",
     };
 
     // Objeto para almacenar los Audio elements
@@ -255,14 +256,144 @@ document.addEventListener("DOMContentLoaded", () => {
       fallo: () => playSonido("fallo"),
       ganar: () => playSonido("ganar"),
       azul: () => playSonido("azul"),
+      inactividad: () => playSonido("sonidoInactividad"),
     };
   })();
   // Constante para el retraso de feedback visual
   const RETRASO_FEEDBACK = 150;
+  //-----------------------
+  // variables para inactividad
+  //---------------------------
+  let intervaloInactividad = null;
+  let tiempoInactividad = 0;
+  let avisoInactividadMostrado = false;
+  let modalAvisoInactividad = null;
 
   // -----------------------------
   // FUNCIONES AUXILIARES
   // -----------------------------
+
+  // Función para reiniciar contador de inactividad
+  function reiniciarContadorInactividad() {
+    tiempoInactividad = 0;
+    avisoInactividadMostrado = false;
+
+    // Cerrar modal de aviso si existe
+    if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+      modalAvisoInactividad.remove();
+      modalAvisoInactividad = null;
+    }
+  }
+
+  // Función para finalizar por inactividad
+  function finalizarPorInactividad() {
+    // Limpiar intervalo
+    if (intervaloInactividad) {
+      clearInterval(intervaloInactividad);
+      intervaloInactividad = null;
+    }
+
+    // Cerrar modal de aviso si existe
+    if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+      modalAvisoInactividad.remove();
+      modalAvisoInactividad = null;
+    }
+
+    // Volver al menú inicial
+    location.reload();
+  }
+
+  // Función para mostrar aviso de inactividad
+  function mostrarAvisoInactividad() {
+    if (avisoInactividadMostrado) return;
+    avisoInactividadMostrado = true;
+
+    // Reproducir sonido - el sonido de inactividad no está definido en sonidosPalabras
+    // Usar un sonido alternativo o crear uno
+    if (sonidosPalabras && sonidosPalabras.inactividad) {
+      sonidosPalabras.inactividad();
+    }
+
+    // Crear modal de aviso
+    modalAvisoInactividad = document.createElement("div");
+    modalAvisoInactividad.id = "modal-aviso-inactividad";
+    modalAvisoInactividad.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20000;
+    backdrop-filter: blur(8px);
+  `;
+
+    // Obtener traducciones usando window.translations
+    const warningText = window.translations?.["memori.warning"] || "Aviso";
+    const inactivityWarningText =
+      window.translations?.["memori.inactivityWarning"] ||
+      "Llevas 10 minutos sin jugar. Si en los próximos 3 minutos no juegas, el juego se acabará.";
+    const understandText =
+      window.translations?.["common.understand"] || "Entendido";
+
+    modalAvisoInactividad.innerHTML = `
+    <div class="modal-inactividad-content" style="
+      background: linear-gradient(145deg, #ffffff, #f8fafc);
+      padding: 35px 40px;
+      border-radius: 24px;
+      text-align: center;
+      max-width: 400px;
+      width: 85%;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+      border: 3px solid #ff9800;
+      animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    ">
+      <h2 style="
+        color: #2d3748;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      ">${warningText}</h2>
+      <p style="
+        font-size: 1.2rem;
+        color: #4a5568;
+        margin-bottom: 25px;
+        line-height: 1.5;
+      ">${inactivityWarningText}</p>
+      <button id="btn-entendido-inactividad" style="
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 14px 32px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 12px rgba(102, 126, 234, 0.25);
+      ">${understandText}</button>
+    </div>
+  `;
+
+    document.body.appendChild(modalAvisoInactividad);
+
+    document
+      .getElementById("btn-entendido-inactividad")
+      .addEventListener("click", () => {
+        if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+          modalAvisoInactividad.remove();
+          modalAvisoInactividad = null;
+        }
+        reiniciarContadorInactividad();
+      });
+  }
 
   function normalizar(texto) {
     return texto
@@ -441,6 +572,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Manejo del input (escribir)
       input.addEventListener("input", (e) => {
+        reiniciarContadorInactividad();
+
         const next = inputsDiv.querySelector(`input[data-index='${i + 1}']`);
         if (next && e.target.value && !comprobado) {
           const hadValue = e.target.getAttribute("data-had-value") === "true";
@@ -465,8 +598,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // Manejo del click (COMPORTAMIENTO ORIGINAL - borra la letra)
+      // Manejo del click
       input.addEventListener("click", (e) => {
+        reiniciarContadorInactividad();
+
         if (!input.disabled) {
           const teniaError = input.classList.contains("letra-error");
           const teniaCorrecta = input.classList.contains("letra-correcta");
@@ -538,6 +673,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function comprobar() {
+    reiniciarContadorInactividad();
+
     if (palabraFinalizada) return;
 
     comprobacionesTotales++;
@@ -686,6 +823,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function revelarPalabra(inputs) {
+    reiniciarContadorInactividad();
+
     sonidosPalabras.azul();
 
     const contenedor = document.querySelector(".imagen-contenedor");
@@ -709,6 +848,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function siguiente() {
+    reiniciarContadorInactividad();
+
     resumen.push({
       palabra: palabraOriginal,
       conAyuda: palabraUsadaConAyuda,
@@ -727,6 +868,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function mostrarResultadoFinal() {
+    // Limpiar intervalo de inactividad al terminar el juego
+    if (intervaloInactividad) {
+      clearInterval(intervaloInactividad);
+      intervaloInactividad = null;
+    }
+
+    // Cerrar modal de inactividad si existe
+    if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+      modalAvisoInactividad.remove();
+      modalAvisoInactividad = null;
+    }
+
     sonidosPalabras.ganar();
 
     modalConfirmExit.style.display = "none";
@@ -758,6 +911,34 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function iniciarJuego() {
+    // Limpiar intervalo anterior si existe
+    if (intervaloInactividad) {
+      clearInterval(intervaloInactividad);
+      intervaloInactividad = null;
+    }
+
+    // Reiniciar variables de inactividad
+    tiempoInactividad = 0;
+    avisoInactividadMostrado = false;
+
+    // Iniciar intervalo de inactividad (cada segundo)
+    // Para producción: 600 segundos = 10 minutos, 780 segundos = 13 minutos
+    intervaloInactividad = setInterval(() => {
+      tiempoInactividad++;
+
+      // AVISO a los 10 minutos (600 segundos)
+      if (tiempoInactividad === 600 && !avisoInactividadMostrado) {
+        mostrarAvisoInactividad();
+      }
+
+      // FINALIZAR a los 13 minutos (780 segundos)
+      if (tiempoInactividad === 780) {
+        clearInterval(intervaloInactividad);
+        intervaloInactividad = null;
+        finalizarPorInactividad();
+      }
+    }, 1000);
+
     const checkboxAyuda = document.getElementById("activar-ayuda");
     ayudaActivada = checkboxAyuda ? checkboxAyuda.checked : true;
 
@@ -868,6 +1049,18 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   salirBtnJuego.addEventListener("click", () => {
+    // Limpiar intervalo de inactividad
+    if (intervaloInactividad) {
+      clearInterval(intervaloInactividad);
+      intervaloInactividad = null;
+    }
+
+    // Cerrar modal de inactividad si existe
+    if (modalAvisoInactividad && modalAvisoInactividad.parentNode) {
+      modalAvisoInactividad.remove();
+      modalAvisoInactividad = null;
+    }
+
     abrirConfirmExit(() => {
       document.getElementById("juego").style.display = "none";
       document.getElementById("panel-info").style.display = "block";

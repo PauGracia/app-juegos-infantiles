@@ -159,7 +159,7 @@ window.translationsEN = {
   "memori.restartChallenge": "Start over",
 
   "memori.invalidName": "Name must be between 3 and 10 characters",
-  "memori.warning": "⚠️ Warning",
+  "memori.warning": "Warning",
   "ranking.title": "🏆 Ranking",
   "memori.levelModalTitle": "Level {{level}}",
   "memori.levelModalInfo": "{{pairs}} pairs - {{time}} minutes",
@@ -263,12 +263,13 @@ window.translationsEN = {
   "attributions.operaciones": "Basic Operations: Interface icons (Flaticon)",
   "ahorcado.instructions.goodLuck": "Good luck!",
   "memori.recordSaved": "Record saved",
+
   "memori.inactivityTitle": "Inactivity",
   "memori.inactivityMessage":
     "You have been inactive for too long. The game will close.",
   "memori.inactivityWarning":
     "You haven't played for 10 minutes. If you don't play in the next 3 minutes, the game will end.",
-  "common.understand": "Understood",
+
   "language.selected": "Selected language: {lang}",
   "palabras.errors.invalidAmount":
     "The number of words must be between 1 and 50",
@@ -309,6 +310,9 @@ window.translationsEN = {
   "ahorcado.minWordsRequired": "Minimum 3 words to save",
   "ahorcado.need3Words":
     "You need to guess at least 3 words to save your record",
+
+  "common.understand": "Understood",
+
   "ahorcado.recordSaved": "Record saved successfully",
   "ahorcado.extraHelpMessage": "💡 You've earned an extra help!",
 

@@ -141,7 +141,7 @@ window.translationsIT = {
   "memori.restartChallenge": "Ricomincia",
 
   "memori.invalidName": "Il nome deve avere tra 3 e 10 caratteri",
-  "memori.warning": "⚠️ Avviso",
+  "memori.warning": "Avviso",
   "ranking.title": "🏆 Classifica",
   "ranking.sort.language": "Ordina per lingua",
   "memori.levelModalTitle": "Livello {{level}}",
@@ -257,7 +257,7 @@ window.translationsIT = {
     "Sei rimasto inattivo troppo a lungo. Il gioco si chiuderà.",
   "memori.inactivityWarning":
     "Sono 10 minuti che non giochi. Se non giochi nei prossimi 3 minuti, il gioco finirà.",
-  "common.understand": "Capito",
+
   "memori.timeUpTitle": "Tempo scaduto",
   "memori.timeUpFinal": "Hai perso per mancanza di tempo",
   "memori.levelReached": "Livello raggiunto:",
@@ -287,6 +287,8 @@ window.translationsIT = {
   "ahorcado.minWordsRequired": "Minimo 3 parole per salvare",
   "ahorcado.need3Words":
     "Devi indovinare almeno 3 parole per salvare il tuo record",
+
+  "common.understand": "Capito",
   "ahorcado.recordSaved": "Record salvato correttamente",
   "ahorcado.extraHelpMessage": "💡 Hai guadagnato un aiuto extra!",
   "privacy.title": "Informativa sulla privacy",

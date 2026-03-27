@@ -122,7 +122,7 @@ window.translationsPT = {
     "Você ficou inativo por muito tempo. O jogo será fechado.",
   "memori.inactivityWarning":
     "Você está há 10 minutos sem jogar. Se não jogar nos próximos 3 minutos, o jogo terminará.",
-  "common.understand": "Entendido",
+
   "operaciones.congratulations": "Parabéns!",
   "operaciones.hasCompleted": "Você completou o nível para",
   "operaciones.continueChallenge": "Deseja continuar com o próximo nível?",
@@ -168,6 +168,7 @@ window.translationsPT = {
   "ahorcado.recordSaved": "Recorde salvo com sucesso",
   "ahorcado.extraHelpMessage": "💡 Você ganhou uma ajuda extra!",
 
+  "common.understand": "Entendido",
   "ranking.sort.points": "Ordenar por pontos",
   "ranking.sort.date": "Ordenar por data",
   "ranking.sort.user": "Ordenar por nome",
@@ -215,7 +216,7 @@ window.translationsPT = {
   "memori.restartChallenge": "Reiniciar",
 
   "memori.invalidName": "O nome deve ter entre 3 e 10 caracteres",
-  "memori.warning": "⚠️ Aviso",
+  "memori.warning": "Aviso",
   "ranking.title": "🏆 Classificação",
   "ranking.sort.language": "Ordenar por idioma",
   "memori.levelModalTitle": "Nível {{level}}",
