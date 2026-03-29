@@ -362,7 +362,7 @@ window.translationsCA = {
   "footer.copyright": "© 2026 PGL",
   "footer.about": "Sobre el Projecte",
   "footer.terms": "Termes",
-  "footer.educational": "Jocs infantils educatius | v2.0.0",
+  "footer.educational": "Jocs educatius infantils | v2.0.0",
   "damas.config.title": "Configuració de la partida",
   "damas.config.shuffleColors": "🎲 Sorteig de peces",
   "damas.config.enableHints": "Activar suggeriments de moviments",

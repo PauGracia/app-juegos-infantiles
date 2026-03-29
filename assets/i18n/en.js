@@ -333,7 +333,7 @@ window.translationsEN = {
   "footer.copyright": "© 2026 PGL",
   "footer.about": "About the Project",
   "footer.terms": "Terms",
-  "footer.educational": "Educational children's games | v2.0.0",
+  "footer.educational": "Children's educational games | v2.0.0",
   "damas.config.title": "Game Configuration",
   "damas.config.shuffleColors": "🎲 Piece draw",
   "damas.config.enableHints": "Enable Move Hints",

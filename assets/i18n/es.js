@@ -361,7 +361,7 @@ window.translationsES = {
   "footer.copyright": "© 2026 PGL",
   "footer.about": "Sobre el Proyecto",
   "footer.terms": "Términos",
-  "footer.educational": "Juegos infantiles educativos | v2.0.0",
+  "footer.educational": "Juegos educativos infantiles | v2.0.0",
   "damas.config.title": "Configuración de partida",
   "damas.config.shuffleColors": "🎲 Sortear piezas",
   "damas.config.enableHints": "Activar sugerencia de movimientos",
