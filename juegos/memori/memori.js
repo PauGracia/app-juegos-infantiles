@@ -121,6 +121,11 @@ document.addEventListener("DOMContentLoaded", () => {
         timeoutNivelActual = null;
       }
 
+      if (intervaloInactividad) {
+        clearInterval(intervaloInactividad);
+        intervaloInactividad = null;
+      }
+
       modalInicio.classList.add("mostrar");
     }
 
@@ -142,25 +147,10 @@ document.addEventListener("DOMContentLoaded", () => {
         timeoutNivelActual = null;
       }
 
-      // Reset flags de desafío
-      desafioTerminado = false;
-      nivelActual = 0;
-
-      // Volver al modal inicial
-      modalInicio.classList.add("mostrar");
-    });
-
-    // ---------- BOTÓN REINICIAR ----------
-    reiniciarBtn.addEventListener("click", () => {
-      modal.classList.remove("mostrar");
-
-      tablero.innerHTML = "";
-      puntuacion = 0;
-      parejasEncontradas = 0;
-      primeraCarta = null;
-      bloqueo = false;
-
-      if (intervaloTiempo) clearInterval(intervaloTiempo);
+      if (intervaloInactividad) {
+        clearInterval(intervaloInactividad);
+        intervaloInactividad = null;
+      }
 
       // Reset flags de desafío
       desafioTerminado = false;
@@ -240,6 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let nivelEnCurso = null;
     const TIEMPO_MAX_ESPERA_NIVEL = 5 * 60 * 1000;
     let timeoutNivelActual = null;
+    let intervaloInactividad = null;
 
     // ------------------ NIVELES DESAFÍO ------------------
     const niveles = [
@@ -489,7 +480,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // INACTIVIDAD
       let tiempoInactividad = 0;
-      let intervaloInactividad = null;
       let avisoMostrado = false;
       let modalAvisoInactividad = null;
 
@@ -578,6 +568,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const seleccionados = mezclar([...elementos]).slice(0, cantidadParejas);
 
       let valores = [...seleccionados, ...seleccionados];
+
+      valores = mezclar(valores);
 
       tablero.innerHTML = "";
 
@@ -862,6 +854,11 @@ document.addEventListener("DOMContentLoaded", () => {
         intervaloTiempo = null;
       }
 
+      if (intervaloInactividad) {
+        clearInterval(intervaloInactividad);
+        intervaloInactividad = null;
+      }
+
       if (timeoutNivelActual) {
         clearTimeout(timeoutNivelActual);
         timeoutNivelActual = null;
@@ -951,20 +948,36 @@ document.addEventListener("DOMContentLoaded", () => {
         // Guardar el timeout en la variable global
         timeoutNivelActual = setTimeout(() => {
           console.warn("Tiempo de espera agotado en selección de nivel");
-
-          // Cerrar modal si sigue abierto
-          if (modalNivel.parentNode) {
+          
+          // Eliminar el modal de siguiente nivel si aún existe
+          if (modalNivel && modalNivel.parentNode) {
             modalNivel.remove();
           }
-
-          // Simular fin de tiempo
-          nivelMaximoAlcanzado = Math.max(
-            nivelMaximoAlcanzado,
-            nivelActual - 1,
-          );
-          mostrarModalTiempoAgotado();
-
-          timeoutNivelActual = null; // Limpiar referencia
+          
+          // Limpiar el tablero para que no queden cartas visibles
+          tablero.innerHTML = "";
+          
+          // Detener cualquier intervalo de tiempo activo
+          if (intervaloTiempo) {
+            clearInterval(intervaloTiempo);
+            intervaloTiempo = null;
+          }
+          
+          // Resetear estado del juego
+          primeraCarta = null;
+          bloqueo = false;
+          
+          // Registrar el nivel alcanzado (el que se había completado, no el siguiente)
+          nivelMaximoAlcanzado = Math.max(nivelMaximoAlcanzado, nivelActual - 1);
+          
+          // Mostrar el modal correspondiente según el nivel ALCANZADO (no el siguiente)
+          if (nivelMaximoAlcanzado >= 6) {
+            mostrarModalTiempoAgotadoConRecord();  // modal con opción de guardar
+          } else {
+            mostrarModalTiempoAgotadoDesafio();    // modal simple de reinicio
+          }
+          
+          timeoutNivelActual = null;
         }, TIEMPO_MAX_ESPERA_NIVEL);
 
         // Actualizar texto inicial
@@ -1199,7 +1212,11 @@ document.addEventListener("DOMContentLoaded", () => {
       playSound(sonidos.finTiempo);
 
       // Guardamos el nivel alcanzado
-      nivelMaximoAlcanzado = Math.max(nivelMaximoAlcanzado, nivelActual);
+      //nivelMaximoAlcanzado = Math.max(nivelMaximoAlcanzado, nivelActual);
+
+      if (nivelMaximoAlcanzado < nivelActual) {
+        nivelMaximoAlcanzado = nivelActual;
+      }
 
       if (nivelActual >= 6) {
         // Modal tipo victoria (pero sin victoria)
@@ -1271,15 +1288,6 @@ document.addEventListener("DOMContentLoaded", () => {
         marcador.textContent = puntuacion;
       }
       // En modo desafío, el tiempo se actualiza en el intervalo
-    }
-
-    // También modificar en los bonus de tiempo:
-    if (nivelEnCurso && nivelEnCurso.nivel >= 9) {
-      tiempoRestante += 2;
-      const mins = Math.floor(tiempoRestante / 60);
-      const segs = tiempoRestante % 60;
-      marcador.textContent = `${mins}:${segs.toString().padStart(2, "0")}`;
-      mostrarBonusTiempo();
     }
   }
 
