@@ -63,6 +63,8 @@ window.translationsCA = {
   "language.fr": "Frances",
   "language.pt": "Portuguès ",
   "language.it": "Italià",
+  "language.gl": "Gallec",
+  "language.eu": "Euskera",
   "categoria.animal": "Animal",
   "categoria.objeto": "Objecte",
   "categoria.lugar": "Lloc",

@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       let idiomaInicial =
         localStorage.getItem("uiLang") || document.documentElement.lang || "es";
-      const opcionesValidas = ["es", "ca", "en", "it", "pt", "fr"];
+      const opcionesValidas = ["es", "ca", "en", "it", "pt", "fr", "gl", "eu"];
       if (!opcionesValidas.includes(idiomaInicial)) {
         idiomaInicial = "es";
       }
@@ -947,6 +947,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       switch (ah_idiomaJuego) {
         case "es":
+        case "gl":     
+        case "eu":     
           abecedario = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
           break;
         case "ca":

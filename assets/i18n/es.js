@@ -81,6 +81,8 @@ window.translationsES = {
   "language.fr": "Francés",
   "language.pt": "Portugués",
   "language.it": "Italiano",
+  "language.gl": "Gallego",
+  "language.eu": "Euskera",
   "operaciones.title": "Operaciones",
   "operaciones.selectMode": "Selecciona modo de juego",
   "operaciones.normalMode": "Modo normal",

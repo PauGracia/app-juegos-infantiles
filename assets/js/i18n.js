@@ -35,7 +35,7 @@ function applyTranslations() {
 function initLanguage() {
   const saved = localStorage.getItem("uiLang");
   const browserLang = navigator.language.slice(0, 2);
-  const supported = ["es", "en", "ca", "fr", "pt", "it"];
+  const supported = ["es", "en", "ca", "fr", "pt", "it", "gl", "eu"];
   const lang = saved || (supported.includes(browserLang) ? browserLang : "es");
   loadLanguage(lang, false);
 }

@@ -1020,13 +1020,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const idiomaInterfaz = (localStorage.getItem("uiLang") || "es").split("-")[0];
 
   const mapaIdiomaPalabras = {
-    es: 0,
-    ca: 1,
-    en: 2,
-    fr: 3,
-    it: 4,
-    pt: 5,
-  };
+  es: 0,
+  ca: 1,
+  en: 2,
+  fr: 3,
+  it: 4,
+  pt: 5,
+  gl: 6,
+  eu: 7,
+};
 
   if (mapaIdiomaPalabras[idiomaInterfaz] !== undefined) {
     selectPalabrasIdioma.value = mapaIdiomaPalabras[idiomaInterfaz];

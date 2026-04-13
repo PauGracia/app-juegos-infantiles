@@ -827,7 +827,7 @@ footer a:hover:active {
   opacity: 0;
   pointer-events: none;
   transition: all 0.35s ease;
-  z-index: 3000;
+  z-index: 99999;
   text-align: center;
   width: 30%;
 }

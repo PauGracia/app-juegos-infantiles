@@ -63,6 +63,8 @@ window.translationsEN = {
   "language.fr": "french",
   "language.pt": "Portuguese",
   "language.it": "Italian",
+  "language.gl": "Galician",
+  "language.eu": "Basque",
   "operations.confirmExit": "Are you sure you want to exit the game?",
   "categoria.animal": "Animal",
   "categoria.objeto": "Object",
