@@ -1330,6 +1330,10 @@ body {
     font-size: 22px;
   }
 
+  .operaciones-pizarra {
+    margin-bottom: 160px;
+  }
+
   .botones-operaciones button,
   #boton-salir-operaciones button {
     width: 200px;
@@ -1356,6 +1360,7 @@ body {
   .operaciones-pizarra {
     gap: 15px;
     padding: 15px;
+    margin-bottom: 110px;
   }
 
   .operacion {
@@ -1461,6 +1466,7 @@ body {
     gap: 10px;
     padding: 10px;
     margin: 20px auto;
+    margin-bottom: 110px;
   }
 
   .operacion {
