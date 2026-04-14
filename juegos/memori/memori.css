@@ -699,11 +699,13 @@ body {
   border-radius: 16px;
   width: 420px;
   max-width: 90%;
+  max-height: 80%;
   text-align: center;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   border-top: 6px solid #4299e1;
   border-bottom: 6px solid #4299e1;
   animation: slideUp 0.4s ease;
+  overflow-y: auto;
 }
 
 #modal-instrucciones h2 {
@@ -1436,6 +1438,7 @@ body {
   .botones button {
     padding: 10px;
     font-size: 14px;
+    gap: 3px;
   }
 
   .modal-contentMemori button {
@@ -1449,7 +1452,7 @@ body {
 
   .modal-contentMemori .botones button {
     padding: 6px 0px;
-    font-size: 17px;
+    font-size: 5px;
   }
 
   .modal-contentMemori .botones button::before {
@@ -1588,7 +1591,7 @@ body {
 
   .modal-contentMemori .botones button {
     padding: 6px 0px;
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .modal-contentMemori .botones button::before {
@@ -1645,7 +1648,7 @@ body {
 
   .modal-contentMemori .botones button {
     padding: 6px 0px;
-    font-size: 15px;
+    font-size: 11px;
   }
 
   .modal-contentMemori .botones button::before {

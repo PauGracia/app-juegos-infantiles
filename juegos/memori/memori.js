@@ -323,14 +323,14 @@ document.addEventListener("DOMContentLoaded", () => {
         modalConfirm.id = "modal-confirm-exit";
         modalConfirm.classList.add("modal-memori");
         modalConfirm.innerHTML = `
-    <div class="modal-contentMemori">
-      <h2>${t("common.confirmExit")}</h2>
-      <div class="botones">
-        <button id="btnConfirmYes">${t("common.confirmYes")}</button>
-        <button id="btnConfirmNo">${t("common.confirmNo")}</button>
-      </div>
-    </div>
-  `;
+          <div class="modal-contentMemori">
+            <h2>${t("common.confirmExit")}</h2>
+            <div class="botones">
+              <button id="btnConfirmYes">${t("common.confirmYes")}</button>
+              <button id="btnConfirmNo">${t("common.confirmNo")}</button>
+            </div>
+          </div>
+        `;
         document.body.appendChild(modalConfirm);
 
         const btnYes = modalConfirm.querySelector("#btnConfirmYes");
@@ -523,12 +523,12 @@ document.addEventListener("DOMContentLoaded", () => {
         modalAvisoInactividad.classList.add("modal-memori", "mostrar");
         modalAvisoInactividad.id = "modal-aviso-inactividad";
         modalAvisoInactividad.innerHTML = `
-    <div class="modal-contentMemori-aviso">
-      <h2>${t("memori.warning")}</h2>
-      <p>${t("memori.inactivityWarning")}</p>
-      <button id="entendidoInactividad">${t("common.understand")}</button>
-    </div>
-  `;
+          <div class="modal-contentMemori-aviso">
+            <h2>${t("memori.warning")}</h2>
+            <p>${t("memori.inactivityWarning")}</p>
+            <button id="entendidoInactividad">${t("common.understand")}</button>
+          </div>
+        `;
         document.body.appendChild(modalAvisoInactividad);
 
         modalAvisoInactividad
