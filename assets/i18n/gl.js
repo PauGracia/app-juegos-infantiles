@@ -18,7 +18,7 @@ window.translationsGL = {
   "damas.instructions": "Instrucións",
   "damas.howToPlay": "Como xogar ás damas",
   "ahorcado.nextWord": "¡Seguinte palabra!",
-
+  "damas.warning.playerNoStats": "Xogando como 'Player' - As estatísticas non se gardarán no ranking",
   "memori.inactivityWarning":
     "Levas 10 minutos sen xogar. Se nos próximos 3 minutos non xogas, o xogo rematará.",
 
@@ -42,7 +42,9 @@ window.translationsGL = {
   "ahorcado.instructions.category.abstract":
     "Concepto abstracto: idea ou cousa que non se pode tocar, como sentimentos ou pensamentos.",
   "common.yes": "Si",
+  "common.create": "Crear",
   "common.no": "Non",
+  "common.delete": "Eliminar",
   "ahorcado.loseMessage": "A palabra era:",
   "ahorcado.winMessage": "¡Palabra acertada!",
   "damas.instructionsText":

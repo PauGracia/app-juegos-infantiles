@@ -18,7 +18,7 @@ window.translationsEU = {
   "damas.instructions": "Argibideak",
   "damas.howToPlay": "Nola jokatu damak",
   "ahorcado.nextWord": "Hurrengo hitza!",
-
+  "damas.warning.playerNoStats": "'Player' bezala jokatzen - Estatistikak ez dira sailkapenean gordeko",
   "memori.inactivityWarning":
     "10 minutu daramatzazu jokatu gabe. Hurrengo 3 minututan jokatzen ez baduzu, jokoa amaituko da.",
 
@@ -43,6 +43,8 @@ window.translationsEU = {
     "Kontzeptu abstraktua: ukitu ezin den ideia edo gauza, hala nola sentimenduak edo pentsamenduak.",
   "common.yes": "Bai",
   "common.no": "Ez",
+  "common.create": "Sortu",
+  "common.delete": "Ezabatu",
   "ahorcado.loseMessage": "Hitza hau zen:",
   "ahorcado.winMessage": "Hitza asmatu duzu!",
   "damas.instructionsText":

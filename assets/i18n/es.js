@@ -17,6 +17,7 @@ window.translationsES = {
   "damas.shuffle": "Sortear",
   "damas.instructions": "Instrucciones",
   "damas.howToPlay": "Cómo jugar a las damas",
+  "damas.warning.playerNoStats": "Jugando como 'Player' - Las estadísticas no se guardarán en el ranking",
   "ahorcado.nextWord": "¡Siguiente palabra!",
 
   "memori.inactivityWarning":
@@ -43,6 +44,8 @@ window.translationsES = {
     "Concepto abstracto: idea o cosa que no se puede tocar, como sentimientos o pensamientos.",
   "common.yes": "Si",
   "common.no": "No",
+  "common.create": "Crear",
+  "common.delete": "Borrar",
   "ahorcado.loseMessage": "La palabra era:",
   "ahorcado.winMessage": "¡Palabra acertada!",
   "damas.instructionsText":

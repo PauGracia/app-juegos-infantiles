@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Volúmenes individuales (0.0 a 1.0)
     sonidos.girar.volume = 0.8;
     sonidos.pareja.volume = 1.0;
-    sonidos.error.volume = 0.2;
+    sonidos.error.volume = 0.5;
     sonidos.pasoNivel.volume = 0.2;
     sonidos.finTiempo.volume = 0.5;
     sonidos.win.volume = 0.7;

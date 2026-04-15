@@ -131,6 +131,7 @@ window.translationsPT = {
   "operaciones.andNowStarts": "e agora você começa",
   "common.continue": "Continuar",
   "damas.title": "Jogo de Damas",
+  "damas.warning.playerNoStats": "Jogando como 'Player' - As estatísticas não serão guardadas no ranking",
   "damas.config.aiLevel": "Nível da IA",
   "damas.config.aiNormal": "Normal",
   "damas.config.aiHard": "Difícil",
@@ -156,6 +157,8 @@ window.translationsPT = {
   "operaciones.invalidTime":
     "O tempo mínimo é de 5 segundos (ou 0 para sem limite)",
   "common.playAgain": "Jogar novamente",
+  "common.create": "Criar",
+  "common.delete": "Excluir",
   "operaciones.invalidMaxOperator":
     "Insira um número válido para o operando máximo (0-1000).",
   "operaciones.selectAtLeastOne":

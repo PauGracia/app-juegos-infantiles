@@ -1630,48 +1630,48 @@ const JuegoDamas = (() => {
   // MODAL RANKING DE JUGADORES
   // ======================================================================
 
-  function mostrarModalRanking() {
+ function mostrarModalRanking() {
     const ranking = GestorJugadores.obtenerRanking();
 
     let contenidoRanking = "";
 
     if (ranking.length === 0) {
-      contenidoRanking = `<p class="sin-jugadores-msg" data-i18n="damas.ranking.noPlayers">No hay jugadores registrados</p>`;
+      contenidoRanking = `<p class="sin-jugadores-msg">${t("damas.ranking.noPlayers")}</p>`;
     } else {
       ranking.forEach((jugador) => {
         contenidoRanking += `
-      <div class="ranking-item">
-        <div class="ranking-nombre">${jugador.nombre}</div>
-        <div class="ranking-estadisticas">
-          <div class="ranking-nivel">
-            <span data-i18n="damas.config.aiNormal">Normal</span>
-            <span class="ranking-victorias">🏆 ${jugador.stats.victoriasNormal}</span>
-            <span class="ranking-derrotas">❌ ${jugador.stats.derrotasNormal}</span>
+          <div class="ranking-item">
+            <div class="ranking-nombre">${jugador.nombre}</div>
+            <div class="ranking-estadisticas">
+              <div class="ranking-nivel">
+                <span>${t("damas.config.aiNormal")}</span>
+                <span class="ranking-victorias">🏆 ${jugador.stats.victoriasNormal}</span>
+                <span class="ranking-derrotas">❌ ${jugador.stats.derrotasNormal}</span>
+              </div>
+              <div class="ranking-nivel">
+                <span>${t("damas.config.aiHard")}</span>
+                <span class="ranking-victorias">🏆 ${jugador.stats.victoriasDificil}</span>
+                <span class="ranking-derrotas">❌ ${jugador.stats.derrotasDificil}</span>
+              </div>
+            </div>
           </div>
-          <div class="ranking-nivel">
-            <span data-i18n="damas.config.aiHard">Difícil</span>
-            <span class="ranking-victorias">🏆 ${jugador.stats.victoriasDificil}</span>
-            <span class="ranking-derrotas">❌ ${jugador.stats.derrotasDificil}</span>
-          </div>
-        </div>
-      </div>
-    `;
+        `;
       });
     }
 
     const modalHTML = `
-  <div id="modal-ranking-jugadores" class="modal-fin-damas" style="display: flex;">
-    <div class="modal-contenido modal-ranking">
-      <h2 data-i18n="damas.ranking.title">Ranking de jugadores</h2>
-      <div class="ranking-lista">
-        ${contenidoRanking}
+      <div id="modal-ranking-jugadores" class="modal-fin-damas" style="display: flex;">
+        <div class="modal-contenido modal-ranking">
+          <h2>${t("damas.ranking.title")}</h2>
+          <div class="ranking-lista">
+            ${contenidoRanking}
+          </div>
+          <div class="botones-modal">
+            <button class="boton-damas" id="btn-cerrar-ranking">${t("common.close")}</button>
+          </div>
+        </div>
       </div>
-      <div class="botones-modal">
-        <button class="boton-damas" id="btn-cerrar-ranking" data-i18n="common.close">Cerrar</button>
-      </div>
-    </div>
-  </div>
-`;
+    `;
 
     // Eliminar modal anterior si existe
     const oldModal = document.getElementById("modal-ranking-jugadores");
@@ -2292,160 +2292,158 @@ const JuegoDamas = (() => {
   }
 
   // ======================================================================
-  // MODAL CREAR JUGADOR
-  // ======================================================================
+// MODAL CREAR JUGADOR 
+// ======================================================================
 
-  function mostrarModalCrearJugador() {
-    // Ocultar cualquier otro modal abierto
-    const modalAviso = document.getElementById("modal-aviso-damas");
-    if (modalAviso.style.display === "flex") {
-      modalAviso.style.display = "none";
-    }
+function mostrarModalCrearJugador() {
+  // Ocultar cualquier otro modal abierto
+  const modalAviso = document.getElementById("modal-aviso-damas");
+  if (modalAviso && modalAviso.style.display === "flex") {
+    modalAviso.style.display = "none";
+  }
 
-    const modalHTML = `
+  const modalHTML = `
     <div id="modal-crear-jugador" class="modal-fin-damas" style="display: flex; z-index: 9999;">
       <div class="modal-contenido modal-crear-jugador">
-        <h2 data-i18n="damas.player.create.title">Crear nuevo jugador</h2>
+        <h2>${t("damas.player.create.title")}</h2>
         <input type="text" id="input-nuevo-jugador" placeholder="${t("damas.player.namePlaceholder")}" maxlength="12" autocomplete="off">
         <div class="botones-modal">
-          <button class="boton-damas" id="btn-crear-jugador-confirm" data-i18n="common.create">Crear</button>
-          <button class="boton-damas" id="btn-crear-jugador-cancel" data-i18n="common.close">Cerrar</button>
+          <button class="boton-damas" id="btn-crear-jugador-confirm">${t("common.create")}</button>
+          <button class="boton-damas" id="btn-crear-jugador-cancel">${t("common.close")}</button>
         </div>
       </div>
     </div>
   `;
 
-    // Eliminar modal anterior si existe
-    const oldModal = document.getElementById("modal-crear-jugador");
-    if (oldModal) oldModal.remove();
+  // Eliminar modal anterior si existe
+  const oldModal = document.getElementById("modal-crear-jugador");
+  if (oldModal) oldModal.remove();
 
-    document.body.insertAdjacentHTML("beforeend", modalHTML);
+  document.body.insertAdjacentHTML("beforeend", modalHTML);
 
-    const modal = document.getElementById("modal-crear-jugador");
-    const input = document.getElementById("input-nuevo-jugador");
+  const modal = document.getElementById("modal-crear-jugador");
+  const input = document.getElementById("input-nuevo-jugador");
 
-    // Enfocar input
-    setTimeout(() => input.focus(), 100);
+  // Enfocar input
+  setTimeout(() => input.focus(), 100);
 
-    // Evento crear
-    document.getElementById("btn-crear-jugador-confirm").onclick = () => {
-      const nombre = input.value.trim();
-      const resultado = GestorJugadores.añadirJugador(nombre);
+  // Evento crear
+  document.getElementById("btn-crear-jugador-confirm").onclick = () => {
+    const nombre = input.value.trim();
+    const resultado = GestorJugadores.añadirJugador(nombre);
 
-      if (resultado.exito) {
-        modal.style.display = "none";
-        mostrarAvisoDamas(t(resultado.mensaje, { nombre }));
-        actualizarSelectorJugadores();
-      } else {
-        mostrarAvisoDamas(t(resultado.mensaje));
-      }
-    };
-
-    // Evento cerrar
-    document.getElementById("btn-crear-jugador-cancel").onclick = () => {
+    if (resultado.exito) {
       modal.style.display = "none";
-    };
+      mostrarAvisoDamas(t(resultado.mensaje, { nombre }));
+      actualizarSelectorJugadores();
+    } else {
+      mostrarAvisoDamas(t(resultado.mensaje));
+    }
+  };
 
-    // Cerrar al hacer click fuera
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.style.display = "none";
-      }
-    });
+  // Evento cerrar
+  document.getElementById("btn-crear-jugador-cancel").onclick = () => {
+    modal.style.display = "none";
+  };
+
+  // Cerrar al hacer click fuera
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+}
+
+// ======================================================================
+// MODAL BORRAR JUGADOR 
+// ======================================================================
+
+function mostrarModalBorrarJugador() {
+  // Obtener jugadores y filtrar para EXCLUIR a "Player"
+  const jugadores = GestorJugadores.obtenerJugadores().filter(
+    (nombre) => nombre !== "Player",
+  );
+
+  if (jugadores.length === 0) {
+    mostrarAvisoDamas(t("damas.player.error.noPlayers"));
+    return;
   }
 
-  // ======================================================================
-  // MODAL BORRAR JUGADOR
-  // ======================================================================
-
-  function mostrarModalBorrarJugador() {
-    // Obtener jugadores y filtrar para EXCLUIR a "Player"
-    const jugadores = GestorJugadores.obtenerJugadores().filter(
-      (nombre) => nombre !== "Player",
-    );
-
-    if (jugadores.length === 0) {
-      mostrarAvisoDamas(t("damas.player.error.noPlayers"));
-      return;
-    }
-
-    const listaJugadores = jugadores
-      .map(
-        (nombre) => `
+  const listaJugadores = jugadores
+    .map(
+      (nombre) => `
     <div class="item-jugador-borrar" data-nombre="${nombre}">
       <input type="radio" name="jugador-borrar" value="${nombre}" id="radio-${nombre}">
       <label for="radio-${nombre}">${nombre}</label>
     </div>
   `,
-      )
-      .join("");
+    )
+    .join("");
 
-    const modalHTML = `
+  const modalHTML = `
     <div id="modal-borrar-jugador" class="modal-fin-damas" style="display: flex;">
       <div class="modal-contenido modal-borrar-jugador">
-        <h2 data-i18n="damas.player.delete.title">Seleccionar jugador a borrar</h2>
+        <h2>${t("damas.player.delete.title")}</h2>
         <div class="lista-jugadores-borrar">
           ${listaJugadores}
         </div>
         <div class="botones-modal">
-          <button class="boton-damas" id="btn-borrar-jugador-confirm" data-i18n="common.delete">Borrar</button>
-          <button class="boton-damas" id="btn-borrar-jugador-cancel" data-i18n="common.close">Cerrar</button>
+          <button class="boton-damas" id="btn-borrar-jugador-confirm">${t("common.delete")}</button>
+          <button class="boton-damas" id="btn-borrar-jugador-cancel">${t("common.close")}</button>
         </div>
       </div>
     </div>
   `;
 
-    // Eliminar modal anterior si existe
-    const oldModal = document.getElementById("modal-borrar-jugador");
-    if (oldModal) oldModal.remove();
+  // Eliminar modal anterior si existe
+  const oldModal = document.getElementById("modal-borrar-jugador");
+  if (oldModal) oldModal.remove();
 
-    document.body.insertAdjacentHTML("beforeend", modalHTML);
+  document.body.insertAdjacentHTML("beforeend", modalHTML);
 
-    const modal = document.getElementById("modal-borrar-jugador");
+  const modal = document.getElementById("modal-borrar-jugador");
 
-    // Añadir efecto de selección
-    document.querySelectorAll(".item-jugador-borrar").forEach((item) => {
-      item.addEventListener("click", () => {
-        document
-          .querySelectorAll(".item-jugador-borrar")
-          .forEach((i) => i.classList.remove("seleccionado"));
-        item.classList.add("seleccionado");
-        const radio = item.querySelector('input[type="radio"]');
-        if (radio) radio.checked = true;
-      });
+  // Añadir efecto de selección
+  document.querySelectorAll(".item-jugador-borrar").forEach((item) => {
+    item.addEventListener("click", () => {
+      document
+        .querySelectorAll(".item-jugador-borrar")
+        .forEach((i) => i.classList.remove("seleccionado"));
+      item.classList.add("seleccionado");
+      const radio = item.querySelector('input[type="radio"]');
+      if (radio) radio.checked = true;
     });
+  });
 
-    // Evento borrar
-    document.getElementById("btn-borrar-jugador-confirm").onclick = () => {
-      const seleccionado = document.querySelector(
-        'input[name="jugador-borrar"]:checked',
-      );
-      if (!seleccionado) {
-        mostrarAvisoDamas(t("damas.player.error.select"));
-        return;
-      }
+  // Evento borrar
+  document.getElementById("btn-borrar-jugador-confirm").onclick = () => {
+    const seleccionado = document.querySelector(
+      'input[name="jugador-borrar"]:checked',
+    );
+    if (!seleccionado) {
+      mostrarAvisoDamas(t("damas.player.error.select"));
+      return;
+    }
 
-      const nombre = seleccionado.value;
-      GestorJugadores.eliminarJugador(nombre);
+    const nombre = seleccionado.value;
+    GestorJugadores.eliminarJugador(nombre);
+    modal.style.display = "none";
+    mostrarAvisoDamas(t("damas.player.deleted", { nombre }));
+    actualizarSelectorJugadores();
+  };
+
+  // Evento cerrar
+  document.getElementById("btn-borrar-jugador-cancel").onclick = () => {
+    modal.style.display = "none";
+  };
+
+  // Cerrar al hacer click fuera
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
       modal.style.display = "none";
-      mostrarAvisoDamas(t("damas.player.deleted", { nombre }));
-      actualizarSelectorJugadores();
-    };
-
-    actualizarNombreJugadorPanel();
-
-    // Evento cerrar
-    document.getElementById("btn-borrar-jugador-cancel").onclick = () => {
-      modal.style.display = "none";
-    };
-
-    // Cerrar al hacer click fuera
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.style.display = "none";
-      }
-    });
-  }
+    }
+  });
+}
 
   // ======================================================================
   // INICIALIZACIÓN
@@ -2614,9 +2612,7 @@ const JuegoDamas = (() => {
           actualizarSelectorJugadores();
           actualizarNombreJugadorPanel();
 
-          mostrarAvisoDamas(
-            "Jugando como 'Player' - Las estadísticas no se guardarán en el ranking",
-          );
+          mostrarAvisoDamas(t("damas.warning.playerNoStats"));
 
           // Realizar sorteo automático de colores
           realizarSorteoColores();
