@@ -20,6 +20,8 @@ window.translationsFR = {
   "damas.instructions": "Instructions",
   "damas.howToPlay": "Comment jouer aux dames",
   "damas.you": "TOI",
+  "damas.jugadores": "Joueurs",
+  "damas.jugadores2": "Joueur:",
   "damas.config.quickGame": "Partie rapide",
   "ahorcado.loseMessage": "Le mot était:",
   "ahorcado.nextWord": "Mot suivant !",

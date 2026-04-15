@@ -135,7 +135,7 @@ window.translationsPT = {
   "damas.config.aiLevel": "Nível da IA",
   "damas.config.aiNormal": "Normal",
   "damas.config.aiHard": "Difícil",
-
+  "damas.jugadores": "Jogadores",
   "language.selected": "Idioma selecionado: {lang}",
   "operaciones.incorrectOperations": "Operações incorretas",
   "operaciones.challengeCompleted": "Modo Desafio concluído!",
