@@ -66,6 +66,83 @@ document.addEventListener("DOMContentLoaded", () => {
     let ah_partidaPalabrasAcertadas = 0;
     let ah_categoriaActual = "";
 
+    // Traducciones de categorías (desde español a cada idioma)
+    const traduccionesCategorias = {
+        es: {
+          "animal": "animal",
+          "deporte": "deporte",
+          "objeto": "objeto",
+          "lugar": "lugar",
+          "comida": "comida",
+          "profesion": "profesión",
+          "abstracto": "abstracto"
+          // Añade aquí todas las categorías que uses
+        },
+        ca: {
+          "animal": "animal",
+          "deporte": "esport",
+          "objeto": "objecte",
+          "lugar": "lloc",
+          "comida": "menjar",
+          "profesion": "professió",
+          "abstracto": "abstracte"
+        },
+        en: {
+          "animal": "animal",
+          "deporte": "sport",
+          "objeto": "object",
+          "lugar": "place",
+          "comida": "food",
+          "profesion": "profession",
+          "abstracto": "abstract"
+        },
+        it: {
+          "animal": "animale",
+          "deporte": "sport",
+          "objeto": "oggetto",
+          "lugar": "luogo",
+          "comida": "cibo",
+          "profesion": "professione",
+          "abstracto": "astratto"
+        },
+        pt: {
+          "animal": "animal",
+          "deporte": "esporte",
+          "objeto": "objeto",
+          "lugar": "lugar",
+          "comida": "comida",
+          "profesion": "profissão",
+          "abstracto": "abstrato"
+        },
+        fr: {
+          "animal": "animal",
+          "deporte": "sport",
+          "objeto": "objet",
+          "lugar": "lieu",
+          "comida": "nourriture",
+          "profesion": "profession",
+          "abstracto": "abstrait"
+        },
+        gl: {
+          "animal": "animal",
+          "deporte": "deporte",
+          "objeto": "obxecto",
+          "lugar": "lugar",
+          "comida": "comida",
+          "profesion": "profesión",
+          "abstracto": "abstracto"
+        },
+        eu: {
+          "animal": "animalia",
+          "deporte": "kirola",
+          "objeto": "objektua",
+          "lugar": "lekua",
+          "comida": "janaria",
+          "profesion": "lanbidea",
+          "abstracto": "abstractoa"
+        }
+    };
+
     // ================================
     // LISTENER DE CAMBIO DE IDIOMA
     // ================================
@@ -125,17 +202,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnPista = document.getElementById("btnPista");
 
     // Función para manejar la pista
-    function usarPista() {
-      // reniciar contador de inactividad
+   function usarPista() {
       reiniciarContadorInactividad();
-
-      if (ah_bloqueado || !ah_categoriaActual) return;
+      if (ah_bloqueado || !ah_palabraSecreta) return;
       reproducirSonido(sonidos.click);
-      const categoriaTraducida = getTranslation(
-        `categoria.${ah_categoriaActual}`,
-        ah_categoriaActual,
-      );
-      mostrarMensajeTemporal(`${categoriaTraducida}`, 3000);
+
+      const selectIdioma = document.getElementById("idioma-juego");
+      const idiomaJuego = selectIdioma ? selectIdioma.value : "es";
+
+      let categoriaEspanol = ah_categoriaActual;
+      if (!categoriaEspanol) {
+    
+        const listaEs = palabras.es;
+        const palabraEncontrada = listaEs.find(
+          (item) => item.palabra.toUpperCase() === ah_palabraSecreta
+        );
+        categoriaEspanol = palabraEncontrada ? palabraEncontrada.categoria : "";
+      }
+
+      if (!categoriaEspanol) {
+        mostrarMensajeTemporal("Categoría", 3000);
+        return;
+      }
+ 
+      let categoriaTraducida = categoriaEspanol;
+      if (idiomaJuego !== "es" && traduccionesCategorias[idiomaJuego]) {
+        categoriaTraducida = traduccionesCategorias[idiomaJuego][categoriaEspanol] || categoriaEspanol;
+      }
+
+      mostrarMensajeTemporal(categoriaTraducida, 3000);
     }
 
     // ================================
@@ -893,11 +988,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!pistaElement) return;
 
       if (ah_categoriaActual) {
-        const categoriaTraducida = getTranslation(
-          `categoria.${ah_categoriaActual}`,
-          ah_categoriaActual,
-        );
-        pistaElement.innerHTML = `${getTranslation("ahorcado.clue", "Pista:")} <span class="categoria-valor">${categoriaTraducida}</span>`;
+        pistaElement.innerHTML = `${getTranslation("ahorcado.clue", "Pista:")} <span class="categoria-valor">${ah_categoriaActual}</span>`;
         pistaElement.style.display = "block";
       } else {
         pistaElement.style.display = "none";
