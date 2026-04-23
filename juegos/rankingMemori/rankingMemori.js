@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // UTITLIZAR PARA PROBAR RANKING
-  // seedRankingMemori();
+   //seedRankingMemori();
 
   // Cargar el idioma inicial
   if (typeof initLanguage === "function") {
