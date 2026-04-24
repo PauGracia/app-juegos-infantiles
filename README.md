@@ -168,7 +168,7 @@ Para generar la APK:
 
 ## 🌍 Demo online
 
-👉 [https://paugracia.github.io/app-juegos-infantiles/index.html](https://paugracia.github.io/app-juegos-infantiles/index.html)
+👉 https://paugracia.github.io/app-juegos-infantiles/index.html
 
 *Funciona en cualquier navegador moderno.*
 
