@@ -7,7 +7,7 @@
 **Repositorio:** `app-juegos-infantiles`  
 **Autor:** Pau Gracia
 
-<img src="assets/img/imagenes/capturaIndex.png" alt="Captura de pantalla de la página principal" width="600">
+<img src="assets/img/imagenes/movil.jpg" alt="Captura de pantallas de versión mobil" width="600">
 
 <img src="assets/img/imagenes/operaciones.png" alt="Captura del juego de operaciones" width="600">
 
@@ -40,6 +40,10 @@ El proyecto comenzó como una web y ha evolucionado hasta convertirse en una **a
 | ♟️ **Juego de Damas** | Juego completo de damas contra la IA con capturas obligatorias y coronación. |
 
 > ℹ️ Los juegos de **Como se LLama** y **Juego del Ahorcado** permiten seleccionar el idioma de juego entre varios disponibles.
+
+---
+
+<img src="assets/img/imagenes/menu.png" alt="Captura del menu" width="600">
 
 ---
 
@@ -77,6 +81,10 @@ En juegos como **Como se llama** y **Juego del Ahorcado**, el usuario puede eleg
 - 📱 **Diseño responsive** optimizado para móvil y tablet
 - 🖱️ **Compatible con escritorio** (funciona a la perfección)
 - 🔒 **Orientación vertical (*portrait*)** en dispositivos móviles
+
+---
+
+<img src="assets/img/imagenes/ahorcado.png" alt="Captura del juego ahorcado" width="600">
 
 ---
 
